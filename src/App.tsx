@@ -1,31 +1,42 @@
-import { useState } from "react";
-import clsx from "clsx";
-import Drawer from "@material-ui/core/Drawer";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import AddIcon from "@material-ui/icons/Add";
-import DescriptionIcon from "@material-ui/icons/Description";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import MenuIcon from "@material-ui/icons/Menu";
+import React, { useState } from "react";
+import {
+  Divider,
+  Toolbar,
+  AppBar,
+  Drawer,
+  ListItem,
+  List,
+  ListItemIcon,
+  IconButton,
+  ListItemText,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  TextField,
+  DialogActions,
+  Button,
+} from "@material-ui/core";
+import {
+  Add,
+  Description,
+  ChevronLeft,
+  ChevronRight,
+  Menu,
+} from "@material-ui/icons";
 import {
   makeStyles,
   useTheme,
   Theme,
   createStyles,
 } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import Highcharts from "highcharts";
 import HighchartsSunburst from "highcharts/modules/sunburst";
 import HighchartsReact from "highcharts-react-official";
 import MaterialTable from "material-table";
+import clsx from "clsx";
+
 import { sunburstMockData, tableMockData } from "./utils/mockData";
-import { table } from "console";
 
 HighchartsSunburst(Highcharts);
 
@@ -92,6 +103,8 @@ const App = () => {
   const classes = useStyles();
   const theme = useTheme();
   const [displayDrawer, setDisplayDrawer] = useState(true);
+  const [newProcedure, setNewProcedure] = useState("");
+  const [displayDialog, setDisplayDialog] = useState(false);
   const [tableData, setTableData]: any = useState(tableMockData);
   const [procedures, setProcedures]: any = useState([
     "Car fires",
@@ -135,6 +148,18 @@ const App = () => {
     ],
   };
 
+  const createNewProcedure = () => {
+    setTableData({
+      ...tableData,
+      [newProcedure]: [],
+    });
+    setProcedures([...procedures, newProcedure]);
+    setCurrentProcedure(newProcedure);
+    setDisplayDialog(false);
+    console.log(procedures);
+    console.log(tableData);
+  };
+
   return (
     <div className={classes.root}>
       <AppBar
@@ -151,7 +176,7 @@ const App = () => {
             edge="start"
             className={clsx(classes.menuButton, displayDrawer && classes.hide)}
           >
-            <MenuIcon />
+            <Menu />
           </IconButton>
           <h4>Sequencing</h4>
         </Toolbar>
@@ -167,20 +192,16 @@ const App = () => {
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={() => setDisplayDrawer(false)}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
+            {theme.direction === "ltr" ? <ChevronLeft /> : <ChevronRight />}
           </IconButton>
         </div>
-        <ListItem button key={"Create new"}>
+        <ListItem button>
           <ListItemIcon>
-            <AddIcon />
+            <Add />
           </ListItemIcon>
           <ListItemText
             primary={"Create new"}
-            onClick={() => setCurrentProcedure("Create new")}
+            onClick={() => setDisplayDialog(true)}
           />
         </ListItem>
         <Divider />
@@ -188,7 +209,7 @@ const App = () => {
           {procedures.map((text: string) => (
             <ListItem button key={text}>
               <ListItemIcon>
-                <DescriptionIcon />
+                <Description />
               </ListItemIcon>
               <ListItemText
                 primary={text}
@@ -204,6 +225,36 @@ const App = () => {
         })}
       >
         <div className={classes.drawerHeader} />
+        <Dialog
+          open={displayDialog}
+          onClose={() => setDisplayDialog(false)}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">Create new procedure</DialogTitle>
+          <DialogContent>
+            <TextField
+              onChange={(e) => setNewProcedure(e.target.value)}
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Name of procedure"
+              type="text"
+              fullWidth
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setDisplayDialog(false)} color="primary">
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              onClick={() => createNewProcedure()}
+              color="primary"
+            >
+              Create
+            </Button>
+          </DialogActions>
+        </Dialog>
         <MaterialTable
           title={currentProcedure}
           columns={columns}
