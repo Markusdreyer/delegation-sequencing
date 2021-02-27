@@ -1,43 +1,139 @@
-export const tableMockData = [
-  {
-    action: "Operation central receives fire alert",
-    agents: "OPC",
-    abbreviation: "1",
-    precedence: 0,
-  },
-  {
-    action: "Operation central gathers building information",
-    agents: "OPC",
-    abbreviation: 2,
-    precedence: 1,
-  },
-  {
-    action: "Operation central alerts fire department",
-    agents: "OPC, F1",
-    abbreviation: 3,
-    precedence: 1,
-  },
-  {
-    action: "Fire department move to scene",
-    agents: "F1",
-    abbreviation: 4,
-    precedence: 2,
-  },
-  {
-    action: "Operation central relays building information to fire chief",
-    agents: "OPC",
-    abbreviation: 4,
-    precedence: 2,
-  },
-  {
-    action: "Smoke dive team are briefed about the layout of the burning house",
-    agents: "OPC",
-    abbreviation: 5,
-    precedence: 2,
-  },
-];
+import { SunburstData, TableData } from "../types";
 
-export const sunburstMockData = [
+export const tableMockData: any = {
+  "Car fires": [
+    {
+      action: "Operation central receives fire alert",
+      agents: "OPC",
+      abbreviation: "1",
+      precedence: "0",
+    },
+    {
+      action: "Operation central gathers location information",
+      agents: "OPC",
+      abbreviation: "2",
+      precedence: "1",
+    },
+    {
+      action: "Operation central alerts fire department",
+      agents: "OPC, F1",
+      abbreviation: "3",
+      precedence: "1",
+    },
+    {
+      action: "Fire department move to scene",
+      agents: "F1",
+      abbreviation: "4",
+      precedence: "2",
+    },
+    {
+      action: "Operation central requests police resources to redirect traffic",
+      agents: "OPC, P1",
+      abbreviation: "4",
+      precedence: "2",
+    },
+    {
+      action:
+        "Operation central requests ambulance resources to take care of wounded",
+      agents: "OPC, A1",
+      abbreviation: "5",
+      precedence: "2",
+    },
+  ],
+  "Mulch/Compost fires": [
+    {
+      action: "Operation central receives fire alert",
+      agents: "OPC",
+      abbreviation: "1",
+      precedence: "0",
+    },
+    {
+      action: "Operation central alerts fire department",
+      agents: "OPC, F1",
+      abbreviation: "3",
+      precedence: "1",
+    },
+    {
+      action: "Fire department move to scene",
+      agents: "F1",
+      abbreviation: "4",
+      precedence: "2",
+    },
+  ],
+  "Aircraft emergencies": [
+    {
+      action: "Operation central receives aircraft indicent alert",
+      agents: "OPC",
+      abbreviation: "1",
+      precedence: "0",
+    },
+    {
+      action: "Operation central gathers technical aircraft information",
+      agents: "OPC",
+      abbreviation: "2",
+      precedence: "1",
+    },
+    {
+      action: "Operation central alerts fire department",
+      agents: "OPC, F1",
+      abbreviation: "3",
+      precedence: "1",
+    },
+    {
+      action: "Fire department move to scene",
+      agents: "F1",
+      abbreviation: "4",
+      precedence: "2",
+    },
+    {
+      action: "Operation central requests additional firefighting resources",
+      agents: "OPC, F2",
+      abbreviation: "5",
+      precedence: "2",
+    },
+  ],
+  "Brush and Wildland fires": [
+    {
+      action: "Operation central receives fire alert",
+      agents: "OPC",
+      abbreviation: "1",
+      precedence: "0",
+    },
+    {
+      action: "Operation central gathers geographical information",
+      agents: "OPC",
+      abbreviation: "2",
+      precedence: "1",
+    },
+    {
+      action: "Operation central alerts fire department",
+      agents: "OPC, F1",
+      abbreviation: "3",
+      precedence: "1",
+    },
+    {
+      action: "Fire department move to scene",
+      agents: "F1",
+      abbreviation: "4",
+      precedence: "2",
+    },
+    {
+      action:
+        "Operation central requests air resources to survey the scope of damage",
+      agents: "OPC, A1",
+      abbreviation: "4",
+      precedence: "2",
+    },
+    {
+      action: "Operation central requests additional firefighting resources",
+      agents: "OPC, F2",
+      abbreviation: "5",
+      precedence: "2",
+    },
+  ],
+};
+
+export const sunburstMockData: SunburstData[] = [
   {
     id: "0.0",
     parent: "",
