@@ -12,10 +12,10 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText,
   TextField,
   DialogActions,
   Button,
+  Collapse,
 } from "@material-ui/core";
 import {
   Add,
@@ -23,6 +23,10 @@ import {
   ChevronLeft,
   ChevronRight,
   Menu,
+  Assignment,
+  ExpandLess,
+  ExpandMore,
+  AccountTree,
 } from "@material-ui/icons";
 import {
   makeStyles,
@@ -96,6 +100,9 @@ const useStyles = makeStyles((theme: Theme) =>
       }),
       marginLeft: 0,
     },
+    nested: {
+      paddingLeft: theme.spacing(4),
+    },
   })
 );
 
@@ -103,9 +110,16 @@ const App = () => {
   const classes = useStyles();
   const theme = useTheme();
   const [displayDrawer, setDisplayDrawer] = useState(true);
+  const [displayProcedures, setDisplayProcedures] = useState(false);
+  const [displayTaxonomies, setDisplayTaxonomies] = useState(false);
   const [newProcedure, setNewProcedure] = useState("");
   const [displayDialog, setDisplayDialog] = useState(false);
   const [tableData, setTableData]: any = useState(tableMockData);
+  const [taxonomies, setTaxonomies]: any = useState([
+    "Land fire incidents",
+    "Offshore incidents",
+    "Terror incidents",
+  ]);
   const [procedures, setProcedures]: any = useState([
     "Car fires",
     "Mulch/Compost fires",
@@ -200,24 +214,70 @@ const App = () => {
             <Add />
           </ListItemIcon>
           <ListItemText
-            primary={"Create new"}
+            primary={"New procedure"}
+            onClick={() => setDisplayDialog(true)}
+          />
+        </ListItem>
+        <ListItem button>
+          <ListItemIcon>
+            <Add />
+          </ListItemIcon>
+          <ListItemText
+            primary={"New Taxonomy"}
             onClick={() => setDisplayDialog(true)}
           />
         </ListItem>
         <Divider />
-        <List>
-          {procedures.map((text: string) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                <Description />
-              </ListItemIcon>
-              <ListItemText
-                primary={text}
-                onClick={() => setCurrentProcedure(text)}
-              />
-            </ListItem>
-          ))}
-        </List>
+        <ListItem
+          button
+          onClick={() => setDisplayProcedures(!displayProcedures)}
+        >
+          <ListItemIcon>
+            <Assignment />
+          </ListItemIcon>
+          <ListItemText primary="Procedures" />
+          {displayProcedures ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={displayProcedures} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            {procedures.map((text: string) => (
+              <ListItem button className={classes.nested} key={text}>
+                <ListItemIcon>
+                  <Description />
+                </ListItemIcon>
+                <ListItemText
+                  primary={text}
+                  onClick={() => setCurrentProcedure(text)}
+                />
+              </ListItem>
+            ))}
+          </List>
+        </Collapse>
+        <ListItem
+          button
+          onClick={() => setDisplayTaxonomies(!displayTaxonomies)}
+        >
+          <ListItemIcon>
+            <AccountTree />
+          </ListItemIcon>
+          <ListItemText primary="Taxonomies" />
+          {displayTaxonomies ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={displayTaxonomies} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            {taxonomies.map((text: string) => (
+              <ListItem button className={classes.nested} key={text}>
+                <ListItemIcon>
+                  <Description />
+                </ListItemIcon>
+                <ListItemText
+                  primary={text}
+                  onClick={() => setCurrentProcedure(text)}
+                />
+              </ListItem>
+            ))}
+          </List>
+        </Collapse>
       </Drawer>
       <main
         className={clsx(classes.content, {
@@ -263,9 +323,11 @@ const App = () => {
             onRowAdd: (newData) =>
               new Promise((resolve: any, reject) => {
                 setTimeout(() => {
+                  const dataUpdate = [...tableData[currentProcedure]];
+                  dataUpdate.push(newData);
                   setTableData({
                     ...tableData,
-                    [currentProcedure]: newData,
+                    [currentProcedure]: [...dataUpdate],
                   });
 
                   resolve();
@@ -280,6 +342,20 @@ const App = () => {
                   setTableData({
                     ...tableData,
                     [currentProcedure]: [...dataUpdate],
+                  });
+
+                  resolve();
+                }, 1000);
+              }),
+            onRowDelete: (oldData: any) =>
+              new Promise((resolve: any, reject) => {
+                setTimeout(() => {
+                  const dataDelete = [...tableData[currentProcedure]];
+                  const index = oldData.tableData.id;
+                  dataDelete.splice(index, 1);
+                  setTableData({
+                    ...tableData,
+                    [currentProcedure]: [...dataDelete],
                   });
 
                   resolve();
