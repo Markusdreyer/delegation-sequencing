@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import {
   Divider,
   Toolbar,
@@ -109,7 +110,8 @@ const useStyles = makeStyles((theme: Theme) =>
 const App = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const [displayDrawer, setDisplayDrawer] = useState(true);
+  const [displayDrawer, setDisplayDrawer] = useState(false);
+  const [displaySunburst, setDisplaySunburst] = useState(false);
   const [displayProcedures, setDisplayProcedures] = useState(false);
   const [displayTaxonomies, setDisplayTaxonomies] = useState(false);
   const [newProcedure, setNewProcedure] = useState("");
@@ -131,6 +133,10 @@ const App = () => {
     {
       title: "Agents",
       field: "agents",
+    },
+    {
+      title: "Quantity",
+      field: "quantity",
     },
     {
       title: "Abbreviation",
@@ -172,6 +178,21 @@ const App = () => {
     setDisplayDialog(false);
     console.log(procedures);
     console.log(tableData);
+  };
+
+  const generateSunburst = () => {
+    const tableJSON = JSON.stringify(tableData[currentProcedure]);
+    axios({
+      method: "post",
+      url: "http://localhost:8000/asp-parser",
+      data: tableJSON,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      console.log(res);
+      console.log(res.data);
+    });
   };
 
   return (
@@ -319,6 +340,24 @@ const App = () => {
           title={currentProcedure}
           columns={columns}
           data={tableData[currentProcedure]}
+          cellEditable={{
+            cellStyle: {},
+            onCellEditApproved: (newValue, oldValue) => {
+              return new Promise((resolve: any, reject) => {
+                setTimeout(() => {
+                  const dataUpdate = [...tableData[currentProcedure]];
+                  const index = oldValue.tableData.id;
+                  dataUpdate[index] = newValue;
+                  setTableData({
+                    ...tableData,
+                    [currentProcedure]: [...dataUpdate],
+                  });
+
+                  resolve();
+                }, 1000);
+              });
+            },
+          }}
           editable={{
             onRowAdd: (newData) =>
               new Promise((resolve: any, reject) => {
@@ -363,11 +402,23 @@ const App = () => {
               }),
           }}
         />
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={options}
-          constructorType={"chart"}
-        />
+        {displaySunburst ? (
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={options}
+            constructorType={"chart"}
+          />
+        ) : (
+          <div className="center padding-l">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={generateSunburst}
+            >
+              Run simulation
+            </Button>
+          </div>
+        )}
       </main>
     </div>
   );

@@ -1,6 +1,7 @@
 export interface TableData {
   action: string;
   agents: string;
+  quantity: number;
   abbreviation: string;
   precedence: string;
 }
