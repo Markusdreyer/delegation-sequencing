@@ -1,6 +1,108 @@
 import { SunburstData, TableData } from "../types";
 
 export const tableMockData: any = {
+  "EA fire": [
+    {
+      action: "Attack engine crew turn-out",
+      agents: "ae_crew",
+      quantity: "1",
+      abbreviation: "a",
+      precedence: "None",
+    },
+    {
+      action: "Second attack engine crew turn-out",
+      agents: "se_crew",
+      quantity: "1",
+      abbreviation: "b",
+      precedence: "None",
+    },
+    {
+      action: "Ladder department turn-out",
+      agents: "lt_crew",
+      quantity: "1",
+      abbreviation: "c",
+      precedence: "None",
+    },
+    {
+      action: "Travel of attack engine crew to 911 address",
+      agents: "ae_crew",
+      quantity: "3",
+      abbreviation: "d",
+      precedence: "a",
+    },
+    {
+      action: "Travel of second engine crew to 911 address",
+      agents: "se_crew",
+      quantity: "1",
+      abbreviation: "e",
+      precedence: "b",
+    },
+    {
+      action: "Travel of ladder tower crew to 911 address",
+      agents: "lt_crew",
+      quantity: "2",
+      abbreviation: "f",
+      precedence: "c",
+    },
+    {
+      action: "Attack engine crew advance 1.75 inch hose to seat of fire",
+      agents: "ae_crew",
+      quantity: "1",
+      abbreviation: "g",
+      precedence: "d",
+    },
+    {
+      action: "Attack engine driver prepare to pump water",
+      agents: "ae_crew",
+      quantity: "1",
+      abbreviation: "h",
+      precedence: "g",
+    },
+    {
+      action: "Attack fire with tank water aboard attack engine",
+      agents: "ae_crew",
+      quantity: "1",
+      abbreviation: "i",
+      precedence: "h",
+    },
+    {
+      action: "Second engine crew member prepare nearest hydrant for hook-up",
+      agents: "se_crew",
+      quantity: "1",
+      abbreviation: "j",
+      precedence: "e",
+    },
+    {
+      action:
+        "Second engine drop 5 inch hose between attack engine and nearest hydrant",
+      agents: "se_crew",
+      quantity: "1",
+      abbreviation: "k",
+      precedence: "e",
+    },
+    {
+      action:
+        "Second engine hook to hydrant and attack engine and prepare to pump water",
+      agents: "se_crew",
+      quantity: "1",
+      abbreviation: "l",
+      precedence: "k",
+    },
+    {
+      action: "Attack fire with hydrant water",
+      agents: "se_crew",
+      quantity: "1",
+      abbreviation: "m",
+      precedence: "l",
+    },
+    {
+      action: "Set up ladder tower",
+      agents: "lt_crew",
+      quantity: "1",
+      abbreviation: "n",
+      precedence: "f",
+    },
+  ],
   "Car fires": [
     {
       action: "Operation central receives fire alert",
@@ -34,7 +136,7 @@ export const tableMockData: any = {
       action: "Operation central requests police resources to redirect traffic",
       agents: "ae_crew, lt_crew",
       quantity: "1",
-      abbreviation: "4",
+      abbreviation: "5",
       precedence: "2",
     },
     {
@@ -42,7 +144,7 @@ export const tableMockData: any = {
         "Operation central requests ambulance resources to take care of wounded",
       agents: "ae_crew, lt_crew",
       quantity: "1",
-      abbreviation: "5",
+      abbreviation: "6",
       precedence: "2",
     },
   ],

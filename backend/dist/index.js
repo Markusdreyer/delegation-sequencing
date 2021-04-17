@@ -35,18 +35,25 @@ app.use(cors_1.default());
 const port = 8000;
 app.post("/asp-parser", (req, res) => {
     const tableData = req.body;
+    console.log(tableData);
     let aspString = "";
+    let predString = "";
     tableData.map((el) => {
         const precedence = el.precedence;
+        const abbreviation = el.abbreviation;
         const agents = el.agents.split(",");
         if (agents.length > 1) {
-            aspString = aspString.concat(`collaborative(${precedence}) . \n`);
+            aspString = aspString.concat(`collaborative(${abbreviation}) . \n`);
         }
         else {
-            aspString = aspString.concat(`primitive(${precedence}) . \n`);
+            aspString = aspString.concat(`primitive(${abbreviation}) . \n`);
         }
-        aspString = aspString.concat(`description(${precedence}, \"${el.action}\") .\ndelegate(${precedence}, ${el.quantity}, ${agents}):-deploy(${precedence}) . \nmandatory(${precedence}) .\n `);
+        aspString = aspString.concat(`description(${abbreviation}, \"${el.action}\") .\ndelegate(${abbreviation}, ${el.quantity}, ${agents}) :- deploy(${abbreviation}) . \nmandatory(${abbreviation}) .\n\n`);
+        if (precedence !== "None") {
+            predString = predString.concat(`pred(${abbreviation}, ${precedence}) .\n`);
+        }
     });
+    aspString = aspString.concat(predString);
     fs_1.default.writeFile("src/model.lp", aspString, (err) => {
         if (err)
             throw err;
@@ -56,7 +63,8 @@ app.post("/asp-parser", (req, res) => {
     const pythonProcess = spawn("python3", ["src/proxy.py"]);
     let models;
     pythonProcess.stdout.on("data", (data) => {
-        models = JSON.parse(data.toString());
+        console.log(data.toString());
+        models = JSON.parse(fs_1.default.readFileSync("src/res.json", "utf8"));
         console.log(models);
         res.json(models);
     });

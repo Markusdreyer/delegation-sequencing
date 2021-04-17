@@ -45,25 +45,25 @@ objective(Ac):- abstract(Ac).
 %% %               Ordering constraints
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-pred(b, a).
-pred(c, a).
-pred(d, b).
-pred(e, b).
-pred(f, b).
-pred(g, e).
-pred(g, f).
-pred(h, c).
-pred(i, c).
-pred(j, h).
-pred(j, i).
-pred(k, j).
-pred(k, g).
-pred(l, d).
-pred(m, e).
-pred(m, f).
-pred(n, e).
-pred(n, f).
-pred(n, l).
+%pred(b, a).
+%pred(c, a).
+%pred(d, b).
+%pred(e, b).
+%pred(f, b).
+%pred(g, e).
+%pred(g, f).
+%pred(h, c).
+%pred(i, c).
+%pred(j, h).
+%pred(j, i).
+%pred(k, j).
+%pred(k, g).
+%pred(l, d).
+%pred(m, e).
+%pred(m, f).
+%pred(n, e).
+%pred(n, f).
+%pred(n, l).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                     Generate responsibilities

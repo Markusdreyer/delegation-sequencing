@@ -123,6 +123,7 @@ const App = () => {
     "Terror incidents",
   ]);
   const [procedures, setProcedures]: any = useState([
+    "EA fire",
     "Car fires",
     "Mulch/Compost fires",
     "Aircraft emergencies",
@@ -141,13 +142,44 @@ const App = () => {
     {
       title: "Abbreviation",
       field: "abbreviation",
-      lookup: { 0: "None", 1: "1", 2: "2", 3: "3", 4: "4", 5: "5" },
+      lookup: {
+        a: "a",
+        b: "b",
+        c: "c",
+        d: "d",
+        e: "e",
+        f: "f",
+        g: "g",
+        h: "h",
+        i: "i",
+        j: "j",
+        k: "k",
+        l: "l",
+        m: "m",
+        n: "n",
+      },
     },
 
     {
       title: "Precedence",
       field: "precedence",
-      lookup: { 0: "None", 1: "1", 2: "2", 3: "3", 4: "4", 5: "5" },
+      lookup: {
+        None: "None",
+        a: "a",
+        b: "b",
+        c: "c",
+        d: "d",
+        e: "e",
+        f: "f",
+        g: "g",
+        h: "h",
+        i: "i",
+        j: "j",
+        k: "k",
+        l: "l",
+        m: "m",
+        n: "n",
+      },
     },
   ]);
   const [currentProcedure, setCurrentProcedure] = useState(procedures[0]);
@@ -191,7 +223,7 @@ const App = () => {
       },
     }).then((res) => {
       console.log(res);
-      console.log(res.data);
+      console.log(JSON.parse(res.data));
     });
   };
 
