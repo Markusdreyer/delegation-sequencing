@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
+import * as child from "child_process";
+import fs from "fs";
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,21 +21,48 @@ interface TableData {
 
 app.post("/asp-parser", (req, res) => {
   const tableData: TableData[] = req.body;
-  let aspString = "";
+  let aspString: string = "";
   tableData.map((el) => {
     const precedence = el.precedence;
     const agents = el.agents.split(",");
     if (agents.length > 1) {
-      aspString = aspString.concat(`collaborative(${precedence})`);
+      aspString = aspString.concat(`collaborative(${precedence}) . \n`);
     } else {
-      aspString = aspString.concat(`primitive(${precedence})`);
+      aspString = aspString.concat(`primitive(${precedence}) . \n`);
     }
     aspString = aspString.concat(
-      `description(${precedence}, ${el.action}) delegate(${precedence}, ${el.quantity}, ${agents}):-deploy(${precedence}) mandatory(${precedence})`
+      `description(${precedence}, \"${el.action}\") .\ndelegate(${precedence}, ${el.quantity}, ${agents}):-deploy(${precedence}) . \nmandatory(${precedence}) .\n `
     );
   });
 
-  res.json(aspString);
+  fs.writeFile("src/model.lp", aspString, (err) => {
+    if (err) throw err;
+    console.log("Model saved to model.lp");
+  });
+
+  const spawn = child.spawn;
+  const pythonProcess = spawn("python3", ["src/proxy.py"]);
+  let models: any;
+  pythonProcess.stdout.on("data", (data) => {
+    models = JSON.parse(data.toString());
+    console.log(models);
+    res.json(models);
+  });
+
+  /* const foo: child.ChildProcess = child.exec(
+  "clingo --outf=2 src/model.lp src/actions.lp",
+  (error: any, stdout: string, stderr: string) => {
+    if (error) {
+      console.log(`error: ${error.message}`);
+      return;
+    }
+    if (stderr) {
+      console.log(`stderr: ${stderr}`);
+      return;
+    }
+    console.log(`stdout: ${stdout}`);
+  }
+); */
 });
 
 // start the Express server

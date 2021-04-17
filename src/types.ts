@@ -10,5 +10,5 @@ export interface SunburstData {
   id: string;
   parent: string;
   name: string;
-  value: number;
+  value?: number;
 }

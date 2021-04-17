@@ -342,7 +342,7 @@ const App = () => {
           data={tableData[currentProcedure]}
           cellEditable={{
             cellStyle: {},
-            onCellEditApproved: (newValue, oldValue) => {
+            onCellEditApproved: (newValue, oldValue: any) => {
               return new Promise((resolve: any, reject) => {
                 setTimeout(() => {
                   const dataUpdate = [...tableData[currentProcedure]];
@@ -402,23 +402,20 @@ const App = () => {
               }),
           }}
         />
-        {displaySunburst ? (
-          <HighchartsReact
-            highcharts={Highcharts}
-            options={options}
-            constructorType={"chart"}
-          />
-        ) : (
-          <div className="center padding-l">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={generateSunburst}
-            >
-              Run simulation
-            </Button>
-          </div>
-        )}
+        <HighchartsReact
+          highcharts={Highcharts}
+          options={options}
+          constructorType={"chart"}
+        />
+        <div className="center padding-l">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={generateSunburst}
+          >
+            Run simulation
+          </Button>
+        </div>
       </main>
     </div>
   );
