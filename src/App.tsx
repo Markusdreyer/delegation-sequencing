@@ -35,16 +35,13 @@ import {
   Theme,
   createStyles,
 } from "@material-ui/core/styles";
-import Highcharts from "highcharts";
-import HighchartsSunburst from "highcharts/modules/sunburst";
-import HighchartsReact from "highcharts-react-official";
-import MaterialTable from "material-table";
+import Sunburst from "./components/Sunburst";
 import clsx from "clsx";
 
 import { sunburstMockData, tableMockData } from "./utils/mockData";
 import { TableData } from "./types";
-
-HighchartsSunburst(Highcharts);
+import { useSelector, useDispatch } from "react-redux";
+import { toggleSidebar, toggleDialog } from "./actions";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) =>
@@ -109,28 +106,18 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const App = () => {
+  const sidebar = useSelector((state: any) => state.sidebar);
+  const dialog = useSelector((state: any) => state.dialog);
+
+  const dispatch = useDispatch();
+
   const classes = useStyles();
   const theme = useTheme();
-  const [displayDrawer, setDisplayDrawer] = useState(false);
   const [sunburstData, setSunburstData] = useState(sunburstMockData);
-  const [displaySunburst, setDisplaySunburst] = useState(false);
-  const [displayProcedures, setDisplayProcedures] = useState(false);
-  const [displayTaxonomies, setDisplayTaxonomies] = useState(false);
+
   const [newProcedure, setNewProcedure] = useState("");
-  const [displayDialog, setDisplayDialog] = useState(false);
   const [tableData, setTableData]: any = useState(tableMockData);
-  const [taxonomies, setTaxonomies]: any = useState([
-    "Land fire incidents",
-    "Offshore incidents",
-    "Terror incidents",
-  ]);
-  const [procedures, setProcedures]: any = useState([
-    "EA fire",
-    "Car fires",
-    "Mulch/Compost fires",
-    "Aircraft emergencies",
-    "Brush and Wildland fires",
-  ]);
+
   const [columns, setColumns]: any = useState([
     { title: "Action", field: "action" },
     {
@@ -186,22 +173,6 @@ const App = () => {
   ]);
   const [currentProcedure, setCurrentProcedure] = useState(procedures[0]);
 
-  const options = {
-    credits: {
-      enabled: false,
-    },
-    title: {
-      text: "Result",
-    },
-    series: [
-      {
-        allowDrillToNode: true,
-        type: "sunburst",
-        data: sunburstData,
-      },
-    ],
-  };
-
   const createNewProcedure = () => {
     setTableData({
       ...tableData,
@@ -209,7 +180,7 @@ const App = () => {
     });
     setProcedures([...procedures, newProcedure]);
     setCurrentProcedure(newProcedure);
-    setDisplayDialog(false);
+    dispatch(toggleDialog());
     console.log(procedures);
     console.log(tableData);
   };
@@ -264,118 +235,15 @@ const App = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: displayDrawer,
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={() => setDisplayDrawer(true)}
-            edge="start"
-            className={clsx(classes.menuButton, displayDrawer && classes.hide)}
-          >
-            <Menu />
-          </IconButton>
-          <h4>Sequencing</h4>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={displayDrawer}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={() => setDisplayDrawer(false)}>
-            {theme.direction === "ltr" ? <ChevronLeft /> : <ChevronRight />}
-          </IconButton>
-        </div>
-        <ListItem button>
-          <ListItemIcon>
-            <Add />
-          </ListItemIcon>
-          <ListItemText
-            primary={"New procedure"}
-            onClick={() => setDisplayDialog(true)}
-          />
-        </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <Add />
-          </ListItemIcon>
-          <ListItemText
-            primary={"New Taxonomy"}
-            onClick={() => setDisplayDialog(true)}
-          />
-        </ListItem>
-        <Divider />
-        <ListItem
-          button
-          onClick={() => setDisplayProcedures(!displayProcedures)}
-        >
-          <ListItemIcon>
-            <Assignment />
-          </ListItemIcon>
-          <ListItemText primary="Procedures" />
-          {displayProcedures ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={displayProcedures} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            {procedures.map((text: string) => (
-              <ListItem button className={classes.nested} key={text}>
-                <ListItemIcon>
-                  <Description />
-                </ListItemIcon>
-                <ListItemText
-                  primary={text}
-                  onClick={() => setCurrentProcedure(text)}
-                />
-              </ListItem>
-            ))}
-          </List>
-        </Collapse>
-        <ListItem
-          button
-          onClick={() => setDisplayTaxonomies(!displayTaxonomies)}
-        >
-          <ListItemIcon>
-            <AccountTree />
-          </ListItemIcon>
-          <ListItemText primary="Taxonomies" />
-          {displayTaxonomies ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={displayTaxonomies} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            {taxonomies.map((text: string) => (
-              <ListItem button className={classes.nested} key={text}>
-                <ListItemIcon>
-                  <Description />
-                </ListItemIcon>
-                <ListItemText
-                  primary={text}
-                  onClick={() => setCurrentProcedure(text)}
-                />
-              </ListItem>
-            ))}
-          </List>
-        </Collapse>
-      </Drawer>
       <main
         className={clsx(classes.content, {
-          [classes.contentShift]: displayDrawer,
+          [classes.contentShift]: sidebar,
         })}
       >
         <div className={classes.drawerHeader} />
         <Dialog
-          open={displayDialog}
-          onClose={() => setDisplayDialog(false)}
+          open={dialog}
+          onClose={() => dispatch(toggleDialog())}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">Create new procedure</DialogTitle>
@@ -391,7 +259,7 @@ const App = () => {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setDisplayDialog(false)} color="primary">
+            <Button onClick={() => dispatch(toggleDialog())} color="primary">
               Cancel
             </Button>
             <Button
@@ -403,73 +271,8 @@ const App = () => {
             </Button>
           </DialogActions>
         </Dialog>
-        <MaterialTable
-          title={currentProcedure}
-          columns={columns}
-          data={tableData[currentProcedure]}
-          cellEditable={{
-            cellStyle: {},
-            onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
-              return new Promise((resolve: any, reject) => {
-                setTimeout(() => {
-                  console.log(rowData);
-                  console.log(columnDef);
-                  const dataUpdate = [...tableData[currentProcedure]];
-                  dataUpdate[rowData.tableData.id][columnDef.field!] = newValue;
-                  resolve();
-                }, 1000);
-              });
-            },
-          }}
-          editable={{
-            onRowAdd: (newData) =>
-              new Promise((resolve: any, reject) => {
-                setTimeout(() => {
-                  const dataUpdate = [...tableData[currentProcedure]];
-                  dataUpdate.push(newData);
-                  setTableData({
-                    ...tableData,
-                    [currentProcedure]: [...dataUpdate],
-                  });
 
-                  resolve();
-                }, 1000);
-              }),
-            onRowUpdate: (newData, oldData: any) =>
-              new Promise((resolve: any, reject) => {
-                setTimeout(() => {
-                  const dataUpdate = [...tableData[currentProcedure]];
-                  const index = oldData.tableData.id;
-                  dataUpdate[index] = newData;
-                  setTableData({
-                    ...tableData,
-                    [currentProcedure]: [...dataUpdate],
-                  });
-
-                  resolve();
-                }, 1000);
-              }),
-            onRowDelete: (oldData: any) =>
-              new Promise((resolve: any, reject) => {
-                setTimeout(() => {
-                  const dataDelete = [...tableData[currentProcedure]];
-                  const index = oldData.tableData.id;
-                  dataDelete.splice(index, 1);
-                  setTableData({
-                    ...tableData,
-                    [currentProcedure]: [...dataDelete],
-                  });
-
-                  resolve();
-                }, 1000);
-              }),
-          }}
-        />
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={options}
-          constructorType={"chart"}
-        />
+        <Sunburst data={sunburstData} />
         <div className="center padding-l">
           <Button
             variant="contained"
