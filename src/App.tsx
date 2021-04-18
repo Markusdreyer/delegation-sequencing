@@ -42,6 +42,7 @@ import MaterialTable from "material-table";
 import clsx from "clsx";
 
 import { sunburstMockData, tableMockData } from "./utils/mockData";
+import { TableData } from "./types";
 
 HighchartsSunburst(Highcharts);
 
@@ -111,6 +112,7 @@ const App = () => {
   const classes = useStyles();
   const theme = useTheme();
   const [displayDrawer, setDisplayDrawer] = useState(false);
+  const [sunburstData, setSunburstData] = useState(sunburstMockData);
   const [displaySunburst, setDisplaySunburst] = useState(false);
   const [displayProcedures, setDisplayProcedures] = useState(false);
   const [displayTaxonomies, setDisplayTaxonomies] = useState(false);
@@ -195,7 +197,7 @@ const App = () => {
       {
         allowDrillToNode: true,
         type: "sunburst",
-        data: sunburstMockData,
+        data: sunburstData,
       },
     ],
   };
@@ -223,7 +225,40 @@ const App = () => {
       },
     }).then((res) => {
       console.log(res);
-      console.log(JSON.parse(res.data));
+      const data = JSON.parse(res.data);
+      console.log(data);
+      const [optimum] = data.Call[0].Witnesses.slice(-1);
+      const optimumCost = optimum.Costs[0];
+      let parsedActions: any = [];
+      optimum.Value.map((el: any) => {
+        const expedite = el.split(/[\(\)\s,]+/);
+        const abbreviation = expedite[1];
+        const agent = expedite[2];
+        const time = expedite[3];
+        const actionLookup = tableData[currentProcedure].find(
+          (el: TableData) => el.abbreviation === abbreviation
+        ).action;
+
+        const actionObject = {
+          action: actionLookup,
+          agent: agent,
+          time: time,
+        };
+        parsedActions.push(actionObject);
+      });
+      const sortedActions = parsedActions.sort((a: any, b: any) =>
+        a.time > b.time ? 1 : b.time > a.time ? -1 : 0
+      );
+      console.log(sortedActions);
+
+      setSunburstData(
+        sortedActions.map((el: any, i: any) => ({
+          id: `${i}.0`,
+          parent: `${i === 0 ? "" : `${i - 1}.0`}`,
+          name: `${el.agent}, ${el.action}, at ${el.time}`,
+          value: 100,
+        }))
+      );
     });
   };
 

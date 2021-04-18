@@ -26,7 +26,7 @@ export const tableMockData: any = {
     {
       action: "Travel of attack engine crew to 911 address",
       agents: "ae_crew",
-      quantity: "3",
+      quantity: "1",
       abbreviation: "d",
       precedence: "a",
     },
@@ -40,7 +40,7 @@ export const tableMockData: any = {
     {
       action: "Travel of ladder tower crew to 911 address",
       agents: "lt_crew",
-      quantity: "2",
+      quantity: "1",
       abbreviation: "f",
       precedence: "c",
     },

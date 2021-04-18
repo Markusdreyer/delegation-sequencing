@@ -15,7 +15,7 @@ mandatory(c) .
 
 primitive(d) . 
 description(d, "Travel of attack engine crew to 911 address") .
-delegate(d, 3, ae_crew) :- deploy(d) . 
+delegate(d, 1, ae_crew) :- deploy(d) . 
 mandatory(d) .
 
 primitive(e) . 
@@ -25,7 +25,7 @@ mandatory(e) .
 
 primitive(f) . 
 description(f, "Travel of ladder tower crew to 911 address") .
-delegate(f, 2, lt_crew) :- deploy(f) . 
+delegate(f, 1, lt_crew) :- deploy(f) . 
 mandatory(f) .
 
 primitive(g) . 
