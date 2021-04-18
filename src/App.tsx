@@ -409,17 +409,13 @@ const App = () => {
           data={tableData[currentProcedure]}
           cellEditable={{
             cellStyle: {},
-            onCellEditApproved: (newValue, oldValue: any) => {
+            onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
               return new Promise((resolve: any, reject) => {
                 setTimeout(() => {
+                  console.log(rowData);
+                  console.log(columnDef);
                   const dataUpdate = [...tableData[currentProcedure]];
-                  const index = oldValue.tableData.id;
-                  dataUpdate[index] = newValue;
-                  setTableData({
-                    ...tableData,
-                    [currentProcedure]: [...dataUpdate],
-                  });
-
+                  dataUpdate[rowData.tableData.id][columnDef.field!] = newValue;
                   resolve();
                 }, 1000);
               });
