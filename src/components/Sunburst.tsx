@@ -1,4 +1,4 @@
-import React, { useSate } from "react";
+import React, { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsSunburst from "highcharts/modules/sunburst";
 import HighchartsReact from "highcharts-react-official";

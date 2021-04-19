@@ -1,25 +1,60 @@
 import { combineReducers } from "redux";
+import initialState from "./utils/initialState";
 
-const initialState = {
-  procedures: [
-    "EA fire",
-    "Car fires",
-    "Mulch/Compost fires",
-    "Aircraft emergencies",
-    "Brush and Wildland fires",
-  ],
-};
-
-const loggedReducer = (state = false, action: any) => {
+const proceduresReducer = (state = initialState.procedures, action: any) => {
   switch (action.type) {
-    case "SIGN_IN":
-      return !state;
+    case "ADD_PROCEDURE":
+      return {
+        ...state,
+        procedures: [...state, action.payload],
+      };
+    case "DELETE_PROCEDURE": //NOT IMPLEMENTED
+      return {
+        ...state,
+        procedures: [...state, action.payload],
+      };
+    case "UPDATE_PROCEDURE": //NOT IMPLEMENTED
+      return {
+        ...state,
+        procedures: [...state, action.payload],
+      };
     default:
       return state;
   }
 };
 
-const toggleSidebar = (state: boolean = false, action: any) => {
+const currentProcedureReducer = (
+  state: string = initialState.procedures[0],
+  action: any
+) => {
+  switch (action.type) {
+    case "SET_CURRENT_PROCEDURE":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const tableDataReducer = (state: any = initialState.tableData, action: any) => {
+  switch (action.type) {
+    case "ADD_PROCEDURE":
+      return action.payload;
+    case "DELETE_PROCEDURE": //NOT IMPLEMENTED
+      return {
+        ...state,
+        tableData: [...state, action.payload],
+      };
+    case "UPDATE_PROCEDURE": //NOT IMPLEMENTED
+      return {
+        ...state,
+        tableData: [...state, action.payload],
+      };
+    default:
+      return state;
+  }
+};
+
+const showSidebarReducer = (state: boolean = false, action: any) => {
   switch (action.type) {
     case "TOGGLE_SIDEBAR":
       return !state;
@@ -28,7 +63,7 @@ const toggleSidebar = (state: boolean = false, action: any) => {
   }
 };
 
-const toggleDialog = (state: boolean = false, action: any) => {
+const showDialogReducer = (state: boolean = false, action: any) => {
   switch (action.type) {
     case "TOGGLE_DIALOG":
       return !state;
@@ -37,20 +72,22 @@ const toggleDialog = (state: boolean = false, action: any) => {
   }
 };
 
-const counterReducer = (state = 0, action: any) => {
+const showProceduresReducer = (state: boolean = false, action: any) => {
   switch (action.type) {
-    case "INCREMENT":
-      return state + 1;
-    case "DECREMENT":
-      return state - 1;
+    case "TOGGLE_PROCEDURES":
+      return !state;
     default:
       return state;
   }
 };
 
 const allReducers = combineReducers({
-  sidebar: toggleSidebar,
-  dialog: toggleDialog,
+  showSidebar: showSidebarReducer,
+  showDialog: showDialogReducer,
+  showProcedures: showProceduresReducer,
+  procedures: proceduresReducer,
+  currentProcedure: currentProcedureReducer,
+  tableData: tableDataReducer,
 });
 
 export default allReducers;

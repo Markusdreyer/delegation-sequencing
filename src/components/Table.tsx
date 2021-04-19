@@ -1,11 +1,72 @@
-import React from "react";
+import React, { useState } from "react";
 import MaterialTable from "material-table";
+import { useSelector, useDispatch } from "react-redux";
+import { addTableData } from "../actions";
 
 interface Props {
   data: any;
 }
 
 const Table: React.FC<Props> = (props) => {
+  const currentProcedure = useSelector((state: any) => state.currentProcedure);
+  const tableData = useSelector((state: any) => state.tableData);
+
+  const dispatch = useDispatch();
+
+  const [columns, setColumns]: any = useState([
+    { title: "Action", field: "action" },
+    {
+      title: "Agents",
+      field: "agents",
+    },
+    {
+      title: "Quantity",
+      field: "quantity",
+    },
+    {
+      title: "Abbreviation",
+      field: "abbreviation",
+      lookup: {
+        a: "a",
+        b: "b",
+        c: "c",
+        d: "d",
+        e: "e",
+        f: "f",
+        g: "g",
+        h: "h",
+        i: "i",
+        j: "j",
+        k: "k",
+        l: "l",
+        m: "m",
+        n: "n",
+      },
+    },
+
+    {
+      title: "Precedence",
+      field: "precedence",
+      lookup: {
+        None: "None",
+        a: "a",
+        b: "b",
+        c: "c",
+        d: "d",
+        e: "e",
+        f: "f",
+        g: "g",
+        h: "h",
+        i: "i",
+        j: "j",
+        k: "k",
+        l: "l",
+        m: "m",
+        n: "n",
+      },
+    },
+  ]);
+
   const { data } = props;
   return (
     <MaterialTable
@@ -32,10 +93,12 @@ const Table: React.FC<Props> = (props) => {
             setTimeout(() => {
               const dataUpdate = [...tableData[currentProcedure]];
               dataUpdate.push(newData);
-              setTableData({
-                ...tableData,
-                [currentProcedure]: [...dataUpdate],
-              });
+              dispatch(
+                addTableData({
+                  ...tableData,
+                  [currentProcedure]: [...dataUpdate],
+                })
+              );
 
               resolve();
             }, 1000);
@@ -46,10 +109,12 @@ const Table: React.FC<Props> = (props) => {
               const dataUpdate = [...tableData[currentProcedure]];
               const index = oldData.tableData.id;
               dataUpdate[index] = newData;
-              setTableData({
-                ...tableData,
-                [currentProcedure]: [...dataUpdate],
-              });
+              dispatch(
+                addTableData({
+                  ...tableData,
+                  [currentProcedure]: [...dataUpdate],
+                })
+              );
 
               resolve();
             }, 1000);
@@ -60,10 +125,12 @@ const Table: React.FC<Props> = (props) => {
               const dataDelete = [...tableData[currentProcedure]];
               const index = oldData.tableData.id;
               dataDelete.splice(index, 1);
-              setTableData({
-                ...tableData,
-                [currentProcedure]: [...dataDelete],
-              });
+              dispatch(
+                addTableData({
+                  ...tableData,
+                  [currentProcedure]: [...dataDelete],
+                })
+              );
 
               resolve();
             }, 1000);

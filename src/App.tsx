@@ -41,7 +41,8 @@ import clsx from "clsx";
 import { sunburstMockData, tableMockData } from "./utils/mockData";
 import { TableData } from "./types";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleSidebar, toggleDialog } from "./actions";
+import { addProcedure, toggleDialog } from "./actions";
+import Sidebar from "./components/Sidebar";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) =>
@@ -107,6 +108,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const App = () => {
   const sidebar = useSelector((state: any) => state.sidebar);
+  const procedures = useSelector((state: any) => state.procedures);
   const dialog = useSelector((state: any) => state.dialog);
 
   const dispatch = useDispatch();
@@ -118,59 +120,6 @@ const App = () => {
   const [newProcedure, setNewProcedure] = useState("");
   const [tableData, setTableData]: any = useState(tableMockData);
 
-  const [columns, setColumns]: any = useState([
-    { title: "Action", field: "action" },
-    {
-      title: "Agents",
-      field: "agents",
-    },
-    {
-      title: "Quantity",
-      field: "quantity",
-    },
-    {
-      title: "Abbreviation",
-      field: "abbreviation",
-      lookup: {
-        a: "a",
-        b: "b",
-        c: "c",
-        d: "d",
-        e: "e",
-        f: "f",
-        g: "g",
-        h: "h",
-        i: "i",
-        j: "j",
-        k: "k",
-        l: "l",
-        m: "m",
-        n: "n",
-      },
-    },
-
-    {
-      title: "Precedence",
-      field: "precedence",
-      lookup: {
-        None: "None",
-        a: "a",
-        b: "b",
-        c: "c",
-        d: "d",
-        e: "e",
-        f: "f",
-        g: "g",
-        h: "h",
-        i: "i",
-        j: "j",
-        k: "k",
-        l: "l",
-        m: "m",
-        n: "n",
-      },
-    },
-  ]);
   const [currentProcedure, setCurrentProcedure] = useState(procedures[0]);
 
   const createNewProcedure = () => {
@@ -178,7 +127,7 @@ const App = () => {
       ...tableData,
       [newProcedure]: [],
     });
-    setProcedures([...procedures, newProcedure]);
+    dispatch(addProcedure(newProcedure));
     setCurrentProcedure(newProcedure);
     dispatch(toggleDialog());
     console.log(procedures);
@@ -235,6 +184,7 @@ const App = () => {
 
   return (
     <div className={classes.root}>
+      <Sidebar />
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: sidebar,
