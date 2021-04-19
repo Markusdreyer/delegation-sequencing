@@ -3,11 +3,7 @@ import MaterialTable from "material-table";
 import { useSelector, useDispatch } from "react-redux";
 import { addTableData } from "../actions";
 
-interface Props {
-  data: any;
-}
-
-const Table: React.FC<Props> = (props) => {
+const Table = () => {
   const currentProcedure = useSelector((state: any) => state.currentProcedure);
   const tableData = useSelector((state: any) => state.tableData);
 
@@ -67,7 +63,6 @@ const Table: React.FC<Props> = (props) => {
     },
   ]);
 
-  const { data } = props;
   return (
     <MaterialTable
       title={currentProcedure}

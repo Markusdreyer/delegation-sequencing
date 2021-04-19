@@ -43,6 +43,7 @@ import { TableData } from "./types";
 import { useSelector, useDispatch } from "react-redux";
 import { addProcedure, toggleDialog } from "./actions";
 import Sidebar from "./components/Sidebar";
+import Table from "./components/Table";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) =>
@@ -107,9 +108,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const App = () => {
-  const sidebar = useSelector((state: any) => state.sidebar);
+  const showSidebar = useSelector((state: any) => state.showSidebar);
+  const showDialog = useSelector((state: any) => state.showDialog);
   const procedures = useSelector((state: any) => state.procedures);
-  const dialog = useSelector((state: any) => state.dialog);
 
   const dispatch = useDispatch();
 
@@ -187,12 +188,12 @@ const App = () => {
       <Sidebar />
       <main
         className={clsx(classes.content, {
-          [classes.contentShift]: sidebar,
+          [classes.contentShift]: showSidebar,
         })}
       >
         <div className={classes.drawerHeader} />
         <Dialog
-          open={dialog}
+          open={showDialog}
           onClose={() => dispatch(toggleDialog())}
           aria-labelledby="form-dialog-title"
         >
@@ -221,7 +222,7 @@ const App = () => {
             </Button>
           </DialogActions>
         </Dialog>
-
+        <Table />
         <Sunburst data={sunburstData} />
         <div className="center padding-l">
           <Button
