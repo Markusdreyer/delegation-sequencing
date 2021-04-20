@@ -1,28 +1,17 @@
-export const setCurrentProcedure = (currentProcedure: any) => {
+export const setCurrentProcedure = (procedure: string) => {
   return {
     type: "SET_CURRENT_PROCEDURE",
-    payload: currentProcedure,
+    payload: procedure,
   };
 };
 
-export const addTableData = (tableData: any) => {
+export const setTableData = (procedure: string, data: any) => {
   return {
-    type: "ADD_TABLE_DATA",
-    payload: tableData,
-  };
-};
-
-export const deleteTableData = (tableData: any) => {
-  return {
-    type: "DELETE_TABLE_DATA",
-    payload: tableData,
-  };
-};
-
-export const updateTableData = (tableData: any) => {
-  return {
-    type: "UPDATE_TABLE_DATA",
-    payload: tableData,
+    type: "SET_TABLE_DATA",
+    payload: {
+      procedure,
+      data,
+    },
   };
 };
 
@@ -53,9 +42,14 @@ export const toggleSidebar = () => {
   };
 };
 
-export const toggleDialog = () => {
+export const toggleDialog = (show: boolean, title?: string, label?: string) => {
   return {
     type: "TOGGLE_DIALOG",
+    payload: {
+      show,
+      title,
+      label,
+    },
   };
 };
 

@@ -1,4 +1,9 @@
 const initialState = {
+  dialog: {
+    show: false,
+    title: "",
+    label: "",
+  },
   procedures: [
     "EA fire",
     "Car fires",

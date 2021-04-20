@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import MaterialTable from "material-table";
 import { useSelector, useDispatch } from "react-redux";
-import { addTableData } from "../actions";
+import { setTableData } from "../actions";
 
 const Table = () => {
   const currentProcedure = useSelector((state: any) => state.currentProcedure);
@@ -88,13 +88,7 @@ const Table = () => {
             setTimeout(() => {
               const dataUpdate = [...tableData[currentProcedure]];
               dataUpdate.push(newData);
-              dispatch(
-                addTableData({
-                  ...tableData,
-                  [currentProcedure]: [...dataUpdate],
-                })
-              );
-
+              dispatch(setTableData(currentProcedure, dataUpdate));
               resolve();
             }, 1000);
           }),
@@ -104,12 +98,7 @@ const Table = () => {
               const dataUpdate = [...tableData[currentProcedure]];
               const index = oldData.tableData.id;
               dataUpdate[index] = newData;
-              dispatch(
-                addTableData({
-                  ...tableData,
-                  [currentProcedure]: [...dataUpdate],
-                })
-              );
+              dispatch(setTableData(currentProcedure, dataUpdate));
 
               resolve();
             }, 1000);
@@ -120,13 +109,7 @@ const Table = () => {
               const dataDelete = [...tableData[currentProcedure]];
               const index = oldData.tableData.id;
               dataDelete.splice(index, 1);
-              dispatch(
-                addTableData({
-                  ...tableData,
-                  [currentProcedure]: [...dataDelete],
-                })
-              );
-
+              dispatch(setTableData(currentProcedure, dataDelete));
               resolve();
             }, 1000);
           }),

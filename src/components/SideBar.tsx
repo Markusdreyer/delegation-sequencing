@@ -42,7 +42,7 @@ import {
 const Sidebar = () => {
   const showSidebar = useSelector((state: any) => state.showSidebar);
   const showProcedures = useSelector((state: any) => state.showProcedures);
-  const showDialog = useSelector((state: any) => state.showDialog);
+  const dialog = useSelector((state: any) => state.dialog);
   const procedures = useSelector((state: any) => state.procedures);
 
   const [displayDrawer, setDisplayDrawer] = useState(false);
@@ -143,7 +143,11 @@ const Sidebar = () => {
           </ListItemIcon>
           <ListItemText
             primary={"New procedure"}
-            onClick={() => dispatch(toggleDialog())}
+            onClick={() =>
+              dispatch(
+                toggleDialog(true, "Create new procedure", "Name of procedure")
+              )
+            }
           />
         </ListItem>
         <ListItem button>
@@ -152,7 +156,11 @@ const Sidebar = () => {
           </ListItemIcon>
           <ListItemText
             primary={"New Taxonomy"}
-            onClick={() => dispatch(toggleDialog())}
+            onClick={() =>
+              dispatch(
+                toggleDialog(true, "Create new taxonomy", "Name of taxonomy")
+              )
+            }
           />
         </ListItem>
         <Divider />

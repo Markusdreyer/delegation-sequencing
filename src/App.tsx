@@ -41,7 +41,12 @@ import clsx from "clsx";
 import { sunburstMockData, tableMockData } from "./utils/mockData";
 import { TableData } from "./types";
 import { useSelector, useDispatch } from "react-redux";
-import { addProcedure, toggleDialog } from "./actions";
+import {
+  setTableData,
+  setCurrentProcedure,
+  addProcedure,
+  toggleDialog,
+} from "./actions";
 import Sidebar from "./components/Sidebar";
 import Table from "./components/Table";
 
@@ -109,8 +114,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const App = () => {
   const showSidebar = useSelector((state: any) => state.showSidebar);
-  const showDialog = useSelector((state: any) => state.showDialog);
+  const dialog = useSelector((state: any) => state.dialog);
   const procedures = useSelector((state: any) => state.procedures);
+  const currentProcedure = useSelector((state: any) => state.currentProcedure);
+  const tableData = useSelector((state: any) => state.tableData);
 
   const dispatch = useDispatch();
 
@@ -119,20 +126,12 @@ const App = () => {
   const [sunburstData, setSunburstData] = useState(sunburstMockData);
 
   const [newProcedure, setNewProcedure] = useState("");
-  const [tableData, setTableData]: any = useState(tableMockData);
-
-  const [currentProcedure, setCurrentProcedure] = useState(procedures[0]);
 
   const createNewProcedure = () => {
-    setTableData({
-      ...tableData,
-      [newProcedure]: [],
-    });
+    dispatch(setTableData(newProcedure, []));
     dispatch(addProcedure(newProcedure));
-    setCurrentProcedure(newProcedure);
-    dispatch(toggleDialog());
-    console.log(procedures);
-    console.log(tableData);
+    dispatch(setCurrentProcedure(newProcedure));
+    dispatch(toggleDialog(false));
   };
 
   const generateSunburst = () => {
@@ -193,24 +192,27 @@ const App = () => {
       >
         <div className={classes.drawerHeader} />
         <Dialog
-          open={showDialog}
-          onClose={() => dispatch(toggleDialog())}
+          open={dialog.show}
+          onClose={() => dispatch(toggleDialog(true, "some", "thing"))}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Create new procedure</DialogTitle>
+          <DialogTitle id="form-dialog-title">{dialog.title}</DialogTitle>
           <DialogContent>
             <TextField
               onChange={(e) => setNewProcedure(e.target.value)}
               autoFocus
               margin="dense"
               id="name"
-              label="Name of procedure"
+              label={dialog.label}
               type="text"
               fullWidth
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => dispatch(toggleDialog())} color="primary">
+            <Button
+              onClick={() => dispatch(toggleDialog(false))}
+              color="primary"
+            >
               Cancel
             </Button>
             <Button

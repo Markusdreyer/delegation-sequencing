@@ -4,10 +4,7 @@ import initialState from "./utils/initialState";
 const proceduresReducer = (state = initialState.procedures, action: any) => {
   switch (action.type) {
     case "ADD_PROCEDURE":
-      return {
-        ...state,
-        procedures: [...state, action.payload],
-      };
+      return [...state, action.payload];
     case "DELETE_PROCEDURE": //NOT IMPLEMENTED
       return {
         ...state,
@@ -37,17 +34,10 @@ const currentProcedureReducer = (
 
 const tableDataReducer = (state: any = initialState.tableData, action: any) => {
   switch (action.type) {
-    case "ADD_PROCEDURE":
-      return action.payload;
-    case "DELETE_PROCEDURE": //NOT IMPLEMENTED
+    case "SET_TABLE_DATA":
       return {
         ...state,
-        tableData: [...state, action.payload],
-      };
-    case "UPDATE_PROCEDURE": //NOT IMPLEMENTED
-      return {
-        ...state,
-        tableData: [...state, action.payload],
+        [action.payload.procedure]: [...action.payload.data],
       };
     default:
       return state;
@@ -63,10 +53,14 @@ const showSidebarReducer = (state: boolean = false, action: any) => {
   }
 };
 
-const showDialogReducer = (state: boolean = false, action: any) => {
+const dialogReducer = (state = initialState.dialog, action: any) => {
   switch (action.type) {
     case "TOGGLE_DIALOG":
-      return !state;
+      return {
+        show: !state.show,
+        title: action.payload.title,
+        label: action.payload.label,
+      };
     default:
       return state;
   }
@@ -83,8 +77,8 @@ const showProceduresReducer = (state: boolean = false, action: any) => {
 
 const allReducers = combineReducers({
   showSidebar: showSidebarReducer,
-  showDialog: showDialogReducer,
   showProcedures: showProceduresReducer,
+  dialog: dialogReducer,
   procedures: proceduresReducer,
   currentProcedure: currentProcedureReducer,
   tableData: tableDataReducer,
