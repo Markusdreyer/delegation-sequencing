@@ -28,7 +28,7 @@ import {
   toggleSidebar,
   toggleDialog,
   toggleProcedures,
-  setCurrentProcedure,
+  setTableMeta,
   addProcedure,
 } from "../actions";
 import useStyles from "../Styles";
@@ -126,7 +126,7 @@ const Sidebar = () => {
                 </ListItemIcon>
                 <ListItemText
                   primary={text}
-                  onClick={() => dispatch(setCurrentProcedure(text))}
+                  onClick={() => dispatch(setTableMeta("procedure", text))}
                 />
               </ListItem>
             ))}

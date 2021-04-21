@@ -1,9 +1,12 @@
 import { TableData } from "./types";
 
-export const setCurrentProcedure = (procedure: string) => {
+export const setTableMeta = (type: string, key: string) => {
   return {
-    type: "SET_CURRENT_PROCEDURE",
-    payload: procedure,
+    type: "SET_TABLE_META",
+    payload: {
+      type,
+      key,
+    },
   };
 };
 

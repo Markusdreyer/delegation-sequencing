@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { TableMeta } from "./types";
 import initialState from "./utils/initialState";
 
 const proceduresReducer = (state = initialState.procedures, action: any) => {
@@ -10,13 +11,16 @@ const proceduresReducer = (state = initialState.procedures, action: any) => {
   }
 };
 
-const currentProcedureReducer = (
-  state: string = initialState.procedures[0],
+const tableMetaReducer = (
+  state: TableMeta = { type: "procedure", key: initialState.procedures[0] },
   action: any
 ) => {
   switch (action.type) {
-    case "SET_CURRENT_PROCEDURE":
-      return action.payload;
+    case "SET_TABLE_META":
+      return {
+        type: action.payload.type,
+        key: action.payload.key,
+      };
     default:
       return state;
   }
@@ -70,7 +74,7 @@ const allReducers = combineReducers({
   showProcedures: showProceduresReducer,
   dialog: dialogReducer,
   procedures: proceduresReducer,
-  currentProcedure: currentProcedureReducer,
+  tableMeta: tableMetaReducer,
   tableData: tableDataReducer,
 });
 

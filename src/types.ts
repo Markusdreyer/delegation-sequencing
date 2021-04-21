@@ -2,11 +2,16 @@ export interface State {
   showSidebar: boolean;
   showProcedures: boolean;
   dialog: Dialog;
-  currentProcedure: string;
+  tableMeta: TableMeta;
   tableData: {
     [key: string]: TableData[];
   };
   sunburstData: SunburstData[];
+}
+
+export interface TableMeta {
+  type: string;
+  key: string;
 }
 
 export interface Dialog {
