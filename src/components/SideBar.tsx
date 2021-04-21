@@ -151,7 +151,7 @@ const Sidebar = () => {
                 </ListItemIcon>
                 <ListItemText
                   primary={text}
-                  onClick={() => dispatch(addProcedure(text))}
+                  onClick={() => dispatch(setTableMeta("taxonomy", text))}
                 />
               </ListItem>
             ))}
