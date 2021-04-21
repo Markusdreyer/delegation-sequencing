@@ -1,44 +1,18 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import {
-  Divider,
-  Toolbar,
-  AppBar,
-  Drawer,
-  ListItem,
-  List,
-  ListItemIcon,
-  IconButton,
-  ListItemText,
   Dialog,
   DialogTitle,
   DialogContent,
   TextField,
   DialogActions,
   Button,
-  Collapse,
 } from "@material-ui/core";
-import {
-  Add,
-  Description,
-  ChevronLeft,
-  ChevronRight,
-  Menu,
-  Assignment,
-  ExpandLess,
-  ExpandMore,
-  AccountTree,
-} from "@material-ui/icons";
-import {
-  makeStyles,
-  useTheme,
-  Theme,
-  createStyles,
-} from "@material-ui/core/styles";
+
 import Sunburst from "./components/Sunburst";
 import clsx from "clsx";
 
-import { sunburstMockData, tableMockData } from "./utils/mockData";
+import { sunburstMockData } from "./utils/mockData";
 import { TableData } from "./types";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -49,80 +23,17 @@ import {
 } from "./actions";
 import Sidebar from "./components/Sidebar";
 import Table from "./components/Table";
-
-const drawerWidth = 240;
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      display: "flex",
-    },
-    appBar: {
-      transition: theme.transitions.create(["margin", "width"], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-    },
-    appBarShift: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-      transition: theme.transitions.create(["margin", "width"], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    hide: {
-      display: "none",
-    },
-    drawer: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
-    drawerPaper: {
-      width: drawerWidth,
-    },
-    drawerHeader: {
-      display: "flex",
-      alignItems: "center",
-      padding: theme.spacing(0, 1),
-      // necessary for content to be below app bar
-      ...theme.mixins.toolbar,
-      justifyContent: "flex-end",
-    },
-    content: {
-      flexGrow: 1,
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      marginLeft: -drawerWidth,
-    },
-    contentShift: {
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    },
-    nested: {
-      paddingLeft: theme.spacing(4),
-    },
-  })
-);
+import useStyles from "./Styles";
 
 const App = () => {
   const showSidebar = useSelector((state: any) => state.showSidebar);
   const dialog = useSelector((state: any) => state.dialog);
-  const procedures = useSelector((state: any) => state.procedures);
   const currentProcedure = useSelector((state: any) => state.currentProcedure);
   const tableData = useSelector((state: any) => state.tableData);
 
   const dispatch = useDispatch();
 
   const classes = useStyles();
-  const theme = useTheme();
   const [sunburstData, setSunburstData] = useState(sunburstMockData);
 
   const [newProcedure, setNewProcedure] = useState("");

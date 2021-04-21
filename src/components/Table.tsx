@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import MaterialTable from "material-table";
 import { useSelector, useDispatch } from "react-redux";
 import { setTableData } from "../actions";

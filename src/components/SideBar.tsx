@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Divider,
   Drawer,
@@ -15,19 +15,12 @@ import {
   Add,
   Description,
   ChevronLeft,
-  ChevronRight,
   Assignment,
   ExpandLess,
   ExpandMore,
   Menu,
   AccountTree,
 } from "@material-ui/icons";
-import {
-  makeStyles,
-  useTheme,
-  Theme,
-  createStyles,
-} from "@material-ui/core/styles";
 import clsx from "clsx";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -38,17 +31,14 @@ import {
   setCurrentProcedure,
   addProcedure,
 } from "../actions";
+import useStyles from "../Styles";
 
 const Sidebar = () => {
   const showSidebar = useSelector((state: any) => state.showSidebar);
   const showProcedures = useSelector((state: any) => state.showProcedures);
-  const dialog = useSelector((state: any) => state.dialog);
   const procedures = useSelector((state: any) => state.procedures);
 
-  const [displayDrawer, setDisplayDrawer] = useState(false);
-
   const dispatch = useDispatch();
-  const [displayProcedures, setDisplayProcedures] = useState(false);
   const [displayTaxonomies, setDisplayTaxonomies] = useState(false);
   const [taxonomies, setTaxonomies]: any = useState([
     "Land fire incidents",
@@ -56,50 +46,6 @@ const Sidebar = () => {
     "Terror incidents",
   ]);
 
-  const drawerWidth = 240;
-  const theme = useTheme();
-  const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-      appBar: {
-        transition: theme.transitions.create(["margin", "width"], {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-      },
-      appBarShift: {
-        width: `calc(100% - ${drawerWidth}px)`,
-        marginLeft: drawerWidth,
-        transition: theme.transitions.create(["margin", "width"], {
-          easing: theme.transitions.easing.easeOut,
-          duration: theme.transitions.duration.enteringScreen,
-        }),
-      },
-      menuButton: {
-        marginRight: theme.spacing(2),
-      },
-      hide: {
-        display: "none",
-      },
-      drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
-      },
-      drawerPaper: {
-        width: drawerWidth,
-      },
-      drawerHeader: {
-        display: "flex",
-        alignItems: "center",
-        padding: theme.spacing(0, 1),
-        // necessary for content to be below app bar
-        ...theme.mixins.toolbar,
-        justifyContent: "flex-end",
-      },
-      nested: {
-        paddingLeft: theme.spacing(4),
-      },
-    })
-  );
   const classes = useStyles();
 
   return (
@@ -134,7 +80,7 @@ const Sidebar = () => {
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={() => dispatch(toggleSidebar())}>
-            {theme.direction === "ltr" ? <ChevronLeft /> : <ChevronRight />}
+            <ChevronLeft />
           </IconButton>
         </div>
         <ListItem button>
