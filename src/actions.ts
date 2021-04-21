@@ -1,3 +1,5 @@
+import { TableData } from "./types";
+
 export const setCurrentProcedure = (procedure: string) => {
   return {
     type: "SET_CURRENT_PROCEDURE",
@@ -5,7 +7,7 @@ export const setCurrentProcedure = (procedure: string) => {
   };
 };
 
-export const setTableData = (procedure: string, data: any) => {
+export const setTableData = (procedure: string, data?: TableData[]) => {
   return {
     type: "SET_TABLE_DATA",
     payload: {
@@ -15,23 +17,9 @@ export const setTableData = (procedure: string, data: any) => {
   };
 };
 
-export const addProcedure = (procedure: any) => {
+export const addProcedure = (procedure: string) => {
   return {
     type: "ADD_PROCEDURE",
-    payload: procedure,
-  };
-};
-
-export const deleteProcedure = (procedure: any) => {
-  return {
-    type: "DELETE_PROCEDURE",
-    payload: procedure,
-  };
-};
-
-export const updateProcedure = (procedure: any) => {
-  return {
-    type: "UPDATE_PROCEDURE",
     payload: procedure,
   };
 };

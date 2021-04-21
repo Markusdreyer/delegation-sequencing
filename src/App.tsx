@@ -13,7 +13,7 @@ import Sunburst from "./components/Sunburst";
 import clsx from "clsx";
 
 import { sunburstMockData } from "./utils/mockData";
-import { TableData } from "./types";
+import { State, TableData } from "./types";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setTableData,
@@ -26,10 +26,12 @@ import Table from "./components/Table";
 import useStyles from "./Styles";
 
 const App = () => {
-  const showSidebar = useSelector((state: any) => state.showSidebar);
-  const dialog = useSelector((state: any) => state.dialog);
-  const currentProcedure = useSelector((state: any) => state.currentProcedure);
-  const tableData = useSelector((state: any) => state.tableData);
+  const showSidebar = useSelector((state: State) => state.showSidebar);
+  const dialog = useSelector((state: State) => state.dialog);
+  const currentProcedure = useSelector(
+    (state: State) => state.currentProcedure
+  );
+  const tableData = useSelector((state: State) => state.tableData);
 
   const dispatch = useDispatch();
 
@@ -39,7 +41,7 @@ const App = () => {
   const [newProcedure, setNewProcedure] = useState("");
 
   const createNewProcedure = () => {
-    dispatch(setTableData(newProcedure, []));
+    dispatch(setTableData(newProcedure));
     dispatch(addProcedure(newProcedure));
     dispatch(setCurrentProcedure(newProcedure));
     dispatch(toggleDialog(false));
@@ -66,6 +68,8 @@ const App = () => {
         const abbreviation = expedite[1];
         const agent = expedite[2];
         const time = expedite[3];
+
+        // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
         const actionLookup = tableData[currentProcedure].find(
           (el: TableData) => el.abbreviation === abbreviation
         ).action;

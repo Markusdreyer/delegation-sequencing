@@ -2,10 +2,13 @@ import { useState } from "react";
 import MaterialTable from "material-table";
 import { useSelector, useDispatch } from "react-redux";
 import { setTableData } from "../actions";
+import { State } from "../types";
 
 const Table = () => {
-  const currentProcedure = useSelector((state: any) => state.currentProcedure);
-  const tableData = useSelector((state: any) => state.tableData);
+  const currentProcedure = useSelector(
+    (state: State) => state.currentProcedure
+  );
+  const tableData = useSelector((state: State) => state.tableData);
 
   const dispatch = useDispatch();
 
@@ -70,12 +73,10 @@ const Table = () => {
       data={tableData[currentProcedure]}
       cellEditable={{
         cellStyle: {},
-        onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
+        onCellEditApproved: (newValue, oldValue, rowData: any, columnDef) => {
           return new Promise((resolve: any, reject) => {
             setTimeout(() => {
-              console.log(rowData);
-              console.log(columnDef);
-              const dataUpdate = [...tableData[currentProcedure]];
+              const dataUpdate = [...tableData[currentProcedure]] as any; //This is pretty weird, but it works
               dataUpdate[rowData.tableData.id][columnDef.field!] = newValue;
               resolve();
             }, 1000);

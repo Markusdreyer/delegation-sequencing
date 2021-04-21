@@ -5,16 +5,6 @@ const proceduresReducer = (state = initialState.procedures, action: any) => {
   switch (action.type) {
     case "ADD_PROCEDURE":
       return [...state, action.payload];
-    case "DELETE_PROCEDURE": //NOT IMPLEMENTED
-      return {
-        ...state,
-        procedures: [...state, action.payload],
-      };
-    case "UPDATE_PROCEDURE": //NOT IMPLEMENTED
-      return {
-        ...state,
-        procedures: [...state, action.payload],
-      };
     default:
       return state;
   }
