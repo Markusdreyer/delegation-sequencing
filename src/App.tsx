@@ -16,7 +16,7 @@ import { sunburstMockData } from "./utils/mockData";
 import { ProcedureData, State, TableData, TaxonomyData } from "./types";
 import { useSelector, useDispatch } from "react-redux";
 import { renderTable, setProcedure, toggleDialog } from "./actions";
-import Sidebar from "./components/Sidebar";
+import Sidebar from "./components/SideBar";
 import Table from "./components/Table";
 import useStyles from "./Styles";
 import { tableTypes } from "./utils/const";
@@ -25,6 +25,7 @@ import initialState from "./utils/initialState";
 const App = () => {
   const showSidebar = useSelector((state: State) => state.showSidebar);
   const tableData = useSelector((state: State) => state.tableData);
+  const procedures = useSelector((state: State) => state.procedures);
   const dialog = useSelector((state: State) => state.dialog);
 
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ const App = () => {
   };
 
   const generateSunburst = () => {
-    const tableJSON = JSON.stringify(tableData.data);
+    const tableJSON = JSON.stringify(procedures[tableData.key]);
     axios({
       method: "post",
       url: "http://localhost:8000/asp-parser",
@@ -54,6 +55,13 @@ const App = () => {
       console.log(data);
       const [optimum] = data.Call[0].Witnesses.slice(-1);
       const optimumCost = optimum.Costs[0];
+
+      const top = data.Call[0].Witnesses.filter((el: any) => {
+        return el.Costs[0] === optimumCost;
+      });
+
+      console.log(top);
+
       let parsedActions: any = [];
       optimum.Value.map((el: any) => {
         const expedite = el.split(/[\(\)\s,]+/);
@@ -62,7 +70,7 @@ const App = () => {
         const time = expedite[3];
 
         // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
-        const actionLookup = tableData.data.find(
+        const actionLookup = procedures[tableData.key].find(
           (el: ProcedureData | TaxonomyData) => el.abbreviation === abbreviation
         ).action;
 

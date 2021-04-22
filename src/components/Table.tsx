@@ -22,18 +22,6 @@ const Table: React.FC<Props> = (props) => {
       title={title}
       columns={columns}
       data={data}
-      cellEditable={{
-        cellStyle: {},
-        onCellEditApproved: (newValue, oldValue, rowData: any, columnDef) => {
-          return new Promise((resolve: any, reject) => {
-            setTimeout(() => {
-              const dataUpdate = data as any;
-              dataUpdate[rowData.tableData.id!][columnDef.field!] = newValue;
-              resolve();
-            }, 1000);
-          });
-        },
-      }}
       editable={{
         onRowAdd: (newData) =>
           new Promise((resolve: any, reject) => {
