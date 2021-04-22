@@ -1,25 +1,12 @@
 import { combineReducers } from "redux";
-import { TableMeta } from "./types";
 import initialState from "./utils/initialState";
 
 const proceduresReducer = (state = initialState.procedures, action: any) => {
   switch (action.type) {
-    case "ADD_PROCEDURE":
-      return [...state, action.payload];
-    default:
-      return state;
-  }
-};
-
-const tableMetaReducer = (
-  state: TableMeta = { type: "procedure", key: initialState.procedures[0] },
-  action: any
-) => {
-  switch (action.type) {
-    case "SET_TABLE_META":
+    case "SET_PROCEDURE":
       return {
-        type: action.payload.type,
-        key: action.payload.key,
+        ...state,
+        [action.key]: [...action.procedure],
       };
     default:
       return state;
@@ -28,10 +15,22 @@ const tableMetaReducer = (
 
 const tableDataReducer = (state: any = initialState.tableData, action: any) => {
   switch (action.type) {
-    case "SET_TABLE_DATA":
+    case "SET_EXISTING_TABLE_DATA":
+      console.log("TYPE: ", action.payload.type);
+      console.log("KEY: ", action.payload.key);
+      console.log("state: ", state);
+      const contents = state[action.payload.type][action.payload.key];
       return {
         ...state,
-        [action.payload.procedure]: [...action.payload.data],
+        type: action.payload.type,
+        key: action.payload.key,
+        contents: contents,
+      };
+    case "SET_NEW_TABLE_DATA":
+      return {
+        type: action.payload.type,
+        key: action.payload.key,
+        contents: action.payload.data,
       };
     default:
       return state;
@@ -74,7 +73,6 @@ const allReducers = combineReducers({
   showProcedures: showProceduresReducer,
   dialog: dialogReducer,
   procedures: proceduresReducer,
-  tableMeta: tableMetaReducer,
   tableData: tableDataReducer,
 });
 

@@ -28,10 +28,11 @@ import {
   toggleSidebar,
   toggleDialog,
   toggleProcedures,
-  setTableMeta,
-  addProcedure,
+  setProcedure,
+  setTableData,
 } from "../actions";
 import useStyles from "../Styles";
+import { tableTypes } from "../utils/const";
 
 const Sidebar = () => {
   const showSidebar = useSelector((state: any) => state.showSidebar);
@@ -119,14 +120,16 @@ const Sidebar = () => {
         </ListItem>
         <Collapse in={showProcedures} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {procedures.map((text: string) => (
+            {Object.keys(procedures).map((text: string) => (
               <ListItem button className={classes.nested} key={text}>
                 <ListItemIcon>
                   <Description />
                 </ListItemIcon>
                 <ListItemText
                   primary={text}
-                  onClick={() => dispatch(setTableMeta("procedure", text))}
+                  onClick={() =>
+                    dispatch(setTableData(tableTypes.PROCEDURES, text))
+                  }
                 />
               </ListItem>
             ))}
@@ -151,7 +154,9 @@ const Sidebar = () => {
                 </ListItemIcon>
                 <ListItemText
                   primary={text}
-                  onClick={() => dispatch(setTableMeta("taxonomy", text))}
+                  onClick={() =>
+                    dispatch(setTableData(tableTypes.TAXONOMIES, text))
+                  }
                 />
               </ListItem>
             ))}

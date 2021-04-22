@@ -13,22 +13,17 @@ import Sunburst from "./components/Sunburst";
 import clsx from "clsx";
 
 import { sunburstMockData } from "./utils/mockData";
-import { State, TableData } from "./types";
+import { ProcedureData, State, TableData, TaxonomyData } from "./types";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  setTableData,
-  setTableMeta,
-  addProcedure,
-  toggleDialog,
-} from "./actions";
+import { setTableData, setProcedure, toggleDialog } from "./actions";
 import Sidebar from "./components/Sidebar";
 import Table from "./components/Table";
 import useStyles from "./Styles";
+import { tableTypes } from "./utils/const";
 
 const App = () => {
   const showSidebar = useSelector((state: State) => state.showSidebar);
   const dialog = useSelector((state: State) => state.dialog);
-  const tableMeta = useSelector((state: State) => state.tableMeta);
   const tableData = useSelector((state: State) => state.tableData);
 
   const dispatch = useDispatch();
@@ -39,14 +34,13 @@ const App = () => {
   const [newProcedure, setNewProcedure] = useState("");
 
   const createNewProcedure = () => {
-    dispatch(setTableData(newProcedure));
-    dispatch(addProcedure(newProcedure));
-    dispatch(setTableMeta("procedure", newProcedure));
+    dispatch(setTableData(tableTypes.PROCEDURES, newProcedure));
+    dispatch(setProcedure(newProcedure));
     dispatch(toggleDialog(false));
   };
 
   const generateSunburst = () => {
-    const tableJSON = JSON.stringify(tableData[tableMeta.key]);
+    const tableJSON = JSON.stringify(tableData.contents);
     axios({
       method: "post",
       url: "http://localhost:8000/asp-parser",
@@ -68,8 +62,8 @@ const App = () => {
         const time = expedite[3];
 
         // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
-        const actionLookup = tableData[tableMeta.key].find(
-          (el: TableData) => el.abbreviation === abbreviation
+        const actionLookup = tableData.contents.find(
+          (el: ProcedureData | TaxonomyData) => el.abbreviation === abbreviation
         ).action;
 
         const actionObject = {

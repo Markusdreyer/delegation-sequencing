@@ -6,7 +6,6 @@ import { State } from "../types";
 import { procedureColumns, taxonomyColumns } from "../utils/TableColumns";
 
 const Table = () => {
-  const tableMeta = useSelector((state: State) => state.tableMeta);
   const tableData = useSelector((state: State) => state.tableData);
 
   const dispatch = useDispatch();
@@ -15,16 +14,16 @@ const Table = () => {
 
   return (
     <MaterialTable
-      title={tableMeta.key}
+      title={tableData.key}
       columns={columns}
-      data={tableData[tableMeta.key]}
+      data={tableData.contents}
       cellEditable={{
         cellStyle: {},
         onCellEditApproved: (newValue, oldValue, rowData: any, columnDef) => {
           return new Promise((resolve: any, reject) => {
             setTimeout(() => {
-              const dataUpdate = [...tableData[tableMeta.key]] as any; //This is pretty weird, but it works
-              dataUpdate[rowData.tableData.id][columnDef.field!] = newValue;
+              const dataUpdate = tableData.contents as any;
+              dataUpdate[rowData.tableData.id!][columnDef.field!] = newValue;
               resolve();
             }, 1000);
           });
@@ -34,19 +33,19 @@ const Table = () => {
         onRowAdd: (newData) =>
           new Promise((resolve: any, reject) => {
             setTimeout(() => {
-              const dataUpdate = [...tableData[tableMeta.key]];
+              const dataUpdate = tableData.contents;
               dataUpdate.push(newData);
-              dispatch(setTableData(tableMeta.key, dataUpdate));
+              dispatch(setTableData(tableData.type, tableData.key, dataUpdate));
               resolve();
             }, 1000);
           }),
         onRowUpdate: (newData, oldData: any) =>
           new Promise((resolve: any, reject) => {
             setTimeout(() => {
-              const dataUpdate = [...tableData[tableMeta.key]];
+              const dataUpdate = tableData.contents;
               const index = oldData.tableData.id;
               dataUpdate[index] = newData;
-              dispatch(setTableData(tableMeta.key, dataUpdate));
+              dispatch(setTableData(tableData.type, tableData.key, dataUpdate));
 
               resolve();
             }, 1000);
@@ -54,10 +53,10 @@ const Table = () => {
         onRowDelete: (oldData: any) =>
           new Promise((resolve: any, reject) => {
             setTimeout(() => {
-              const dataDelete = [...tableData[tableMeta.key]];
+              const dataDelete = tableData.contents;
               const index = oldData.tableData.id;
               dataDelete.splice(index, 1);
-              dispatch(setTableData(tableMeta.key, dataDelete));
+              dispatch(setTableData(tableData.type, tableData.key, dataDelete));
               resolve();
             }, 1000);
           }),
