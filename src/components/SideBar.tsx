@@ -29,7 +29,7 @@ import {
   toggleDialog,
   toggleProcedures,
   setProcedure,
-  setTableData,
+  renderTable,
 } from "../actions";
 import useStyles from "../Styles";
 import { tableTypes } from "../utils/const";
@@ -128,7 +128,7 @@ const Sidebar = () => {
                 <ListItemText
                   primary={text}
                   onClick={() =>
-                    dispatch(setTableData(tableTypes.PROCEDURES, text))
+                    dispatch(renderTable(tableTypes.PROCEDURES, text))
                   }
                 />
               </ListItem>
@@ -154,9 +154,9 @@ const Sidebar = () => {
                 </ListItemIcon>
                 <ListItemText
                   primary={text}
-                  onClick={() =>
-                    dispatch(setTableData(tableTypes.TAXONOMIES, text))
-                  }
+                  //onClick={() =>
+                  //dispatch(setTableData(tableTypes.TAXONOMIES, text))
+                  //}
                 />
               </ListItem>
             ))}

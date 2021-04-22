@@ -3,13 +3,19 @@ export interface State {
   showProcedures: boolean;
   dialog: Dialog;
   tableData: TableData;
+  procedures: {
+    [key: string]: ProcedureData[];
+  };
+  taxonomies: {
+    [key: string]: TaxonomyData[];
+  };
   sunburstData: SunburstData[];
 }
 
 export interface TableData {
   type: string;
   key: string;
-  contents: ProcedureData[] | TaxonomyData[];
+  data?: ProcedureData[] | TaxonomyData[];
 }
 
 export interface ProcedureData {

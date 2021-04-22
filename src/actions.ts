@@ -1,28 +1,13 @@
-import { ProcedureData, TableData, TaxonomyData } from "./types";
+import { ProcedureData } from "./types";
 
-export const setTableData = (
-  type: string,
-  key: string,
-  data?: TableData[] | TaxonomyData[]
-) => {
-  if (!data) {
-    return {
-      type: "SET_EXISTING_TABLE_DATA",
-      payload: {
-        type,
-        key,
-      },
-    };
-  } else {
-    return {
-      type: "SET_NEW_TABLE_DATA",
-      payload: {
-        type,
-        key,
-        data,
-      },
-    };
-  }
+export const renderTable = (type: string, key: string) => {
+  return {
+    type: "RENDER_TABLE",
+    payload: {
+      type,
+      key,
+    },
+  };
 };
 
 export const setProcedure = (key: string, procedure?: ProcedureData[]) => {

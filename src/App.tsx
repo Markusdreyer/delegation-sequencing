@@ -15,32 +15,32 @@ import clsx from "clsx";
 import { sunburstMockData } from "./utils/mockData";
 import { ProcedureData, State, TableData, TaxonomyData } from "./types";
 import { useSelector, useDispatch } from "react-redux";
-import { setTableData, setProcedure, toggleDialog } from "./actions";
+import { renderTable, setProcedure, toggleDialog } from "./actions";
 import Sidebar from "./components/Sidebar";
 import Table from "./components/Table";
 import useStyles from "./Styles";
 import { tableTypes } from "./utils/const";
+import initialState from "./utils/initialState";
 
 const App = () => {
   const showSidebar = useSelector((state: State) => state.showSidebar);
-  const dialog = useSelector((state: State) => state.dialog);
   const tableData = useSelector((state: State) => state.tableData);
+  const dialog = useSelector((state: State) => state.dialog);
 
   const dispatch = useDispatch();
 
   const classes = useStyles();
   const [sunburstData, setSunburstData] = useState(sunburstMockData);
-
   const [newProcedure, setNewProcedure] = useState("");
 
   const createNewProcedure = () => {
-    dispatch(setTableData(tableTypes.PROCEDURES, newProcedure));
+    dispatch(renderTable(tableTypes.PROCEDURES, newProcedure));
     dispatch(setProcedure(newProcedure));
     dispatch(toggleDialog(false));
   };
 
   const generateSunburst = () => {
-    const tableJSON = JSON.stringify(tableData.contents);
+    const tableJSON = JSON.stringify(tableData.data);
     axios({
       method: "post",
       url: "http://localhost:8000/asp-parser",
@@ -62,7 +62,7 @@ const App = () => {
         const time = expedite[3];
 
         // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
-        const actionLookup = tableData.contents.find(
+        const actionLookup = tableData.data.find(
           (el: ProcedureData | TaxonomyData) => el.abbreviation === abbreviation
         ).action;
 
@@ -131,7 +131,7 @@ const App = () => {
             </Button>
           </DialogActions>
         </Dialog>
-        <Table />
+        <Table type={tableData.type} title={tableData.key} />
         <Sunburst data={sunburstData} />
         <div className="center padding-l">
           <Button

@@ -1,36 +1,27 @@
 import { combineReducers } from "redux";
 import initialState from "./utils/initialState";
 
-const proceduresReducer = (state = initialState.procedures, action: any) => {
+const tableReducer = (
+  state = { type: "procedures", key: "EA fire" },
+  action: any
+) => {
   switch (action.type) {
-    case "SET_PROCEDURE":
+    case "RENDER_TABLE":
       return {
-        ...state,
-        [action.key]: [...action.procedure],
+        type: action.payload.type,
+        key: action.payload.key,
       };
     default:
       return state;
   }
 };
 
-const tableDataReducer = (state: any = initialState.tableData, action: any) => {
+const proceduresReducer = (state = initialState.procedures, action: any) => {
   switch (action.type) {
-    case "SET_EXISTING_TABLE_DATA":
-      console.log("TYPE: ", action.payload.type);
-      console.log("KEY: ", action.payload.key);
-      console.log("state: ", state);
-      const contents = state[action.payload.type][action.payload.key];
+    case "SET_PROCEDURE":
       return {
         ...state,
-        type: action.payload.type,
-        key: action.payload.key,
-        contents: contents,
-      };
-    case "SET_NEW_TABLE_DATA":
-      return {
-        type: action.payload.type,
-        key: action.payload.key,
-        contents: action.payload.data,
+        [action.key]: [...action.procedure],
       };
     default:
       return state;
@@ -73,7 +64,7 @@ const allReducers = combineReducers({
   showProcedures: showProceduresReducer,
   dialog: dialogReducer,
   procedures: proceduresReducer,
-  tableData: tableDataReducer,
+  tableData: tableReducer,
 });
 
 export default allReducers;
