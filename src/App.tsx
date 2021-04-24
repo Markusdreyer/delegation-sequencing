@@ -13,6 +13,7 @@ import Sunburst from "./components/Sunburst";
 import clsx from "clsx";
 
 import { sunburstMockData } from "./utils/mockData";
+import { generateSunburstData } from "./utils/utils";
 import { ProcedureData, State, TableData, TaxonomyData } from "./types";
 import { useSelector, useDispatch } from "react-redux";
 import { renderTable, setProcedure, toggleDialog } from "./actions";
@@ -56,44 +57,44 @@ const App = () => {
       const [optimum] = data.Call[0].Witnesses.slice(-1);
       const optimumCost = optimum.Costs[0];
 
-      const top = data.Call[0].Witnesses.filter((el: any) => {
+      const optimumModels = data.Call[0].Witnesses.filter((el: any) => {
         return el.Costs[0] === optimumCost;
       });
 
-      console.log(top);
+      console.log(optimumModels);
 
-      let parsedActions: any = [];
-      optimum.Value.map((el: any) => {
-        const expedite = el.split(/[\(\)\s,]+/);
-        const abbreviation = expedite[1];
-        const agent = expedite[2];
-        const time = expedite[3];
+      let parsedModels: any = [];
+      optimumModels.map((model: any) => {
+        let tmpParsedModel: any = [];
+        model.Value.map((el: any) => {
+          const expedite = el.split(/[\(\)\s,]+/);
+          const abbreviation = expedite[1];
+          const agent = expedite[2];
+          const time = expedite[3];
 
-        // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
-        const actionLookup = procedures[tableData.key].find(
-          (el: ProcedureData | TaxonomyData) => el.abbreviation === abbreviation
-        ).action;
+          // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
+          const actionLookup = procedures[tableData.key].find(
+            (el: ProcedureData | TaxonomyData) =>
+              el.abbreviation === abbreviation
+          ).action;
 
-        const actionObject = {
-          action: actionLookup,
-          agent: agent,
-          time: time,
-        };
-        parsedActions.push(actionObject);
+          const actionObject = {
+            action: actionLookup,
+            agent: agent,
+            time: time,
+          };
+          tmpParsedModel.push(actionObject);
+        });
+        parsedModels.push(tmpParsedModel);
       });
-      const sortedActions = parsedActions.sort((a: any, b: any) =>
-        a.time > b.time ? 1 : b.time > a.time ? -1 : 0
-      );
-      console.log(sortedActions);
 
-      setSunburstData(
-        sortedActions.map((el: any, i: any) => ({
-          id: `${i}.0`,
-          parent: `${i === 0 ? "" : `${i - 1}.0`}`,
-          name: `${el.agent}, ${el.action}, at ${el.time}`,
-          value: 100,
-        }))
-      );
+      parsedModels.map((model: any) => {
+        model.sort((a: any, b: any) =>
+          a.time > b.time ? 1 : b.time > a.time ? -1 : 0
+        );
+      });
+
+      setSunburstData(generateSunburstData(parsedModels));
     });
   };
 

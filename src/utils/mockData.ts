@@ -326,3 +326,42 @@ export const sunburstMockDataPH: SunburstData[] = [
     value: 25,
   },
 ];
+
+export const sunburstCrashMock = [
+  {
+    id: "4cba41a8da35b78396e0804209d9a67b",
+    parent: "",
+    name: "liz, Second attack engine crew turn-out, at 1",
+    value: 16.666666666666668,
+  },
+  {
+    id: "42435d1d455070e1091217487d5608a9",
+    parent: "",
+    name: "barry, Attack engine crew turn-out, at 1",
+    value: 16.666666666666668,
+  },
+  {
+    id: "6e6ff121219f61f8bc185b6479db9aa6",
+    parent: "",
+    name: "lin, Ladder department turn-out, at 1",
+    value: 16.666666666666668,
+  },
+  {
+    id: "6e6ff121219f61f8bc185b6479db9aa6",
+    parent: "",
+    name: "lin, Ladder department turn-out, at 1",
+    value: 16.666666666666668,
+  },
+  {
+    id: "6e6ff121219f61f8bc185b6479db9aa6",
+    parent: "",
+    name: "lin, Ladder department turn-out, at 1",
+    value: 16.666666666666668,
+  },
+  {
+    id: "7b27052db1eaf90e7503fee19b88b331",
+    parent: "",
+    name: "xi, Ladder department turn-out, at 1",
+    value: 16.666666666666668,
+  },
+];

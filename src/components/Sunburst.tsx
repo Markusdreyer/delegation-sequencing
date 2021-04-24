@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Highcharts from "highcharts";
 import HighchartsSunburst from "highcharts/modules/sunburst";
 import HighchartsReact from "highcharts-react-official";
+import { sunburstCrashMock } from "../utils/mockData";
 HighchartsSunburst(Highcharts);
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
 
 const Sunburst: React.FC<Props> = (props) => {
   const { data } = props;
+  console.log(data);
   const [displaySunburst, setDisplaySunburst] = useState(false);
 
   const options = {
@@ -23,13 +25,14 @@ const Sunburst: React.FC<Props> = (props) => {
       {
         allowDrillToNode: true,
         type: "sunburst",
-        data: data,
+        data: sunburstCrashMock,
       },
     ],
   };
 
   return (
     <HighchartsReact
+      containerProps={{ style: { height: "100%" } }}
       highcharts={Highcharts}
       options={options}
       constructorType={"chart"}
