@@ -25,14 +25,13 @@ const Sunburst: React.FC<Props> = (props) => {
       {
         allowDrillToNode: true,
         type: "sunburst",
-        data: sunburstCrashMock,
+        data: data,
       },
     ],
   };
 
   return (
     <HighchartsReact
-      containerProps={{ style: { height: "100%" } }}
       highcharts={Highcharts}
       options={options}
       constructorType={"chart"}
