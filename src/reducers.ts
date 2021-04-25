@@ -21,7 +21,7 @@ const proceduresReducer = (state = initialState.procedures, action: any) => {
     case "SET_PROCEDURE":
       return {
         ...state,
-        [action.key]: [...action.procedure],
+        [action.payload.key]: [...action.payload.procedure],
       };
     default:
       return state;

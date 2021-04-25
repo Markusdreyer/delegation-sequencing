@@ -1,4 +1,4 @@
-export interface State {
+export interface RootState {
   showSidebar: boolean;
   showProcedures: boolean;
   dialog: Dialog;

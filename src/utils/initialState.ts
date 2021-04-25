@@ -1,6 +1,6 @@
-import { State } from "../types";
+import { RootState } from "../types";
 
-const initialState: State = {
+const initialState: RootState = {
   dialog: {
     show: false,
     title: "",

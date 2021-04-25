@@ -1,5 +1,5 @@
 primitive(a) . 
-description(a, "Attack engine crew turn-out") .
+description(a, "afsafasfas") .
 delegate(a, 1, ae_crew) :- deploy(a) . 
 mandatory(a) .
 

@@ -14,7 +14,7 @@ import clsx from "clsx";
 
 import { sunburstMockData } from "./utils/mockData";
 import { generateSunburstData } from "./utils/utils";
-import { ProcedureData, State, TableData, TaxonomyData } from "./types";
+import { ProcedureData, RootState, TableData, TaxonomyData } from "./types";
 import { useSelector, useDispatch } from "react-redux";
 import { renderTable, setProcedure, toggleDialog } from "./actions";
 import Sidebar from "./components/SideBar";
@@ -24,10 +24,10 @@ import { tableTypes } from "./utils/const";
 import initialState from "./utils/initialState";
 
 const App = () => {
-  const showSidebar = useSelector((state: State) => state.showSidebar);
-  const tableData = useSelector((state: State) => state.tableData);
-  const procedures = useSelector((state: State) => state.procedures);
-  const dialog = useSelector((state: State) => state.dialog);
+  const showSidebar = useSelector((state: RootState) => state.showSidebar);
+  const tableData = useSelector((state: RootState) => state.tableData);
+  const procedures = useSelector((state: RootState) => state.procedures);
+  const dialog = useSelector((state: RootState) => state.dialog);
 
   const dispatch = useDispatch();
 
