@@ -41,7 +41,7 @@ const App = () => {
 
   useEffect(() => {
     if (tableData.key) {
-      if (tableData.key === tableTypes.PROCEDURES) {
+      if (tableData.type === tableTypes.PROCEDURES) {
         console.log("Update procedure table");
         dispatch(
           renderTable(
@@ -50,7 +50,7 @@ const App = () => {
             procedures[tableData.key]
           )
         );
-      } else if (tableData.key === tableTypes.TAXONOMIES) {
+      } else if (tableData.type === tableTypes.TAXONOMIES) {
         console.log("Update taxonomy table");
         dispatch(
           renderTable(
@@ -61,7 +61,7 @@ const App = () => {
         );
       } else {
         console.error(
-          `${tableData.key} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
+          `${tableData.type} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
         );
       }
     }

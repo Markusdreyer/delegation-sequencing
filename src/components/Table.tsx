@@ -3,7 +3,8 @@ import MaterialTable from "material-table";
 import { useDispatch } from "react-redux";
 import { TableData } from "../types";
 import { procedureColumns } from "../utils/TableColumns";
-import { setProcedure } from "../actions";
+import { setProcedure, setTaxonomy } from "../actions";
+import { tableTypes } from "../utils/const";
 interface Props {
   data: TableData;
 }
@@ -24,7 +25,16 @@ const Table: React.FC<Props> = (props) => {
             setTimeout(() => {
               const dataUpdate = data.data!;
               dataUpdate.push(newData);
-              dispatch(setProcedure(data.key, dataUpdate));
+              if (data.type === tableTypes.PROCEDURES) {
+                dispatch(setProcedure(data.key, dataUpdate));
+              } else if (data.type === tableTypes.TAXONOMIES) {
+                dispatch(setTaxonomy(data.key, dataUpdate));
+              } else {
+                console.error(
+                  `${data.type} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
+                );
+              }
+
               resolve();
             }, 1000);
           }),
@@ -34,7 +44,16 @@ const Table: React.FC<Props> = (props) => {
               const dataUpdate = data.data!;
               const index = oldData.tableData.id;
               dataUpdate[index] = newData;
-              dispatch(setProcedure(data.key, dataUpdate));
+
+              if (data.key === tableTypes.PROCEDURES) {
+                dispatch(setProcedure(data.key, dataUpdate));
+              } else if (data.key === tableTypes.TAXONOMIES) {
+                dispatch(setTaxonomy(data.key, dataUpdate));
+              } else {
+                console.error(
+                  `${data.key} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
+                );
+              }
               resolve();
             }, 1000);
           }),
@@ -44,7 +63,17 @@ const Table: React.FC<Props> = (props) => {
               const dataDelete = data.data!;
               const index = oldData.tableData.id;
               dataDelete.splice(index, 1);
-              dispatch(setProcedure(data.key, dataDelete));
+
+              if (data.key === tableTypes.PROCEDURES) {
+                dispatch(setProcedure(data.key, dataDelete));
+              } else if (data.key === tableTypes.TAXONOMIES) {
+                dispatch(setTaxonomy(data.key, dataDelete));
+              } else {
+                console.error(
+                  `${data.key} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
+                );
+              }
+
               resolve();
             }, 1000);
           }),
