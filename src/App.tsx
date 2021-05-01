@@ -16,48 +16,70 @@ import { sunburstMockData } from "./utils/mockData";
 import { generateSunburstData } from "./utils/utils";
 import { ProcedureData, RootState, TaxonomyData } from "./types";
 import { useSelector, useDispatch } from "react-redux";
-import { renderTable, setProcedure, toggleDialog } from "./actions";
+import {
+  renderTable,
+  setProcedure,
+  setTaxonomy,
+  toggleDialog,
+} from "./actions";
 import Sidebar from "./components/SideBar";
 import Table from "./components/Table";
 import useStyles from "./Styles";
-import { tableTypes } from "./utils/const";
+import { dialogOptions, tableTypes } from "./utils/const";
 
 const App = () => {
   const showSidebar = useSelector((state: RootState) => state.showSidebar);
   const tableData = useSelector((state: RootState) => state.tableData);
   const procedures = useSelector((state: RootState) => state.procedures);
+  const taxonomies = useSelector((state: RootState) => state.taxonomies);
   const dialog = useSelector((state: RootState) => state.dialog);
   const [sunburstData, setSunburstData] = useState(sunburstMockData);
-  const [newProcedure, setNewProcedure] = useState("");
-
-  console.log(tableData);
-
-  const [taxonomies, setTaxonomies]: any = useState([
-    "Land fire incidents",
-    "Offshore incidents",
-    "Terror incidents",
-  ]);
+  const [newDocument, setNewDocument] = useState("");
 
   const dispatch = useDispatch();
   const classes = useStyles();
 
   useEffect(() => {
     if (tableData.key) {
-      console.log("USE EFFECT");
-      dispatch(
-        renderTable(
-          tableTypes.PROCEDURES,
-          tableData.key,
-          procedures[tableData.key]
-        )
-      );
+      if (tableData.key === tableTypes.PROCEDURES) {
+        console.log("Update procedure table");
+        dispatch(
+          renderTable(
+            tableTypes.PROCEDURES,
+            tableData.key,
+            procedures[tableData.key]
+          )
+        );
+      } else if (tableData.key === tableTypes.TAXONOMIES) {
+        console.log("Update taxonomy table");
+        dispatch(
+          renderTable(
+            tableTypes.TAXONOMIES,
+            tableData.key,
+            taxonomies[tableData.key]
+          )
+        );
+      } else {
+        console.error(
+          `${tableData.key} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
+        );
+      }
     }
   }, [tableData.key, procedures]);
 
-  const createNewProcedure = () => {
-    dispatch(renderTable(tableTypes.PROCEDURES, newProcedure, []));
-    dispatch(setProcedure(newProcedure));
-    dispatch(toggleDialog(false));
+  const createNewDocument = () => {
+    if (dialog.title === dialogOptions.PROCEDURE.title) {
+      dispatch(renderTable(tableTypes.PROCEDURES, newDocument, []));
+      dispatch(setProcedure(newDocument, []));
+    } else if (dialog.title === dialogOptions.TAXONOMY.title) {
+      dispatch(renderTable(tableTypes.TAXONOMIES, newDocument, []));
+      dispatch(setTaxonomy(newDocument, []));
+    } else {
+      console.error(
+        `${dialog.title} does not match ${dialogOptions.PROCEDURE.title} or ${dialogOptions.TAXONOMY.title}`
+      );
+    }
+    dispatch(toggleDialog());
   };
 
   const generateSunburst = () => {
@@ -126,13 +148,13 @@ const App = () => {
         <div className={classes.drawerHeader} />
         <Dialog
           open={dialog.show}
-          onClose={() => dispatch(toggleDialog(true, "some", "thing"))}
+          onClose={() => dispatch(toggleDialog())}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">{dialog.title}</DialogTitle>
           <DialogContent>
             <TextField
-              onChange={(e) => setNewProcedure(e.target.value)}
+              onChange={(e) => setNewDocument(e.target.value)}
               autoFocus
               margin="dense"
               id="name"
@@ -142,15 +164,12 @@ const App = () => {
             />
           </DialogContent>
           <DialogActions>
-            <Button
-              onClick={() => dispatch(toggleDialog(false))}
-              color="primary"
-            >
+            <Button onClick={() => dispatch(toggleDialog())} color="primary">
               Cancel
             </Button>
             <Button
               type="submit"
-              onClick={() => createNewProcedure()}
+              onClick={() => createNewDocument()}
               color="primary"
             >
               Create

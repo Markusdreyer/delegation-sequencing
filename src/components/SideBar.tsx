@@ -31,21 +31,16 @@ import {
   renderTable,
 } from "../actions";
 import useStyles from "../Styles";
-import { tableTypes } from "../utils/const";
+import { dialogOptions, tableTypes } from "../utils/const";
 import { RootState } from "../types";
 
 const Sidebar = () => {
   const procedures = useSelector((state: RootState) => state.procedures);
   const showSidebar = useSelector((state: RootState) => state.showSidebar);
+  const taxonomies = useSelector((state: RootState) => state.taxonomies);
   const showProcedures = useSelector(
     (state: RootState) => state.showProcedures
   );
-
-  const [taxonomies, setTaxonomies]: any = useState([
-    "Land fire incidents",
-    "Offshore incidents",
-    "Terror incidents",
-  ]);
 
   const dispatch = useDispatch();
   const [displayTaxonomies, setDisplayTaxonomies] = useState(false);
@@ -93,11 +88,7 @@ const Sidebar = () => {
           </ListItemIcon>
           <ListItemText
             primary={"New procedure"}
-            onClick={() =>
-              dispatch(
-                toggleDialog(true, "Create new procedure", "Name of procedure")
-              )
-            }
+            onClick={() => dispatch(toggleDialog(dialogOptions.PROCEDURE))}
           />
         </ListItem>
         <ListItem button>
@@ -105,12 +96,8 @@ const Sidebar = () => {
             <Add />
           </ListItemIcon>
           <ListItemText
-            primary={"New Taxonomy"}
-            onClick={() =>
-              dispatch(
-                toggleDialog(true, "Create new taxonomy", "Name of taxonomy")
-              )
-            }
+            primary={"New taxonomy"}
+            onClick={() => dispatch(toggleDialog(dialogOptions.TAXONOMY))}
           />
         </ListItem>
         <Divider />
@@ -153,7 +140,7 @@ const Sidebar = () => {
         </ListItem>
         <Collapse in={displayTaxonomies} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {taxonomies.map((text: string) => (
+            {Object.keys(taxonomies).map((text: string) => (
               <ListItem button className={classes.nested} key={text}>
                 <ListItemIcon>
                   <Description />

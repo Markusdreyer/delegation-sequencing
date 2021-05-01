@@ -26,6 +26,18 @@ const proceduresReducer = (state = initialState.procedures, action: any) => {
   }
 };
 
+const taxonomiesReducer = (state = initialState.taxonomies, action: any) => {
+  switch (action.type) {
+    case "SET_TAXONOMY":
+      return {
+        ...state,
+        [action.payload.key]: [...action.payload.taxonomy],
+      };
+    default:
+      return state;
+  }
+};
+
 const showSidebarReducer = (state: boolean = false, action: any) => {
   switch (action.type) {
     case "TOGGLE_SIDEBAR":
@@ -40,8 +52,8 @@ const dialogReducer = (state = initialState.dialog, action: any) => {
     case "TOGGLE_DIALOG":
       return {
         show: !state.show,
-        title: action.payload.title,
-        label: action.payload.label,
+        title: action.payload.options?.title,
+        label: action.payload.options?.label,
       };
     default:
       return state;
@@ -63,6 +75,7 @@ const allReducers = combineReducers({
   dialog: dialogReducer,
   procedures: proceduresReducer,
   tableData: tableReducer,
+  taxonomies: taxonomiesReducer,
 });
 
 export default allReducers;

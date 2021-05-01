@@ -10,7 +10,6 @@ interface Props {
 
 const Table: React.FC<Props> = (props) => {
   const { data } = props;
-  console.log(data.data);
   const dispatch = useDispatch();
   const [columns, setColumns]: any = useState(procedureColumns);
 

@@ -15,12 +15,22 @@ export const renderTable = (
   };
 };
 
-export const setProcedure = (key: string, procedure?: ProcedureData[]) => {
+export const setProcedure = (key: string, procedure: ProcedureData[]) => {
   return {
     type: "SET_PROCEDURE",
     payload: {
       key,
       procedure,
+    },
+  };
+};
+
+export const setTaxonomy = (key: string, taxonomy: TaxonomyData[]) => {
+  return {
+    type: "SET_TAXONOMY",
+    payload: {
+      key,
+      taxonomy,
     },
   };
 };
@@ -31,13 +41,11 @@ export const toggleSidebar = () => {
   };
 };
 
-export const toggleDialog = (show: boolean, title?: string, label?: string) => {
+export const toggleDialog = (options?: { title: string; label: string }) => {
   return {
     type: "TOGGLE_DIALOG",
     payload: {
-      show,
-      title,
-      label,
+      options,
     },
   };
 };

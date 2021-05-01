@@ -10,7 +10,6 @@ interface Props {
 
 const Sunburst: React.FC<Props> = (props) => {
   const { data } = props;
-  console.log(data);
 
   const options = {
     credits: {
