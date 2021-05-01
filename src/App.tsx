@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import {
   Dialog,
@@ -28,15 +28,35 @@ const App = () => {
   const tableData = useSelector((state: RootState) => state.tableData);
   const procedures = useSelector((state: RootState) => state.procedures);
   const dialog = useSelector((state: RootState) => state.dialog);
-
-  const dispatch = useDispatch();
-
-  const classes = useStyles();
   const [sunburstData, setSunburstData] = useState(sunburstMockData);
   const [newProcedure, setNewProcedure] = useState("");
 
+  console.log(tableData);
+
+  const [taxonomies, setTaxonomies]: any = useState([
+    "Land fire incidents",
+    "Offshore incidents",
+    "Terror incidents",
+  ]);
+
+  const dispatch = useDispatch();
+  const classes = useStyles();
+
+  useEffect(() => {
+    if (tableData.key) {
+      console.log("USE EFFECT");
+      dispatch(
+        renderTable(
+          tableTypes.PROCEDURES,
+          tableData.key,
+          procedures[tableData.key]
+        )
+      );
+    }
+  }, [tableData.key, procedures]);
+
   const createNewProcedure = () => {
-    dispatch(renderTable(tableTypes.PROCEDURES, newProcedure));
+    dispatch(renderTable(tableTypes.PROCEDURES, newProcedure, []));
     dispatch(setProcedure(newProcedure));
     dispatch(toggleDialog(false));
   };
@@ -138,7 +158,7 @@ const App = () => {
             </Button>
           </DialogActions>
         </Dialog>
-        <Table type={tableData.type} title={tableData.key} />
+        <Table data={tableData} />
         <Sunburst data={sunburstData} />
         <div className="center padding-l">
           <Button

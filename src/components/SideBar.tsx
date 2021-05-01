@@ -33,19 +33,23 @@ import {
 } from "../actions";
 import useStyles from "../Styles";
 import { tableTypes } from "../utils/const";
+import { ProcedureData, RootState, TaxonomyData } from "../types";
 
 const Sidebar = () => {
-  const showSidebar = useSelector((state: any) => state.showSidebar);
-  const showProcedures = useSelector((state: any) => state.showProcedures);
-  const procedures = useSelector((state: any) => state.procedures);
+  const procedures = useSelector((state: RootState) => state.procedures);
+  const showSidebar = useSelector((state: RootState) => state.showSidebar);
+  const showProcedures = useSelector(
+    (state: RootState) => state.showProcedures
+  );
 
-  const dispatch = useDispatch();
-  const [displayTaxonomies, setDisplayTaxonomies] = useState(false);
   const [taxonomies, setTaxonomies]: any = useState([
     "Land fire incidents",
     "Offshore incidents",
     "Terror incidents",
   ]);
+
+  const dispatch = useDispatch();
+  const [displayTaxonomies, setDisplayTaxonomies] = useState(false);
 
   const classes = useStyles();
 
@@ -128,7 +132,10 @@ const Sidebar = () => {
                 <ListItemText
                   primary={text}
                   onClick={() =>
-                    dispatch(renderTable(tableTypes.PROCEDURES, text))
+                    dispatch(
+                      // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
+                      renderTable(tableTypes.PROCEDURES, text, procedures[text])
+                    )
                   }
                 />
               </ListItem>

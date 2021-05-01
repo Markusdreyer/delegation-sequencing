@@ -1,11 +1,16 @@
-import { ProcedureData } from "./types";
+import { ProcedureData, TaxonomyData } from "./types";
 
-export const renderTable = (type: string, key: string) => {
+export const renderTable = (
+  type: string,
+  key: string,
+  data: ProcedureData[] | TaxonomyData[]
+) => {
   return {
     type: "RENDER_TABLE",
     payload: {
       type,
       key,
+      data,
     },
   };
 };

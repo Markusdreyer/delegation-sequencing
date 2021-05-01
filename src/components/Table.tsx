@@ -6,50 +6,47 @@ import { ProcedureData, RootState, TableData, TaxonomyData } from "../types";
 import { procedureColumns, taxonomyColumns } from "../utils/TableColumns";
 import { setProcedure } from "../actions";
 interface Props {
-  type: string;
-  title: string;
+  data: TableData;
 }
 
 const Table: React.FC<Props> = (props) => {
-  const { type, title } = props;
-  const procedures = useSelector((state: any) => state.procedures[title]);
+  const { data } = props;
+  console.log(data.data);
   const dispatch = useDispatch();
-
   const [columns, setColumns]: any = useState(procedureColumns);
 
   return (
     <MaterialTable
-      title={title}
+      title={data.key}
       columns={columns}
-      data={procedures}
+      data={data.data.map((o) => ({ ...o }))} //Ugly immutable hack: https://github.com/mbrn/material-table/issues/666
       editable={{
         onRowAdd: (newData) =>
           new Promise((resolve: any, reject) => {
             setTimeout(() => {
-              const dataUpdate = procedures;
+              const dataUpdate = data.data!;
               dataUpdate.push(newData);
-              dispatch(setProcedure(title, dataUpdate));
+              dispatch(setProcedure(data.key, dataUpdate));
               resolve();
             }, 1000);
           }),
         onRowUpdate: (newData, oldData: any) =>
           new Promise((resolve: any, reject) => {
             setTimeout(() => {
-              const dataUpdate = procedures;
+              const dataUpdate = data.data!;
               const index = oldData.tableData.id;
               dataUpdate[index] = newData;
-              dispatch(setProcedure(title, dataUpdate));
-
+              dispatch(setProcedure(data.key, dataUpdate));
               resolve();
             }, 1000);
           }),
         onRowDelete: (oldData: any) =>
           new Promise((resolve: any, reject) => {
             setTimeout(() => {
-              const dataDelete = procedures;
+              const dataDelete = data.data!;
               const index = oldData.tableData.id;
               dataDelete.splice(index, 1);
-              dispatch(setProcedure(title, dataDelete));
+              dispatch(setProcedure(data.key, dataDelete));
               resolve();
             }, 1000);
           }),

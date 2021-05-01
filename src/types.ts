@@ -15,7 +15,7 @@ export interface RootState {
 export interface TableData {
   type: string;
   key: string;
-  data?: ProcedureData[] | TaxonomyData[];
+  data: ProcedureData[] | TaxonomyData[];
 }
 
 export interface ProcedureData {

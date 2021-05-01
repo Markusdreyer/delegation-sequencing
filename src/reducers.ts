@@ -1,15 +1,15 @@
 import { combineReducers } from "redux";
+import { ProcedureData, TaxonomyData } from "./types";
+import { createReducer } from "@reduxjs/toolkit";
 import initialState from "./utils/initialState";
 
-const tableReducer = (
-  state = { type: "procedures", key: "EA fire" },
-  action: any
-) => {
+const tableReducer = (state = initialState.tableData, action: any) => {
   switch (action.type) {
     case "RENDER_TABLE":
       return {
         type: action.payload.type,
         key: action.payload.key,
+        data: action.payload.data,
       };
     default:
       return state;
