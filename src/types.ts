@@ -19,6 +19,8 @@ export interface TableData {
 }
 
 export interface ProcedureData {
+  id: number;
+  parentId?: number;
   action: string;
   agents: string;
   quantity: number;
@@ -27,6 +29,8 @@ export interface ProcedureData {
 }
 
 export interface TaxonomyData {
+  id: number;
+  parentId?: number;
   action: string;
   agents: string;
   quantity: number;

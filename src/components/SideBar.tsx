@@ -147,9 +147,12 @@ const Sidebar = () => {
                 </ListItemIcon>
                 <ListItemText
                   primary={text}
-                  //onClick={() =>
-                  //dispatch(setTableData(tableTypes.TAXONOMIES, text))
-                  //}
+                  onClick={() =>
+                    dispatch(
+                      // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
+                      renderTable(tableTypes.TAXONOMIES, text, taxonomies[text])
+                    )
+                  }
                 />
               </ListItem>
             ))}

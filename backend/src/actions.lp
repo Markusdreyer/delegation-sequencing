@@ -1,19 +1,19 @@
 %%%%%%%%%%%%%%%%% Agent taxonomy  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Taxonomy of companies
-class(agent).
-is_subclass(ae_crew, agent).
-is_subclass(driver, ae_crew).
-is_subclass(se_crew, agent).
-is_subclass(lt_crew, agent).
-
 % Subclass reasoning
 subclass(A, B):- is_subclass(A, B).
 subclass(A, C):- is_subclass(A, D), subclass(D, C).
 
 member(A, C):- is_a(A, C).
 member(A, C):- is_a(A, D), subclass(D, C).
+
+% Taxonomy of companies
+class(agent).
+is_subclass(ae_crew, agent).
+is_subclass(driver, ae_crew).
+is_subclass(se_crew, agent).
+is_subclass(lt_crew, agent).
 
 % Property ascription
 property(barry, driver).
@@ -34,8 +34,6 @@ is_a(lin, lt_crew).
 is_a(dahn, lt_crew).
 
 agent(X):- member(X, agent).
-
-
 
 objective(Ac):- collaborative(Ac).
 objective(Ac):- primitive(Ac).

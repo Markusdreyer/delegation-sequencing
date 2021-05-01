@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import MaterialTable from "material-table";
 import { useDispatch } from "react-redux";
-import { TableData } from "../types";
+import { TableData, TaxonomyData } from "../types";
 import { procedureColumns } from "../utils/TableColumns";
 import { setProcedure, setTaxonomy } from "../actions";
 import { tableTypes } from "../utils/const";
@@ -18,7 +18,8 @@ const Table: React.FC<Props> = (props) => {
     <MaterialTable
       title={data.key}
       columns={columns}
-      data={data.data.map((o) => ({ ...o }))} //Ugly immutable hack: https://github.com/mbrn/material-table/issues/666
+      data={data.data.map((o: any) => ({ ...o }))} //Ugly immutable hack: https://github.com/mbrn/material-table/issues/666
+      parentChildData={(row, rows) => rows.find((o) => o.id === row.parentId)}
       editable={{
         onRowAdd: (newData) =>
           new Promise((resolve: any, reject) => {
@@ -28,7 +29,7 @@ const Table: React.FC<Props> = (props) => {
               if (data.type === tableTypes.PROCEDURES) {
                 dispatch(setProcedure(data.key, dataUpdate));
               } else if (data.type === tableTypes.TAXONOMIES) {
-                dispatch(setTaxonomy(data.key, dataUpdate));
+                dispatch(setTaxonomy(data.key, dataUpdate as TaxonomyData[]));
               } else {
                 console.error(
                   `${data.type} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
@@ -48,7 +49,7 @@ const Table: React.FC<Props> = (props) => {
               if (data.key === tableTypes.PROCEDURES) {
                 dispatch(setProcedure(data.key, dataUpdate));
               } else if (data.key === tableTypes.TAXONOMIES) {
-                dispatch(setTaxonomy(data.key, dataUpdate));
+                dispatch(setTaxonomy(data.key, dataUpdate as TaxonomyData[]));
               } else {
                 console.error(
                   `${data.key} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
@@ -67,7 +68,7 @@ const Table: React.FC<Props> = (props) => {
               if (data.key === tableTypes.PROCEDURES) {
                 dispatch(setProcedure(data.key, dataDelete));
               } else if (data.key === tableTypes.TAXONOMIES) {
-                dispatch(setTaxonomy(data.key, dataDelete));
+                dispatch(setTaxonomy(data.key, dataDelete as TaxonomyData[]));
               } else {
                 console.error(
                   `${data.key} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
