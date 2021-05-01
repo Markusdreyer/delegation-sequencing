@@ -1,6 +1,4 @@
 import { combineReducers } from "redux";
-import { ProcedureData, TaxonomyData } from "./types";
-import { createReducer } from "@reduxjs/toolkit";
 import initialState from "./utils/initialState";
 
 const tableReducer = (state = initialState.tableData, action: any) => {

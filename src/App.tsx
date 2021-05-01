@@ -14,14 +14,13 @@ import clsx from "clsx";
 
 import { sunburstMockData } from "./utils/mockData";
 import { generateSunburstData } from "./utils/utils";
-import { ProcedureData, RootState, TableData, TaxonomyData } from "./types";
+import { ProcedureData, RootState, TaxonomyData } from "./types";
 import { useSelector, useDispatch } from "react-redux";
 import { renderTable, setProcedure, toggleDialog } from "./actions";
 import Sidebar from "./components/SideBar";
 import Table from "./components/Table";
 import useStyles from "./Styles";
 import { tableTypes } from "./utils/const";
-import initialState from "./utils/initialState";
 
 const App = () => {
   const showSidebar = useSelector((state: RootState) => state.showSidebar);

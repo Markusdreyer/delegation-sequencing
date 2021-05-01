@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import MaterialTable from "material-table";
-import { useSelector, useDispatch } from "react-redux";
-//import { setTableData } from "../actions";
-import { ProcedureData, RootState, TableData, TaxonomyData } from "../types";
-import { procedureColumns, taxonomyColumns } from "../utils/TableColumns";
+import { useDispatch } from "react-redux";
+import { TableData } from "../types";
+import { procedureColumns } from "../utils/TableColumns";
 import { setProcedure } from "../actions";
 interface Props {
   data: TableData;

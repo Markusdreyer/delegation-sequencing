@@ -28,12 +28,11 @@ import {
   toggleSidebar,
   toggleDialog,
   toggleProcedures,
-  setProcedure,
   renderTable,
 } from "../actions";
 import useStyles from "../Styles";
 import { tableTypes } from "../utils/const";
-import { ProcedureData, RootState, TaxonomyData } from "../types";
+import { RootState } from "../types";
 
 const Sidebar = () => {
   const procedures = useSelector((state: RootState) => state.procedures);

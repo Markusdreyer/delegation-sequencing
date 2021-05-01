@@ -1,22 +1,12 @@
 primitive(a) . 
-description(a, "afsafasfas") .
+description(a, "Attack engine crew turn-out") .
 delegate(a, 1, ae_crew) :- deploy(a) . 
 mandatory(a) .
-
-primitive(b) . 
-description(b, "Second attack engine crew turn-out") .
-delegate(b, 1, se_crew) :- deploy(b) . 
-mandatory(b) .
 
 primitive(c) . 
 description(c, "Ladder department turn-out") .
 delegate(c, 1, lt_crew) :- deploy(c) . 
 mandatory(c) .
-
-primitive(d) . 
-description(d, "Travel of attack engine crew to 911 address") .
-delegate(d, 1, ae_crew) :- deploy(d) . 
-mandatory(d) .
 
 primitive(e) . 
 description(e, "Travel of second engine crew to 911 address") .
@@ -68,7 +58,6 @@ description(n, "Set up ladder tower") .
 delegate(n, 1, lt_crew) :- deploy(n) . 
 mandatory(n) .
 
-pred(d, a) .
 pred(e, b) .
 pred(f, c) .
 pred(g, d) .
