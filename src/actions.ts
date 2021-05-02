@@ -1,5 +1,14 @@
 import { ProcedureData, TaxonomyData } from "./types";
 
+export const setActiveTaxonomy = (activeTaxonomy: string) => {
+  return {
+    type: "SET_ACTIVE_TAXONOMY",
+    payload: {
+      activeTaxonomy,
+    },
+  };
+};
+
 export const renderTable = (
   type: string,
   key: string,

@@ -10,28 +10,28 @@ member(A, C):- is_a(A, D), subclass(D, C).
 
 % Taxonomy of companies
 class(agent).
-is_subclass(ae_crew, agent).
-is_subclass(driver, ae_crew).
-is_subclass(se_crew, agent).
-is_subclass(lt_crew, agent).
+%is_subclass(ae_crew, agent).
+%is_subclass(driver, ae_crew).
+%is_subclass(se_crew, agent).
+%is_subclass(lt_crew, agent).
 
 % Property ascription
-property(barry, driver).
+%property(barry, driver).
 
 % Member agents
-is_a(john, ae_crew).
-is_a(barry, ae_crew).
-is_a(frank, ae_crew).
+%is_a(john, ae_crew).
+%is_a(barry, ae_crew).
+%is_a(frank, ae_crew).
 
-is_a(jan, se_crew).
-is_a(liz, se_crew).
-is_a(kathrin, se_crew).
+%is_a(jan, se_crew).
+%is_a(liz, se_crew).
+%is_a(kathrin, se_crew).
 
-is_a(barry, driver).
+%is_a(barry, driver).
 
-is_a(xi, lt_crew).
-is_a(lin, lt_crew).
-is_a(dahn, lt_crew).
+%is_a(xi, lt_crew).
+%is_a(lin, lt_crew).
+%is_a(dahn, lt_crew).
 
 agent(X):- member(X, agent).
 

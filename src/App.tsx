@@ -11,8 +11,6 @@ import {
 
 import Sunburst from "./components/Sunburst";
 import clsx from "clsx";
-
-import { sunburstMockData } from "./utils/mockData";
 import { generateSunburstData } from "./utils/utils";
 import { ProcedureData, RootState, TaxonomyData } from "./types";
 import { useSelector, useDispatch } from "react-redux";
@@ -32,6 +30,9 @@ const App = () => {
   const tableData = useSelector((state: RootState) => state.tableData);
   const procedures = useSelector((state: RootState) => state.procedures);
   const taxonomies = useSelector((state: RootState) => state.taxonomies);
+  const activeTaxonomy = useSelector(
+    (state: RootState) => state.activeTaxonomy
+  );
   const dialog = useSelector((state: RootState) => state.dialog);
   const [sunburstData, setSunburstData] = useState();
   const [newDocument, setNewDocument] = useState("");
@@ -60,12 +61,12 @@ const App = () => {
           )
         );
       } else {
-        console.error(
+        console.log(
           `${tableData.type} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
         );
       }
     }
-  }, [tableData.key, procedures]);
+  }, [procedures, taxonomies, tableData.type, tableData.key, dispatch]);
 
   const createNewDocument = () => {
     if (dialog.title === dialogOptions.PROCEDURE.title) {
@@ -75,7 +76,7 @@ const App = () => {
       dispatch(renderTable(tableTypes.TAXONOMIES, newDocument, []));
       dispatch(setTaxonomy(newDocument, []));
     } else {
-      console.error(
+      console.log(
         `${dialog.title} does not match ${dialogOptions.PROCEDURE.title} or ${dialogOptions.TAXONOMY.title}`
       );
     }
@@ -83,11 +84,16 @@ const App = () => {
   };
 
   const generateSunburst = () => {
-    const tableJSON = JSON.stringify(procedures[tableData.key]);
+    const simulationData = {
+      taxonomy: taxonomies[activeTaxonomy],
+      procedure: procedures[tableData.key],
+    };
+    const simulationRequest = JSON.stringify(simulationData);
+
     axios({
       method: "post",
       url: "http://localhost:8000/asp-parser",
-      data: tableJSON,
+      data: simulationRequest,
       headers: {
         "Content-Type": "application/json",
       },

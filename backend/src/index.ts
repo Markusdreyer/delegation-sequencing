@@ -3,6 +3,7 @@ import cors from "cors";
 import bodyParser, { json } from "body-parser";
 import * as child from "child_process";
 import fs from "fs";
+import { isA, isSubClass, property } from "./utils";
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -11,7 +12,7 @@ app.enable("trust proxy");
 app.use(cors());
 const port = 8000;
 
-interface TableData {
+interface ProcedureData {
   action: string;
   agents: string;
   quantity: number;
@@ -19,32 +20,62 @@ interface TableData {
   precedence: string;
 }
 
+interface TaxonomyData {
+  id: number;
+  parentId: number;
+  role?: string;
+  agent: string;
+}
+
 app.post("/asp-parser", (req, res) => {
-  const tableData: TableData[] = req.body;
-  console.log(tableData);
+  const reqBody = req.body;
+  const taxonomyData: TaxonomyData[] = reqBody.taxonomy;
+  const procedureData: ProcedureData[] = reqBody.procedure;
+  console.log("PROCEDURE DATA:: ", procedureData);
+  console.log("TAXONOMY DATA:: ", taxonomyData);
   let aspString: string = "";
   let predString: string = "";
-  tableData.map((el) => {
+  let taxonomyString: string = "";
+  procedureData.map((el) => {
     const precedence = el.precedence;
     const abbreviation = el.abbreviation;
     const agents = el.agents.split(",");
     if (agents.length > 1) {
-      aspString = aspString.concat(`collaborative(${abbreviation}) . \n`);
+      aspString += `collaborative(${abbreviation}) . \n`;
     } else {
-      aspString = aspString.concat(`primitive(${abbreviation}) . \n`);
+      aspString += `primitive(${abbreviation}) . \n`;
     }
-    aspString = aspString.concat(
-      `description(${abbreviation}, \"${el.action}\") .\ndelegate(${abbreviation}, ${el.quantity}, ${agents}) :- deploy(${abbreviation}) . \nmandatory(${abbreviation}) .\n\n`
-    );
+    aspString += `description(${abbreviation}, \"${el.action}\") .\ndelegate(${abbreviation}, ${el.quantity}, ${agents}) :- deploy(${abbreviation}) . \nmandatory(${abbreviation}) .\n\n`;
 
     if (precedence !== "None") {
-      predString = predString.concat(
-        `pred(${abbreviation}, ${precedence}) .\n`
-      );
+      predString += `pred(${abbreviation}, ${precedence}) .\n`;
     }
   });
 
-  aspString = aspString.concat(predString);
+  const parents: string[] = [];
+  taxonomyData.map((el) => {
+    /**
+     * Means that the element should be considered top-level.
+     * The parents should be added to an array for easy lookup.
+     */
+
+    if (!el.hasOwnProperty("parentId")) {
+      taxonomyString += isSubClass(el.agent, "agent");
+      parents[el.id] = el.agent;
+    } else if (el.hasOwnProperty("role")) {
+      // What happens if eg. driver is added as subclass to ae_crew twice?
+      taxonomyString += isSubClass(el.role, parents[el.parentId]);
+      taxonomyString += property(el.agent, el.role);
+      taxonomyString += isA(el.agent, el.role);
+    } else {
+      taxonomyString += isA(el.agent, parents[el.parentId]);
+    }
+    console.log("EL:: ", el);
+    console.log("PARENTS:: ", parents[1]);
+  });
+
+  aspString += `${predString}\n\n`;
+  aspString += `${taxonomyString}\n\n`;
 
   fs.writeFile("src/model.lp", aspString, (err) => {
     if (err) throw err;
@@ -80,5 +111,5 @@ app.post("/asp-parser", (req, res) => {
 // start the Express server
 app.listen(port, () => {
   // tslint:disable-next-line:no-console
-  console.log(`server started at http://localhost:${port}`);
+  console.log(`server started at http:// localhost:${port}`);
 });

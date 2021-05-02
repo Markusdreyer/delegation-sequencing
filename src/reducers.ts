@@ -1,6 +1,18 @@
 import { combineReducers } from "redux";
 import initialState from "./utils/initialState";
 
+const activeTaxonomyReducer = (
+  state = initialState.activeTaxonomy,
+  action: any
+) => {
+  switch (action.type) {
+    case "SET_ACTIVE_TAXONOMY":
+      return action.payload.activeTaxonomy;
+    default:
+      return state;
+  }
+};
+
 const tableReducer = (state = initialState.tableData, action: any) => {
   switch (action.type) {
     case "RENDER_TABLE":
@@ -76,6 +88,7 @@ const allReducers = combineReducers({
   procedures: proceduresReducer,
   tableData: tableReducer,
   taxonomies: taxonomiesReducer,
+  activeTaxonomy: activeTaxonomyReducer,
 });
 
 export default allReducers;

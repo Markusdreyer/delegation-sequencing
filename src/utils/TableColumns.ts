@@ -4,6 +4,11 @@ export const tableColumns = {
     {
       title: "Agents",
       field: "agents",
+      lookup: {
+        ae_crew: "ae_crew",
+        se_crew: "se_crew",
+        lt_crew: "lt_crew",
+      },
     },
     {
       title: "Quantity",

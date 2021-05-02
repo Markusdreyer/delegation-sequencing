@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { ProcedureData, RootState, TableData, TaxonomyData } from "../types";
 import { tableColumns } from "../utils/TableColumns";
-import { setProcedure, setTaxonomy } from "../actions";
+import { setActiveTaxonomy, setProcedure, setTaxonomy } from "../actions";
 import { tableTypes } from "../utils/const";
 import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
 interface Props {
@@ -13,10 +13,9 @@ interface Props {
 
 const Table: React.FC<Props> = (props) => {
   const taxonomies = useSelector((state: RootState) => state.taxonomies);
-  const [activeTaxonomy, setActiveTaxonomy] = useState(
-    Object.keys(taxonomies)[0]
+  const activeTaxonomy = useSelector(
+    (state: RootState) => state.activeTaxonomy
   );
-  console.log(activeTaxonomy);
   const { data } = props;
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -27,7 +26,17 @@ const Table: React.FC<Props> = (props) => {
     setColumns(tableColumns[data.type]);
   }, [data.type]);
 
-  const handleChange = () => {};
+  const handleChange = (evt: any) => {
+    dispatch(setActiveTaxonomy(evt.target.value));
+
+    let updateColumns: any = [...columns];
+    updateColumns[1].lookup = taxonomies[evt.target.value]
+      .filter((el) => !el.hasOwnProperty("parentId") && el["agent"])
+      // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
+      // eslint-disable-next-line no-sequences
+      .reduce((acc, curr) => ((acc[curr.agent] = curr.agent), acc), {});
+    console.log(updateColumns);
+  };
 
   return (
     <MaterialTable
@@ -46,7 +55,7 @@ const Table: React.FC<Props> = (props) => {
               } else if (data.type === tableTypes.TAXONOMIES) {
                 dispatch(setTaxonomy(data.key, dataUpdate as TaxonomyData[]));
               } else {
-                console.error(
+                console.log(
                   `${data.type} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
                 );
               }
@@ -61,13 +70,13 @@ const Table: React.FC<Props> = (props) => {
               const index = oldData.tableData.id;
               dataUpdate[index] = newData;
 
-              if (data.key === tableTypes.PROCEDURES) {
+              if (data.type === tableTypes.PROCEDURES) {
                 dispatch(setProcedure(data.key, dataUpdate as ProcedureData[]));
-              } else if (data.key === tableTypes.TAXONOMIES) {
+              } else if (data.type === tableTypes.TAXONOMIES) {
                 dispatch(setTaxonomy(data.key, dataUpdate as TaxonomyData[]));
               } else {
-                console.error(
-                  `${data.key} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
+                console.log(
+                  `${data.type} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
                 );
               }
               resolve();
@@ -80,13 +89,13 @@ const Table: React.FC<Props> = (props) => {
               const index = oldData.tableData.id;
               dataDelete.splice(index, 1);
 
-              if (data.key === tableTypes.PROCEDURES) {
+              if (data.type === tableTypes.PROCEDURES) {
                 dispatch(setProcedure(data.key, dataDelete as ProcedureData[]));
-              } else if (data.key === tableTypes.TAXONOMIES) {
+              } else if (data.type === tableTypes.TAXONOMIES) {
                 dispatch(setTaxonomy(data.key, dataDelete as TaxonomyData[]));
               } else {
-                console.error(
-                  `${data.key} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
+                console.log(
+                  `${data.type} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
                 );
               }
 

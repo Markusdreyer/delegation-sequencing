@@ -79,3 +79,21 @@ pred(k, e) .
 pred(l, k) .
 pred(m, l) .
 pred(n, f) .
+
+
+is_subclass(ae_crew, agent).
+is_subclass(driver, ae_crew).
+property(barry, driver).
+is_a(barry, driver).
+is_a(john, ae_crew).
+is_a(frank, ae_crew).
+is_subclass(se_crew, agent).
+is_a(jan, se_crew).
+is_a(liz, se_crew).
+is_a(kathrin, se_crew).
+is_subclass(lt_crew, agent).
+is_a(xi, lt_crew).
+is_a(lin, lt_crew).
+is_a(dahn, lt_crew).
+
+

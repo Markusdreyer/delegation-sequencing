@@ -1,4 +1,5 @@
 export interface RootState {
+  activeTaxonomy: string;
   showSidebar: boolean;
   showProcedures: boolean;
   dialog: Dialog;

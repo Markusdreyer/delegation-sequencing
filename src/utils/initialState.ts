@@ -1,6 +1,7 @@
 import { RootState } from "../types";
 
 const initialState: RootState = {
+  activeTaxonomy: "Land fire incidents",
   dialog: {
     show: false,
     title: "",
