@@ -31,11 +31,8 @@ export interface ProcedureData {
 export interface TaxonomyData {
   id: number;
   parentId?: number;
-  action: string;
-  agents: string;
-  quantity: number;
-  abbreviation: string;
-  precedence: string;
+  agent: string;
+  role?: string;
 }
 
 export interface Dialog {

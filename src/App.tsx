@@ -33,7 +33,7 @@ const App = () => {
   const procedures = useSelector((state: RootState) => state.procedures);
   const taxonomies = useSelector((state: RootState) => state.taxonomies);
   const dialog = useSelector((state: RootState) => state.dialog);
-  const [sunburstData, setSunburstData] = useState(sunburstMockData);
+  const [sunburstData, setSunburstData] = useState();
   const [newDocument, setNewDocument] = useState("");
 
   const dispatch = useDispatch();
@@ -113,8 +113,7 @@ const App = () => {
 
           // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
           const actionLookup = procedures[tableData.key].find(
-            (el: ProcedureData | TaxonomyData) =>
-              el.abbreviation === abbreviation
+            (el: ProcedureData) => el.abbreviation === abbreviation
           ).action;
 
           const actionObject = {
@@ -177,16 +176,20 @@ const App = () => {
           </DialogActions>
         </Dialog>
         <Table data={tableData} />
-        <Sunburst data={sunburstData} />
-        <div className="center padding-l">
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={generateSunburst}
-          >
-            Run simulation
-          </Button>
-        </div>
+        {tableData.type === tableTypes.PROCEDURES && (
+          <>
+            <div className="center padding-l">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={generateSunburst}
+              >
+                Run simulation
+              </Button>
+            </div>
+            {sunburstData && <Sunburst data={sunburstData} />}
+          </>
+        )}
       </main>
     </div>
   );

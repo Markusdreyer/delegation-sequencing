@@ -302,20 +302,61 @@ const initialState: RootState = {
     "Land fire incidents": [
       {
         id: 1,
-        action: "Attack engine crew turn-out",
-        agents: "ae_crew",
-        quantity: 1,
-        abbreviation: "a",
-        precedence: "None",
+        agent: "ae_crew",
       },
       {
         id: 2,
         parentId: 1,
-        action: "Second attack engine crew turn-out",
-        agents: "se_crew",
-        quantity: 1,
-        abbreviation: "b",
-        precedence: "None",
+        agent: "barry",
+        role: "driver",
+      },
+      {
+        id: 3,
+        parentId: 1,
+        agent: "john",
+      },
+      {
+        id: 4,
+        parentId: 1,
+        agent: "frank",
+      },
+      {
+        id: 5,
+        agent: "se_crew",
+      },
+      {
+        id: 6,
+        parentId: 5,
+        agent: "jan",
+      },
+      {
+        id: 7,
+        parentId: 5,
+        agent: "liz",
+      },
+      {
+        id: 7,
+        parentId: 5,
+        agent: "kathrin",
+      },
+      {
+        id: 9,
+        agent: "lt_crew",
+      },
+      {
+        id: 10,
+        parentId: 9,
+        agent: "xi",
+      },
+      {
+        id: 11,
+        parentId: 9,
+        agent: "lin",
+      },
+      {
+        id: 12,
+        parentId: 9,
+        agent: "dahn",
       },
     ],
     "Offshore incidents": [],
