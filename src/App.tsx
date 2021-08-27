@@ -98,7 +98,8 @@ const App = () => {
         "Content-Type": "application/json",
       },
     }).then((res) => {
-      const data = JSON.parse(res.data);
+      const data = res.data;
+      console.log("DATA ", data);
       const [optimum] = data.Call[0].Witnesses.slice(-1);
       const optimumCost = optimum.Costs[0];
 

@@ -3,7 +3,8 @@ import cors from "cors";
 import bodyParser, { json } from "body-parser";
 import * as child from "child_process";
 import fs from "fs";
-import { isA, isSubClass, property } from "./utils";
+import { isA, isSubClass, property, sortModels } from "./utils";
+import { Models } from "./types";
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -54,12 +55,11 @@ app.post("/asp-parser", (req, res) => {
 
   const parents: string[] = [];
   taxonomyData.map((el) => {
-    /**
-     * Means that the element should be considered top-level.
-     * The parents should be added to an array for easy lookup.
-     */
-
     if (!el.hasOwnProperty("parentId")) {
+      /**
+       * Means that the element should be considered top-level.
+       * The parents should be added to an array for easy lookup.
+       */
       taxonomyString += isSubClass(el.agent, "agent");
       parents[el.id] = el.agent;
     } else if (el.hasOwnProperty("role")) {
@@ -70,8 +70,6 @@ app.post("/asp-parser", (req, res) => {
     } else {
       taxonomyString += isA(el.agent, parents[el.parentId]);
     }
-    console.log("EL:: ", el);
-    console.log("PARENTS:: ", parents[1]);
   });
 
   aspString += `${predString}\n\n`;
@@ -84,12 +82,11 @@ app.post("/asp-parser", (req, res) => {
 
   const spawn = child.spawn;
   const pythonProcess = spawn("python3", ["src/proxy.py"]);
-  let models: any;
   pythonProcess.stdout.on("data", (data) => {
     console.log(data.toString());
-    models = JSON.parse(fs.readFileSync("src/res.json", "utf8"));
-    console.log(models);
-    res.json(models);
+    const models = fs.readFileSync("src/res.json", "utf8");
+    const sortedModels = sortModels(JSON.parse(models));
+    res.status(sortedModels.status).json(sortedModels.body);
   });
 
   /* const foo: child.ChildProcess = child.exec(

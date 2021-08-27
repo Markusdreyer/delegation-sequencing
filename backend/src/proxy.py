@@ -5,6 +5,7 @@ stream = os.popen('clingo --outf=2 -Wno-atom-undefined --opt-mode=optN --models=
 output = stream.read()
 
 with open('src/res.json', 'w') as f:
-    json.dump(output, f)
+    f.write(output)
+    #json.dump(output, f)
 
 print("Data ready")

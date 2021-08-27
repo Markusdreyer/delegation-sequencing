@@ -60,11 +60,11 @@ app.post("/asp-parser", (req, res) => {
     });
     const parents = [];
     taxonomyData.map((el) => {
-        /**
-         * Means that the element should be considered top-level.
-         * The parents should be added to an array for easy lookup.
-         */
         if (!el.hasOwnProperty("parentId")) {
+            /**
+             * Means that the element should be considered top-level.
+             * The parents should be added to an array for easy lookup.
+             */
             taxonomyString += utils_1.isSubClass(el.agent, "agent");
             parents[el.id] = el.agent;
         }
@@ -77,8 +77,6 @@ app.post("/asp-parser", (req, res) => {
         else {
             taxonomyString += utils_1.isA(el.agent, parents[el.parentId]);
         }
-        console.log("EL:: ", el);
-        console.log("PARENTS:: ", parents[1]);
     });
     aspString += `${predString}\n\n`;
     aspString += `${taxonomyString}\n\n`;
@@ -89,12 +87,11 @@ app.post("/asp-parser", (req, res) => {
     });
     const spawn = child.spawn;
     const pythonProcess = spawn("python3", ["src/proxy.py"]);
-    let models;
     pythonProcess.stdout.on("data", (data) => {
         console.log(data.toString());
-        models = JSON.parse(fs_1.default.readFileSync("src/res.json", "utf8"));
-        console.log(models);
-        res.json(models);
+        const models = fs_1.default.readFileSync("src/res.json", "utf8");
+        const sortedModels = utils_1.sortModels(JSON.parse(models));
+        res.status(sortedModels.status).json(sortedModels.body);
     });
     /* const foo: child.ChildProcess = child.exec(
     "clingo --outf=2 src/model.lp src/actions.lp",
