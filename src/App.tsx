@@ -12,7 +12,7 @@ import {
 import Sunburst from "./components/Sunburst";
 import clsx from "clsx";
 import { generateSunburstData } from "./utils/utils";
-import { ProcedureData, RootState, TaxonomyData } from "./types";
+import { Action, ProcedureData, RootState, TaxonomyData } from "./types";
 import { useSelector, useDispatch } from "react-redux";
 import {
   renderTable,
@@ -116,15 +116,15 @@ const App = () => {
           const expedite = el.split(/[\(\)\s,]+/);
           const abbreviation = expedite[1];
           const agent = expedite[2];
-          const time = expedite[3];
+          const time = parseInt(expedite[3]);
 
           // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
           const actionLookup = procedures[tableData.key].find(
             (el: ProcedureData) => el.abbreviation === abbreviation
           ).action;
 
-          const actionObject = {
-            action: actionLookup,
+          const actionObject: Action = {
+            name: actionLookup,
             agent: agent,
             time: time,
           };

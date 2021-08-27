@@ -47,3 +47,9 @@ export interface SunburstData {
   name: string;
   value?: number;
 }
+
+export interface Action {
+  name: string;
+  agent: string;
+  time: number;
+}
