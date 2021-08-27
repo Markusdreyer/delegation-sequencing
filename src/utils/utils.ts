@@ -55,7 +55,7 @@ const getParent = (parents: string[], time: string, index: number) => {
 
   if (parents[index - 1].split("-")[1] === time) {
     /**
-     * Child and parrent occur on the same level. Need to find element from previous level
+     * Child and parent occur on the same level. Need to find element from previous level
      * Currently this is causing issues, since it's finding the last element from the previous level
      * and all the models has the same action and agent as the last element.
      */

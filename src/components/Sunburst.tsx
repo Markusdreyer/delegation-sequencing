@@ -15,6 +15,9 @@ const Sunburst: React.FC<Props> = (props) => {
     credits: {
       enabled: false,
     },
+    tooltip: {
+      valueDecimals: 2,
+    },
     title: {
       text: "Result",
     },
