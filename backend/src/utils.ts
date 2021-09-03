@@ -21,9 +21,6 @@ export const sortModels = (models: any): Response => {
     return error;
   }
 
-  console.log("MODELS CALL:: ", models.Solver);
-  console.log("MODELS:: ", models);
-
   if (models.Call.length > 1) {
     const error: Response = {
       status: 500,

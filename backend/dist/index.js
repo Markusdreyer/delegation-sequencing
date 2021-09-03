@@ -38,8 +38,6 @@ app.post("/asp-parser", (req, res) => {
     const reqBody = req.body;
     const taxonomyData = reqBody.taxonomy;
     const procedureData = reqBody.procedure;
-    console.log("PROCEDURE DATA:: ", procedureData);
-    console.log("TAXONOMY DATA:: ", taxonomyData);
     let aspString = "";
     let predString = "";
     let taxonomyString = "";
@@ -87,10 +85,18 @@ app.post("/asp-parser", (req, res) => {
     });
     const spawn = child.spawn;
     const pythonProcess = spawn("python3", ["src/proxy.py"]);
-    pythonProcess.stdout.on("data", (data) => {
-        console.log(data.toString());
-        const models = fs_1.default.readFileSync("src/res.json", "utf8");
-        const sortedModels = utils_1.sortModels(JSON.parse(models));
+    pythonProcess.stdout.on("data", () => {
+        let sortedModels;
+        console.log("HALLOAOO");
+        let models;
+        try {
+            models = fs_1.default.readFileSync("src/res.json", "utf8");
+            sortedModels = utils_1.sortModels(JSON.parse(models));
+        }
+        catch (error) {
+            console.error("Unable to parse model file:: ", error);
+            console.error("Model file:: ", models);
+        }
         res.status(sortedModels.status).json(sortedModels.body);
     });
     /* const foo: child.ChildProcess = child.exec(

@@ -1,11 +1,12 @@
 import os
-import json
 
 stream = os.popen('clingo --outf=2 -Wno-atom-undefined --opt-mode=optN --models=4 src/model.lp src/actions.lp')
 output = stream.read()
 
-with open('src/res.json', 'w') as f:
-    f.write(output)
-    #json.dump(output, f)
+try:
+    with open('res.json', 'w') as f:
+        f.write(output)
+        print("Data ready")
+except Exception as error:
+    print("Unable to write to file")
 
-print("Data ready")

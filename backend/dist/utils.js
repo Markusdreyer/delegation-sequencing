@@ -21,8 +21,6 @@ const sortModels = (models) => {
         };
         return error;
     }
-    console.log("MODELS CALL:: ", models.Solver);
-    console.log("MODELS:: ", models);
     if (models.Call.length > 1) {
         const error = {
             status: 500,
