@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import * as dotenv from "dotenv";
 import axios from "axios";
 import {
   Dialog,
@@ -24,6 +25,8 @@ import Sidebar from "./components/SideBar";
 import Table from "./components/Table";
 import useStyles from "./Styles";
 import { dialogOptions, tableTypes } from "./utils/const";
+
+dotenv.config();
 
 const App = () => {
   const showSidebar = useSelector((state: RootState) => state.showSidebar);
@@ -90,9 +93,11 @@ const App = () => {
     };
     const simulationRequest = JSON.stringify(simulationData);
 
+    console.log("ENV:: ", process.env.REACT_APP_BACKEND_URL);
+
     axios({
       method: "post",
-      url: "http://localhost:8000/asp-parser",
+      url: process.env.REACT_APP_BACKEND_URL || "https://localhost:8000",
       data: simulationRequest,
       headers: {
         "Content-Type": "application/json",

@@ -15,7 +15,6 @@ export const generateSunburstData = (models: any) => {
         const hash = md5(`${el.agent}${el.name}, at ${el.time}`);
         const id = `${hash}-${el.time}`;
 
-        console.log("EL:: ", el);
         const parent = getParent(parents, el.time, j);
 
         parents.push(id);
