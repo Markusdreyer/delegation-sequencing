@@ -8,6 +8,7 @@ WORKDIR /app
 COPY ["package.json", "package-lock.json", "./"]
 RUN ls
 RUN npm install --production
+RUN npm run tsc
 COPY . .
 
 EXPOSE 8000
