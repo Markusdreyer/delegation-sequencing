@@ -1,7 +1,7 @@
 FROM node:14
 
 
-ENV REACT_APP_BACKEND_URL="http://34.141.107.82/asp-parser"
+ENV REACT_APP_BACKEND_URL="http://delegation-sequencing.azurewebsites.net/asp-parser"
 
 LABEL version="1.0"
 LABEL description="Frontend image"
