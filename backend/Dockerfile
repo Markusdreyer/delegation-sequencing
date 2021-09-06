@@ -3,12 +3,10 @@ FROM node:14.15.1
 LABEL version="1.0"
 LABEL description="Backend image"
 
-WORKDIR /app
+WORKDIR /backend
 
 COPY ["package.json", "package-lock.json", "./"]
-RUN ls
-RUN npm install --production
-RUN npm run tsc
+RUN npm install 
 COPY . .
 
 EXPOSE 8000

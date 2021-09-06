@@ -1,16 +1,16 @@
 import express from "express";
 import cors from "cors";
-import bodyParser, { json } from "body-parser";
 import * as child from "child_process";
 import fs from "fs";
 import { isA, isSubClass, property, sortModels } from "./utils";
 import { Models } from "./types";
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.enable("trust proxy");
 app.use(cors());
+app.use("*", cors());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.enable("trust proxy");
 const port = 8000;
 
 interface ProcedureData {

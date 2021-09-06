@@ -91,13 +91,14 @@ const App = () => {
       taxonomy: taxonomies[activeTaxonomy],
       procedure: procedures[tableData.key],
     };
-    const simulationRequest = JSON.stringify(simulationData);
+    const simulationRequest = simulationData;
 
     console.log("ENV:: ", process.env.REACT_APP_BACKEND_URL);
 
     axios({
       method: "post",
-      url: process.env.REACT_APP_BACKEND_URL || "https://localhost:8000",
+      url:
+        process.env.REACT_APP_BACKEND_URL || "http://localhost:8000/asp-parser",
       data: simulationRequest,
       headers: {
         "Content-Type": "application/json",
