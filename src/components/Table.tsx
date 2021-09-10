@@ -50,6 +50,7 @@ const Table: React.FC<Props> = (props) => {
             setTimeout(() => {
               const dataUpdate = data.data!;
               dataUpdate.push(newData);
+              console.log("DATA UPDATE:: ", dataUpdate);
               if (data.type === tableTypes.PROCEDURES) {
                 dispatch(setProcedure(data.key, dataUpdate as ProcedureData[]));
               } else if (data.type === tableTypes.TAXONOMIES) {

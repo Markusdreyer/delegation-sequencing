@@ -82,10 +82,9 @@ app.post("/asp-parser", (req, res) => {
   const pythonProcess = spawn("python3", ["src/proxy.py"]);
   pythonProcess.stdout.on("data", () => {
     let sortedModels;
-    console.log("HALLOAOO");
     let models;
     try {
-      models = fs.readFileSync("src/res.json", "utf8");
+      models = fs.readFileSync("res.json", "utf8");
       sortedModels = sortModels(JSON.parse(models));
     } catch (error) {
       console.error("Unable to parse model file:: ", error);

@@ -28,6 +28,11 @@ const Sunburst: React.FC<Props> = (props) => {
         data: data,
       },
     ],
+    chart: {
+      animation: {
+        duration: 100,
+      },
+    },
   };
 
   return (

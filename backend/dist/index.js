@@ -87,10 +87,9 @@ app.post("/asp-parser", (req, res) => {
     const pythonProcess = spawn("python3", ["src/proxy.py"]);
     pythonProcess.stdout.on("data", () => {
         let sortedModels;
-        console.log("HALLOAOO");
         let models;
         try {
-            models = fs_1.default.readFileSync("src/res.json", "utf8");
+            models = fs_1.default.readFileSync("res.json", "utf8");
             sortedModels = utils_1.sortModels(JSON.parse(models));
         }
         catch (error) {

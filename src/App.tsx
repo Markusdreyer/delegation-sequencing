@@ -93,7 +93,7 @@ const App = () => {
     };
     const simulationRequest = simulationData;
 
-    console.log("ENV:: ", process.env.REACT_APP_BACKEND_URL);
+    console.log("SIM REQUEST:: ", simulationRequest);
 
     axios({
       method: "post",
