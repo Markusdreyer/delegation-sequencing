@@ -48,19 +48,31 @@ const Table: React.FC<Props> = (props) => {
         onRowAdd: (newData) =>
           new Promise((resolve: any, reject) => {
             setTimeout(() => {
-              const dataUpdate = data.data!;
-              dataUpdate.push(newData);
-              console.log("DATA UPDATE:: ", dataUpdate);
               if (data.type === tableTypes.PROCEDURES) {
-                dispatch(setProcedure(data.key, dataUpdate as ProcedureData[]));
+                const dataUpdate = data.data as ProcedureData[];
+                newData.id = 1;
+                dataUpdate.push(newData);
+                dispatch(setProcedure(data.key, dataUpdate));
               } else if (data.type === tableTypes.TAXONOMIES) {
-                dispatch(setTaxonomy(data.key, dataUpdate as TaxonomyData[]));
+                let taxonomyData = newData as TaxonomyData;
+                if (taxonomyData.parent !== "None") {
+                  const parentId = taxonomies[data.key]!.find(
+                    (el: TaxonomyData) => el.agent === taxonomyData.parent
+                  )!.id;
+                  taxonomyData.parentId = parentId;
+                  taxonomyData.id = parentId + 1;
+                } else {
+                  newData.id = 1;
+                  taxonomyData.role = "N/A";
+                }
+                const dataUpdate = data.data as TaxonomyData[];
+                dataUpdate.push(taxonomyData);
+                dispatch(setTaxonomy(data.key, dataUpdate));
               } else {
                 console.log(
                   `${data.type} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
                 );
               }
-
               resolve();
             }, 1000);
           }),

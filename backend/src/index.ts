@@ -3,7 +3,7 @@ import cors from "cors";
 import * as child from "child_process";
 import fs from "fs";
 import { isA, isSubClass, property, sortModels } from "./utils";
-import { Models } from "./types";
+import { Response } from "./types";
 
 const app = express();
 app.use(cors());
@@ -81,7 +81,7 @@ app.post("/asp-parser", (req, res) => {
   const spawn = child.spawn;
   const pythonProcess = spawn("python3", ["src/proxy.py"]);
   pythonProcess.stdout.on("data", () => {
-    let sortedModels;
+    let sortedModels: Response;
     let models;
     try {
       models = fs.readFileSync("res.json", "utf8");
@@ -89,6 +89,10 @@ app.post("/asp-parser", (req, res) => {
     } catch (error) {
       console.error("Unable to parse model file:: ", error);
       console.error("Model file:: ", models);
+      sortedModels = {
+        status: 500,
+        body: error,
+      };
     }
 
     res.status(sortedModels.status).json(sortedModels.body);

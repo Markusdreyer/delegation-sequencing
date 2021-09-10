@@ -34,6 +34,7 @@ export interface TaxonomyData {
   parentId?: number;
   agent: string;
   role?: string;
+  parent: string;
 }
 
 export interface Dialog {

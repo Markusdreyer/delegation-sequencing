@@ -66,5 +66,14 @@ export const tableColumns = {
       title: "Role",
       field: "role",
     },
+    {
+      title: "Parent",
+      field: "parent",
+      lookup: {
+        None: "None",
+        foo: "foo",
+        bar: "bar",
+      },
+    },
   ],
 };

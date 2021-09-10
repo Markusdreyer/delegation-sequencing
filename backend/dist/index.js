@@ -95,6 +95,10 @@ app.post("/asp-parser", (req, res) => {
         catch (error) {
             console.error("Unable to parse model file:: ", error);
             console.error("Model file:: ", models);
+            sortedModels = {
+                status: 500,
+                body: error,
+            };
         }
         res.status(sortedModels.status).json(sortedModels.body);
     });
