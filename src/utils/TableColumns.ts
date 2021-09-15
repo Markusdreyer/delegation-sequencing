@@ -71,8 +71,6 @@ export const tableColumns = {
       field: "parent",
       lookup: {
         None: "None",
-        foo: "foo",
-        bar: "bar",
       },
     },
   ],

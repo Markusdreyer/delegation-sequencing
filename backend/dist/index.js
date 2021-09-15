@@ -78,18 +78,17 @@ app.post("/asp-parser", (req, res) => {
     });
     aspString += `${predString}\n\n`;
     aspString += `${taxonomyString}\n\n`;
-    fs_1.default.writeFile("src/model.lp", aspString, (err) => {
-        if (err)
-            throw err;
-        console.log("Model saved to model.lp");
-    });
+    /* fs.writeFile("src/model.lp", aspString, (err) => {
+      if (err) throw err;
+      console.log("Model saved to model.lp");
+    }); */
     const spawn = child.spawn;
     const pythonProcess = spawn("python3", ["src/proxy.py"]);
     pythonProcess.stdout.on("data", () => {
         let sortedModels;
         let models;
         try {
-            models = fs_1.default.readFileSync("res.json", "utf8");
+            models = fs_1.default.readFileSync("./src/res.json", "utf8");
             sortedModels = utils_1.sortModels(JSON.parse(models));
         }
         catch (error) {

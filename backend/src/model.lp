@@ -25,7 +25,7 @@ mandatory(e) .
 
 primitive(f) . 
 description(f, "Travel of ladder tower crew to 911 address") .
-delegate(f, 1, lt_crew) :- deploy(f) . 
+responsible(f, Ag) :- deploy(f), property(Ag, driver).
 mandatory(f) .
 
 primitive(g) . 
@@ -82,7 +82,7 @@ pred(n, f) .
 
 
 is_subclass(ae_crew, agent).
-is_subclass(driver, ae_crew).
+is_subclass(driver, lt_crew).
 property(barry, driver).
 is_a(barry, driver).
 is_a(john, ae_crew).

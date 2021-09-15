@@ -73,10 +73,10 @@ app.post("/asp-parser", (req, res) => {
   aspString += `${predString}\n\n`;
   aspString += `${taxonomyString}\n\n`;
 
-  fs.writeFile("src/model.lp", aspString, (err) => {
+  /* fs.writeFile("src/model.lp", aspString, (err) => {
     if (err) throw err;
     console.log("Model saved to model.lp");
-  });
+  }); */
 
   const spawn = child.spawn;
   const pythonProcess = spawn("python3", ["src/proxy.py"]);
@@ -84,7 +84,7 @@ app.post("/asp-parser", (req, res) => {
     let sortedModels: Response;
     let models;
     try {
-      models = fs.readFileSync("res.json", "utf8");
+      models = fs.readFileSync("./src/res.json", "utf8");
       sortedModels = sortModels(JSON.parse(models));
     } catch (error) {
       console.error("Unable to parse model file:: ", error);

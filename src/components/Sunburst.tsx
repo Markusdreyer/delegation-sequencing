@@ -26,6 +26,13 @@ const Sunburst: React.FC<Props> = (props) => {
         allowDrillToNode: true,
         type: "sunburst",
         data: data,
+        point: {
+          events: {
+            click: (e: any) => {
+              console.log(e.point.name);
+            },
+          },
+        },
       },
     ],
     chart: {

@@ -86,6 +86,11 @@ const App = () => {
     dispatch(toggleDialog());
   };
 
+  const logTableSnapshot = () => {
+    console.log("Taxonomy: ", taxonomies[activeTaxonomy]);
+    console.log("Procedure: ", procedures[tableData.key]);
+  };
+
   const generateSunburst = () => {
     const simulationData = {
       taxonomy: taxonomies[activeTaxonomy],
@@ -198,6 +203,13 @@ const App = () => {
                 onClick={generateSunburst}
               >
                 Run simulation
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={logTableSnapshot}
+              >
+                Log table snapshot
               </Button>
             </div>
             {sunburstData && <Sunburst data={sunburstData} />}

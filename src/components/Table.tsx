@@ -44,6 +44,14 @@ const Table: React.FC<Props> = (props) => {
       columns={columns}
       data={data.data.map((o: any) => ({ ...o }))} //Ugly immutable hack: https://github.com/mbrn/material-table/issues/666
       parentChildData={(row, rows) => rows.find((o) => o.id === row.parentId)}
+      options={{
+        rowStyle: (rowData) => ({
+          backgroundColor:
+            rowData.tableData.childRows === null && data.type === "taxonomies"
+              ? "#EEE"
+              : "",
+        }),
+      }}
       editable={{
         onRowAdd: (newData) =>
           new Promise((resolve: any, reject) => {
@@ -67,6 +75,12 @@ const Table: React.FC<Props> = (props) => {
                 }
                 const dataUpdate = data.data as TaxonomyData[];
                 dataUpdate.push(taxonomyData);
+                console.log("TABLE columns ", tableColumns);
+                const columnUpdate: any = tableColumns;
+                columnUpdate.taxonomies[2].lookup[taxonomyData.agent] =
+                  taxonomyData.agent;
+
+                console.log("Col update ", columnUpdate);
                 dispatch(setTaxonomy(data.key, dataUpdate));
               } else {
                 console.log(

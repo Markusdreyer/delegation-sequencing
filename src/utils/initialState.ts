@@ -300,6 +300,21 @@ const initialState: RootState = {
     ],
   },
   taxonomies: {
+    Cooking: [
+      {
+        agent: "Chefs",
+        parent: "None",
+        id: 1,
+        role: "N/A",
+      },
+      {
+        agent: "Eivind Hellstrøm",
+        role: "Cook",
+        parent: "Chefs",
+        parentId: 1,
+        id: 2,
+      },
+    ],
     "Land fire incidents": [
       {
         id: 1,
@@ -310,20 +325,20 @@ const initialState: RootState = {
         id: 2,
         parentId: 1,
         agent: "barry",
-        parent: "None",
+        parent: "ae_crew",
         role: "driver",
       },
       {
         id: 3,
         parentId: 1,
         agent: "john",
-        parent: "None",
+        parent: "ae_crew",
       },
       {
         id: 4,
         parentId: 1,
         agent: "frank",
-        parent: "None",
+        parent: "ae_crew",
       },
       {
         id: 5,
@@ -334,19 +349,19 @@ const initialState: RootState = {
         id: 6,
         parentId: 5,
         agent: "jan",
-        parent: "None",
+        parent: "se_crew",
       },
       {
         id: 7,
         parentId: 5,
         agent: "liz",
-        parent: "None",
+        parent: "se_crew",
       },
       {
         id: 7,
         parentId: 5,
         agent: "kathrin",
-        parent: "None",
+        parent: "se_crew",
       },
       {
         id: 9,
@@ -357,19 +372,19 @@ const initialState: RootState = {
         id: 10,
         parentId: 9,
         agent: "xi",
-        parent: "None",
+        parent: "lt_crew",
       },
       {
         id: 11,
         parentId: 9,
         agent: "lin",
-        parent: "None",
+        parent: "lt_crew",
       },
       {
         id: 12,
         parentId: 9,
         agent: "dahn",
-        parent: "None",
+        parent: "lt_crew",
       },
     ],
     "Offshore incidents": [],
