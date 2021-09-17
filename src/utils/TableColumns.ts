@@ -1,6 +1,7 @@
 export const tableColumns = {
   procedures: [
     { title: "Action", field: "action" },
+    { title: "Role", field: "role" },
     {
       title: "Agents",
       field: "agents",

@@ -27,6 +27,7 @@ export interface ProcedureData {
   quantity: number;
   abbreviation: string;
   precedence: string;
+  role?: string;
 }
 
 export interface TaxonomyData {

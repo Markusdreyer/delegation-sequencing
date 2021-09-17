@@ -8,15 +8,7 @@
       "Witnesses": [
         {
           "Value": [
-            "expedite(f,barry,2)", "expedite(c,lin,1)", "expedite(n,dahn,7)", "expedite(b,jan,3)", "expedite(l,jan,9)", "expedite(e,liz,4)", "expedite(j,liz,8)", "expedite(k,kathrin,6)", "expedite(m,kathrin,11)", "expedite(g,john,5)", "expedite(a,frank,1)", "expedite(d,frank,2)", "expedite(h,frank,10)", "expedite(i,frank,12)"
-          ],
-          "Costs": [
-            78
-          ]
-        },
-        {
-          "Value": [
-            "expedite(f,barry,2)", "expedite(c,lin,1)", "expedite(n,dahn,7)", "expedite(b,jan,3)", "expedite(l,jan,9)", "expedite(m,jan,10)", "expedite(e,liz,4)", "expedite(j,liz,8)", "expedite(k,kathrin,6)", "expedite(g,john,5)", "expedite(i,john,11)", "expedite(a,frank,1)", "expedite(d,frank,2)", "expedite(h,frank,10)"
+            "expedite(f,barry,6)", "expedite(h,barry,9)", "expedite(c,xi,1)", "expedite(n,lin,8)", "expedite(e,jan,4)", "expedite(b,liz,2)", "expedite(j,liz,6)", "expedite(l,liz,7)", "expedite(m,liz,11)", "expedite(k,kathrin,5)", "expedite(a,john,3)", "expedite(i,john,10)", "expedite(d,frank,6)", "expedite(g,frank,7)"
           ],
           "Costs": [
             66
@@ -24,15 +16,7 @@
         },
         {
           "Value": [
-            "expedite(f,barry,7)", "expedite(n,xi,8)", "expedite(c,lin,6)", "expedite(k,jan,6)", "expedite(l,jan,9)", "expedite(m,jan,10)", "expedite(j,liz,8)", "expedite(b,kathrin,4)", "expedite(e,kathrin,5)", "expedite(a,john,1)", "expedite(g,john,3)", "expedite(i,john,7)", "expedite(d,frank,2)", "expedite(h,frank,5)"
-          ],
-          "Costs": [
-            55
-          ]
-        },
-        {
-          "Value": [
-            "expedite(f,barry,3)", "expedite(c,lin,2)", "expedite(n,dahn,4)", "expedite(b,jan,1)", "expedite(e,jan,2)", "expedite(l,jan,4)", "expedite(k,liz,3)", "expedite(j,liz,4)", "expedite(m,kathrin,5)", "expedite(g,john,6)", "expedite(a,frank,4)", "expedite(d,frank,5)", "expedite(h,frank,7)", "expedite(i,frank,8)"
+            "expedite(d,barry,3)", "expedite(g,barry,4)", "expedite(f,barry,6)", "expedite(c,xi,4)", "expedite(n,lin,7)", "expedite(e,jan,3)", "expedite(b,liz,2)", "expedite(j,liz,4)", "expedite(l,liz,7)", "expedite(m,liz,8)", "expedite(k,kathrin,5)", "expedite(h,john,5)", "expedite(a,frank,1)", "expedite(i,frank,7)"
           ],
           "Costs": [
             36
@@ -40,7 +24,7 @@
         },
         {
           "Value": [
-            "expedite(f,barry,3)", "expedite(n,lin,5)", "expedite(c,dahn,2)", "expedite(e,jan,3)", "expedite(b,liz,1)", "expedite(k,kathrin,4)", "expedite(j,kathrin,5)", "expedite(l,kathrin,6)", "expedite(m,kathrin,7)", "expedite(a,john,1)", "expedite(h,john,5)", "expedite(d,frank,2)", "expedite(g,frank,3)", "expedite(i,frank,6)"
+            "expedite(a,barry,2)", "expedite(d,barry,3)", "expedite(g,barry,4)", "expedite(f,barry,6)", "expedite(c,lin,5)", "expedite(n,dahn,7)", "expedite(l,jan,6)", "expedite(b,liz,1)", "expedite(j,liz,6)", "expedite(m,liz,7)", "expedite(e,kathrin,4)", "expedite(k,kathrin,5)", "expedite(h,john,5)", "expedite(i,frank,6)"
           ],
           "Costs": [
             28
@@ -48,7 +32,7 @@
         },
         {
           "Value": [
-            "expedite(f,barry,4)", "expedite(c,xi,2)", "expedite(n,lin,5)", "expedite(b,jan,2)", "expedite(e,jan,3)", "expedite(k,jan,4)", "expedite(l,jan,5)", "expedite(j,kathrin,5)", "expedite(m,kathrin,6)", "expedite(a,john,1)", "expedite(d,frank,2)", "expedite(g,frank,3)", "expedite(h,frank,4)", "expedite(i,frank,5)"
+            "expedite(g,barry,4)", "expedite(f,barry,5)", "expedite(c,lin,4)", "expedite(n,dahn,6)", "expedite(k,jan,3)", "expedite(b,liz,1)", "expedite(l,liz,4)", "expedite(j,liz,5)", "expedite(e,kathrin,2)", "expedite(m,kathrin,5)", "expedite(d,john,2)", "expedite(a,frank,1)", "expedite(h,frank,5)", "expedite(i,frank,6)"
           ],
           "Costs": [
             21
@@ -56,7 +40,7 @@
         },
         {
           "Value": [
-            "expedite(f,barry,4)", "expedite(n,lin,5)", "expedite(c,dahn,3)", "expedite(b,jan,1)", "expedite(j,jan,3)", "expedite(l,jan,4)", "expedite(e,liz,2)", "expedite(m,liz,5)", "expedite(k,kathrin,3)", "expedite(a,john,1)", "expedite(d,john,2)", "expedite(g,frank,3)", "expedite(h,frank,4)", "expedite(i,frank,5)"
+            "expedite(g,barry,3)", "expedite(f,barry,4)", "expedite(c,xi,2)", "expedite(n,dahn,5)", "expedite(b,liz,1)", "expedite(j,liz,4)", "expedite(e,kathrin,2)", "expedite(k,kathrin,3)", "expedite(l,kathrin,4)", "expedite(m,kathrin,5)", "expedite(d,john,2)", "expedite(h,john,4)", "expedite(a,frank,1)", "expedite(i,frank,5)"
           ],
           "Costs": [
             15
@@ -64,7 +48,7 @@
         },
         {
           "Value": [
-            "expedite(f,barry,4)", "expedite(n,lin,5)", "expedite(c,dahn,2)", "expedite(l,jan,4)", "expedite(e,liz,2)", "expedite(j,liz,4)", "expedite(b,kathrin,1)", "expedite(k,kathrin,3)", "expedite(m,kathrin,5)", "expedite(a,john,1)", "expedite(d,john,2)", "expedite(g,frank,3)", "expedite(h,frank,4)", "expedite(i,frank,5)"
+            "expedite(f,barry,2)", "expedite(g,barry,3)", "expedite(h,barry,4)", "expedite(c,lin,1)", "expedite(n,dahn,4)", "expedite(k,jan,3)", "expedite(b,liz,1)", "expedite(l,liz,4)", "expedite(m,liz,5)", "expedite(e,kathrin,2)", "expedite(j,kathrin,4)", "expedite(d,john,2)", "expedite(i,john,5)", "expedite(a,frank,1)"
           ],
           "Costs": [
             15
@@ -72,7 +56,7 @@
         },
         {
           "Value": [
-            "expedite(f,barry,4)", "expedite(n,lin,5)", "expedite(c,dahn,2)", "expedite(l,jan,4)", "expedite(e,liz,2)", "expedite(j,liz,4)", "expedite(b,kathrin,1)", "expedite(k,kathrin,3)", "expedite(m,kathrin,5)", "expedite(d,john,2)", "expedite(a,frank,1)", "expedite(g,frank,3)", "expedite(h,frank,4)", "expedite(i,frank,5)"
+            "expedite(a,barry,1)", "expedite(f,barry,2)", "expedite(g,barry,3)", "expedite(h,barry,4)", "expedite(c,lin,1)", "expedite(n,dahn,4)", "expedite(k,jan,3)", "expedite(b,liz,1)", "expedite(l,liz,4)", "expedite(m,liz,5)", "expedite(e,kathrin,2)", "expedite(j,kathrin,4)", "expedite(d,john,2)", "expedite(i,john,5)"
           ],
           "Costs": [
             15
@@ -80,7 +64,7 @@
         },
         {
           "Value": [
-            "expedite(f,barry,4)", "expedite(n,lin,5)", "expedite(c,dahn,2)", "expedite(l,jan,4)", "expedite(b,liz,1)", "expedite(e,liz,2)", "expedite(j,liz,4)", "expedite(k,kathrin,3)", "expedite(m,kathrin,5)", "expedite(a,john,1)", "expedite(d,john,2)", "expedite(g,frank,3)", "expedite(h,frank,4)", "expedite(i,frank,5)"
+            "expedite(f,barry,2)", "expedite(g,barry,3)", "expedite(h,barry,4)", "expedite(c,lin,1)", "expedite(n,dahn,4)", "expedite(k,jan,3)", "expedite(b,liz,1)", "expedite(l,liz,4)", "expedite(m,liz,5)", "expedite(e,kathrin,2)", "expedite(j,kathrin,4)", "expedite(a,john,1)", "expedite(d,john,2)", "expedite(i,john,5)"
           ],
           "Costs": [
             15
@@ -88,7 +72,7 @@
         },
         {
           "Value": [
-            "expedite(f,barry,4)", "expedite(n,lin,5)", "expedite(c,dahn,2)", "expedite(l,jan,4)", "expedite(b,liz,1)", "expedite(e,liz,2)", "expedite(j,liz,4)", "expedite(k,kathrin,3)", "expedite(m,kathrin,5)", "expedite(d,john,2)", "expedite(a,frank,1)", "expedite(g,frank,3)", "expedite(h,frank,4)", "expedite(i,frank,5)"
+            "expedite(a,barry,1)", "expedite(f,barry,2)", "expedite(g,barry,3)", "expedite(h,barry,4)", "expedite(c,dahn,1)", "expedite(n,dahn,4)", "expedite(k,jan,3)", "expedite(b,liz,1)", "expedite(l,liz,4)", "expedite(m,liz,5)", "expedite(e,kathrin,2)", "expedite(j,kathrin,4)", "expedite(d,john,2)", "expedite(i,john,5)"
           ],
           "Costs": [
             15
@@ -99,7 +83,7 @@
   ],
   "Result": "OPTIMUM FOUND",
   "Models": {
-    "Number": 11,
+    "Number": 9,
     "More": "yes",
     "Optimum": "yes",
     "Optimal": 4,
@@ -109,10 +93,10 @@
   },
   "Calls": 1,
   "Time": {
-    "Total": 0.186,
-    "Solve": 0.153,
-    "Model": 0.044,
+    "Total": 0.115,
+    "Solve": 0.082,
+    "Model": 0.058,
     "Unsat": 0.000,
-    "CPU": 0.184
+    "CPU": 0.113
   }
 }

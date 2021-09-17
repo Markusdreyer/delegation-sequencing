@@ -58,6 +58,7 @@ const initialState: RootState = {
         agents: "lt_crew",
         quantity: 1,
         abbreviation: "f",
+        role: "driver",
         precedence: "c",
       },
       {
@@ -440,6 +441,7 @@ const initialState: RootState = {
         action: "Travel of ladder tower crew to 911 address",
         agents: "lt_crew",
         quantity: 2,
+        role: "driver",
         abbreviation: "f",
         precedence: "c",
       },

@@ -19,6 +19,7 @@ interface ProcedureData {
   quantity: number;
   abbreviation: string;
   precedence: string;
+  role?: string;
 }
 
 interface TaxonomyData {
@@ -38,13 +39,19 @@ app.post("/asp-parser", (req, res) => {
   procedureData.map((el) => {
     const precedence = el.precedence;
     const abbreviation = el.abbreviation;
+    const role = el.role;
     const agents = el.agents.split(",");
     if (agents.length > 1) {
       aspString += `collaborative(${abbreviation}) . \n`;
     } else {
       aspString += `primitive(${abbreviation}) . \n`;
     }
-    aspString += `description(${abbreviation}, \"${el.action}\") .\ndelegate(${abbreviation}, ${el.quantity}, ${agents}) :- deploy(${abbreviation}) . \nmandatory(${abbreviation}) .\n\n`;
+
+    if (role) {
+      aspString += `description(${abbreviation}, \"${el.action}\") .\nresponsible(${abbreviation}, Ag) :- deploy(${abbreviation}), property(Ag, ${role}). \nmandatory(${abbreviation}) .\n\n`;
+    } else {
+      aspString += `description(${abbreviation}, \"${el.action}\") .\ndelegate(${abbreviation}, ${el.quantity}, ${agents}) :- deploy(${abbreviation}) . \nmandatory(${abbreviation}) .\n\n`;
+    }
 
     if (precedence !== "None") {
       predString += `pred(${abbreviation}, ${precedence}) .\n`;
@@ -73,10 +80,10 @@ app.post("/asp-parser", (req, res) => {
   aspString += `${predString}\n\n`;
   aspString += `${taxonomyString}\n\n`;
 
-  /* fs.writeFile("src/model.lp", aspString, (err) => {
+  fs.writeFile("src/model.lp", aspString, (err) => {
     if (err) throw err;
     console.log("Model saved to model.lp");
-  }); */
+  });
 
   const spawn = child.spawn;
   const pythonProcess = spawn("python3", ["src/proxy.py"]);
