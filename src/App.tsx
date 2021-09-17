@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import * as dotenv from "dotenv";
-import axios from "axios";
 import {
   Dialog,
   DialogTitle,
@@ -13,7 +12,7 @@ import {
 import Sunburst from "./components/Sunburst";
 import clsx from "clsx";
 import { generateSunburstData, getASPModels } from "./utils/utils";
-import { Action, ProcedureData, RootState, TaxonomyData } from "./types";
+import { Action, RootState } from "./types";
 import { useSelector, useDispatch } from "react-redux";
 import {
   renderTable,
@@ -25,6 +24,7 @@ import Sidebar from "./components/SideBar";
 import Table from "./components/Table";
 import useStyles from "./Styles";
 import { dialogOptions, tableTypes } from "./utils/const";
+import ActionCards from "./components/ActionCards";
 
 dotenv.config();
 
@@ -38,6 +38,7 @@ const App = () => {
   );
   const dialog = useSelector((state: RootState) => state.dialog);
   const [sunburstData, setSunburstData] = useState();
+  const [actionCardData, setActionCardData] = useState<Action[][]>();
   const [newDocument, setNewDocument] = useState("");
 
   const dispatch = useDispatch();
@@ -86,13 +87,17 @@ const App = () => {
     dispatch(toggleDialog());
   };
 
-  const generateActionCards = () => {
-    console.log("Taxonomy: ", taxonomies[activeTaxonomy]);
-    console.log("Procedure: ", procedures[tableData.key]);
+  const generateActionCards = async () => {
+    const models: Action[][] = await getASPModels(
+      taxonomies[activeTaxonomy],
+      procedures[tableData.key]
+    );
+    console.log(models);
+    setActionCardData(models);
   };
 
   const generateSunburst = async () => {
-    const models: Action[] = await getASPModels(
+    const models: Action[][] = await getASPModels(
       taxonomies[activeTaxonomy],
       procedures[tableData.key]
     );
@@ -101,68 +106,71 @@ const App = () => {
   };
 
   return (
-    <div className={classes.root}>
-      <Sidebar />
-      <main
-        className={clsx(classes.content, {
-          [classes.contentShift]: showSidebar,
-        })}
-      >
-        <div className={classes.drawerHeader} />
-        <Dialog
-          open={dialog.show}
-          onClose={() => dispatch(toggleDialog())}
-          aria-labelledby="form-dialog-title"
+    <>
+      <div className={classes.root}>
+        <Sidebar />
+        <main
+          className={clsx(classes.content, {
+            [classes.contentShift]: showSidebar,
+          })}
         >
-          <DialogTitle id="form-dialog-title">{dialog.title}</DialogTitle>
-          <DialogContent>
-            <TextField
-              onChange={(e) => setNewDocument(e.target.value)}
-              autoFocus
-              margin="dense"
-              id="name"
-              label={dialog.label}
-              type="text"
-              fullWidth
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => dispatch(toggleDialog())} color="primary">
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              onClick={() => createNewDocument()}
-              color="primary"
-            >
-              Create
-            </Button>
-          </DialogActions>
-        </Dialog>
-        <Table data={tableData} />
-        {tableData.type === tableTypes.PROCEDURES && (
-          <>
-            <div className="center padding-l">
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={generateSunburst}
-              >
-                Generate sunburst
+          <div className={classes.drawerHeader} />
+          <Dialog
+            open={dialog.show}
+            onClose={() => dispatch(toggleDialog())}
+            aria-labelledby="form-dialog-title"
+          >
+            <DialogTitle id="form-dialog-title">{dialog.title}</DialogTitle>
+            <DialogContent>
+              <TextField
+                onChange={(e) => setNewDocument(e.target.value)}
+                autoFocus
+                margin="dense"
+                id="name"
+                label={dialog.label}
+                type="text"
+                fullWidth
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => dispatch(toggleDialog())} color="primary">
+                Cancel
               </Button>
               <Button
-                variant="contained"
+                type="submit"
+                onClick={() => createNewDocument()}
                 color="primary"
-                onClick={generateActionCards}
               >
-                Generate action cards
+                Create
               </Button>
-            </div>
-            {sunburstData && <Sunburst data={sunburstData} />}
-          </>
-        )}
-      </main>
-    </div>
+            </DialogActions>
+          </Dialog>
+          <Table data={tableData} />
+          {tableData.type === tableTypes.PROCEDURES && (
+            <>
+              <div className="center padding-l">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={generateSunburst}
+                >
+                  Generate sunburst
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={generateActionCards}
+                >
+                  Generate action cards
+                </Button>
+              </div>
+              {sunburstData && <Sunburst data={sunburstData} />}
+            </>
+          )}
+        </main>
+      </div>
+      {actionCardData && <ActionCards data={actionCardData} />}
+    </>
   );
 };
 

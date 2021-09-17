@@ -97,7 +97,7 @@ const generateValues = (models: any) => {
 export const getASPModels = (
   taxonomy: TaxonomyData[],
   procedure: ProcedureData[]
-): Promise<Action[]> => {
+): Promise<Action[][]> => {
   const simulationData = {
     taxonomy,
     procedure,
@@ -127,7 +127,7 @@ export const getASPModels = (
 const parseModels = (
   optimumModels: Action[],
   procedure: ProcedureData[]
-): Action[] => {
+): Action[][] => {
   let parsedModels: any = [];
   optimumModels.map((model: any) => {
     let tmpParsedModel: any = [];
