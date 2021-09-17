@@ -1,5 +1,6 @@
+import axios from "axios";
 import md5 from "md5";
-import { Action } from "../types";
+import { Action, ProcedureData, TaxonomyData } from "../types";
 
 export const generateSunburstData = (models: any) => {
   /**
@@ -91,4 +92,70 @@ const generateValues = (models: any) => {
     });
   });
   return valueEstimator;
+};
+
+export const getASPModels = (
+  taxonomy: TaxonomyData[],
+  procedure: ProcedureData[]
+): Promise<Action[]> => {
+  const simulationData = {
+    taxonomy,
+    procedure,
+  };
+  const simulationRequest = simulationData;
+  return axios({
+    method: "post",
+    url:
+      process.env.REACT_APP_BACKEND_URL || "http://localhost:8000/asp-parser",
+    data: simulationRequest,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => {
+      const data = res.data;
+      const [optimum] = data.Call[0].Witnesses.slice(-1);
+      const optimumCost = optimum.Costs[0];
+      const optimumModels = data.Call[0].Witnesses.filter((el: any) => {
+        return el.Costs[0] === optimumCost;
+      });
+      return optimumModels;
+    })
+    .then((models) => parseModels(models, procedure));
+};
+
+const parseModels = (
+  optimumModels: Action[],
+  procedure: ProcedureData[]
+): Action[] => {
+  let parsedModels: any = [];
+  optimumModels.map((model: any) => {
+    let tmpParsedModel: any = [];
+    model.Value.map((el: any) => {
+      const expedite = el.split(/[\(\)\s,]+/);
+      const abbreviation = expedite[1];
+      const agent = expedite[2];
+      const time = parseInt(expedite[3]);
+
+      // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
+      const actionLookup = procedure.find(
+        (el: ProcedureData) => el.abbreviation === abbreviation
+      ).action;
+
+      const actionObject: Action = {
+        name: actionLookup,
+        agent: agent,
+        time: time,
+      };
+      tmpParsedModel.push(actionObject);
+    });
+    parsedModels.push(tmpParsedModel);
+  });
+
+  parsedModels.map((model: any) => {
+    model.sort((a: any, b: any) =>
+      a.time > b.time ? 1 : b.time > a.time ? -1 : 0
+    );
+  });
+  return parsedModels;
 };

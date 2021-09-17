@@ -12,7 +12,7 @@ import {
 
 import Sunburst from "./components/Sunburst";
 import clsx from "clsx";
-import { generateSunburstData } from "./utils/utils";
+import { generateSunburstData, getASPModels } from "./utils/utils";
 import { Action, ProcedureData, RootState, TaxonomyData } from "./types";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -86,72 +86,18 @@ const App = () => {
     dispatch(toggleDialog());
   };
 
-  const logTableSnapshot = () => {
+  const generateActionCards = () => {
     console.log("Taxonomy: ", taxonomies[activeTaxonomy]);
     console.log("Procedure: ", procedures[tableData.key]);
   };
 
-  const generateSunburst = () => {
-    const simulationData = {
-      taxonomy: taxonomies[activeTaxonomy],
-      procedure: procedures[tableData.key],
-    };
-    const simulationRequest = simulationData;
+  const generateSunburst = async () => {
+    const models: Action[] = await getASPModels(
+      taxonomies[activeTaxonomy],
+      procedures[tableData.key]
+    );
 
-    console.log("SIM REQUEST:: ", simulationRequest);
-
-    axios({
-      method: "post",
-      url:
-        process.env.REACT_APP_BACKEND_URL || "http://localhost:8000/asp-parser",
-      data: simulationRequest,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      const data = res.data;
-      console.log("DATA ", data);
-      const [optimum] = data.Call[0].Witnesses.slice(-1);
-      const optimumCost = optimum.Costs[0];
-
-      const optimumModels = data.Call[0].Witnesses.filter((el: any) => {
-        return el.Costs[0] === optimumCost;
-      });
-
-      console.log(optimumModels);
-
-      let parsedModels: any = [];
-      optimumModels.map((model: any) => {
-        let tmpParsedModel: any = [];
-        model.Value.map((el: any) => {
-          const expedite = el.split(/[\(\)\s,]+/);
-          const abbreviation = expedite[1];
-          const agent = expedite[2];
-          const time = parseInt(expedite[3]);
-
-          // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
-          const actionLookup = procedures[tableData.key].find(
-            (el: ProcedureData) => el.abbreviation === abbreviation
-          ).action;
-
-          const actionObject: Action = {
-            name: actionLookup,
-            agent: agent,
-            time: time,
-          };
-          tmpParsedModel.push(actionObject);
-        });
-        parsedModels.push(tmpParsedModel);
-      });
-
-      parsedModels.map((model: any) => {
-        model.sort((a: any, b: any) =>
-          a.time > b.time ? 1 : b.time > a.time ? -1 : 0
-        );
-      });
-
-      setSunburstData(generateSunburstData(parsedModels));
-    });
+    setSunburstData(generateSunburstData(models));
   };
 
   return (
@@ -202,14 +148,14 @@ const App = () => {
                 color="primary"
                 onClick={generateSunburst}
               >
-                Run simulation
+                Generate sunburst
               </Button>
               <Button
                 variant="contained"
                 color="primary"
-                onClick={logTableSnapshot}
+                onClick={generateActionCards}
               >
-                Log table snapshot
+                Generate action cards
               </Button>
             </div>
             {sunburstData && <Sunburst data={sunburstData} />}
