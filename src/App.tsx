@@ -105,6 +105,11 @@ const App = () => {
     setSunburstData(generateSunburstData(models));
   };
 
+  const logTableData = () => {
+    console.log("Procedure: ", procedures[tableData.key]);
+    console.log("Taxonomy: ", taxonomies[activeTaxonomy]);
+  };
+
   return (
     <>
       <div className={classes.root}>
@@ -162,6 +167,13 @@ const App = () => {
                   onClick={generateActionCards}
                 >
                   Generate action cards
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={logTableData}
+                >
+                  Log table data
                 </Button>
               </div>
               {sunburstData && <Sunburst data={sunburstData} />}

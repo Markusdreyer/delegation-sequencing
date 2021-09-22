@@ -14,8 +14,9 @@ code {
 
 .center {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  align-items: space;
+  margin: 0 20vw;
 }
 
 .padding-l {

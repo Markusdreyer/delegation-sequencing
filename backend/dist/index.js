@@ -45,18 +45,18 @@ app.post("/asp-parser", (req, res) => {
         const precedence = el.precedence;
         const abbreviation = el.abbreviation;
         const role = el.role;
-        const agents = el.agents.split(",");
+        const agents = el.agent.split(",");
         if (agents.length > 1) {
-            aspString += `collaborative(${abbreviation}) . \n`;
+            aspString += `collaborative(\"${abbreviation}\") . \n`;
         }
         else {
-            aspString += `primitive(${abbreviation}) . \n`;
+            aspString += `primitive(\"${abbreviation}\") . \n`;
         }
         if (role) {
-            aspString += `description(${abbreviation}, \"${el.action}\") .\nresponsible(${abbreviation}, Ag) :- deploy(${abbreviation}), property(Ag, ${role}). \nmandatory(${abbreviation}) .\n\n`;
+            aspString += `description(\"${abbreviation}\", \"${el.action}\") .\nresponsible(\"${abbreviation}\", Ag) :- deploy(\"${abbreviation}\"), property(Ag, \"${role}\"). \nmandatory(\"${abbreviation}\") .\n\n`;
         }
         else {
-            aspString += `description(${abbreviation}, \"${el.action}\") .\ndelegate(${abbreviation}, ${el.quantity}, ${agents}) :- deploy(${abbreviation}) . \nmandatory(${abbreviation}) .\n\n`;
+            aspString += `description(\"${abbreviation}\", \"${el.action}\") .\ndelegate(\"${abbreviation}\", ${el.quantity}, \"${agents}\") :- deploy(\"${abbreviation}\") . \nmandatory(\"${abbreviation}\") .\n\n`;
         }
         if (precedence !== "None") {
             predString += `pred(${abbreviation}, ${precedence}) .\n`;

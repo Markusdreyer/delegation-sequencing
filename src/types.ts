@@ -23,7 +23,7 @@ export interface ProcedureData {
   id: number;
   parentId?: number;
   action: string;
-  agents: string;
+  agent: string;
   quantity: number;
   abbreviation: string;
   precedence: string;
@@ -54,4 +54,23 @@ export interface Action {
   name: string;
   agent: string;
   time: number;
+}
+
+export interface MaterialTableData extends ProcedureData, TaxonomyData {
+  tableData: {
+    childRows: number;
+    editing: boolean;
+    id: number;
+    isTreeExpanded: boolean;
+    markedForTreeRemove: boolean;
+    path: number[];
+  };
+}
+
+export interface FieldProps {
+  columnDef: {
+    field: string;
+    lookup: boolean;
+  };
+  value: string;
 }

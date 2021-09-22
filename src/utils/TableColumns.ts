@@ -1,10 +1,16 @@
 export const tableColumns = {
   procedures: [
     { title: "Action", field: "action" },
-    { title: "Role", field: "role" },
     {
-      title: "Agents",
-      field: "agents",
+      title: "Role",
+      field: "role",
+      lookup: {
+        driver: "driver",
+      },
+    },
+    {
+      title: "Agent",
+      field: "agent",
       lookup: {
         ae_crew: "ae_crew",
         se_crew: "se_crew",
@@ -72,6 +78,8 @@ export const tableColumns = {
       field: "parent",
       lookup: {
         None: "None",
+        "1st Attack Engine Crew": "1st Attack Engine Crew",
+        "2nd Attack Engine Crew": "2nd Attack Engine Crew",
       },
     },
   ],

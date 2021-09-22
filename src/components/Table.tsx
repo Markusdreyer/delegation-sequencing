@@ -1,12 +1,26 @@
 import React, { useEffect, useState } from "react";
-import MaterialTable, { MTableToolbar } from "material-table";
+import MaterialTable, { MTableEditField, MTableToolbar } from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { ProcedureData, RootState, TableData, TaxonomyData } from "../types";
+import {
+  FieldProps,
+  MaterialTableData,
+  ProcedureData,
+  RootState,
+  TableData,
+  TaxonomyData,
+} from "../types";
+import Autocomplete from "@mui/material/Autocomplete";
 import { tableColumns } from "../utils/TableColumns";
 import { setActiveTaxonomy, setProcedure, setTaxonomy } from "../actions";
 import { tableTypes } from "../utils/const";
-import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@material-ui/core";
 interface Props {
   data: TableData;
 }
@@ -20,22 +34,114 @@ const Table: React.FC<Props> = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [columns, setColumns] = useState([]);
+  const [roleOptions, setRoleOptions] = useState<string[]>([]);
 
   useEffect(() => {
     // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
     setColumns(tableColumns[data.type]);
   }, [data.type]);
 
+  useEffect(() => {
+    const tmpRoleOptions = taxonomies[activeTaxonomy]
+      .filter((el) => el.role)
+      .map((el) => el.role);
+    console.log(tmpRoleOptions);
+    setRoleOptions(tmpRoleOptions as string[]);
+  }, [taxonomies, activeTaxonomy]);
+
   const handleChange = (evt: any) => {
     dispatch(setActiveTaxonomy(evt.target.value));
 
     let updateColumns: any = [...columns];
-    updateColumns[1].lookup = taxonomies[evt.target.value]
+    updateColumns[1].lookup = taxonomies[evt.target.value] //Fetch role lookup data from taxonomy
+      .filter((el) => el.hasOwnProperty("parentId") && el["role"])
+      // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
+      // eslint-disable-next-line no-sequences
+      .reduce((acc, curr) => ((acc[curr.role] = curr.role), acc), {});
+    updateColumns[2].lookup = taxonomies[evt.target.value] //Fetch agent lookup data from taxonomy
       .filter((el) => !el.hasOwnProperty("parentId") && el["agent"])
       // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
       // eslint-disable-next-line no-sequences
       .reduce((acc, curr) => ((acc[curr.agent] = curr.agent), acc), {});
-    console.log(updateColumns);
+  };
+
+  const addTableRow = (newData: ProcedureData | TaxonomyData): void => {
+    const currentTaxonomy = taxonomies[data.key];
+    const currentTableData = data.data;
+
+    if (data.type === tableTypes.PROCEDURES) {
+      const dataUpdate = currentTableData as ProcedureData[];
+      newData.id = 1;
+      dataUpdate.push(newData as ProcedureData);
+      dispatch(setProcedure(data.key, dataUpdate));
+    } else if (data.type === tableTypes.TAXONOMIES) {
+      let taxonomyData = newData as TaxonomyData;
+      if (taxonomyData.parent && taxonomyData.parent !== "None") {
+        const parentId = currentTaxonomy!.find(
+          (el: TaxonomyData) => el.agent === taxonomyData.parent
+        )!.id;
+        taxonomyData.parentId = parentId;
+        taxonomyData.id = parentId + 1;
+      } else {
+        const prevId = Math.max.apply(
+          Math,
+          currentTaxonomy.map((el) => el.id)
+        );
+        console.log("PREV ID: ", prevId);
+        newData.id = prevId < 0 ? 1 : prevId + 1;
+        taxonomyData.role = "";
+        taxonomyData.parent = "None";
+      }
+      const dataUpdate = currentTableData as TaxonomyData[];
+      dataUpdate.push(taxonomyData);
+      const columnUpdate: any = tableColumns;
+      columnUpdate.taxonomies[2].lookup[taxonomyData.agent] =
+        taxonomyData.agent;
+      dispatch(setTaxonomy(data.key, dataUpdate));
+    } else {
+      console.log(
+        `${data.type} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
+      );
+    }
+  };
+
+  const updateTableRow = (
+    newData: TaxonomyData | ProcedureData,
+    oldData: MaterialTableData | undefined
+  ): void => {
+    if (oldData) {
+      const dataUpdate = data.data!;
+      const index = oldData.tableData.id;
+      dataUpdate[index] = newData;
+
+      if (data.type === tableTypes.PROCEDURES) {
+        dispatch(setProcedure(data.key, dataUpdate as ProcedureData[]));
+      } else if (data.type === tableTypes.TAXONOMIES) {
+        dispatch(setTaxonomy(data.key, dataUpdate as TaxonomyData[]));
+      } else {
+        console.log(
+          `${data.type} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
+        );
+      }
+    }
+  };
+
+  const deleteTableRow = (oldData: MaterialTableData | undefined): void => {
+    if (oldData) {
+      const dataDelete = data.data!;
+      const index = oldData.tableData.id;
+      dataDelete.splice(index, 1);
+
+      if (data.type === tableTypes.PROCEDURES) {
+        dispatch(setProcedure(data.key, dataDelete as ProcedureData[]));
+      } else if (data.type === tableTypes.TAXONOMIES) {
+        dispatch(setTaxonomy(data.key, dataDelete as TaxonomyData[]));
+      } else {
+        console.log(
+          `${data.type} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
+        );
+      }
+    }
   };
 
   return (
@@ -45,92 +151,75 @@ const Table: React.FC<Props> = (props) => {
       data={data.data.map((o: any) => ({ ...o }))} //Ugly immutable hack: https://github.com/mbrn/material-table/issues/666
       parentChildData={(row, rows) => rows.find((o) => o.id === row.parentId)}
       options={{
-        rowStyle: (rowData) => ({
+        rowStyle: (rowData: MaterialTableData) => ({
           backgroundColor:
-            rowData.tableData.childRows === null && data.type === "taxonomies"
+            rowData.parent !== "None" && data.type === "taxonomies"
               ? "#EEE"
               : "",
         }),
       }}
       editable={{
-        onRowAdd: (newData) =>
+        onRowAdd: (newData: ProcedureData | TaxonomyData) =>
           new Promise((resolve: any, reject) => {
             setTimeout(() => {
-              if (data.type === tableTypes.PROCEDURES) {
-                const dataUpdate = data.data as ProcedureData[];
-                newData.id = 1;
-                dataUpdate.push(newData);
-                dispatch(setProcedure(data.key, dataUpdate));
-              } else if (data.type === tableTypes.TAXONOMIES) {
-                let taxonomyData = newData as TaxonomyData;
-                if (taxonomyData.parent !== "None") {
-                  const parentId = taxonomies[data.key]!.find(
-                    (el: TaxonomyData) => el.agent === taxonomyData.parent
-                  )!.id;
-                  taxonomyData.parentId = parentId;
-                  taxonomyData.id = parentId + 1;
-                } else {
-                  newData.id = 1;
-                  taxonomyData.role = "N/A";
-                }
-                const dataUpdate = data.data as TaxonomyData[];
-                dataUpdate.push(taxonomyData);
-                console.log("TABLE columns ", tableColumns);
-                const columnUpdate: any = tableColumns;
-                columnUpdate.taxonomies[2].lookup[taxonomyData.agent] =
-                  taxonomyData.agent;
-
-                console.log("Col update ", columnUpdate);
-                dispatch(setTaxonomy(data.key, dataUpdate));
-              } else {
-                console.log(
-                  `${data.type} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
-                );
-              }
+              addTableRow(newData);
               resolve();
             }, 1000);
           }),
-        onRowUpdate: (newData, oldData: any) =>
+        onRowUpdate: (
+          newData: ProcedureData | TaxonomyData,
+          oldData: MaterialTableData | undefined
+        ) =>
           new Promise((resolve: any, reject) => {
             setTimeout(() => {
-              const dataUpdate = data.data!;
-              const index = oldData.tableData.id;
-              dataUpdate[index] = newData;
-
-              if (data.type === tableTypes.PROCEDURES) {
-                dispatch(setProcedure(data.key, dataUpdate as ProcedureData[]));
-              } else if (data.type === tableTypes.TAXONOMIES) {
-                dispatch(setTaxonomy(data.key, dataUpdate as TaxonomyData[]));
-              } else {
-                console.log(
-                  `${data.type} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
-                );
-              }
+              updateTableRow(newData, oldData);
               resolve();
             }, 1000);
           }),
-        onRowDelete: (oldData: any) =>
+        onRowDelete: (oldData: MaterialTableData | undefined) =>
           new Promise((resolve: any, reject) => {
             setTimeout(() => {
-              const dataDelete = data.data!;
-              const index = oldData.tableData.id;
-              dataDelete.splice(index, 1);
-
-              if (data.type === tableTypes.PROCEDURES) {
-                dispatch(setProcedure(data.key, dataDelete as ProcedureData[]));
-              } else if (data.type === tableTypes.TAXONOMIES) {
-                dispatch(setTaxonomy(data.key, dataDelete as TaxonomyData[]));
-              } else {
-                console.log(
-                  `${data.type} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
-                );
-              }
-
+              deleteTableRow(oldData);
               resolve();
             }, 1000);
           }),
       }}
       components={{
+        EditField: (fieldProps: FieldProps) => {
+          const {
+            columnDef: { lookup },
+          } = fieldProps;
+          if (lookup) {
+            console.info(fieldProps);
+            return (
+              <Autocomplete
+                multiple
+                id="tags-standard"
+                options={
+                  taxonomies[activeTaxonomy]
+                    .filter((el: any) => el[fieldProps.columnDef.field])
+                    .map(
+                      (el: any) => el[fieldProps.columnDef.field]
+                    ) as string[]
+                }
+                getOptionLabel={(el: string) => el}
+                renderInput={(params: any) => (
+                  <TextField
+                    {...params}
+                    label={fieldProps.columnDef.field}
+                    placeholder="Favorites"
+                  />
+                )}
+              />
+            );
+          } else {
+            return (
+              <MTableEditField
+                {...{ ...fieldProps, value: fieldProps.value || "" }}
+              />
+            );
+          }
+        },
         Toolbar: (props) => (
           <div>
             <MTableToolbar {...props} />

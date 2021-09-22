@@ -8,74 +8,58 @@
       "Witnesses": [
         {
           "Value": [
-            "expedite(f,barry,6)", "expedite(h,barry,9)", "expedite(c,xi,1)", "expedite(n,lin,8)", "expedite(e,jan,4)", "expedite(b,liz,2)", "expedite(j,liz,6)", "expedite(l,liz,7)", "expedite(m,liz,11)", "expedite(k,kathrin,5)", "expedite(a,john,3)", "expedite(i,john,10)", "expedite(d,frank,6)", "expedite(g,frank,7)"
+            "expedite(\"e\",\"Rikard\",1)", "expedite(\"d\",\"Rikard\",4)", "expedite(\"e\",\"Kari\",1)", "expedite(\"d\",\"Kari\",3)", "expedite(\"b\",\"Lukas\",1)", "expedite(\"a\",\"Lukas\",4)", "expedite(\"b\",\"Peter\",1)", "expedite(\"a\",\"Peter\",4)", "expedite(\"c\",\"Herman\",1)", "expedite(\"f\",\"Tormod\",1)"
           ],
           "Costs": [
-            66
+            8
           ]
         },
         {
           "Value": [
-            "expedite(d,barry,3)", "expedite(g,barry,4)", "expedite(f,barry,6)", "expedite(c,xi,4)", "expedite(n,lin,7)", "expedite(e,jan,3)", "expedite(b,liz,2)", "expedite(j,liz,4)", "expedite(l,liz,7)", "expedite(m,liz,8)", "expedite(k,kathrin,5)", "expedite(h,john,5)", "expedite(a,frank,1)", "expedite(i,frank,7)"
+            "expedite(\"e\",\"Rikard\",1)", "expedite(\"d\",\"Rikard\",2)", "expedite(\"d\",\"Kari\",1)", "expedite(\"e\",\"Kari\",2)", "expedite(\"b\",\"Lukas\",1)", "expedite(\"a\",\"Lukas\",4)", "expedite(\"b\",\"Peter\",1)", "expedite(\"a\",\"Peter\",2)", "expedite(\"c\",\"Herman\",1)", "expedite(\"f\",\"Tormod\",1)"
           ],
           "Costs": [
-            36
+            7
           ]
         },
         {
           "Value": [
-            "expedite(a,barry,2)", "expedite(d,barry,3)", "expedite(g,barry,4)", "expedite(f,barry,6)", "expedite(c,lin,5)", "expedite(n,dahn,7)", "expedite(l,jan,6)", "expedite(b,liz,1)", "expedite(j,liz,6)", "expedite(m,liz,7)", "expedite(e,kathrin,4)", "expedite(k,kathrin,5)", "expedite(h,john,5)", "expedite(i,frank,6)"
+            "expedite(\"e\",\"Rikard\",1)", "expedite(\"d\",\"Rikard\",2)", "expedite(\"e\",\"Kari\",1)", "expedite(\"d\",\"Kari\",2)", "expedite(\"b\",\"Lukas\",1)", "expedite(\"a\",\"Lukas\",2)", "expedite(\"a\",\"Peter\",1)", "expedite(\"b\",\"Peter\",2)", "expedite(\"c\",\"Herman\",1)", "expedite(\"f\",\"Tormod\",1)"
           ],
           "Costs": [
-            28
+            3
           ]
         },
         {
           "Value": [
-            "expedite(g,barry,4)", "expedite(f,barry,5)", "expedite(c,lin,4)", "expedite(n,dahn,6)", "expedite(k,jan,3)", "expedite(b,liz,1)", "expedite(l,liz,4)", "expedite(j,liz,5)", "expedite(e,kathrin,2)", "expedite(m,kathrin,5)", "expedite(d,john,2)", "expedite(a,frank,1)", "expedite(h,frank,5)", "expedite(i,frank,6)"
+            "expedite(\"e\",\"Rikard\",1)", "expedite(\"d\",\"Rikard\",2)", "expedite(\"e\",\"Kari\",1)", "expedite(\"d\",\"Kari\",2)", "expedite(\"a\",\"Lukas\",1)", "expedite(\"b\",\"Lukas\",2)", "expedite(\"b\",\"Peter\",1)", "expedite(\"a\",\"Peter\",2)", "expedite(\"c\",\"Herman\",1)", "expedite(\"f\",\"Theodor\",1)"
           ],
           "Costs": [
-            21
+            3
           ]
         },
         {
           "Value": [
-            "expedite(g,barry,3)", "expedite(f,barry,4)", "expedite(c,xi,2)", "expedite(n,dahn,5)", "expedite(b,liz,1)", "expedite(j,liz,4)", "expedite(e,kathrin,2)", "expedite(k,kathrin,3)", "expedite(l,kathrin,4)", "expedite(m,kathrin,5)", "expedite(d,john,2)", "expedite(h,john,4)", "expedite(a,frank,1)", "expedite(i,frank,5)"
+            "expedite(\"e\",\"Rikard\",1)", "expedite(\"d\",\"Rikard\",2)", "expedite(\"e\",\"Kari\",1)", "expedite(\"d\",\"Kari\",2)", "expedite(\"a\",\"Lukas\",1)", "expedite(\"b\",\"Lukas\",2)", "expedite(\"b\",\"Peter\",1)", "expedite(\"a\",\"Peter\",2)", "expedite(\"c\",\"Herman\",1)", "expedite(\"f\",\"Jørgen\",1)"
           ],
           "Costs": [
-            15
+            3
           ]
         },
         {
           "Value": [
-            "expedite(f,barry,2)", "expedite(g,barry,3)", "expedite(h,barry,4)", "expedite(c,lin,1)", "expedite(n,dahn,4)", "expedite(k,jan,3)", "expedite(b,liz,1)", "expedite(l,liz,4)", "expedite(m,liz,5)", "expedite(e,kathrin,2)", "expedite(j,kathrin,4)", "expedite(d,john,2)", "expedite(i,john,5)", "expedite(a,frank,1)"
+            "expedite(\"e\",\"Rikard\",1)", "expedite(\"d\",\"Rikard\",2)", "expedite(\"e\",\"Kari\",1)", "expedite(\"d\",\"Kari\",2)", "expedite(\"a\",\"Lukas\",1)", "expedite(\"b\",\"Lukas\",2)", "expedite(\"b\",\"Peter\",1)", "expedite(\"a\",\"Peter\",2)", "expedite(\"c\",\"Herman\",1)", "expedite(\"f\",\"Mikael\",1)"
           ],
           "Costs": [
-            15
+            3
           ]
         },
         {
           "Value": [
-            "expedite(a,barry,1)", "expedite(f,barry,2)", "expedite(g,barry,3)", "expedite(h,barry,4)", "expedite(c,lin,1)", "expedite(n,dahn,4)", "expedite(k,jan,3)", "expedite(b,liz,1)", "expedite(l,liz,4)", "expedite(m,liz,5)", "expedite(e,kathrin,2)", "expedite(j,kathrin,4)", "expedite(d,john,2)", "expedite(i,john,5)"
+            "expedite(\"e\",\"Rikard\",1)", "expedite(\"d\",\"Rikard\",2)", "expedite(\"e\",\"Kari\",1)", "expedite(\"d\",\"Kari\",2)", "expedite(\"a\",\"Lukas\",1)", "expedite(\"b\",\"Lukas\",2)", "expedite(\"b\",\"Peter\",1)", "expedite(\"a\",\"Peter\",2)", "expedite(\"c\",\"Herman\",1)", "expedite(\"f\",\"Ingolf\",1)"
           ],
           "Costs": [
-            15
-          ]
-        },
-        {
-          "Value": [
-            "expedite(f,barry,2)", "expedite(g,barry,3)", "expedite(h,barry,4)", "expedite(c,lin,1)", "expedite(n,dahn,4)", "expedite(k,jan,3)", "expedite(b,liz,1)", "expedite(l,liz,4)", "expedite(m,liz,5)", "expedite(e,kathrin,2)", "expedite(j,kathrin,4)", "expedite(a,john,1)", "expedite(d,john,2)", "expedite(i,john,5)"
-          ],
-          "Costs": [
-            15
-          ]
-        },
-        {
-          "Value": [
-            "expedite(a,barry,1)", "expedite(f,barry,2)", "expedite(g,barry,3)", "expedite(h,barry,4)", "expedite(c,dahn,1)", "expedite(n,dahn,4)", "expedite(k,jan,3)", "expedite(b,liz,1)", "expedite(l,liz,4)", "expedite(m,liz,5)", "expedite(e,kathrin,2)", "expedite(j,kathrin,4)", "expedite(d,john,2)", "expedite(i,john,5)"
-          ],
-          "Costs": [
-            15
+            3
           ]
         }
       ]
@@ -83,20 +67,20 @@
   ],
   "Result": "OPTIMUM FOUND",
   "Models": {
-    "Number": 9,
+    "Number": 7,
     "More": "yes",
     "Optimum": "yes",
     "Optimal": 4,
     "Costs": [
-      15
+      3
     ]
   },
   "Calls": 1,
   "Time": {
-    "Total": 0.115,
-    "Solve": 0.082,
-    "Model": 0.058,
+    "Total": 0.012,
+    "Solve": 0.001,
+    "Model": 0.000,
     "Unsat": 0.000,
-    "CPU": 0.113
+    "CPU": 0.011
   }
 }
