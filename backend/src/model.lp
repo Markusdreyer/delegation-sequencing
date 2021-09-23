@@ -1,34 +1,84 @@
 primitive("a") . 
-description("a", "1st attack engine crew turn-out") .
-responsible("a", Ag) :- deploy("a"), property(Ag, "Firetruck Driver"). 
+description("a", "Attack engine crew turn-out") .
+delegate("a", 1, "ae_crew") :- deploy("a") . 
 mandatory("a") .
 
 primitive("b") . 
-description("b", "2nd attack engine crew turn-out") .
-responsible("b", Ag) :- deploy("b"), property(Ag, "Firetruck Driver"). 
+description("b", "Second attack engine crew turn-out") .
+delegate("b", 1, "se_crew") :- deploy("b") . 
 mandatory("b") .
 
 primitive("c") . 
-description("c", "Patrol vehicle turn-out") .
-responsible("c", Ag) :- deploy("c"), property(Ag, "Patrol Vehicle Driver"). 
+description("c", "Ladder department turn-out") .
+delegate("c", 2, "lt_crew") :- deploy("c") . 
 mandatory("c") .
 
 primitive("d") . 
-description("d", "1st Ambulance turn-out") .
-responsible("d", Ag) :- deploy("d"), property(Ag, "Ambulance Driver"). 
+description("d", "Travel of attack engine crew to 911 address") .
+delegate("d", 2, "ae_crew") :- deploy("d") . 
 mandatory("d") .
 
 primitive("e") . 
-description("e", "2nd Ambulance turn-out") .
-responsible("e", Ag) :- deploy("e"), property(Ag, "Ambulance Driver"). 
+description("e", "Travel of second engine crew to 911 address") .
+delegate("e", 2, "se_crew") :- deploy("e") . 
 mandatory("e") .
 
 primitive("f") . 
-description("f", "First arriving fire department scene size up and establish command ") .
-delegate("f", 1, "1st Attack Engine Crew") :- deploy("f") . 
+description("f", "Travel of ladder tower crew to 911 address") .
+responsible("f", Ag) :- deploy("f"), property(Ag, "driver"). 
 mandatory("f") .
 
-pred(f, a) .
+primitive("g") . 
+description("g", "Attack engine crew advance 1.75 inch hose to seat of fire") .
+delegate("g", 2, "ae_crew") :- deploy("g") . 
+mandatory("g") .
+
+primitive("h") . 
+description("h", "Attack engine driver prepare to pump water") .
+delegate("h", 2, "ae_crew") :- deploy("h") . 
+mandatory("h") .
+
+primitive("i") . 
+description("i", "Attack fire with tank water aboard attack engine") .
+delegate("i", 2, "ae_crew") :- deploy("i") . 
+mandatory("i") .
+
+primitive("j") . 
+description("j", "Second engine crew member prepare nearest hydrant for hook-up") .
+delegate("j", 2, "se_crew") :- deploy("j") . 
+mandatory("j") .
+
+primitive("k") . 
+description("k", "Second engine drop 5 inch hose between attack engine and nearest hydrant") .
+delegate("k", 2, "se_crew") :- deploy("k") . 
+mandatory("k") .
+
+primitive("l") . 
+description("l", "Second engine hook to hydrant and attack engine and prepare to pump water") .
+delegate("l", 2, "se_crew") :- deploy("l") . 
+mandatory("l") .
+
+primitive("m") . 
+description("m", "Attack fire with hydrant water") .
+delegate("m", 2, "se_crew") :- deploy("m") . 
+mandatory("m") .
+
+primitive("n") . 
+description("n", "Set up ladder tower") .
+delegate("n", 2, "lt_crew") :- deploy("n") . 
+mandatory("n") .
+
+pred(d, a) .
+pred(e, b) .
+pred(f, c) .
+pred(g, d) .
+pred(h, g) .
+pred(i, h) .
+pred(j, e) .
+pred(k, e) .
+pred(l, k) .
+pred(m, l) .
+pred(n, f) .
 
 
 is_subclass("1st Attack Engine Crew", "agent").

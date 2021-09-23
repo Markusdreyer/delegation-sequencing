@@ -5,82 +5,20 @@
   ],
   "Call": [
     {
-      "Witnesses": [
-        {
-          "Value": [
-            "expedite(\"e\",\"Rikard\",1)", "expedite(\"d\",\"Rikard\",4)", "expedite(\"e\",\"Kari\",1)", "expedite(\"d\",\"Kari\",3)", "expedite(\"b\",\"Lukas\",1)", "expedite(\"a\",\"Lukas\",4)", "expedite(\"b\",\"Peter\",1)", "expedite(\"a\",\"Peter\",4)", "expedite(\"c\",\"Herman\",1)", "expedite(\"f\",\"Tormod\",1)"
-          ],
-          "Costs": [
-            8
-          ]
-        },
-        {
-          "Value": [
-            "expedite(\"e\",\"Rikard\",1)", "expedite(\"d\",\"Rikard\",2)", "expedite(\"d\",\"Kari\",1)", "expedite(\"e\",\"Kari\",2)", "expedite(\"b\",\"Lukas\",1)", "expedite(\"a\",\"Lukas\",4)", "expedite(\"b\",\"Peter\",1)", "expedite(\"a\",\"Peter\",2)", "expedite(\"c\",\"Herman\",1)", "expedite(\"f\",\"Tormod\",1)"
-          ],
-          "Costs": [
-            7
-          ]
-        },
-        {
-          "Value": [
-            "expedite(\"e\",\"Rikard\",1)", "expedite(\"d\",\"Rikard\",2)", "expedite(\"e\",\"Kari\",1)", "expedite(\"d\",\"Kari\",2)", "expedite(\"b\",\"Lukas\",1)", "expedite(\"a\",\"Lukas\",2)", "expedite(\"a\",\"Peter\",1)", "expedite(\"b\",\"Peter\",2)", "expedite(\"c\",\"Herman\",1)", "expedite(\"f\",\"Tormod\",1)"
-          ],
-          "Costs": [
-            3
-          ]
-        },
-        {
-          "Value": [
-            "expedite(\"e\",\"Rikard\",1)", "expedite(\"d\",\"Rikard\",2)", "expedite(\"e\",\"Kari\",1)", "expedite(\"d\",\"Kari\",2)", "expedite(\"a\",\"Lukas\",1)", "expedite(\"b\",\"Lukas\",2)", "expedite(\"b\",\"Peter\",1)", "expedite(\"a\",\"Peter\",2)", "expedite(\"c\",\"Herman\",1)", "expedite(\"f\",\"Theodor\",1)"
-          ],
-          "Costs": [
-            3
-          ]
-        },
-        {
-          "Value": [
-            "expedite(\"e\",\"Rikard\",1)", "expedite(\"d\",\"Rikard\",2)", "expedite(\"e\",\"Kari\",1)", "expedite(\"d\",\"Kari\",2)", "expedite(\"a\",\"Lukas\",1)", "expedite(\"b\",\"Lukas\",2)", "expedite(\"b\",\"Peter\",1)", "expedite(\"a\",\"Peter\",2)", "expedite(\"c\",\"Herman\",1)", "expedite(\"f\",\"Jørgen\",1)"
-          ],
-          "Costs": [
-            3
-          ]
-        },
-        {
-          "Value": [
-            "expedite(\"e\",\"Rikard\",1)", "expedite(\"d\",\"Rikard\",2)", "expedite(\"e\",\"Kari\",1)", "expedite(\"d\",\"Kari\",2)", "expedite(\"a\",\"Lukas\",1)", "expedite(\"b\",\"Lukas\",2)", "expedite(\"b\",\"Peter\",1)", "expedite(\"a\",\"Peter\",2)", "expedite(\"c\",\"Herman\",1)", "expedite(\"f\",\"Mikael\",1)"
-          ],
-          "Costs": [
-            3
-          ]
-        },
-        {
-          "Value": [
-            "expedite(\"e\",\"Rikard\",1)", "expedite(\"d\",\"Rikard\",2)", "expedite(\"e\",\"Kari\",1)", "expedite(\"d\",\"Kari\",2)", "expedite(\"a\",\"Lukas\",1)", "expedite(\"b\",\"Lukas\",2)", "expedite(\"b\",\"Peter\",1)", "expedite(\"a\",\"Peter\",2)", "expedite(\"c\",\"Herman\",1)", "expedite(\"f\",\"Ingolf\",1)"
-          ],
-          "Costs": [
-            3
-          ]
-        }
-      ]
+
     }
   ],
-  "Result": "OPTIMUM FOUND",
+  "Result": "UNSATISFIABLE",
   "Models": {
-    "Number": 7,
-    "More": "yes",
-    "Optimum": "yes",
-    "Optimal": 4,
-    "Costs": [
-      3
-    ]
+    "Number": 0,
+    "More": "no"
   },
   "Calls": 1,
   "Time": {
-    "Total": 0.012,
-    "Solve": 0.001,
+    "Total": 0.010,
+    "Solve": 0.000,
     "Model": 0.000,
     "Unsat": 0.000,
-    "CPU": 0.011
+    "CPU": 0.009
   }
 }

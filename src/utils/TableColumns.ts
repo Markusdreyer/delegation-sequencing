@@ -24,22 +24,6 @@ export const tableColumns = {
     {
       title: "Abbreviation",
       field: "abbreviation",
-      lookup: {
-        a: "a",
-        b: "b",
-        c: "c",
-        d: "d",
-        e: "e",
-        f: "f",
-        g: "g",
-        h: "h",
-        i: "i",
-        j: "j",
-        k: "k",
-        l: "l",
-        m: "m",
-        n: "n",
-      },
     },
 
     {

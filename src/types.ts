@@ -23,11 +23,21 @@ export interface ProcedureData {
   id: number;
   parentId?: number;
   action: string;
-  agent: string;
+  agent: string[];
   quantity: number;
   abbreviation: string;
   precedence: string;
-  role?: string;
+  role?: string[];
+}
+
+export interface MultiselectOptions {
+  role: string[];
+  agent: string[];
+}
+
+export interface MultiselectValues {
+  role: string;
+  agent: string;
 }
 
 export interface TaxonomyData {
@@ -56,7 +66,7 @@ export interface Action {
   time: number;
 }
 
-export interface MaterialTableData extends ProcedureData, TaxonomyData {
+export interface MaterialTableData {
   tableData: {
     childRows: number;
     editing: boolean;

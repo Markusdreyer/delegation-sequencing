@@ -15,7 +15,7 @@ const initialState: RootState = {
       {
         id: 1,
         action: "Attack engine crew turn-out",
-        agent: "ae_crew",
+        agent: ["ae_crew"],
         quantity: 1,
         abbreviation: "a",
         precedence: "None",
@@ -23,7 +23,7 @@ const initialState: RootState = {
       {
         id: 2,
         action: "Second attack engine crew turn-out",
-        agent: "se_crew",
+        agent: ["se_crew"],
         quantity: 1,
         abbreviation: "b",
         precedence: "None",
@@ -31,7 +31,7 @@ const initialState: RootState = {
       {
         id: 3,
         action: "Ladder department turn-out",
-        agent: "lt_crew",
+        agent: ["lt_crew"],
         quantity: 2,
         abbreviation: "c",
         precedence: "None",
@@ -39,7 +39,7 @@ const initialState: RootState = {
       {
         id: 4,
         action: "Travel of attack engine crew to 911 address",
-        agent: "ae_crew",
+        agent: ["ae_crew"],
         quantity: 2,
         abbreviation: "d",
         precedence: "a",
@@ -47,7 +47,7 @@ const initialState: RootState = {
       {
         id: 5,
         action: "Travel of second engine crew to 911 address",
-        agent: "se_crew",
+        agent: ["se_crew"],
         quantity: 2,
         abbreviation: "e",
         precedence: "b",
@@ -55,16 +55,16 @@ const initialState: RootState = {
       {
         id: 6,
         action: "Travel of ladder tower crew to 911 address",
-        agent: "lt_crew",
+        agent: ["lt_crew"],
         quantity: 2,
-        role: "driver",
+        role: ["driver"],
         abbreviation: "f",
         precedence: "c",
       },
       {
         id: 7,
         action: "Attack engine crew advance 1.75 inch hose to seat of fire",
-        agent: "ae_crew",
+        agent: ["ae_crew"],
         quantity: 2,
         abbreviation: "g",
         precedence: "d",
@@ -72,7 +72,7 @@ const initialState: RootState = {
       {
         id: 8,
         action: "Attack engine driver prepare to pump water",
-        agent: "ae_crew",
+        agent: ["ae_crew"],
         quantity: 2,
         abbreviation: "h",
         precedence: "g",
@@ -80,7 +80,7 @@ const initialState: RootState = {
       {
         id: 9,
         action: "Attack fire with tank water aboard attack engine",
-        agent: "ae_crew",
+        agent: ["ae_crew"],
         quantity: 2,
         abbreviation: "i",
         precedence: "h",
@@ -88,7 +88,7 @@ const initialState: RootState = {
       {
         id: 10,
         action: "Second engine crew member prepare nearest hydrant for hook-up",
-        agent: "se_crew",
+        agent: ["se_crew"],
         quantity: 2,
         abbreviation: "j",
         precedence: "e",
@@ -97,7 +97,7 @@ const initialState: RootState = {
         id: 11,
         action:
           "Second engine drop 5 inch hose between attack engine and nearest hydrant",
-        agent: "se_crew",
+        agent: ["se_crew"],
         quantity: 2,
         abbreviation: "k",
         precedence: "e",
@@ -106,7 +106,7 @@ const initialState: RootState = {
         id: 12,
         action:
           "Second engine hook to hydrant and attack engine and prepare to pump water",
-        agent: "se_crew",
+        agent: ["se_crew"],
         quantity: 2,
         abbreviation: "l",
         precedence: "k",
@@ -114,7 +114,7 @@ const initialState: RootState = {
       {
         id: 13,
         action: "Attack fire with hydrant water",
-        agent: "se_crew",
+        agent: ["se_crew"],
         quantity: 2,
         abbreviation: "m",
         precedence: "l",
@@ -122,7 +122,7 @@ const initialState: RootState = {
       {
         id: 14,
         action: "Set up ladder tower",
-        agent: "lt_crew",
+        agent: ["lt_crew"],
         quantity: 2,
         abbreviation: "n",
         precedence: "f",
@@ -132,7 +132,7 @@ const initialState: RootState = {
       {
         id: 1,
         action: "Operation central receives fire alert",
-        agent: "ae_crew",
+        agent: ["ae_crew"],
         quantity: 1,
         abbreviation: "1",
         precedence: "0",
@@ -140,7 +140,7 @@ const initialState: RootState = {
       {
         id: 1,
         action: "Operation central alerts fire department",
-        agent: "ae_crew, se_crew",
+        agent: ["ae_crew", "se_crew"],
         quantity: 1,
         abbreviation: "3",
         precedence: "1",
@@ -148,7 +148,7 @@ const initialState: RootState = {
       {
         id: 1,
         action: "Fire department move to scene",
-        agent: "se_crew",
+        agent: ["se_crew"],
         quantity: 1,
         abbreviation: "4",
         precedence: "2",
@@ -158,7 +158,7 @@ const initialState: RootState = {
       {
         id: 1,
         action: "Operation central receives aircraft indicent alert",
-        agent: "ae_crew",
+        agent: ["ae_crew"],
         quantity: 1,
         abbreviation: "1",
         precedence: "0",
@@ -166,7 +166,7 @@ const initialState: RootState = {
       {
         id: 1,
         action: "Operation central gathers technical aircraft information",
-        agent: "ae_crew",
+        agent: ["ae_crew"],
         quantity: 1,
         abbreviation: "2",
         precedence: "1",
@@ -174,7 +174,7 @@ const initialState: RootState = {
       {
         id: 1,
         action: "Operation central alerts fire department",
-        agent: "ae_crew, se_crew",
+        agent: ["ae_crew", "se_crew"],
         quantity: 1,
         abbreviation: "3",
         precedence: "1",
@@ -182,7 +182,7 @@ const initialState: RootState = {
       {
         id: 1,
         action: "Fire department move to scene",
-        agent: "se_crew",
+        agent: ["se_crew"],
         quantity: 1,
         abbreviation: "4",
         precedence: "2",
@@ -190,7 +190,7 @@ const initialState: RootState = {
       {
         id: 1,
         action: "Operation central requests additional firefighting resources",
-        agent: "ae_crew, lt_crew",
+        agent: ["ae_crew", "lt_crew"],
         quantity: 1,
         abbreviation: "5",
         precedence: "2",
@@ -200,7 +200,7 @@ const initialState: RootState = {
       {
         id: 1,
         action: "Operation central receives fire alert",
-        agent: "ae_crew",
+        agent: ["ae_crew"],
         quantity: 1,
         abbreviation: "1",
         precedence: "0",
@@ -208,7 +208,7 @@ const initialState: RootState = {
       {
         id: 1,
         action: "Operation central gathers geographical information",
-        agent: "ae_crew",
+        agent: ["ae_crew"],
         quantity: 1,
         abbreviation: "2",
         precedence: "1",
@@ -216,7 +216,7 @@ const initialState: RootState = {
       {
         id: 1,
         action: "Operation central alerts fire department",
-        agent: "ae_crew, se_crew",
+        agent: ["ae_crew", "se_crew"],
         quantity: 1,
         abbreviation: "3",
         precedence: "1",
@@ -224,7 +224,7 @@ const initialState: RootState = {
       {
         id: 1,
         action: "Fire department move to scene",
-        agent: "se_crew",
+        agent: ["se_crew"],
         quantity: 1,
         abbreviation: "4",
         precedence: "2",
@@ -233,7 +233,7 @@ const initialState: RootState = {
         id: 1,
         action:
           "Operation central requests air resources to survey the scope of damage",
-        agent: "ae_crew, lt_crew",
+        agent: ["ae_crew", "lt_crew"],
         quantity: 1,
         abbreviation: "4",
         precedence: "2",
@@ -241,7 +241,7 @@ const initialState: RootState = {
       {
         id: 1,
         action: "Operation central requests additional firefighting resources",
-        agent: "ae_crew, lt_crew",
+        agent: ["ae_crew", "lt_crew"],
         quantity: 1,
         abbreviation: "5",
         precedence: "2",
@@ -250,7 +250,7 @@ const initialState: RootState = {
     "Hamar Scenario": [
       {
         action: "1st attack engine crew turn-out",
-        agent: "1st Attack Engine Crew",
+        agent: ["1st Attack Engine Crew"],
         quantity: 1,
         abbreviation: "a",
         precedence: "None",
@@ -258,7 +258,7 @@ const initialState: RootState = {
       },
       {
         action: "2nd attack engine crew turn-out",
-        agent: "2nd Attack Engine Crew",
+        agent: ["2nd Attack Engine Crew"],
         quantity: 1,
         abbreviation: "b",
         precedence: "None",
@@ -266,14 +266,14 @@ const initialState: RootState = {
       },
       {
         action: "Patrol vehicle turn-out",
-        agent: "Patrol Vehicle",
+        agent: ["Patrol Vehicle"],
         quantity: 1,
         abbreviation: "c",
         precedence: "None",
         id: 1,
       },
       {
-        agent: "1st Ambulance",
+        agent: ["1st Ambulance"],
         action: "1st Ambulance turn-out",
         id: 1,
         quantity: 1,
@@ -282,7 +282,7 @@ const initialState: RootState = {
       },
       {
         action: "2nd Ambulance turn-out",
-        agent: "2nd Ambulance",
+        agent: ["2nd Ambulance"],
         quantity: 1,
         abbreviation: "e",
         precedence: "None",
@@ -291,7 +291,7 @@ const initialState: RootState = {
       {
         action:
           "First arriving fire department scene size up and establish command ",
-        agent: "1st Attack Engine Crew",
+        agent: ["1st Attack Engine Crew"],
         quantity: 1,
         abbreviation: "f",
         precedence: "a",
@@ -302,7 +302,7 @@ const initialState: RootState = {
   taxonomies: {
     Hamar: [
       {
-        agent: "1st Attack Engine Crew",
+        agent: "1st Attack ngine Crew",
         id: 1,
         role: "",
         parent: "None",
@@ -343,7 +343,7 @@ const initialState: RootState = {
         id: 6,
       },
       {
-        agent: "2nd Attack Engine Crew",
+        agent: "2nd Attack ngine Crew",
         id: 7,
         role: "",
         parent: "None",
@@ -618,7 +618,7 @@ const initialState: RootState = {
       {
         id: 1,
         action: "Attack engine crew turn-out",
-        agent: "ae_crew",
+        agent: ["ae_crew"],
         quantity: 1,
         abbreviation: "a",
         precedence: "None",
@@ -626,7 +626,7 @@ const initialState: RootState = {
       {
         id: 2,
         action: "Second attack engine crew turn-out",
-        agent: "se_crew",
+        agent: ["se_crew"],
         quantity: 1,
         abbreviation: "b",
         precedence: "None",
@@ -635,7 +635,7 @@ const initialState: RootState = {
       {
         id: 3,
         action: "Ladder department turn-out",
-        agent: "lt_crew",
+        agent: ["lt_crew"],
         quantity: 2,
         abbreviation: "c",
         precedence: "None",
@@ -643,7 +643,7 @@ const initialState: RootState = {
       {
         id: 4,
         action: "Travel of attack engine crew to 911 address",
-        agent: "ae_crew",
+        agent: ["ae_crew"],
         quantity: 2,
         abbreviation: "d",
         precedence: "a",
@@ -651,7 +651,7 @@ const initialState: RootState = {
       {
         id: 5,
         action: "Travel of second engine crew to 911 address",
-        agent: "se_crew",
+        agent: ["se_crew"],
         quantity: 2,
         abbreviation: "e",
         precedence: "b",
@@ -659,16 +659,16 @@ const initialState: RootState = {
       {
         id: 6,
         action: "Travel of ladder tower crew to 911 address",
-        agent: "lt_crew",
+        agent: ["lt_crew"],
         quantity: 2,
-        role: "driver",
+        role: ["driver"],
         abbreviation: "f",
         precedence: "c",
       },
       {
         id: 7,
         action: "Attack engine crew advance 1.75 inch hose to seat of fire",
-        agent: "ae_crew",
+        agent: ["ae_crew"],
         quantity: 2,
         abbreviation: "g",
         precedence: "d",
@@ -676,7 +676,7 @@ const initialState: RootState = {
       {
         id: 8,
         action: "Attack engine driver prepare to pump water",
-        agent: "ae_crew",
+        agent: ["ae_crew"],
         quantity: 2,
         abbreviation: "h",
         precedence: "g",
@@ -684,7 +684,7 @@ const initialState: RootState = {
       {
         id: 9,
         action: "Attack fire with tank water aboard attack engine",
-        agent: "ae_crew",
+        agent: ["ae_crew"],
         quantity: 2,
         abbreviation: "i",
         precedence: "h",
@@ -692,7 +692,7 @@ const initialState: RootState = {
       {
         id: 10,
         action: "Second engine crew member prepare nearest hydrant for hook-up",
-        agent: "se_crew",
+        agent: ["se_crew"],
         quantity: 2,
         abbreviation: "j",
         precedence: "e",
@@ -701,7 +701,7 @@ const initialState: RootState = {
         id: 11,
         action:
           "Second engine drop 5 inch hose between attack engine and nearest hydrant",
-        agent: "se_crew",
+        agent: ["se_crew"],
         quantity: 2,
         abbreviation: "k",
         precedence: "e",
@@ -710,7 +710,7 @@ const initialState: RootState = {
         id: 12,
         action:
           "Second engine hook to hydrant and attack engine and prepare to pump water",
-        agent: "se_crew",
+        agent: ["se_crew"],
         quantity: 2,
         abbreviation: "l",
         precedence: "k",
@@ -718,7 +718,7 @@ const initialState: RootState = {
       {
         id: 13,
         action: "Attack fire with hydrant water",
-        agent: "se_crew",
+        agent: ["se_crew"],
         quantity: 2,
         abbreviation: "m",
         precedence: "l",
@@ -726,7 +726,7 @@ const initialState: RootState = {
       {
         id: 14,
         action: "Set up ladder tower",
-        agent: "lt_crew",
+        agent: ["lt_crew"],
         quantity: 2,
         abbreviation: "n",
         precedence: "f",
