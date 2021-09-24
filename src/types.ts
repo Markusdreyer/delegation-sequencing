@@ -30,14 +30,9 @@ export interface ProcedureData {
   role?: string[];
 }
 
-export interface MultiselectOptions {
+export interface MultiselectValues {
   role: string[];
   agent: string[];
-}
-
-export interface MultiselectValues {
-  role: string;
-  agent: string;
 }
 
 export interface TaxonomyData {
@@ -76,11 +71,7 @@ export interface MaterialTableData {
     path: number[];
   };
 }
-
-export interface FieldProps {
-  columnDef: {
-    field: string;
-    lookup: boolean;
-  };
-  value: string;
+export interface ColumnDef {
+  field: string;
+  lookup: boolean;
 }

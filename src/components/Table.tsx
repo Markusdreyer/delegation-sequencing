@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import MaterialTable, { MTableEditField, MTableToolbar } from "material-table";
 import { makeStyles, Theme, useTheme } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  FieldProps,
+  ColumnDef,
   MaterialTableData,
-  MultiselectOptions,
   MultiselectValues,
   ProcedureData,
   RootState,
@@ -13,7 +12,6 @@ import {
   TaxonomyData,
 } from "../types";
 import Autocomplete from "@mui/material/Autocomplete";
-import { tableColumns } from "../utils/TableColumns";
 import { setActiveTaxonomy, setProcedure, setTaxonomy } from "../actions";
 import { tableTypes } from "../utils/const";
 import {
@@ -37,14 +35,86 @@ const Table: React.FC<Props> = (props) => {
   const { data } = props;
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [columns, setColumns] = useState([]);
+  const [columns, setColumns] = useState<any>([
+    [
+      { title: "Action", field: "action" },
+      {
+        title: "Role",
+        field: "role",
+        options: ["fj", "fk"],
+        editComponent: (props: {
+          columnDef: ColumnDef;
+          onChange: any;
+          value: string[];
+        }) => (
+          <Select
+            multiple
+            value={props.value ? props.value : [""]}
+            onChange={(evt) => {
+              console.log("PROPS:: ", props);
+              console.log("evt ", multiselectOptions);
+              props.onChange(evt.target.value);
+            }}
+            input={<OutlinedInput label="Name" />}
+            MenuProps={MenuProps}
+          >
+            {/* @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642*/}
+            {multiselectOptions.role.map((el: string) => (
+              <MenuItem key={el} value={el}>
+                {el}
+              </MenuItem>
+            ))}
+          </Select>
+        ),
+      },
+      {
+        title: "Agent",
+        field: "agent",
+        lookup: {
+          ae_crew: "ae_crew",
+          se_crew: "se_crew",
+          lt_crew: "lt_crew",
+        },
+      },
+      {
+        title: "Quantity",
+        field: "quantity",
+      },
+      {
+        title: "Abbreviation",
+        field: "abbreviation",
+      },
+
+      {
+        title: "Precedence",
+        field: "precedence",
+        lookup: {
+          None: "None",
+          a: "a",
+          b: "b",
+          c: "c",
+          d: "d",
+          e: "e",
+          f: "f",
+          g: "g",
+          h: "h",
+          i: "i",
+          j: "j",
+          k: "k",
+          l: "l",
+          m: "m",
+          n: "n",
+        },
+      },
+    ],
+  ]);
   const [multiselectOptions, setMultiselectOptions] =
-    useState<MultiselectOptions>({ role: [], agent: [] });
-  const [multiselectValues, setMultiselectValues] = useState<MultiselectValues>(
-    { role: "", agent: "" }
-  );
+    useState<MultiselectValues>({ role: [], agent: [] });
 
   useEffect(() => {
+    // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
+    setColumns(tableColumns[data.type]);
+    console.log("TAXONOM USEEFFECT");
     const roles = taxonomies[activeTaxonomy]
       .filter((el: TaxonomyData) => el.role)
       .map((el: any) => el.role)
@@ -60,11 +130,92 @@ const Table: React.FC<Props> = (props) => {
   }, [taxonomies, activeTaxonomy]);
 
   useEffect(() => {
+    console.log("MULTISELECT OPTIONS ", multiselectOptions);
+    setColumns(tableColumns.procedures);
+  }, [multiselectOptions]);
+
+  const tableColumns = {
+    procedures: [
+      { title: "Action", field: "action" },
+      {
+        title: "Role",
+        field: "role",
+        editComponent: (props: {
+          columnDef: ColumnDef;
+          onChange: any;
+          value: string[];
+        }) => (
+          <Select
+            multiple
+            value={props.value ? props.value : [""]}
+            onChange={(evt) => {
+              console.log("PROPS:: ", props);
+              console.log("MULTISELECT OPTIONS:: ", multiselectOptions);
+              props.onChange(evt.target.value);
+            }}
+            input={<OutlinedInput label="Name" />}
+            MenuProps={MenuProps}
+          >
+            {/* @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642*/}
+            {multiselectOptions.role.map((el: string) => (
+              <MenuItem key={el} value={el}>
+                {el}
+              </MenuItem>
+            ))}
+          </Select>
+        ),
+      },
+      {
+        title: "Agent",
+        field: "agent",
+        lookup: {
+          ae_crew: "ae_crew",
+          se_crew: "se_crew",
+          lt_crew: "lt_crew",
+        },
+      },
+      {
+        title: "Quantity",
+        field: "quantity",
+      },
+      {
+        title: "Abbreviation",
+        field: "abbreviation",
+      },
+
+      {
+        title: "Precedence",
+        field: "precedence",
+        lookup: {
+          None: "None",
+          a: "a",
+          b: "b",
+          c: "c",
+          d: "d",
+          e: "e",
+          f: "f",
+          g: "g",
+          h: "h",
+          i: "i",
+          j: "j",
+          k: "k",
+          l: "l",
+          m: "m",
+          n: "n",
+        },
+      },
+    ],
+  };
+
+  useEffect(() => {
+    console.log("DATATYPE USEEFFECT");
     // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
     setColumns(tableColumns[data.type]);
   }, [data.type]);
 
   const handleChangeTaxonomyChange = (evt: any) => {
+    console.log("TAXONOMY CHANGE");
+    // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
     dispatch(setActiveTaxonomy(evt.target.value));
 
     let updateColumns: any = [...columns];
@@ -78,20 +229,6 @@ const Table: React.FC<Props> = (props) => {
       // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
       // eslint-disable-next-line no-sequences
       .reduce((acc, curr) => ((acc[curr.agent] = curr.agent), acc), {});
-  };
-
-  const handleMultiselectChange = (fieldProps: FieldProps, evt: any) => {
-    const value = evt.target.value;
-    console.log("FIELDPROPS:: ", fieldProps);
-    console.log("MULTISELECT CHANGE:: ", value);
-
-    // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
-    setMultiselectValues({
-      ...multiselectValues,
-      [fieldProps.columnDef.field]:
-        typeof value === "string" ? value.split(",") : value,
-    });
-    console.log("MULTISELECT VAL:: ", multiselectValues);
   };
 
   const addTableRow = (newData: ProcedureData | TaxonomyData): void => {
@@ -141,11 +278,12 @@ const Table: React.FC<Props> = (props) => {
     newData: TaxonomyData | ProcedureData,
     oldData: MaterialTableData | undefined
   ): void => {
+    console.log("UPDATE TABLE", newData);
     if (oldData) {
       const dataUpdate = data.data!;
       const index = oldData.tableData.id;
       dataUpdate[index] = newData;
-
+      console.log("newData: ", newData);
       if (data.type === tableTypes.PROCEDURES) {
         dispatch(setProcedure(data.key, dataUpdate as ProcedureData[]));
       } else if (data.type === tableTypes.TAXONOMIES) {
@@ -180,27 +318,6 @@ const Table: React.FC<Props> = (props) => {
     return self.indexOf(value) === index;
   };
 
-  const renderMultiselectOptions = (fieldProps: FieldProps): string[] => {
-    if (data.type === tableTypes.PROCEDURES) {
-      switch (fieldProps.columnDef.field) {
-        case "agent":
-          return taxonomies[activeTaxonomy]
-            .filter((el: TaxonomyData) => el.parent === "None")
-            .filter((el: any) => el[fieldProps.columnDef.field])
-            .map((el: any) => el[fieldProps.columnDef.field])
-            .filter(unique) as string[];
-        default:
-          return taxonomies[activeTaxonomy]
-            .filter((el: any) => el[fieldProps.columnDef.field])
-            .map((el: any) => el[fieldProps.columnDef.field])
-            .filter(unique) as string[];
-      }
-    } else {
-      console.log("Not procedure data");
-      return [];
-    }
-  };
-
   return (
     <MaterialTable
       title={data.key}
@@ -223,6 +340,8 @@ const Table: React.FC<Props> = (props) => {
               resolve();
             }, 1000);
           }),
+        onRowAddCancelled: (rowData) => console.log("Row adding cancelled"),
+        onRowUpdateCancelled: (rowData) => console.log("Row editing cancelled"),
         onRowUpdate: (newData: ProcedureData | TaxonomyData, oldData: any) =>
           new Promise((resolve: any, reject) => {
             setTimeout(() => {
@@ -239,44 +358,8 @@ const Table: React.FC<Props> = (props) => {
           }),
       }}
       components={{
-        EditField: (fieldProps: FieldProps) => {
-          const {
-            columnDef: { lookup, field },
-          } = fieldProps;
-          if ((lookup && field === "role") || field === "agent") {
-            console.info(fieldProps);
-            return (
-              <Select
-                labelId="demo-multiple-name-label"
-                id="demo-multiple-name"
-                multiple
-                value={multiselectValues[field]}
-                onChange={(evt) => handleMultiselectChange(fieldProps, evt)}
-                input={<OutlinedInput label="Name" />}
-                MenuProps={MenuProps}
-              >
-                {multiselectOptions[field].map((el: string) => (
-                  <MenuItem
-                    key={el}
-                    value={el}
-                    style={getStyles(el, multiselectOptions[field], theme)}
-                  >
-                    {el}
-                  </MenuItem>
-                ))}
-              </Select>
-            );
-          } else {
-            return (
-              <MTableEditField
-                {...{ ...fieldProps, value: fieldProps.value || "" }}
-              />
-            );
-          }
-        },
         Toolbar: (props) => (
           <div>
-            {console.log(taxonomies[activeTaxonomy])}
             <MTableToolbar {...props} />
             {data.type === tableTypes.PROCEDURES && (
               <div style={{ padding: "0px 10px" }}>
@@ -321,14 +404,5 @@ const MenuProps = {
     },
   },
 };
-
-function getStyles(name: string, personName: string[], theme: Theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
 
 export default Table;
