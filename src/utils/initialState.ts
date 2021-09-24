@@ -302,7 +302,7 @@ const initialState: RootState = {
   taxonomies: {
     Hamar: [
       {
-        agent: "1st Attack ngine Crew",
+        agent: "1st Attack Engine Crew",
         id: 1,
         role: "",
         parent: "None",
@@ -343,7 +343,7 @@ const initialState: RootState = {
         id: 6,
       },
       {
-        agent: "2nd Attack ngine Crew",
+        agent: "2nd Attack Engine Crew",
         id: 7,
         role: "",
         parent: "None",

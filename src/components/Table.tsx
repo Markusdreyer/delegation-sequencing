@@ -149,8 +149,6 @@ const Table: React.FC<Props> = (props) => {
             multiple
             value={props.value ? props.value : [""]}
             onChange={(evt) => {
-              console.log("PROPS:: ", props);
-              console.log("MULTISELECT OPTIONS:: ", multiselectOptions);
               props.onChange(evt.target.value);
             }}
             input={<OutlinedInput label="Name" />}
@@ -168,11 +166,28 @@ const Table: React.FC<Props> = (props) => {
       {
         title: "Agent",
         field: "agent",
-        lookup: {
-          ae_crew: "ae_crew",
-          se_crew: "se_crew",
-          lt_crew: "lt_crew",
-        },
+        editComponent: (props: {
+          columnDef: ColumnDef;
+          onChange: any;
+          value: string[];
+        }) => (
+          <Select
+            multiple
+            value={props.value ? props.value : [""]}
+            onChange={(evt) => {
+              props.onChange(evt.target.value);
+            }}
+            input={<OutlinedInput label="Name" />}
+            MenuProps={MenuProps}
+          >
+            {/* @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642*/}
+            {multiselectOptions.agent.map((el: string) => (
+              <MenuItem key={el} value={el}>
+                {el}
+              </MenuItem>
+            ))}
+          </Select>
+        ),
       },
       {
         title: "Quantity",
@@ -202,6 +217,25 @@ const Table: React.FC<Props> = (props) => {
           l: "l",
           m: "m",
           n: "n",
+        },
+      },
+    ],
+    taxonomies: [
+      {
+        title: "Agent",
+        field: "agent",
+      },
+      {
+        title: "Role",
+        field: "role",
+      },
+      {
+        title: "Parent",
+        field: "parent",
+        lookup: {
+          None: "None",
+          "1st Attack Engine Crew": "1st Attack Engine Crew",
+          "2nd Attack Engine Crew": "2nd Attack Engine Crew",
         },
       },
     ],
@@ -239,8 +273,6 @@ const Table: React.FC<Props> = (props) => {
       const dataUpdate = currentTableData as ProcedureData[];
       const procedureData = newData as unknown as ProcedureData;
       procedureData.id = 1;
-      procedureData.role = multiselectOptions.role;
-      procedureData.agent = multiselectOptions.agent;
 
       dataUpdate.push(procedureData as ProcedureData);
       dispatch(setProcedure(data.key, dataUpdate));
