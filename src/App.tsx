@@ -12,7 +12,7 @@ import {
 import Sunburst from "./components/Sunburst";
 import clsx from "clsx";
 import { generateSunburstData, getASPModels } from "./utils/utils";
-import { Action, RootState } from "./types";
+import { Action, ProcedureData, RootState } from "./types";
 import { useSelector, useDispatch } from "react-redux";
 import {
   renderTable,
@@ -88,9 +88,16 @@ const App = () => {
   };
 
   const generateActionCards = async () => {
+    const tmpProcedures = JSON.parse(JSON.stringify(procedures[tableData.key]));
+    tmpProcedures.forEach((el: ProcedureData) => {
+      el.role = (el.role as string[]).filter((e) => e).join(",");
+      el.agent = (el.agent as string[]).filter((e) => e).join(",");
+    });
+
+    console.log("PARDDS", tmpProcedures);
     const models: Action[][] = await getASPModels(
       taxonomies[activeTaxonomy],
-      procedures[tableData.key]
+      tmpProcedures
     );
     console.log(models);
     setActionCardData(models);

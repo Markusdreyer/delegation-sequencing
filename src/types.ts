@@ -23,11 +23,11 @@ export interface ProcedureData {
   id: number;
   parentId?: number;
   action: string;
-  agent: string[];
+  agent: string[] | string;
   quantity: number;
   abbreviation: string;
   precedence: string;
-  role?: string[];
+  role?: string[] | string;
 }
 
 export interface MultiselectValues {

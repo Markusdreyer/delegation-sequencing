@@ -5,20 +5,242 @@
   ],
   "Call": [
     {
-
+      "Witnesses": [
+        {
+          "Value": [
+            "expedite(\"f\",\"barry\",1)", "expedite(\"h\",\"barry\",2)", "expedite(\"g\",\"barry\",5)", "expedite(\"d\",\"barry\",11)", "expedite(\"i\",\"barry\",12)", "expedite(\"a\",\"barry\",15)", "expedite(\"c\",\"lin\",4)", "expedite(\"n\",\"lin\",13)", "expedite(\"n\",\"dahn\",10)", "expedite(\"c\",\"dahn\",14)", "expedite(\"m\",\"jan\",1)", "expedite(\"k\",\"liz\",1)", "expedite(\"e\",\"liz\",2)", "expedite(\"l\",\"liz\",6)", "expedite(\"j\",\"liz\",12)", "expedite(\"m\",\"liz\",13)", "expedite(\"k\",\"kathrin\",1)", "expedite(\"e\",\"kathrin\",2)", "expedite(\"b\",\"kathrin\",5)", "expedite(\"l\",\"kathrin\",6)", "expedite(\"j\",\"kathrin\",12)", "expedite(\"d\",\"john\",1)", "expedite(\"h\",\"frank\",1)", "expedite(\"g\",\"frank\",2)", "expedite(\"i\",\"frank\",12)"
+          ],
+          "Costs": [
+            93
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"f\",\"barry\",1)", "expedite(\"h\",\"barry\",2)", "expedite(\"g\",\"barry\",5)", "expedite(\"d\",\"barry\",11)", "expedite(\"i\",\"barry\",12)", "expedite(\"a\",\"barry\",15)", "expedite(\"c\",\"lin\",6)", "expedite(\"n\",\"lin\",11)", "expedite(\"c\",\"dahn\",4)", "expedite(\"n\",\"dahn\",14)", "expedite(\"m\",\"jan\",1)", "expedite(\"k\",\"liz\",1)", "expedite(\"e\",\"liz\",2)", "expedite(\"l\",\"liz\",6)", "expedite(\"j\",\"liz\",12)", "expedite(\"m\",\"liz\",13)", "expedite(\"k\",\"kathrin\",1)", "expedite(\"e\",\"kathrin\",2)", "expedite(\"b\",\"kathrin\",5)", "expedite(\"l\",\"kathrin\",6)", "expedite(\"j\",\"kathrin\",12)", "expedite(\"d\",\"john\",12)", "expedite(\"g\",\"frank\",2)", "expedite(\"h\",\"frank\",5)", "expedite(\"i\",\"frank\",11)"
+          ],
+          "Costs": [
+            83
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"f\",\"barry\",1)", "expedite(\"h\",\"barry\",4)", "expedite(\"d\",\"barry\",5)", "expedite(\"g\",\"barry\",10)", "expedite(\"i\",\"barry\",12)", "expedite(\"a\",\"barry\",15)", "expedite(\"n\",\"lin\",12)", "expedite(\"c\",\"lin\",13)", "expedite(\"n\",\"dahn\",13)", "expedite(\"c\",\"dahn\",14)", "expedite(\"m\",\"jan\",4)", "expedite(\"k\",\"liz\",1)", "expedite(\"l\",\"liz\",4)", "expedite(\"j\",\"liz\",5)", "expedite(\"m\",\"liz\",13)", "expedite(\"e\",\"liz\",15)", "expedite(\"b\",\"kathrin\",1)", "expedite(\"e\",\"kathrin\",3)", "expedite(\"k\",\"kathrin\",4)", "expedite(\"l\",\"kathrin\",5)", "expedite(\"j\",\"kathrin\",10)", "expedite(\"d\",\"john\",14)", "expedite(\"i\",\"frank\",4)", "expedite(\"h\",\"frank\",13)", "expedite(\"g\",\"frank\",14)"
+          ],
+          "Costs": [
+            77
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"f\",\"barry\",1)", "expedite(\"g\",\"barry\",2)", "expedite(\"i\",\"barry\",3)", "expedite(\"h\",\"barry\",4)", "expedite(\"d\",\"barry\",5)", "expedite(\"a\",\"barry\",15)", "expedite(\"n\",\"lin\",2)", "expedite(\"c\",\"lin\",13)", "expedite(\"n\",\"dahn\",13)", "expedite(\"c\",\"dahn\",14)", "expedite(\"m\",\"jan\",4)", "expedite(\"j\",\"liz\",1)", "expedite(\"k\",\"liz\",2)", "expedite(\"l\",\"liz\",4)", "expedite(\"e\",\"liz\",10)", "expedite(\"m\",\"liz\",13)", "expedite(\"b\",\"kathrin\",1)", "expedite(\"j\",\"kathrin\",2)", "expedite(\"k\",\"kathrin\",4)", "expedite(\"l\",\"kathrin\",10)", "expedite(\"e\",\"kathrin\",15)", "expedite(\"d\",\"john\",14)", "expedite(\"i\",\"frank\",4)", "expedite(\"h\",\"frank\",13)", "expedite(\"g\",\"frank\",14)"
+          ],
+          "Costs": [
+            67
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"f\",\"barry\",1)", "expedite(\"d\",\"barry\",2)", "expedite(\"h\",\"barry\",3)", "expedite(\"i\",\"barry\",4)", "expedite(\"g\",\"barry\",12)", "expedite(\"a\",\"barry\",15)", "expedite(\"n\",\"lin\",1)", "expedite(\"c\",\"lin\",15)", "expedite(\"n\",\"dahn\",3)", "expedite(\"c\",\"dahn\",14)", "expedite(\"m\",\"jan\",15)", "expedite(\"k\",\"liz\",1)", "expedite(\"m\",\"liz\",2)", "expedite(\"j\",\"liz\",3)", "expedite(\"l\",\"liz\",4)", "expedite(\"e\",\"liz\",11)", "expedite(\"b\",\"kathrin\",1)", "expedite(\"l\",\"kathrin\",2)", "expedite(\"e\",\"kathrin\",3)", "expedite(\"j\",\"kathrin\",11)", "expedite(\"k\",\"kathrin\",12)", "expedite(\"d\",\"john\",14)", "expedite(\"h\",\"frank\",2)", "expedite(\"i\",\"frank\",11)", "expedite(\"g\",\"frank\",14)"
+          ],
+          "Costs": [
+            62
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"f\",\"barry\",1)", "expedite(\"g\",\"barry\",2)", "expedite(\"i\",\"barry\",4)", "expedite(\"h\",\"barry\",11)", "expedite(\"d\",\"barry\",12)", "expedite(\"a\",\"barry\",15)", "expedite(\"n\",\"lin\",12)", "expedite(\"c\",\"lin\",15)", "expedite(\"n\",\"dahn\",1)", "expedite(\"c\",\"dahn\",14)", "expedite(\"m\",\"jan\",15)", "expedite(\"k\",\"liz\",1)", "expedite(\"m\",\"liz\",2)", "expedite(\"e\",\"liz\",4)", "expedite(\"j\",\"liz\",12)", "expedite(\"l\",\"liz\",15)", "expedite(\"b\",\"kathrin\",1)", "expedite(\"j\",\"kathrin\",2)", "expedite(\"l\",\"kathrin\",11)", "expedite(\"k\",\"kathrin\",12)", "expedite(\"e\",\"kathrin\",15)", "expedite(\"d\",\"john\",14)", "expedite(\"i\",\"frank\",2)", "expedite(\"h\",\"frank\",12)", "expedite(\"g\",\"frank\",14)"
+          ],
+          "Costs": [
+            59
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"f\",\"barry\",1)", "expedite(\"d\",\"barry\",2)", "expedite(\"i\",\"barry\",3)", "expedite(\"g\",\"barry\",4)", "expedite(\"h\",\"barry\",5)", "expedite(\"a\",\"barry\",15)", "expedite(\"n\",\"lin\",1)", "expedite(\"c\",\"lin\",3)", "expedite(\"n\",\"dahn\",3)", "expedite(\"c\",\"dahn\",14)", "expedite(\"m\",\"jan\",1)", "expedite(\"l\",\"liz\",1)", "expedite(\"m\",\"liz\",2)", "expedite(\"j\",\"liz\",3)", "expedite(\"e\",\"liz\",4)", "expedite(\"k\",\"liz\",5)", "expedite(\"b\",\"kathrin\",1)", "expedite(\"l\",\"kathrin\",2)", "expedite(\"e\",\"kathrin\",3)", "expedite(\"j\",\"kathrin\",4)", "expedite(\"k\",\"kathrin\",12)", "expedite(\"d\",\"john\",14)", "expedite(\"i\",\"frank\",2)", "expedite(\"h\",\"frank\",3)", "expedite(\"g\",\"frank\",14)"
+          ],
+          "Costs": [
+            56
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"i\",\"barry\",1)", "expedite(\"a\",\"barry\",6)", "expedite(\"h\",\"barry\",8)", "expedite(\"f\",\"barry\",9)", "expedite(\"d\",\"barry\",10)", "expedite(\"g\",\"barry\",11)", "expedite(\"n\",\"xi\",9)", "expedite(\"c\",\"lin\",8)", "expedite(\"n\",\"dahn\",5)", "expedite(\"c\",\"dahn\",9)", "expedite(\"b\",\"jan\",1)", "expedite(\"k\",\"jan\",8)", "expedite(\"l\",\"jan\",9)", "expedite(\"m\",\"jan\",10)", "expedite(\"j\",\"liz\",9)", "expedite(\"e\",\"liz\",10)", "expedite(\"m\",\"kathrin\",5)", "expedite(\"j\",\"kathrin\",6)", "expedite(\"e\",\"kathrin\",8)", "expedite(\"k\",\"kathrin\",9)", "expedite(\"l\",\"kathrin\",10)", "expedite(\"h\",\"john\",9)", "expedite(\"d\",\"john\",11)", "expedite(\"g\",\"frank\",9)", "expedite(\"i\",\"frank\",10)"
+          ],
+          "Costs": [
+            50
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"a\",\"barry\",1)", "expedite(\"d\",\"barry\",4)", "expedite(\"i\",\"barry\",5)", "expedite(\"g\",\"barry\",9)", "expedite(\"f\",\"barry\",10)", "expedite(\"h\",\"barry\",11)", "expedite(\"n\",\"xi\",9)", "expedite(\"c\",\"lin\",10)", "expedite(\"c\",\"dahn\",4)", "expedite(\"n\",\"dahn\",5)", "expedite(\"b\",\"jan\",1)", "expedite(\"m\",\"jan\",3)", "expedite(\"k\",\"jan\",4)", "expedite(\"l\",\"jan\",9)", "expedite(\"e\",\"liz\",3)", "expedite(\"j\",\"liz\",4)", "expedite(\"e\",\"kathrin\",4)", "expedite(\"l\",\"kathrin\",5)", "expedite(\"j\",\"kathrin\",6)", "expedite(\"k\",\"kathrin\",9)", "expedite(\"m\",\"kathrin\",10)", "expedite(\"d\",\"john\",4)", "expedite(\"h\",\"john\",9)", "expedite(\"g\",\"frank\",4)", "expedite(\"i\",\"frank\",9)"
+          ],
+          "Costs": [
+            49
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"a\",\"barry\",1)", "expedite(\"i\",\"barry\",4)", "expedite(\"d\",\"barry\",5)", "expedite(\"g\",\"barry\",6)", "expedite(\"h\",\"barry\",9)", "expedite(\"f\",\"barry\",10)", "expedite(\"n\",\"xi\",9)", "expedite(\"c\",\"lin\",9)", "expedite(\"n\",\"dahn\",5)", "expedite(\"c\",\"dahn\",11)", "expedite(\"b\",\"jan\",1)", "expedite(\"l\",\"jan\",5)", "expedite(\"m\",\"jan\",9)", "expedite(\"k\",\"jan\",10)", "expedite(\"j\",\"liz\",9)", "expedite(\"e\",\"liz\",11)", "expedite(\"k\",\"kathrin\",1)", "expedite(\"m\",\"kathrin\",5)", "expedite(\"j\",\"kathrin\",6)", "expedite(\"e\",\"kathrin\",9)", "expedite(\"l\",\"kathrin\",10)", "expedite(\"h\",\"john\",6)", "expedite(\"d\",\"john\",9)", "expedite(\"g\",\"frank\",9)", "expedite(\"i\",\"frank\",10)"
+          ],
+          "Costs": [
+            46
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"d\",\"barry\",1)", "expedite(\"i\",\"barry\",2)", "expedite(\"f\",\"barry\",3)", "expedite(\"h\",\"barry\",4)", "expedite(\"a\",\"barry\",5)", "expedite(\"g\",\"barry\",10)", "expedite(\"n\",\"xi\",9)", "expedite(\"c\",\"lin\",4)", "expedite(\"n\",\"dahn\",5)", "expedite(\"c\",\"dahn\",6)", "expedite(\"b\",\"jan\",2)", "expedite(\"m\",\"jan\",3)", "expedite(\"l\",\"jan\",4)", "expedite(\"k\",\"jan\",5)", "expedite(\"e\",\"liz\",3)", "expedite(\"j\",\"liz\",5)", "expedite(\"e\",\"kathrin\",1)", "expedite(\"l\",\"kathrin\",2)", "expedite(\"k\",\"kathrin\",3)", "expedite(\"m\",\"kathrin\",4)", "expedite(\"j\",\"kathrin\",6)", "expedite(\"h\",\"john\",3)", "expedite(\"d\",\"john\",5)", "expedite(\"g\",\"frank\",2)", "expedite(\"i\",\"frank\",3)"
+          ],
+          "Costs": [
+            40
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"i\",\"barry\",3)", "expedite(\"f\",\"barry\",4)", "expedite(\"a\",\"barry\",5)", "expedite(\"g\",\"barry\",6)", "expedite(\"h\",\"barry\",9)", "expedite(\"d\",\"barry\",10)", "expedite(\"n\",\"xi\",9)", "expedite(\"c\",\"lin\",4)", "expedite(\"n\",\"dahn\",5)", "expedite(\"c\",\"dahn\",6)", "expedite(\"b\",\"jan\",1)", "expedite(\"k\",\"jan\",3)", "expedite(\"m\",\"jan\",9)", "expedite(\"l\",\"jan\",10)", "expedite(\"j\",\"liz\",3)", "expedite(\"e\",\"liz\",4)", "expedite(\"e\",\"kathrin\",3)", "expedite(\"k\",\"kathrin\",4)", "expedite(\"m\",\"kathrin\",5)", "expedite(\"j\",\"kathrin\",6)", "expedite(\"l\",\"kathrin\",9)", "expedite(\"d\",\"john\",3)", "expedite(\"h\",\"john\",5)", "expedite(\"g\",\"frank\",3)", "expedite(\"i\",\"frank\",5)"
+          ],
+          "Costs": [
+            38
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"f\",\"barry\",1)", "expedite(\"i\",\"barry\",2)", "expedite(\"g\",\"barry\",5)", "expedite(\"a\",\"barry\",6)", "expedite(\"d\",\"barry\",9)", "expedite(\"h\",\"barry\",10)", "expedite(\"n\",\"xi\",9)", "expedite(\"c\",\"lin\",1)", "expedite(\"c\",\"dahn\",1)", "expedite(\"n\",\"dahn\",5)", "expedite(\"k\",\"jan\",1)", "expedite(\"b\",\"jan\",2)", "expedite(\"m\",\"jan\",5)", "expedite(\"l\",\"jan\",10)", "expedite(\"j\",\"liz\",1)", "expedite(\"e\",\"liz\",2)", "expedite(\"e\",\"kathrin\",1)", "expedite(\"l\",\"kathrin\",2)", "expedite(\"m\",\"kathrin\",4)", "expedite(\"j\",\"kathrin\",6)", "expedite(\"k\",\"kathrin\",10)", "expedite(\"h\",\"john\",1)", "expedite(\"d\",\"john\",5)", "expedite(\"i\",\"frank\",1)", "expedite(\"g\",\"frank\",6)"
+          ],
+          "Costs": [
+            37
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"a\",\"barry\",2)", "expedite(\"f\",\"barry\",3)", "expedite(\"i\",\"barry\",6)", "expedite(\"h\",\"barry\",10)", "expedite(\"c\",\"xi\",9)", "expedite(\"n\",\"lin\",2)", "expedite(\"c\",\"dahn\",2)", "expedite(\"n\",\"dahn\",3)", "expedite(\"l\",\"jan\",1)", "expedite(\"j\",\"jan\",2)", "expedite(\"m\",\"jan\",3)", "expedite(\"k\",\"jan\",9)", "expedite(\"m\",\"liz\",2)", "expedite(\"k\",\"liz\",3)", "expedite(\"e\",\"liz\",9)", "expedite(\"b\",\"kathrin\",2)", "expedite(\"l\",\"kathrin\",3)", "expedite(\"e\",\"kathrin\",4)", "expedite(\"j\",\"kathrin\",9)", "expedite(\"d\",\"john\",2)", "expedite(\"g\",\"john\",9)", "expedite(\"g\",\"frank\",2)", "expedite(\"i\",\"frank\",3)", "expedite(\"h\",\"frank\",4)", "expedite(\"d\",\"frank\",10)"
+          ],
+          "Costs": [
+            35
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"f\",\"barry\",1)", "expedite(\"a\",\"barry\",9)", "expedite(\"h\",\"barry\",10)", "expedite(\"c\",\"xi\",9)", "expedite(\"n\",\"lin\",1)", "expedite(\"n\",\"dahn\",3)", "expedite(\"c\",\"dahn\",9)", "expedite(\"l\",\"jan\",1)", "expedite(\"m\",\"jan\",2)", "expedite(\"e\",\"jan\",8)", "expedite(\"j\",\"jan\",9)", "expedite(\"j\",\"liz\",1)", "expedite(\"b\",\"liz\",2)", "expedite(\"k\",\"liz\",3)", "expedite(\"e\",\"liz\",9)", "expedite(\"m\",\"kathrin\",1)", "expedite(\"k\",\"kathrin\",3)", "expedite(\"l\",\"kathrin\",9)", "expedite(\"d\",\"john\",1)", "expedite(\"h\",\"john\",8)", "expedite(\"g\",\"john\",9)", "expedite(\"i\",\"john\",10)", "expedite(\"g\",\"frank\",8)", "expedite(\"i\",\"frank\",9)", "expedite(\"d\",\"frank\",10)"
+          ],
+          "Costs": [
+            33
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"a\",\"barry\",1)", "expedite(\"g\",\"barry\",8)", "expedite(\"f\",\"barry\",9)", "expedite(\"h\",\"barry\",10)", "expedite(\"c\",\"xi\",9)", "expedite(\"n\",\"lin\",8)", "expedite(\"c\",\"dahn\",8)", "expedite(\"n\",\"dahn\",9)", "expedite(\"l\",\"jan\",8)", "expedite(\"b\",\"jan\",9)", "expedite(\"j\",\"jan\",10)", "expedite(\"m\",\"liz\",1)", "expedite(\"e\",\"liz\",8)", "expedite(\"k\",\"liz\",9)", "expedite(\"m\",\"kathrin\",1)", "expedite(\"k\",\"kathrin\",3)", "expedite(\"j\",\"kathrin\",8)", "expedite(\"e\",\"kathrin\",9)", "expedite(\"l\",\"kathrin\",10)", "expedite(\"d\",\"john\",3)", "expedite(\"i\",\"john\",8)", "expedite(\"g\",\"john\",9)", "expedite(\"h\",\"frank\",8)", "expedite(\"i\",\"frank\",9)", "expedite(\"d\",\"frank\",10)"
+          ],
+          "Costs": [
+            31
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"i\",\"barry\",1)", "expedite(\"f\",\"barry\",2)", "expedite(\"d\",\"barry\",3)", "expedite(\"a\",\"barry\",4)", "expedite(\"h\",\"barry\",10)", "expedite(\"c\",\"xi\",1)", "expedite(\"n\",\"lin\",1)", "expedite(\"n\",\"dahn\",1)", "expedite(\"c\",\"dahn\",2)", "expedite(\"k\",\"jan\",1)", "expedite(\"j\",\"jan\",2)", "expedite(\"e\",\"jan\",10)", "expedite(\"m\",\"liz\",1)", "expedite(\"b\",\"liz\",2)", "expedite(\"l\",\"liz\",3)", "expedite(\"j\",\"liz\",4)", "expedite(\"m\",\"kathrin\",1)", "expedite(\"l\",\"kathrin\",2)", "expedite(\"k\",\"kathrin\",3)", "expedite(\"e\",\"kathrin\",10)", "expedite(\"h\",\"john\",2)", "expedite(\"g\",\"john\",9)", "expedite(\"i\",\"frank\",2)", "expedite(\"g\",\"frank\",3)", "expedite(\"d\",\"frank\",4)"
+          ],
+          "Costs": [
+            29
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"i\",\"barry\",1)", "expedite(\"f\",\"barry\",2)", "expedite(\"a\",\"barry\",3)", "expedite(\"d\",\"barry\",9)", "expedite(\"h\",\"barry\",10)", "expedite(\"c\",\"xi\",3)", "expedite(\"n\",\"xi\",9)", "expedite(\"n\",\"lin\",2)", "expedite(\"c\",\"dahn\",2)", "expedite(\"e\",\"jan\",2)", "expedite(\"j\",\"jan\",3)", "expedite(\"k\",\"jan\",9)", "expedite(\"m\",\"jan\",10)", "expedite(\"b\",\"liz\",2)", "expedite(\"l\",\"liz\",3)", "expedite(\"j\",\"liz\",9)", "expedite(\"k\",\"liz\",10)", "expedite(\"m\",\"kathrin\",1)", "expedite(\"e\",\"kathrin\",2)", "expedite(\"l\",\"kathrin\",3)", "expedite(\"i\",\"john\",2)", "expedite(\"g\",\"john\",9)", "expedite(\"d\",\"frank\",2)", "expedite(\"h\",\"frank\",9)", "expedite(\"g\",\"frank\",10)"
+          ],
+          "Costs": [
+            25
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"a\",\"barry\",1)", "expedite(\"f\",\"barry\",2)", "expedite(\"h\",\"barry\",8)", "expedite(\"c\",\"xi\",2)", "expedite(\"n\",\"xi\",8)", "expedite(\"c\",\"lin\",1)", "expedite(\"n\",\"dahn\",2)", "expedite(\"k\",\"jan\",2)", "expedite(\"l\",\"jan\",3)", "expedite(\"j\",\"jan\",8)", "expedite(\"m\",\"jan\",9)", "expedite(\"j\",\"liz\",2)", "expedite(\"k\",\"liz\",3)", "expedite(\"e\",\"liz\",8)", "expedite(\"m\",\"liz\",9)", "expedite(\"l\",\"kathrin\",2)", "expedite(\"b\",\"kathrin\",3)", "expedite(\"e\",\"kathrin\",9)", "expedite(\"d\",\"john\",1)", "expedite(\"g\",\"john\",2)", "expedite(\"i\",\"john\",3)", "expedite(\"h\",\"john\",9)", "expedite(\"i\",\"frank\",1)", "expedite(\"d\",\"frank\",2)", "expedite(\"g\",\"frank\",8)"
+          ],
+          "Costs": [
+            23
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"f\",\"barry\",1)", "expedite(\"h\",\"barry\",2)", "expedite(\"a\",\"barry\",9)", "expedite(\"c\",\"xi\",1)", "expedite(\"n\",\"xi\",2)", "expedite(\"c\",\"lin\",1)", "expedite(\"n\",\"dahn\",2)", "expedite(\"k\",\"jan\",2)", "expedite(\"l\",\"jan\",8)", "expedite(\"m\",\"jan\",9)", "expedite(\"m\",\"liz\",1)", "expedite(\"k\",\"liz\",2)", "expedite(\"j\",\"liz\",8)", "expedite(\"e\",\"liz\",9)", "expedite(\"b\",\"kathrin\",1)", "expedite(\"j\",\"kathrin\",2)", "expedite(\"e\",\"kathrin\",8)", "expedite(\"l\",\"kathrin\",9)", "expedite(\"d\",\"john\",1)", "expedite(\"h\",\"john\",2)", "expedite(\"g\",\"john\",8)", "expedite(\"i\",\"john\",9)", "expedite(\"d\",\"frank\",1)", "expedite(\"i\",\"frank\",2)", "expedite(\"g\",\"frank\",9)"
+          ],
+          "Costs": [
+            20
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"f\",\"barry\",1)", "expedite(\"a\",\"barry\",2)", "expedite(\"g\",\"barry\",3)", "expedite(\"n\",\"xi\",1)", "expedite(\"c\",\"xi\",2)", "expedite(\"c\",\"lin\",1)", "expedite(\"n\",\"dahn\",2)", "expedite(\"m\",\"jan\",1)", "expedite(\"j\",\"jan\",2)", "expedite(\"l\",\"jan\",3)", "expedite(\"k\",\"jan\",12)", "expedite(\"e\",\"liz\",1)", "expedite(\"m\",\"liz\",2)", "expedite(\"k\",\"liz\",3)", "expedite(\"j\",\"kathrin\",1)", "expedite(\"b\",\"kathrin\",2)", "expedite(\"e\",\"kathrin\",3)", "expedite(\"l\",\"kathrin\",12)", "expedite(\"h\",\"john\",1)", "expedite(\"d\",\"john\",2)", "expedite(\"i\",\"john\",3)", "expedite(\"h\",\"frank\",1)", "expedite(\"i\",\"frank\",2)", "expedite(\"d\",\"frank\",3)", "expedite(\"g\",\"frank\",12)"
+          ],
+          "Costs": [
+            18
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"a\",\"barry\",1)", "expedite(\"h\",\"barry\",2)", "expedite(\"f\",\"barry\",3)", "expedite(\"g\",\"barry\",4)", "expedite(\"c\",\"xi\",2)", "expedite(\"n\",\"xi\",3)", "expedite(\"c\",\"lin\",3)", "expedite(\"n\",\"dahn\",2)", "expedite(\"b\",\"jan\",2)", "expedite(\"m\",\"jan\",3)", "expedite(\"k\",\"jan\",4)", "expedite(\"l\",\"jan\",7)", "expedite(\"m\",\"liz\",2)", "expedite(\"l\",\"liz\",3)", "expedite(\"e\",\"liz\",4)", "expedite(\"j\",\"liz\",7)", "expedite(\"k\",\"kathrin\",2)", "expedite(\"e\",\"kathrin\",3)", "expedite(\"j\",\"kathrin\",4)", "expedite(\"d\",\"john\",1)", "expedite(\"i\",\"john\",2)", "expedite(\"h\",\"john\",3)", "expedite(\"i\",\"frank\",1)", "expedite(\"g\",\"frank\",2)", "expedite(\"d\",\"frank\",3)"
+          ],
+          "Costs": [
+            17
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"a\",\"barry\",1)", "expedite(\"h\",\"barry\",2)", "expedite(\"g\",\"barry\",3)", "expedite(\"f\",\"barry\",4)", "expedite(\"c\",\"xi\",2)", "expedite(\"n\",\"lin\",3)", "expedite(\"n\",\"dahn\",2)", "expedite(\"c\",\"dahn\",3)", "expedite(\"l\",\"jan\",1)", "expedite(\"b\",\"jan\",2)", "expedite(\"m\",\"jan\",3)", "expedite(\"k\",\"jan\",4)", "expedite(\"j\",\"liz\",1)", "expedite(\"m\",\"liz\",2)", "expedite(\"l\",\"liz\",3)", "expedite(\"e\",\"liz\",4)", "expedite(\"j\",\"kathrin\",1)", "expedite(\"k\",\"kathrin\",2)", "expedite(\"e\",\"kathrin\",3)", "expedite(\"d\",\"john\",1)", "expedite(\"i\",\"john\",2)", "expedite(\"h\",\"john\",3)", "expedite(\"i\",\"frank\",1)", "expedite(\"g\",\"frank\",2)", "expedite(\"d\",\"frank\",3)"
+          ],
+          "Costs": [
+            10
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"h\",\"barry\",1)", "expedite(\"f\",\"barry\",2)", "expedite(\"a\",\"barry\",3)", "expedite(\"i\",\"barry\",4)", "expedite(\"c\",\"xi\",2)", "expedite(\"n\",\"lin\",1)", "expedite(\"c\",\"dahn\",1)", "expedite(\"n\",\"dahn\",2)", "expedite(\"j\",\"jan\",1)", "expedite(\"l\",\"jan\",2)", "expedite(\"e\",\"jan\",3)", "expedite(\"m\",\"jan\",4)", "expedite(\"l\",\"liz\",1)", "expedite(\"k\",\"liz\",2)", "expedite(\"j\",\"liz\",3)", "expedite(\"e\",\"liz\",4)", "expedite(\"m\",\"kathrin\",1)", "expedite(\"b\",\"kathrin\",3)", "expedite(\"k\",\"kathrin\",4)", "expedite(\"h\",\"john\",1)", "expedite(\"d\",\"john\",2)", "expedite(\"g\",\"john\",3)", "expedite(\"i\",\"john\",4)", "expedite(\"d\",\"frank\",1)", "expedite(\"g\",\"frank\",2)"
+          ],
+          "Costs": [
+            10
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"h\",\"barry\",1)", "expedite(\"f\",\"barry\",2)", "expedite(\"a\",\"barry\",3)", "expedite(\"i\",\"barry\",4)", "expedite(\"c\",\"xi\",2)", "expedite(\"n\",\"lin\",1)", "expedite(\"c\",\"dahn\",1)", "expedite(\"n\",\"dahn\",2)", "expedite(\"j\",\"jan\",1)", "expedite(\"l\",\"jan\",2)", "expedite(\"e\",\"jan\",3)", "expedite(\"m\",\"jan\",4)", "expedite(\"l\",\"liz\",1)", "expedite(\"k\",\"liz\",2)", "expedite(\"b\",\"liz\",3)", "expedite(\"e\",\"liz\",4)", "expedite(\"m\",\"kathrin\",1)", "expedite(\"j\",\"kathrin\",3)", "expedite(\"k\",\"kathrin\",4)", "expedite(\"h\",\"john\",1)", "expedite(\"d\",\"john\",2)", "expedite(\"g\",\"john\",3)", "expedite(\"i\",\"john\",4)", "expedite(\"d\",\"frank\",1)", "expedite(\"g\",\"frank\",2)"
+          ],
+          "Costs": [
+            10
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"h\",\"barry\",1)", "expedite(\"f\",\"barry\",2)", "expedite(\"a\",\"barry\",3)", "expedite(\"i\",\"barry\",4)", "expedite(\"c\",\"xi\",1)", "expedite(\"n\",\"lin\",1)", "expedite(\"c\",\"dahn\",1)", "expedite(\"n\",\"dahn\",2)", "expedite(\"j\",\"jan\",1)", "expedite(\"l\",\"jan\",2)", "expedite(\"e\",\"jan\",3)", "expedite(\"m\",\"jan\",4)", "expedite(\"l\",\"liz\",1)", "expedite(\"k\",\"liz\",2)", "expedite(\"j\",\"liz\",3)", "expedite(\"e\",\"liz\",4)", "expedite(\"m\",\"kathrin\",1)", "expedite(\"b\",\"kathrin\",3)", "expedite(\"k\",\"kathrin\",4)", "expedite(\"h\",\"john\",1)", "expedite(\"d\",\"john\",2)", "expedite(\"g\",\"john\",3)", "expedite(\"i\",\"john\",4)", "expedite(\"d\",\"frank\",1)", "expedite(\"g\",\"frank\",2)"
+          ],
+          "Costs": [
+            10
+          ]
+        },
+        {
+          "Value": [
+            "expedite(\"h\",\"barry\",1)", "expedite(\"f\",\"barry\",2)", "expedite(\"a\",\"barry\",3)", "expedite(\"i\",\"barry\",4)", "expedite(\"c\",\"xi\",3)", "expedite(\"n\",\"lin\",1)", "expedite(\"c\",\"dahn\",1)", "expedite(\"n\",\"dahn\",2)", "expedite(\"j\",\"jan\",1)", "expedite(\"l\",\"jan\",2)", "expedite(\"e\",\"jan\",3)", "expedite(\"m\",\"jan\",4)", "expedite(\"l\",\"liz\",1)", "expedite(\"k\",\"liz\",2)", "expedite(\"j\",\"liz\",3)", "expedite(\"e\",\"liz\",4)", "expedite(\"m\",\"kathrin\",1)", "expedite(\"b\",\"kathrin\",3)", "expedite(\"k\",\"kathrin\",4)", "expedite(\"h\",\"john\",1)", "expedite(\"d\",\"john\",2)", "expedite(\"g\",\"john\",3)", "expedite(\"i\",\"john\",4)", "expedite(\"d\",\"frank\",1)", "expedite(\"g\",\"frank\",2)"
+          ],
+          "Costs": [
+            10
+          ]
+        }
+      ]
     }
   ],
-  "Result": "UNSATISFIABLE",
+  "Result": "OPTIMUM FOUND",
   "Models": {
-    "Number": 0,
-    "More": "no"
+    "Number": 27,
+    "More": "yes",
+    "Optimum": "yes",
+    "Optimal": 4,
+    "Costs": [
+      10
+    ]
   },
   "Calls": 1,
   "Time": {
-    "Total": 0.010,
-    "Solve": 0.000,
+    "Total": 0.082,
+    "Solve": 0.059,
     "Model": 0.000,
     "Unsat": 0.000,
-    "CPU": 0.009
+    "CPU": 0.080
   }
 }

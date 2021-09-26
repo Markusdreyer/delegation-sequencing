@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
-import MaterialTable, { MTableEditField, MTableToolbar } from "material-table";
-import { makeStyles, Theme, useTheme } from "@material-ui/core/styles";
+import React, { useEffect, useState } from "react";
+import MaterialTable, { MTableToolbar } from "material-table";
+import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import {
   ColumnDef,
@@ -11,7 +11,6 @@ import {
   TableData,
   TaxonomyData,
 } from "../types";
-import Autocomplete from "@mui/material/Autocomplete";
 import { setActiveTaxonomy, setProcedure, setTaxonomy } from "../actions";
 import { tableTypes } from "../utils/const";
 import {
@@ -20,14 +19,12 @@ import {
   MenuItem,
   OutlinedInput,
   Select,
-  TextField,
 } from "@material-ui/core";
 interface Props {
   data: TableData;
 }
 
 const Table: React.FC<Props> = (props) => {
-  const theme = useTheme();
   const taxonomies = useSelector((state: RootState) => state.taxonomies);
   const activeTaxonomy = useSelector(
     (state: RootState) => state.activeTaxonomy
