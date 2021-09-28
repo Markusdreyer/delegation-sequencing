@@ -21,6 +21,15 @@ export const sortModels = (models: any): Response => {
     return error;
   }
 
+  if (Object.keys(models.Call[0]).length < 1) {
+    const error: Response = {
+      status: 400,
+      body: models,
+    };
+    console.log("UNSATISFIABLE MODEL: ", models);
+    return error;
+  }
+
   if (models.Call.length > 1) {
     const error: Response = {
       status: 500,

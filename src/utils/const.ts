@@ -3,6 +3,11 @@ export const tableTypes = {
   TAXONOMIES: "taxonomies",
 };
 
+export const modelTypes = {
+  SUNBURST: "sunburst",
+  ACTION_CARDS: "action-cards",
+};
+
 export const dialogOptions = {
   PROCEDURE: {
     label: "Create new procedure",

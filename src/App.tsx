@@ -12,7 +12,7 @@ import {
 import Sunburst from "./components/Sunburst";
 import clsx from "clsx";
 import { generateSunburstData, getASPModels } from "./utils/utils";
-import { Action, ProcedureData, RootState } from "./types";
+import { Action, Models, ProcedureData, RootState } from "./types";
 import { useSelector, useDispatch } from "react-redux";
 import {
   renderTable,
@@ -23,8 +23,9 @@ import {
 import Sidebar from "./components/SideBar";
 import Table from "./components/Table";
 import useStyles from "./Styles";
-import { dialogOptions, tableTypes } from "./utils/const";
+import { dialogOptions, modelTypes, tableTypes } from "./utils/const";
 import ActionCards from "./components/ActionCards";
+import { AxiosError } from "axios";
 
 dotenv.config();
 
@@ -40,6 +41,7 @@ const App = () => {
   const [sunburstData, setSunburstData] = useState();
   const [actionCardData, setActionCardData] = useState<Action[][]>();
   const [newDocument, setNewDocument] = useState("");
+  const [failureMessage, setFailureMessage] = useState<string>();
 
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -87,29 +89,28 @@ const App = () => {
     dispatch(toggleDialog());
   };
 
-  const generateActionCards = async () => {
-    const tmpProcedures = JSON.parse(JSON.stringify(procedures[tableData.key]));
-    tmpProcedures.forEach((el: ProcedureData) => {
-      el.role = (el.role as string[]).filter((e) => e).join(",");
-      el.agent = (el.agent as string[]).filter((e) => e).join(",");
-    });
-
-    console.log("PARDDS", tmpProcedures);
-    const models: Action[][] = await getASPModels(
-      taxonomies[activeTaxonomy],
-      tmpProcedures
-    );
-    console.log(models);
-    setActionCardData(models);
-  };
-
-  const generateSunburst = async () => {
-    const models: Action[][] = await getASPModels(
+  const generateModels = async (modelType: string) => {
+    const models: Action[][] | Models = await getASPModels(
       taxonomies[activeTaxonomy],
       procedures[tableData.key]
     );
 
-    setSunburstData(generateSunburstData(models));
+    if (models instanceof Array) {
+      if (modelType === modelTypes.SUNBURST) {
+        setFailureMessage(undefined);
+        setSunburstData(generateSunburstData(models));
+      } else if (modelType === modelTypes.ACTION_CARDS) {
+        setFailureMessage(undefined);
+        setActionCardData(models);
+      } else {
+        console.log(`${modelType} is not yet implemented`);
+      }
+    } else {
+      setSunburstData(undefined);
+      setActionCardData(undefined);
+      setFailureMessage(JSON.stringify(models));
+      return;
+    }
   };
 
   const logTableData = () => {
@@ -164,14 +165,14 @@ const App = () => {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={generateSunburst}
+                  onClick={() => generateModels(modelTypes.SUNBURST)}
                 >
                   Generate sunburst
                 </Button>
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={generateActionCards}
+                  onClick={() => generateModels(modelTypes.ACTION_CARDS)}
                 >
                   Generate action cards
                 </Button>
@@ -183,6 +184,7 @@ const App = () => {
                   Log table data
                 </Button>
               </div>
+              {failureMessage && <p>{failureMessage}</p>}
               {sunburstData && <Sunburst data={sunburstData} />}
             </>
           )}

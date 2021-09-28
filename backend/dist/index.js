@@ -105,6 +105,8 @@ app.post("/asp-parser", (req, res) => {
                 status: 500,
                 body: error,
             };
+            res.status(sortedModels.status);
+            res.send(sortedModels.body);
         }
         res.status(sortedModels.status).json(sortedModels.body);
     });

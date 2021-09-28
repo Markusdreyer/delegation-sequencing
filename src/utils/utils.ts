@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import md5 from "md5";
-import { Action, ProcedureData, TaxonomyData } from "../types";
+import { Action, Models, ProcedureData, TaxonomyData } from "../types";
 
 export const generateSunburstData = (models: any) => {
   /**
@@ -97,12 +97,20 @@ const generateValues = (models: any) => {
 export const getASPModels = (
   taxonomy: TaxonomyData[],
   procedure: ProcedureData[]
-): Promise<Action[][]> => {
+): Promise<Models | Action[][]> => {
+  const tmpProcedure = JSON.parse(JSON.stringify(procedure));
+  console.log(tmpProcedure);
+  tmpProcedure.forEach((el: ProcedureData) => {
+    el.role = (el.role as string[]).filter((e) => e).join(",");
+    el.agent = (el.agent as string[]).filter((e) => e).join(",");
+  });
+
   const simulationData = {
     taxonomy,
-    procedure,
+    procedure: tmpProcedure,
   };
   const simulationRequest = simulationData;
+
   return axios({
     method: "post",
     url:
@@ -121,7 +129,10 @@ export const getASPModels = (
       });
       return optimumModels;
     })
-    .then((models) => parseModels(models, procedure));
+    .then((models) => parseModels(models, procedure))
+    .catch((error) => {
+      return error.response.data;
+    });
 };
 
 const parseModels = (
