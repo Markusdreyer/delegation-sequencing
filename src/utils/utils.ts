@@ -122,6 +122,7 @@ export const getASPModels = (
   })
     .then((res) => {
       const data = res.data;
+      console.log("BACKEND RESPONSE: ", res.data);
       const [optimum] = data.Call[0].Witnesses.slice(-1);
       const optimumCost = optimum.Costs[0];
       const optimumModels = data.Call[0].Witnesses.filter((el: any) => {

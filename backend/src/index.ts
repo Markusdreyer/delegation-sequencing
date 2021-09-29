@@ -41,17 +41,26 @@ app.post("/asp-parser", (req, res) => {
     const abbreviation = el.abbreviation;
     const role = el.role;
     const agents = el.agent.split(",");
+
     if (agents.length > 1) {
-      aspString += `collaborative(\"${abbreviation}\") . \n`;
+      aspString += `collaborative(${abbreviation}) . \n`;
+      agents.map((agent) => {
+        // TODO:Tasks with roles does not support collaborative tasks, and will crash
+        aspString += `delegate(${abbreviation}, ${el.quantity}, "${agent}") :- deploy(${abbreviation}) . \n`;
+      });
     } else {
-      aspString += `primitive(\"${abbreviation}\") . \n`;
+      aspString += `primitive(${abbreviation}) . \n`;
     }
 
     if (role) {
-      aspString += `description(\"${abbreviation}\", \"${el.action}\") .\nresponsible(\"${abbreviation}\", Ag) :- deploy(\"${abbreviation}\"), property(Ag, \"${role}\"). \nmandatory(\"${abbreviation}\") .\n\n`;
+      // TODO:Backend does not support multiple roles for a single task
+      aspString += `responsible(${abbreviation}, Ag) :- deploy(${abbreviation}), property(Ag, "${role}") .\n`;
     } else {
-      aspString += `description(\"${abbreviation}\", \"${el.action}\") .\ndelegate(\"${abbreviation}\", ${el.quantity}, \"${agents}\") :- deploy(\"${abbreviation}\") . \nmandatory(\"${abbreviation}\") .\n\n`;
+      aspString += `delegate(${abbreviation}, ${el.quantity}, "${agents}") :- deploy(${abbreviation}) .\n`;
     }
+
+    aspString += ``;
+    aspString += `description(${abbreviation}, "${el.action}") .\nmandatory(${abbreviation}) .\n\n`;
 
     if (precedence !== "None") {
       predString += `pred(${abbreviation}, ${precedence}) .\n`;

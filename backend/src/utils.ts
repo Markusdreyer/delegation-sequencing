@@ -1,15 +1,15 @@
 import { Models, Response, Witnesses } from "./types";
 
 export const isSubClass = (child: string, parent: string) => {
-  return `is_subclass(\"${child}\", \"${parent}\").\n`;
+  return `is_subclass("${child}", "${parent}").\n`;
 };
 
 export const isA = (child: string, parent: string) => {
-  return `is_a(\"${child}\", \"${parent}\").\n`;
+  return `is_a("${child}", "${parent}").\n`;
 };
 
 export const property = (child: string, parent: string) => {
-  return `property(\"${child}\", \"${parent}\").\n`;
+  return `property("${child}", "${parent}").\n`;
 };
 
 export const sortModels = (models: any): Response => {

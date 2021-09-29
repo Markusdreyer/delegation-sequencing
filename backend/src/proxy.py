@@ -1,6 +1,6 @@
 import os
 
-stream = os.popen('clingo --outf=2 -Wno-atom-undefined --opt-mode=optN --models=4 src/model.lp src/actions.lp')
+stream = os.popen('clingo --outf=2  --opt-mode=optN --models=4 src/model.lp src/actions.lp')
 output = stream.read()
 
 try:

@@ -2,15 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sortModels = exports.property = exports.isA = exports.isSubClass = void 0;
 const isSubClass = (child, parent) => {
-    return `is_subclass(\"${child}\", \"${parent}\").\n`;
+    return `is_subclass("${child}", "${parent}").\n`;
 };
 exports.isSubClass = isSubClass;
 const isA = (child, parent) => {
-    return `is_a(\"${child}\", \"${parent}\").\n`;
+    return `is_a("${child}", "${parent}").\n`;
 };
 exports.isA = isA;
 const property = (child, parent) => {
-    return `property(\"${child}\", \"${parent}\").\n`;
+    return `property("${child}", "${parent}").\n`;
 };
 exports.property = property;
 const sortModels = (models) => {

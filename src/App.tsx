@@ -47,6 +47,12 @@ const App = () => {
   const classes = useStyles();
 
   useEffect(() => {
+    setActionCardData(undefined);
+    setSunburstData(undefined);
+    setFailureMessage(undefined);
+  }, [activeTaxonomy]);
+
+  useEffect(() => {
     if (tableData.key) {
       if (tableData.type === tableTypes.PROCEDURES) {
         console.log("Update procedure table");
@@ -95,12 +101,16 @@ const App = () => {
       procedures[tableData.key]
     );
 
+    console.log("MODELS:: ", models);
+
     if (models instanceof Array) {
       if (modelType === modelTypes.SUNBURST) {
         setFailureMessage(undefined);
+        setActionCardData(undefined);
         setSunburstData(generateSunburstData(models));
       } else if (modelType === modelTypes.ACTION_CARDS) {
         setFailureMessage(undefined);
+        setSunburstData(undefined);
         setActionCardData(models);
       } else {
         console.log(`${modelType} is not yet implemented`);
@@ -108,7 +118,7 @@ const App = () => {
     } else {
       setSunburstData(undefined);
       setActionCardData(undefined);
-      setFailureMessage(JSON.stringify(models));
+      setFailureMessage(JSON.stringify(models, null, 2));
       return;
     }
   };
@@ -184,7 +194,7 @@ const App = () => {
                   Log table data
                 </Button>
               </div>
-              {failureMessage && <p>{failureMessage}</p>}
+              {failureMessage && PrettyPrintJson(failureMessage)}
               {sunburstData && <Sunburst data={sunburstData} />}
             </>
           )}
@@ -192,6 +202,15 @@ const App = () => {
       </div>
       {actionCardData && <ActionCards data={actionCardData} />}
     </>
+  );
+};
+
+const PrettyPrintJson = (data: any) => {
+  // (destructured) data could be a prop for example
+  return (
+    <div>
+      <pre>{data}</pre>
+    </div>
   );
 };
 
