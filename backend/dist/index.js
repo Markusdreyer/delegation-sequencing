@@ -49,19 +49,19 @@ app.post("/asp-parser", (req, res) => {
         if (agents.length > 1) {
             aspString += `collaborative(${abbreviation}) . \n`;
             agents.map((agent) => {
-                // TODO:Tasks with roles does not support collaborative tasks, and will crash
+                // TODO:Tasks with roles does not support collaborative tasks, and the task will be ignored
                 aspString += `delegate(${abbreviation}, ${el.quantity}, "${agent}") :- deploy(${abbreviation}) . \n`;
             });
         }
         else {
             aspString += `primitive(${abbreviation}) . \n`;
-        }
-        if (role) {
-            // TODO:Backend does not support multiple roles for a single task
-            aspString += `responsible(${abbreviation}, Ag) :- deploy(${abbreviation}), property(Ag, "${role}") .\n`;
-        }
-        else {
-            aspString += `delegate(${abbreviation}, ${el.quantity}, "${agents}") :- deploy(${abbreviation}) .\n`;
+            if (role) {
+                // TODO:Backend does not support multiple roles for a single task
+                aspString += `responsible(${abbreviation}, Ag) :- deploy(${abbreviation}), property(Ag, "${role}") .\n`;
+            }
+            else {
+                aspString += `delegate(${abbreviation}, ${el.quantity}, "${agents}") :- deploy(${abbreviation}) .\n`;
+            }
         }
         aspString += ``;
         aspString += `description(${abbreviation}, "${el.action}") .\nmandatory(${abbreviation}) .\n\n`;

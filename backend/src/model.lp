@@ -24,11 +24,46 @@ description(e, "2nd Ambulance turn-out") .
 mandatory(e) .
 
 primitive(f) . 
-delegate(f, 1, "1st Attack Engine Crew") :- deploy(f) .
+responsible(f, Ag) :- deploy(f), property(Ag, "Fire Officer") .
 description(f, "First arriving fire department scene size up and establish command ") .
 mandatory(f) .
 
+primitive(g) . 
+responsible(g, Ag) :- deploy(g), property(Ag, "Fire Officer") .
+description(g, "Isolate the area and establish Hot Zone") .
+mandatory(g) .
+
+collaborative(h) . 
+delegate(h, 2, "1st Ambulance") :- deploy(h) . 
+delegate(h, 2, "2nd Ambulance") :- deploy(h) . 
+description(h, "Evacuate wounded") .
+mandatory(h) .
+
+collaborative(i) . 
+delegate(i, 2, "1st Attack Engine Crew") :- deploy(i) . 
+delegate(i, 2, "2nd Attack Engine Crew") :- deploy(i) . 
+description(i, "Locate and establish permanent water supply") .
+mandatory(i) .
+
+collaborative(j) . 
+delegate(j, 2, "1st Attack Engine Crew") :- deploy(j) . 
+delegate(j, 2, "2nd Attack Engine Crew") :- deploy(j) . 
+description(j, "Charge water hoses and stand by") .
+mandatory(j) .
+
+collaborative(k) . 
+delegate(k, 1, "Patrol Vehicle") :- deploy(k) . 
+delegate(k, 1, "2nd Attack Engine Crew") :- deploy(k) . 
+delegate(k, 1, "1st Attack Engine Crew") :- deploy(k) . 
+description(k, "Remove possible ignition sources") .
+mandatory(k) .
+
 pred(f, a) .
+pred(g, f) .
+pred(h, f) .
+pred(i, f) .
+pred(j, i) .
+pred(k, f) .
 
 
 is_subclass("1st Attack Engine Crew", "agent").

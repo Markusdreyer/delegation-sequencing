@@ -12,7 +12,7 @@ import {
 import Sunburst from "./components/Sunburst";
 import clsx from "clsx";
 import { generateSunburstData, getASPModels } from "./utils/utils";
-import { Action, Models, ProcedureData, RootState } from "./types";
+import { Action, Models, RootState } from "./types";
 import { useSelector, useDispatch } from "react-redux";
 import {
   renderTable,
@@ -25,7 +25,6 @@ import Table from "./components/Table";
 import useStyles from "./Styles";
 import { dialogOptions, modelTypes, tableTypes } from "./utils/const";
 import ActionCards from "./components/ActionCards";
-import { AxiosError } from "axios";
 
 dotenv.config();
 
