@@ -24,10 +24,10 @@ export interface ProcedureData {
   parentId?: number;
   action: string;
   agent: string[] | string;
-  quantity: number;
+  quantity: string;
   abbreviation: string;
   precedence: string;
-  role?: string[] | string;
+  role: string[] | string;
 }
 
 export interface MultiselectValues {
@@ -39,7 +39,7 @@ export interface TaxonomyData {
   id: number;
   parentId?: number;
   agent: string;
-  role: string[];
+  role: string;
   parent: string;
 }
 

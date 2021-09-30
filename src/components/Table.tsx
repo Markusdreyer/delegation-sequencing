@@ -74,6 +74,7 @@ const Table: React.FC<Props> = (props) => {
       {
         title: "Quantity",
         field: "quantity",
+        type: "numeric",
       },
       {
         title: "Abbreviation",
@@ -120,6 +121,7 @@ const Table: React.FC<Props> = (props) => {
       .map((el: TaxonomyData) => el.agent)
       .filter(unique) as string[];
 
+    console.log("ROLES:: ", roles);
     setMultiselectOptions({ role: roles, agent: agents });
   }, [taxonomies, activeTaxonomy]);
 
@@ -267,6 +269,9 @@ const Table: React.FC<Props> = (props) => {
       const dataUpdate = currentTableData as ProcedureData[];
       const procedureData = newData as unknown as ProcedureData;
       procedureData.id = 1;
+      if (!procedureData.role) {
+        procedureData.role = [""];
+      }
 
       dataUpdate.push(procedureData as ProcedureData);
       dispatch(setProcedure(data.key, dataUpdate));
@@ -284,7 +289,7 @@ const Table: React.FC<Props> = (props) => {
           currentTaxonomy.map((el) => el.id)
         );
         newData.id = prevId < 0 ? 1 : prevId + 1;
-        taxonomyData.role = [""];
+        taxonomyData.role = "";
         taxonomyData.parent = "None";
       }
       const dataUpdate = currentTableData as TaxonomyData[];

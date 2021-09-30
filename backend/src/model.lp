@@ -39,15 +39,31 @@ delegate(h, 2, "2nd Ambulance") :- deploy(h) .
 description(h, "Evacuate wounded") .
 mandatory(h) .
 
-primitive(i) . 
-responsible(i, Ag) :- deploy(i), property(Ag, "Firefighter") .
+collaborative(i) . 
+delegate(i, 2, "1st Attack Engine Crew") :- deploy(i) . 
+delegate(i, 2, "2nd Attack Engine Crew") :- deploy(i) . 
 description(i, "Locate and establish permanent water supply") .
 mandatory(i) .
+
+collaborative(j) . 
+delegate(j, 2, "1st Attack Engine Crew") :- deploy(j) . 
+delegate(j, 2, "2nd Attack Engine Crew") :- deploy(j) . 
+description(j, "Charge water hoses and stand by") .
+mandatory(j) .
+
+collaborative(k) . 
+delegate(k, 1, "Patrol Vehicle") :- deploy(k) . 
+delegate(k, 1, "2nd Attack Engine Crew") :- deploy(k) . 
+delegate(k, 1, "1st Attack Engine Crew") :- deploy(k) . 
+description(k, "Remove possible ignition sources") .
+mandatory(k) .
 
 pred(f, a) .
 pred(g, f) .
 pred(h, f) .
 pred(i, f) .
+pred(j, i) .
+pred(k, f) .
 
 
 is_subclass("1st Attack Engine Crew", "agent").
