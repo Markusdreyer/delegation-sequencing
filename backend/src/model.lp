@@ -24,11 +24,30 @@ description(e, "2nd Ambulance turn-out") .
 mandatory(e) .
 
 primitive(f) . 
-delegate(f, 1, "1st Attack Engine Crew") :- deploy(f) .
+responsible(f, Ag) :- deploy(f), property(Ag, "Fire Officer") .
 description(f, "First arriving fire department scene size up and establish command ") .
 mandatory(f) .
 
+primitive(g) . 
+responsible(g, Ag) :- deploy(g), property(Ag, "Fire Officer") .
+description(g, "Isolate the area and establish Hot Zone") .
+mandatory(g) .
+
+collaborative(h) . 
+delegate(h, 2, "1st Ambulance") :- deploy(h) . 
+delegate(h, 2, "2nd Ambulance") :- deploy(h) . 
+description(h, "Evacuate wounded") .
+mandatory(h) .
+
+primitive(i) . 
+responsible(i, Ag) :- deploy(i), property(Ag, "Firefighter") .
+description(i, "Locate and establish permanent water supply") .
+mandatory(i) .
+
 pred(f, a) .
+pred(g, f) .
+pred(h, f) .
+pred(i, f) .
 
 
 is_subclass("1st Attack Engine Crew", "agent").

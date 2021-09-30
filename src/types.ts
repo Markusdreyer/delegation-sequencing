@@ -39,7 +39,7 @@ export interface TaxonomyData {
   id: number;
   parentId?: number;
   agent: string;
-  role?: string;
+  role: string[];
   parent: string;
 }
 
