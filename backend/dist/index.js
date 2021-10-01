@@ -50,17 +50,21 @@ app.post("/asp-parser", (req, res) => {
             aspString += `collaborative(${abbreviation}) . \n`;
             agents.map((agent) => {
                 // TODO:Tasks with roles does not support collaborative tasks, and the task will be ignored
-                aspString += `delegate(${abbreviation}, ${el.quantity}, "${agent}") :- deploy(${abbreviation}) . \n`;
+                const parsedAgent = utils_1.createReadableConst(agent);
+                console.log("PARSED AGENT:: ", parsedAgent);
+                aspString += `delegate(${abbreviation}, ${el.quantity}, ${parsedAgent}) :- deploy(${abbreviation}),  member(Ag, ${parsedAgent}). \n`;
             });
         }
         else {
             aspString += `primitive(${abbreviation}) . \n`;
+            const parsedAgent = utils_1.createReadableConst(agents[0]);
             if (role) {
                 // TODO:Backend does not support multiple roles for a single task
-                aspString += `responsible(${abbreviation}, Ag) :- deploy(${abbreviation}), property(Ag, "${role}") .\n`;
+                const parsedRole = utils_1.createReadableConst(role);
+                aspString += `responsible(${abbreviation}, Ag) :- deploy(${abbreviation}), property(Ag, ${parsedRole}), member(Ag, ${parsedAgent}) .\n`;
             }
             else {
-                aspString += `delegate(${abbreviation}, ${el.quantity}, "${agents}") :- deploy(${abbreviation}) .\n`;
+                aspString += `delegate(${abbreviation}, ${el.quantity}, ${parsedAgent}) :- deploy(${abbreviation}), member(Ag, ${agents}).\n`;
             }
         }
         aspString += ``;

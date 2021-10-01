@@ -1,15 +1,22 @@
+import * as converter from "number-to-words";
 import { Models, Response, Witnesses } from "./types";
 
 export const isSubClass = (child: string, parent: string) => {
-  return `is_subclass("${child}", "${parent}").\n`;
+  return `is_subclass(${createReadableConst(child)}, ${createReadableConst(
+    parent
+  )}).\n`;
 };
 
 export const isA = (child: string, parent: string) => {
-  return `is_a("${child}", "${parent}").\n`;
+  return `is_a(${createReadableConst(child)}, ${createReadableConst(
+    parent
+  )}).\n`;
 };
 
 export const property = (child: string, parent: string) => {
-  return `property("${child}", "${parent}").\n`;
+  return `property(${createReadableConst(child)}, ${createReadableConst(
+    parent
+  )}).\n`;
 };
 
 export const sortModels = (models: any): Response => {
@@ -50,4 +57,27 @@ export const sortModels = (models: any): Response => {
   };
 
   return success;
+};
+
+export const createReadableConst = (input: string): string => {
+  if (!input) {
+    console.log("No input");
+    return null;
+  }
+  const readableConst = input
+    .replace(/\d.{2}/g, numberConverter)
+    .replace(/\s/g, "")
+    .replace(/[æøå]/g, "");
+  return readableConst.charAt(0).toLowerCase() + readableConst.slice(1);
+};
+
+const numberConverter = (stringNumber: string) => {
+  console.log("Number converter match: ", stringNumber);
+  const ordinals = ["st", "nd", "rd", "th"];
+
+  if (ordinals.includes(stringNumber.slice(-2).toLowerCase())) {
+    return converter.toWordsOrdinal(stringNumber.slice(0, -2));
+  }
+
+  return stringNumber.replace(/\d/g, converter.toWordsOrdinal);
 };
