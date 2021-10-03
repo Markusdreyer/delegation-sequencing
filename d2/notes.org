@@ -1,0 +1,15 @@
+* Operations
+** Add/Remove
+   Two versions: with or without time points. Without timepoints means any timepoints.
+
+
+* Observations
+
+** Implicit time constraints
+Restricting actions to a-f, the optimal initial sequence requires three time steps.
+BY removeing john from task e, barry has to be reallocated to e, but since he is also the sole person responsible for f
+the sequence adds one step. 
+
+* Bugs
+* New operators
++ Shuffle specific teams.
