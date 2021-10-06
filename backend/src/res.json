@@ -8,7 +8,7 @@
       "Witnesses": [
         {
           "Value": [
-            "expedite(f,\"Ingolf\",2)", "expedite(g,\"Ingolf\",11)", "expedite(j,\"Ingolf\",12)", "expedite(f,\"Morten\",2)", "expedite(g,\"Morten\",12)", "expedite(e,\"Rikard\",1)", "expedite(d,\"Rikard\",6)", "expedite(h,\"Rikard\",12)", "expedite(e,\"Kari\",1)", "expedite(d,\"Kari\",12)", "expedite(c,\"Herman\",1)", "expedite(a,\"Lukas\",1)", "expedite(b,\"Lukas\",12)", "expedite(a,\"Peter\",1)", "expedite(b,\"Peter\",6)", "expedite(k,\"Peter\",12)", "expedite(i,\"Tormod\",3)", "expedite(i,\"Halvard\",3)", "expedite(j,\"Halvard\",12)", "expedite(k,\"Yngve\",12)", "expedite(h,\"Miriam\",12)"
+            "expedite(f,ingolf,2)", "expedite(g,ingolf,11)", "expedite(j,ingolf,12)", "expedite(f,morten,2)", "expedite(g,morten,12)", "expedite(e,rikard,1)", "expedite(d,rikard,6)", "expedite(h,rikard,12)", "expedite(e,kari,1)", "expedite(d,kari,12)", "expedite(c,herman,1)", "expedite(a,lukas,1)", "expedite(b,lukas,12)", "expedite(a,peter,1)", "expedite(b,peter,6)", "expedite(k,peter,12)", "expedite(i,tormod,3)", "expedite(i,halvard,3)", "expedite(j,halvard,12)", "expedite(k,yngve,12)", "expedite(h,miriam,12)"
           ],
           "Costs": [
             35
@@ -16,7 +16,7 @@
         },
         {
           "Value": [
-            "expedite(f,\"Ingolf\",2)", "expedite(g,\"Ingolf\",11)", "expedite(j,\"Ingolf\",12)", "expedite(f,\"Morten\",2)", "expedite(g,\"Morten\",12)", "expedite(d,\"Rikard\",4)", "expedite(e,\"Rikard\",11)", "expedite(h,\"Rikard\",12)", "expedite(e,\"Kari\",3)", "expedite(d,\"Kari\",11)", "expedite(c,\"Herman\",1)", "expedite(a,\"Lukas\",1)", "expedite(b,\"Lukas\",12)", "expedite(a,\"Peter\",1)", "expedite(b,\"Peter\",11)", "expedite(k,\"Peter\",12)", "expedite(i,\"Tormod\",3)", "expedite(i,\"Halvard\",3)", "expedite(j,\"Halvard\",12)", "expedite(k,\"Yngve\",12)", "expedite(h,\"Miriam\",12)"
+            "expedite(f,ingolf,2)", "expedite(g,ingolf,11)", "expedite(j,ingolf,12)", "expedite(f,morten,2)", "expedite(g,morten,12)", "expedite(d,rikard,4)", "expedite(e,rikard,11)", "expedite(h,rikard,12)", "expedite(e,kari,3)", "expedite(d,kari,11)", "expedite(c,herman,1)", "expedite(a,lukas,1)", "expedite(b,lukas,12)", "expedite(a,peter,1)", "expedite(b,peter,11)", "expedite(k,peter,12)", "expedite(i,tormod,3)", "expedite(i,halvard,3)", "expedite(j,halvard,12)", "expedite(k,yngve,12)", "expedite(h,miriam,12)"
           ],
           "Costs": [
             33
@@ -24,7 +24,7 @@
         },
         {
           "Value": [
-            "expedite(f,\"Ingolf\",2)", "expedite(g,\"Ingolf\",11)", "expedite(j,\"Ingolf\",12)", "expedite(f,\"Morten\",2)", "expedite(g,\"Morten\",12)", "expedite(d,\"Rikard\",1)", "expedite(e,\"Rikard\",3)", "expedite(h,\"Rikard\",12)", "expedite(d,\"Kari\",1)", "expedite(e,\"Kari\",11)", "expedite(c,\"Herman\",1)", "expedite(a,\"Lukas\",1)", "expedite(b,\"Lukas\",12)", "expedite(a,\"Peter\",1)", "expedite(b,\"Peter\",11)", "expedite(k,\"Peter\",12)", "expedite(i,\"Tormod\",3)", "expedite(i,\"Halvard\",3)", "expedite(j,\"Halvard\",12)", "expedite(k,\"Yngve\",12)", "expedite(h,\"Miriam\",12)"
+            "expedite(f,ingolf,2)", "expedite(g,ingolf,11)", "expedite(j,ingolf,12)", "expedite(f,morten,2)", "expedite(g,morten,12)", "expedite(d,rikard,1)", "expedite(e,rikard,3)", "expedite(h,rikard,12)", "expedite(d,kari,1)", "expedite(e,kari,11)", "expedite(c,herman,1)", "expedite(a,lukas,1)", "expedite(b,lukas,12)", "expedite(a,peter,1)", "expedite(b,peter,11)", "expedite(k,peter,12)", "expedite(i,tormod,3)", "expedite(i,halvard,3)", "expedite(j,halvard,12)", "expedite(k,yngve,12)", "expedite(h,miriam,12)"
           ],
           "Costs": [
             29
@@ -32,7 +32,7 @@
         },
         {
           "Value": [
-            "expedite(f,\"Ingolf\",2)", "expedite(k,\"Ingolf\",3)", "expedite(g,\"Ingolf\",5)", "expedite(f,\"Morten\",2)", "expedite(g,\"Morten\",3)", "expedite(d,\"Rikard\",2)", "expedite(e,\"Rikard\",3)", "expedite(e,\"Kari\",2)", "expedite(d,\"Kari\",3)", "expedite(h,\"Kari\",11)", "expedite(c,\"Herman\",2)", "expedite(k,\"Herman\",5)", "expedite(a,\"Lukas\",1)", "expedite(b,\"Lukas\",2)", "expedite(a,\"Peter\",1)", "expedite(b,\"Peter\",4)", "expedite(i,\"Tormod\",3)", "expedite(j,\"Tormod\",4)", "expedite(j,\"Theodor\",4)", "expedite(i,\"Halvard\",3)", "expedite(h,\"Miriam\",3)"
+            "expedite(f,ingolf,2)", "expedite(k,ingolf,3)", "expedite(g,ingolf,5)", "expedite(f,morten,2)", "expedite(g,morten,3)", "expedite(d,rikard,2)", "expedite(e,rikard,3)", "expedite(e,kari,2)", "expedite(d,kari,3)", "expedite(h,kari,11)", "expedite(c,herman,2)", "expedite(k,herman,5)", "expedite(a,lukas,1)", "expedite(b,lukas,2)", "expedite(a,peter,1)", "expedite(b,peter,4)", "expedite(i,tormod,3)", "expedite(j,tormod,4)", "expedite(j,theodor,4)", "expedite(i,halvard,3)", "expedite(h,miriam,3)"
           ],
           "Costs": [
             26
@@ -40,7 +40,7 @@
         },
         {
           "Value": [
-            "expedite(f,\"Ingolf\",2)", "expedite(g,\"Ingolf\",4)", "expedite(j,\"Ingolf\",7)", "expedite(f,\"Morten\",2)", "expedite(g,\"Morten\",5)", "expedite(e,\"Rikard\",4)", "expedite(d,\"Rikard\",5)", "expedite(e,\"Kari\",5)", "expedite(h,\"Kari\",6)", "expedite(d,\"Kari\",7)", "expedite(c,\"Herman\",5)", "expedite(a,\"Lukas\",1)", "expedite(b,\"Lukas\",6)", "expedite(a,\"Peter\",1)", "expedite(b,\"Peter\",4)", "expedite(i,\"Tormod\",6)", "expedite(j,\"Tormod\",7)", "expedite(k,\"Jørgen\",4)", "expedite(i,\"Halvard\",6)", "expedite(k,\"Yngve\",5)", "expedite(h,\"Miriam\",5)"
+            "expedite(f,ingolf,2)", "expedite(g,ingolf,4)", "expedite(j,ingolf,7)", "expedite(f,morten,2)", "expedite(g,morten,5)", "expedite(e,rikard,4)", "expedite(d,rikard,5)", "expedite(e,kari,5)", "expedite(h,kari,6)", "expedite(d,kari,7)", "expedite(c,herman,5)", "expedite(a,lukas,1)", "expedite(b,lukas,6)", "expedite(a,peter,1)", "expedite(b,peter,4)", "expedite(i,tormod,6)", "expedite(j,tormod,7)", "expedite(k,jrgen,4)", "expedite(i,halvard,6)", "expedite(k,yngve,5)", "expedite(h,miriam,5)"
           ],
           "Costs": [
             25
@@ -48,7 +48,7 @@
         },
         {
           "Value": [
-            "expedite(f,\"Ingolf\",2)", "expedite(g,\"Ingolf\",4)", "expedite(f,\"Morten\",2)", "expedite(g,\"Morten\",5)", "expedite(e,\"Rikard\",5)", "expedite(d,\"Rikard\",6)", "expedite(e,\"Kari\",4)", "expedite(d,\"Kari\",5)", "expedite(h,\"Kari\",6)", "expedite(c,\"Herman\",5)", "expedite(a,\"Lukas\",1)", "expedite(b,\"Lukas\",5)", "expedite(a,\"Peter\",1)", "expedite(b,\"Peter\",4)", "expedite(i,\"Tormod\",4)", "expedite(j,\"Tormod\",6)", "expedite(j,\"Theodor\",6)", "expedite(k,\"Mikael\",4)", "expedite(i,\"Halvard\",5)", "expedite(k,\"Yngve\",5)", "expedite(h,\"Miriam\",5)"
+            "expedite(f,ingolf,2)", "expedite(g,ingolf,4)", "expedite(f,morten,2)", "expedite(g,morten,5)", "expedite(e,rikard,5)", "expedite(d,rikard,6)", "expedite(e,kari,4)", "expedite(d,kari,5)", "expedite(h,kari,6)", "expedite(c,herman,5)", "expedite(a,lukas,1)", "expedite(b,lukas,5)", "expedite(a,peter,1)", "expedite(b,peter,4)", "expedite(i,tormod,4)", "expedite(j,tormod,6)", "expedite(j,theodor,6)", "expedite(k,mikael,4)", "expedite(i,halvard,5)", "expedite(k,yngve,5)", "expedite(h,miriam,5)"
           ],
           "Costs": [
             18
@@ -56,7 +56,7 @@
         },
         {
           "Value": [
-            "expedite(f,\"Ingolf\",2)", "expedite(g,\"Ingolf\",3)", "expedite(f,\"Morten\",2)", "expedite(g,\"Morten\",3)", "expedite(j,\"Morten\",6)", "expedite(e,\"Rikard\",2)", "expedite(d,\"Rikard\",3)", "expedite(h,\"Rikard\",6)", "expedite(d,\"Kari\",2)", "expedite(e,\"Kari\",3)", "expedite(c,\"Herman\",3)", "expedite(a,\"Lukas\",1)", "expedite(b,\"Lukas\",3)", "expedite(a,\"Peter\",1)", "expedite(b,\"Peter\",2)", "expedite(j,\"Peter\",4)", "expedite(i,\"Tormod\",3)", "expedite(k,\"Jørgen\",3)", "expedite(i,\"Halvard\",3)", "expedite(k,\"Yngve\",3)", "expedite(h,\"Sven\",3)"
+            "expedite(f,ingolf,2)", "expedite(g,ingolf,3)", "expedite(f,morten,2)", "expedite(g,morten,3)", "expedite(j,morten,6)", "expedite(e,rikard,2)", "expedite(d,rikard,3)", "expedite(h,rikard,6)", "expedite(d,kari,2)", "expedite(e,kari,3)", "expedite(c,herman,3)", "expedite(a,lukas,1)", "expedite(b,lukas,3)", "expedite(a,peter,1)", "expedite(b,peter,2)", "expedite(j,peter,4)", "expedite(i,tormod,3)", "expedite(k,jrgen,3)", "expedite(i,halvard,3)", "expedite(k,yngve,3)", "expedite(h,sven,3)"
           ],
           "Costs": [
             16
@@ -64,7 +64,7 @@
         },
         {
           "Value": [
-            "expedite(f,\"Ingolf\",2)", "expedite(g,\"Ingolf\",3)", "expedite(f,\"Morten\",2)", "expedite(g,\"Morten\",3)", "expedite(j,\"Morten\",4)", "expedite(e,\"Rikard\",2)", "expedite(d,\"Rikard\",3)", "expedite(d,\"Kari\",2)", "expedite(e,\"Kari\",3)", "expedite(h,\"Kari\",4)", "expedite(c,\"Herman\",3)", "expedite(a,\"Lukas\",1)", "expedite(b,\"Lukas\",3)", "expedite(a,\"Peter\",1)", "expedite(b,\"Peter\",2)", "expedite(j,\"Peter\",4)", "expedite(i,\"Mikael\",3)", "expedite(i,\"Jørgen\",3)", "expedite(k,\"Halvard\",3)", "expedite(k,\"Yngve\",3)", "expedite(h,\"Sven\",3)"
+            "expedite(f,ingolf,2)", "expedite(g,ingolf,3)", "expedite(f,morten,2)", "expedite(g,morten,3)", "expedite(j,morten,4)", "expedite(e,rikard,2)", "expedite(d,rikard,3)", "expedite(d,kari,2)", "expedite(e,kari,3)", "expedite(h,kari,4)", "expedite(c,herman,3)", "expedite(a,lukas,1)", "expedite(b,lukas,3)", "expedite(a,peter,1)", "expedite(b,peter,2)", "expedite(j,peter,4)", "expedite(i,mikael,3)", "expedite(i,jrgen,3)", "expedite(k,halvard,3)", "expedite(k,yngve,3)", "expedite(h,sven,3)"
           ],
           "Costs": [
             10
@@ -72,7 +72,7 @@
         },
         {
           "Value": [
-            "expedite(f,\"Ingolf\",2)", "expedite(k,\"Ingolf\",3)", "expedite(g,\"Ingolf\",4)", "expedite(f,\"Morten\",2)", "expedite(g,\"Morten\",3)", "expedite(j,\"Morten\",4)", "expedite(d,\"Rikard\",2)", "expedite(e,\"Rikard\",3)", "expedite(e,\"Kari\",2)", "expedite(d,\"Kari\",3)", "expedite(h,\"Kari\",4)", "expedite(c,\"Herman\",2)", "expedite(a,\"Lukas\",1)", "expedite(b,\"Lukas\",3)", "expedite(a,\"Peter\",1)", "expedite(b,\"Peter\",2)", "expedite(j,\"Peter\",4)", "expedite(i,\"Mikael\",3)", "expedite(i,\"Jørgen\",3)", "expedite(k,\"Yngve\",4)", "expedite(h,\"Miriam\",3)"
+            "expedite(f,ingolf,2)", "expedite(k,ingolf,3)", "expedite(g,ingolf,4)", "expedite(f,morten,2)", "expedite(g,morten,3)", "expedite(j,morten,4)", "expedite(d,rikard,2)", "expedite(e,rikard,3)", "expedite(e,kari,2)", "expedite(d,kari,3)", "expedite(h,kari,4)", "expedite(c,herman,2)", "expedite(a,lukas,1)", "expedite(b,lukas,3)", "expedite(a,peter,1)", "expedite(b,peter,2)", "expedite(j,peter,4)", "expedite(i,mikael,3)", "expedite(i,jrgen,3)", "expedite(k,yngve,4)", "expedite(h,miriam,3)"
           ],
           "Costs": [
             10
@@ -80,7 +80,7 @@
         },
         {
           "Value": [
-            "expedite(f,\"Ingolf\",2)", "expedite(k,\"Ingolf\",3)", "expedite(g,\"Ingolf\",4)", "expedite(f,\"Morten\",2)", "expedite(g,\"Morten\",3)", "expedite(j,\"Morten\",4)", "expedite(d,\"Rikard\",2)", "expedite(e,\"Rikard\",3)", "expedite(e,\"Kari\",2)", "expedite(d,\"Kari\",3)", "expedite(h,\"Kari\",4)", "expedite(c,\"Herman\",2)", "expedite(k,\"Herman\",4)", "expedite(a,\"Lukas\",1)", "expedite(b,\"Lukas\",3)", "expedite(a,\"Peter\",1)", "expedite(b,\"Peter\",2)", "expedite(j,\"Peter\",4)", "expedite(i,\"Mikael\",3)", "expedite(i,\"Jørgen\",3)", "expedite(h,\"Miriam\",3)"
+            "expedite(f,ingolf,2)", "expedite(k,ingolf,3)", "expedite(g,ingolf,4)", "expedite(f,morten,2)", "expedite(g,morten,3)", "expedite(j,morten,4)", "expedite(d,rikard,2)", "expedite(e,rikard,3)", "expedite(e,kari,2)", "expedite(d,kari,3)", "expedite(h,kari,4)", "expedite(c,herman,2)", "expedite(k,herman,4)", "expedite(a,lukas,1)", "expedite(b,lukas,3)", "expedite(a,peter,1)", "expedite(b,peter,2)", "expedite(j,peter,4)", "expedite(i,mikael,3)", "expedite(i,jrgen,3)", "expedite(h,miriam,3)"
           ],
           "Costs": [
             10
@@ -88,7 +88,7 @@
         },
         {
           "Value": [
-            "expedite(f,\"Ingolf\",2)", "expedite(k,\"Ingolf\",3)", "expedite(g,\"Ingolf\",4)", "expedite(f,\"Morten\",2)", "expedite(g,\"Morten\",3)", "expedite(j,\"Morten\",4)", "expedite(d,\"Rikard\",2)", "expedite(e,\"Rikard\",3)", "expedite(h,\"Rikard\",4)", "expedite(e,\"Kari\",2)", "expedite(d,\"Kari\",3)", "expedite(c,\"Herman\",2)", "expedite(a,\"Lukas\",1)", "expedite(b,\"Lukas\",3)", "expedite(a,\"Peter\",1)", "expedite(b,\"Peter\",2)", "expedite(j,\"Peter\",4)", "expedite(i,\"Mikael\",3)", "expedite(i,\"Jørgen\",3)", "expedite(k,\"Yngve\",4)", "expedite(h,\"Miriam\",3)"
+            "expedite(f,ingolf,2)", "expedite(k,ingolf,3)", "expedite(g,ingolf,4)", "expedite(f,morten,2)", "expedite(g,morten,3)", "expedite(j,morten,4)", "expedite(d,rikard,2)", "expedite(e,rikard,3)", "expedite(h,rikard,4)", "expedite(e,kari,2)", "expedite(d,kari,3)", "expedite(c,herman,2)", "expedite(a,lukas,1)", "expedite(b,lukas,3)", "expedite(a,peter,1)", "expedite(b,peter,2)", "expedite(j,peter,4)", "expedite(i,mikael,3)", "expedite(i,jrgen,3)", "expedite(k,yngve,4)", "expedite(h,miriam,3)"
           ],
           "Costs": [
             10
@@ -96,7 +96,7 @@
         },
         {
           "Value": [
-            "expedite(f,\"Ingolf\",2)", "expedite(k,\"Ingolf\",3)", "expedite(g,\"Ingolf\",4)", "expedite(f,\"Morten\",2)", "expedite(g,\"Morten\",3)", "expedite(j,\"Morten\",4)", "expedite(d,\"Rikard\",2)", "expedite(e,\"Rikard\",3)", "expedite(h,\"Rikard\",4)", "expedite(e,\"Kari\",2)", "expedite(d,\"Kari\",3)", "expedite(c,\"Herman\",2)", "expedite(k,\"Herman\",4)", "expedite(a,\"Lukas\",1)", "expedite(b,\"Lukas\",3)", "expedite(a,\"Peter\",1)", "expedite(b,\"Peter\",2)", "expedite(j,\"Peter\",4)", "expedite(i,\"Mikael\",3)", "expedite(i,\"Jørgen\",3)", "expedite(h,\"Miriam\",3)"
+            "expedite(f,ingolf,2)", "expedite(k,ingolf,3)", "expedite(g,ingolf,4)", "expedite(f,morten,2)", "expedite(g,morten,3)", "expedite(j,morten,4)", "expedite(d,rikard,2)", "expedite(e,rikard,3)", "expedite(h,rikard,4)", "expedite(e,kari,2)", "expedite(d,kari,3)", "expedite(c,herman,2)", "expedite(k,herman,4)", "expedite(a,lukas,1)", "expedite(b,lukas,3)", "expedite(a,peter,1)", "expedite(b,peter,2)", "expedite(j,peter,4)", "expedite(i,mikael,3)", "expedite(i,jrgen,3)", "expedite(h,miriam,3)"
           ],
           "Costs": [
             10
@@ -117,10 +117,10 @@
   },
   "Calls": 1,
   "Time": {
-    "Total": 0.039,
-    "Solve": 0.012,
+    "Total": 0.049,
+    "Solve": 0.015,
     "Model": 0.001,
     "Unsat": 0.000,
-    "CPU": 0.038
+    "CPU": 0.047
   }
 }
