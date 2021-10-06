@@ -81,3 +81,17 @@ const numberConverter = (stringNumber: string) => {
 
   return stringNumber.replace(/\d/g, converter.toWordsOrdinal);
 };
+
+export const parseModel = (model: string) => {
+  const parsedModel = model.split(")");
+  parsedModel.filter((el) => el);
+  const resList: string[] = [];
+  parsedModel.forEach((el) => {
+    let res = el.trim();
+    if (res.slice(-1) !== ")") {
+      res += ")";
+    }
+    resList.push(res);
+  });
+  return resList;
+};

@@ -19,7 +19,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createReadableConst = exports.sortModels = exports.property = exports.isA = exports.isSubClass = void 0;
+exports.parseModel = exports.createReadableConst = exports.sortModels = exports.property = exports.isA = exports.isSubClass = void 0;
 const converter = __importStar(require("number-to-words"));
 const isSubClass = (child, parent) => {
     return `is_subclass(${exports.createReadableConst(child)}, ${exports.createReadableConst(parent)}).\n`;
@@ -86,4 +86,18 @@ const numberConverter = (stringNumber) => {
     }
     return stringNumber.replace(/\d/g, converter.toWordsOrdinal);
 };
+const parseModel = (model) => {
+    const parsedModel = model.split(")");
+    parsedModel.filter((el) => el);
+    const resList = [];
+    parsedModel.forEach((el) => {
+        let res = el.trim();
+        if (res.slice(-1) !== ")") {
+            res += ")";
+        }
+        resList.push(res);
+    });
+    return resList;
+};
+exports.parseModel = parseModel;
 //# sourceMappingURL=utils.js.map

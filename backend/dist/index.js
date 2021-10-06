@@ -24,9 +24,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
+const clingojs_1 = __importDefault(require("clingojs"));
 const child = __importStar(require("child_process"));
 const fs_1 = __importDefault(require("fs"));
 const utils_1 = require("./utils");
+const clingo = new clingojs_1.default();
 const app = express_1.default();
 app.use(cors_1.default());
 app.use("*", cors_1.default());
@@ -34,6 +36,42 @@ app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
 app.enable("trust proxy");
 const port = 8000;
+app.get("/test", (req, res) => {
+    const models = [];
+    clingo
+        .solve({
+        inputFiles: ["src/model.lp", "src/actions.lp"],
+    })
+        .on("model", (model) => {
+        models.push(model);
+    })
+        .on("end", () => {
+        res.status(200).json(models);
+    });
+});
+app.post("/revise", (req, res) => {
+    const reqBody = req.body;
+    const currentModel = reqBody.currentModel.join("");
+    const changes = reqBody.changes.join("");
+    console.log(currentModel);
+    console.log(changes);
+    clingo.config({
+        maxModels: 0,
+    });
+    const newModels = [];
+    clingo
+        .solve({
+        inputFiles: ["src/control.lp", currentModel + changes],
+    })
+        .on("model", (model) => {
+        console.log("model", model);
+        const parsedModel = utils_1.parseModel(model);
+        newModels.push(parsedModel);
+    })
+        .on("end", () => {
+        res.status(200).json({ model: newModels });
+    });
+});
 app.post("/asp-parser", (req, res) => {
     const reqBody = req.body;
     const taxonomyData = reqBody.taxonomy;
@@ -64,7 +102,7 @@ app.post("/asp-parser", (req, res) => {
                 aspString += `responsible(${abbreviation}, Ag) :- deploy(${abbreviation}), property(Ag, ${parsedRole}), member(Ag, ${parsedAgent}) .\n`;
             }
             else {
-                aspString += `delegate(${abbreviation}, ${el.quantity}, ${parsedAgent}) :- deploy(${abbreviation}), member(Ag, ${agents}).\n`;
+                aspString += `delegate(${abbreviation}, ${el.quantity}, ${parsedAgent}) :- deploy(${abbreviation}), member(Ag, ${parsedAgent}).\n`;
             }
         }
         aspString += ``;
@@ -121,20 +159,6 @@ app.post("/asp-parser", (req, res) => {
         }
         res.status(sortedModels.status).json(sortedModels.body);
     });
-    /* const foo: child.ChildProcess = child.exec(
-    "clingo --outf=2 src/model.lp src/actions.lp",
-    (error: any, stdout: string, stderr: string) => {
-      if (error) {
-        console.log(`error: ${error.message}`);
-        return;
-      }
-      if (stderr) {
-        console.log(`stderr: ${stderr}`);
-        return;
-      }
-      console.log(`stdout: ${stdout}`);
-    }
-  ); */
 });
 // start the Express server
 app.listen(port, () => {
