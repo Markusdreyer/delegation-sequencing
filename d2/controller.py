@@ -7,7 +7,7 @@ import re
 import os 
 import functools
 
-from clingo.solving import Model
+from clingo.solving import Model, SolveResult
 
 
 message = lambda: "Invalid input format.\n"
@@ -84,21 +84,17 @@ def revise(trace, requested_changes):
     """Generates a new model that is as similar to the buffer_as_preceeding_modeled one as the
     requested revisions allow."""
     revision = functools.reduce(lambda a, b: a+b, trace + requested_changes )
-    #print("In revise, revision: " + str(revision))
     print("REVISION: ", revision)
     prg = _initialise_base(revision)
 
-    with prg.solve(yield_ = True) as results:
+    with prg.solve(yield_ = True, on_finish=on_finish) as results:
+        print(str(results))
         m = results.model()
-        if (m == []):
-            raise UnsatisfiabilityError()
-        #else:
-            #best = select_best_model(models)
-           
-        #print("In revise, best: " + str(buffer_as_preceeding_model(best)))
-        #display(m)
-        print(str(m))
+        #print("Revised model", str(m))
         return (str(m), buffer_as_past(parse_model(m)))
+
+def on_finish(res: SolveResult) :
+    print("Model is: ", str(res))
 
 def revise_model(trace, requested_changes):
     return revise(trace, requested_changes)[0]
@@ -111,6 +107,7 @@ def parse_model(model, punctuation=False):
     res_list = []
     for el in parsed_model:
         res = el.strip()
+        print(f"parse model res: {res}")
         if res[-1] != ")":
             res += ")"
         if punctuation:
