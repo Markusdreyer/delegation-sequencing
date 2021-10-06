@@ -2,7 +2,13 @@ import express from "express";
 import cors from "cors";
 import * as child from "child_process";
 import fs from "fs";
-import { isA, isSubClass, property, sortModels } from "./utils";
+import {
+  createReadableConst,
+  isA,
+  isSubClass,
+  property,
+  sortModels,
+} from "./utils";
 import { Response } from "./types";
 
 const app = express();
@@ -45,18 +51,21 @@ app.post("/asp-parser", (req, res) => {
     if (agents.length > 1) {
       aspString += `collaborative(${abbreviation}) . \n`;
       agents.map((agent) => {
-        // TODO:Tasks with roles does not support collaborative tasks, and will crash
-        aspString += `delegate(${abbreviation}, ${el.quantity}, "${agent}") :- deploy(${abbreviation}) . \n`;
+        // TODO:Tasks with roles does not support collaborative tasks, and the task will be ignored
+        const parsedAgent = createReadableConst(agent);
+        console.log("PARSED AGENT:: ", parsedAgent);
+        aspString += `delegate(${abbreviation}, ${el.quantity}, ${parsedAgent}) :- deploy(${abbreviation}),  member(Ag, ${parsedAgent}). \n`;
       });
     } else {
       aspString += `primitive(${abbreviation}) . \n`;
-    }
-
-    if (role) {
-      // TODO:Backend does not support multiple roles for a single task
-      aspString += `responsible(${abbreviation}, Ag) :- deploy(${abbreviation}), property(Ag, "${role}") .\n`;
-    } else {
-      aspString += `delegate(${abbreviation}, ${el.quantity}, "${agents}") :- deploy(${abbreviation}) .\n`;
+      const parsedAgent = createReadableConst(agents[0]);
+      if (role) {
+        // TODO:Backend does not support multiple roles for a single task
+        const parsedRole = createReadableConst(role);
+        aspString += `responsible(${abbreviation}, Ag) :- deploy(${abbreviation}), property(Ag, ${parsedRole}), member(Ag, ${parsedAgent}) .\n`;
+      } else {
+        aspString += `delegate(${abbreviation}, ${el.quantity}, ${parsedAgent}) :- deploy(${abbreviation}), member(Ag, ${agents}).\n`;
+      }
     }
 
     aspString += ``;

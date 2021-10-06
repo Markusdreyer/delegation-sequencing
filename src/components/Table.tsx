@@ -48,8 +48,6 @@ const Table: React.FC<Props> = (props) => {
             multiple
             value={props.value ? props.value : [""]}
             onChange={(evt) => {
-              console.log("PROPS:: ", props);
-              console.log("evt ", multiselectOptions);
               props.onChange(evt.target.value);
             }}
             input={<OutlinedInput label="Name" />}
@@ -76,6 +74,7 @@ const Table: React.FC<Props> = (props) => {
       {
         title: "Quantity",
         field: "quantity",
+        type: "numeric",
       },
       {
         title: "Abbreviation",
@@ -111,7 +110,6 @@ const Table: React.FC<Props> = (props) => {
   useEffect(() => {
     // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
     setColumns(tableColumns[data.type]);
-    console.log("TAXONOM USEEFFECT");
     const roles = taxonomies[activeTaxonomy]
       .filter((el: TaxonomyData) => el.role)
       .map((el: any) => el.role)
@@ -123,11 +121,11 @@ const Table: React.FC<Props> = (props) => {
       .map((el: TaxonomyData) => el.agent)
       .filter(unique) as string[];
 
+    console.log("ROLES:: ", roles);
     setMultiselectOptions({ role: roles, agent: agents });
   }, [taxonomies, activeTaxonomy]);
 
   useEffect(() => {
-    console.log("MULTISELECT OPTIONS ", multiselectOptions);
     setColumns(tableColumns.procedures);
   }, [multiselectOptions]);
 
@@ -242,13 +240,11 @@ const Table: React.FC<Props> = (props) => {
   };
 
   useEffect(() => {
-    console.log("DATATYPE USEEFFECT");
     // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
     setColumns(tableColumns[data.type]);
   }, [data.type]);
 
   const handleChangeTaxonomyChange = (evt: any) => {
-    console.log("TAXONOMY CHANGE");
     // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
     dispatch(setActiveTaxonomy(evt.target.value));
 
@@ -273,6 +269,9 @@ const Table: React.FC<Props> = (props) => {
       const dataUpdate = currentTableData as ProcedureData[];
       const procedureData = newData as unknown as ProcedureData;
       procedureData.id = 1;
+      if (!procedureData.role) {
+        procedureData.role = [""];
+      }
 
       dataUpdate.push(procedureData as ProcedureData);
       dispatch(setProcedure(data.key, dataUpdate));
