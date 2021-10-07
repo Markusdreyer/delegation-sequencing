@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import clingojs from "clingojs";
+import * as clingowasm from "clingo-wasm";
 import * as child from "child_process";
 import fs from "fs";
 import {
@@ -11,7 +12,7 @@ import {
   property,
   sortModels,
 } from "./utils";
-import { Response } from "./types";
+import { Models, Response } from "./types";
 
 const clingo = new clingojs();
 const app = express();
@@ -39,6 +40,20 @@ interface TaxonomyData {
   agent: string;
 }
 
+app.post("/wasm", async (req, res) => {
+  const reqBody = req.body;
+  const currentModel = reqBody.currentModel.join("");
+  const changes = reqBody.changes.join("");
+  const revision = currentModel + changes;
+
+  const model = fs.readFileSync("src/control.lp", "utf8");
+  const actions = fs.readFileSync("src/actions.lp", "utf8");
+  const newModels: clingowasm.ClingoResult | clingowasm.ClingoError =
+    await clingowasm.run(model + actions + revision, 0);
+  console.log("models: ", newModels);
+  res.status(200).json({ models: newModels });
+});
+
 app.get("/test", (req, res) => {
   const models: any = [];
 
@@ -59,22 +74,23 @@ app.post("/revise", (req, res) => {
   const currentModel = reqBody.currentModel.join("");
   const changes = reqBody.changes.join("");
 
-  console.log(currentModel);
-  console.log(changes);
-
   clingo.config({
     maxModels: 0,
   });
 
   const newModels: any = [];
+
+  const revision = currentModel + changes;
+  console.log("REVISION", revision);
+
   clingo
     .solve({
-      inputFiles: ["src/control.lp", currentModel + changes],
+      inputFiles: ["src/d2/control.lp", currentModel + changes],
     })
     .on("model", (model: any) => {
       console.log("model", model);
-      const parsedModel = parseModel(model);
-      newModels.push(parsedModel);
+      // const parsedModel = parseModel(model);
+      // newModels.push(parsedModel);
     })
     .on("end", () => {
       res.status(200).json({ model: newModels });
@@ -144,9 +160,9 @@ app.post("/asp-parser", (req, res) => {
   aspString += `${predString}\n\n`;
   aspString += `${taxonomyString}\n\n`;
 
-  fs.writeFile("src/model.lp", aspString, (err) => {
+  fs.writeFile("src/actions.lp", aspString, (err) => {
     if (err) throw err;
-    console.log("Model saved to model.lp");
+    console.log("Model saved to actions.lp");
   });
 
   const spawn = child.spawn;

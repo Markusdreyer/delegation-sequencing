@@ -18,6 +18,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -25,6 +34,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const clingojs_1 = __importDefault(require("clingojs"));
+const clingowasm = __importStar(require("clingo-wasm"));
 const child = __importStar(require("child_process"));
 const fs_1 = __importDefault(require("fs"));
 const utils_1 = require("./utils");
@@ -36,6 +46,17 @@ app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
 app.enable("trust proxy");
 const port = 8000;
+app.post("/wasm", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const reqBody = req.body;
+    const currentModel = reqBody.currentModel.join("");
+    const changes = reqBody.changes.join("");
+    const revision = currentModel + changes;
+    const model = fs_1.default.readFileSync("src/control.lp", "utf8");
+    const actions = fs_1.default.readFileSync("src/actions.lp", "utf8");
+    const newModels = yield clingowasm.run(model + actions + revision, 0);
+    console.log("models: ", newModels);
+    res.status(200).json({ models: newModels });
+}));
 app.get("/test", (req, res) => {
     const models = [];
     clingo
@@ -49,24 +70,25 @@ app.get("/test", (req, res) => {
         res.status(200).json(models);
     });
 });
+// TODO: Fix .lp file linking. All .lp files should be placed in /src and include the correct files.
 app.post("/revise", (req, res) => {
     const reqBody = req.body;
     const currentModel = reqBody.currentModel.join("");
     const changes = reqBody.changes.join("");
-    console.log(currentModel);
-    console.log(changes);
     clingo.config({
         maxModels: 0,
     });
     const newModels = [];
+    const revision = currentModel + changes;
+    console.log("REVISION", revision);
     clingo
         .solve({
-        inputFiles: ["src/control.lp", currentModel + changes],
+        inputFiles: ["src/d2/control.lp", currentModel + changes],
     })
         .on("model", (model) => {
         console.log("model", model);
-        const parsedModel = utils_1.parseModel(model);
-        newModels.push(parsedModel);
+        // const parsedModel = parseModel(model);
+        // newModels.push(parsedModel);
     })
         .on("end", () => {
         res.status(200).json({ model: newModels });
@@ -133,10 +155,10 @@ app.post("/asp-parser", (req, res) => {
     });
     aspString += `${predString}\n\n`;
     aspString += `${taxonomyString}\n\n`;
-    fs_1.default.writeFile("src/model.lp", aspString, (err) => {
+    fs_1.default.writeFile("src/actions.lp", aspString, (err) => {
         if (err)
             throw err;
-        console.log("Model saved to model.lp");
+        console.log("Model saved to actions.lp");
     });
     const spawn = child.spawn;
     const pythonProcess = spawn("python3", ["src/proxy.py"]);

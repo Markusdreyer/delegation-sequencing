@@ -1,75 +1,88 @@
-%%%%%%%%%%%%%%%%% Agent taxonomy  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+primitive(a) . 
+delegate(a, 1, firstAttackEngineCrew) :- deploy(a), member(Ag, firstAttackEngineCrew).
+description(a, "1st attack engine crew turn-out") .
+mandatory(a) .
 
-% Subclass reasoning
-subclass(A, B):- is_subclass(A, B).
-subclass(A, C):- is_subclass(A, D), subclass(D, C).
+primitive(b) . 
+delegate(b, 1, secondAttackEngineCrew) :- deploy(b), member(Ag, secondAttackEngineCrew).
+description(b, "2nd attack engine crew turn-out") .
+mandatory(b) .
 
-member(A, C):- is_a(A, C).
-member(A, C):- is_a(A, D), subclass(D, C).
+primitive(c) . 
+delegate(c, 1, patrolVehicle) :- deploy(c), member(Ag, patrolVehicle).
+description(c, "Patrol vehicle turn-out") .
+mandatory(c) .
 
-% Taxonomy of companies
-class(agent).
+primitive(d) . 
+delegate(d, 1, firstAmbulance) :- deploy(d), member(Ag, firstAmbulance).
+description(d, "1st Ambulance turn-out") .
+mandatory(d) .
 
-agent(X):- member(X, agent).
+primitive(e) . 
+delegate(e, 1, secondAmbulance) :- deploy(e), member(Ag, secondAmbulance).
+description(e, "2nd Ambulance turn-out") .
+mandatory(e) .
 
-objective(Ac):- collaborative(Ac).
-objective(Ac):- primitive(Ac).
-objective(Ac):- abstract(Ac).
+primitive(f) . 
+delegate(f, 1, firstAttackEngineCrew) :- deploy(f), member(Ag, firstAttackEngineCrew).
+description(f, "First arriving fire department scene size up and establish command ") .
+mandatory(f) .
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                     Generate responsibilities
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-N{responsible(Ac, Ag): member(Ag, Group)}N :-  delegate(Ac, N, Group).
-{deploy(X): objective(X)}.
-
-:- not {deploy(Ac): abstract(Ac1), subtask(Ac1, Ac)}1. 
-
-% All mandatory tasks are deployd
-:- mandatory(X), not deploy(X).
-
-% Dont deploy non-selected subtasks
-:- not mandatory(Ac), deploy(Ac).
-
-% Inherit mandatoriness to substasks
-
-mandatory(Ac2):- sub(Ac1, Ac2), deploy(Ac2), mandatory(Ac1).
-
-#minimize{1: responsible(Ac, Ag, N)}.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                 Projections
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-delegated(Ac):-  delegate(Ac, _, _).
-expedited_by(Ac, Ag):- expedite(Ac, Ag, T).
-expedited_at(Ac, T):- expedite(Ac, _, T).
-concurrent(Ac1, Ac2):- expedite(Ac1, Ag1, T), expedite(Ac2, Ag1, T),  Ac1 != Ac2.
-something_done(T):- expedite(_,_,T).
-someone_does(Ac, T):- expedite(Ac, _, T).
-preceded(Ac1):- expedited_at(Ac1, T), expedited_at(Ac2, T-1), step(T).
+pred(f, a) .
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                 Temporalize
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+is_subclass(firstAttackEngineCrew, agent).
+is_subclass(fireOfficer, firstAttackEngineCrew).
+property(ingolf, fireOfficer).
+is_a(ingolf, fireOfficer).
+is_subclass(firetruckDriver, firstAttackEngineCrew).
+property(lukas, firetruckDriver).
+is_a(lukas, firetruckDriver).
+is_subclass(firefighter, firstAttackEngineCrew).
+property(tormod, firefighter).
+is_a(tormod, firefighter).
+is_subclass(firefighter, firstAttackEngineCrew).
+property(theodor, firefighter).
+is_a(theodor, firefighter).
+is_subclass(firefighter, firstAttackEngineCrew).
+property(mikael, firefighter).
+is_a(mikael, firefighter).
+is_subclass(secondAttackEngineCrew, agent).
+is_subclass(fireOfficer, secondAttackEngineCrew).
+property(morten, fireOfficer).
+is_a(morten, fireOfficer).
+is_subclass(firetruckDriver, secondAttackEngineCrew).
+property(peter, firetruckDriver).
+is_a(peter, firetruckDriver).
+is_subclass(firefighter, secondAttackEngineCrew).
+property(jrgen, firefighter).
+is_a(jrgen, firefighter).
+is_subclass(firefighter, secondAttackEngineCrew).
+property(roar, firefighter).
+is_a(roar, firefighter).
+is_subclass(firefighter, secondAttackEngineCrew).
+property(halvard, firefighter).
+is_a(halvard, firefighter).
+is_subclass(patrolVehicle, agent).
+is_subclass(patrolVehicleDriver, patrolVehicle).
+property(herman, patrolVehicleDriver).
+is_a(herman, patrolVehicleDriver).
+is_subclass(policeOfficer, patrolVehicle).
+property(yngve, policeOfficer).
+is_a(yngve, policeOfficer).
+is_subclass(firstAmbulance, agent).
+is_subclass(ambulanceDriver, firstAmbulance).
+property(rikard, ambulanceDriver).
+is_a(rikard, ambulanceDriver).
+is_subclass(ambulanceAssistant, firstAmbulance).
+property(sven, ambulanceAssistant).
+is_a(sven, ambulanceAssistant).
+is_subclass(secondAmbulance, agent).
+is_subclass(ambulanceAssistant, secondAmbulance).
+property(miriam, ambulanceAssistant).
+is_a(miriam, ambulanceAssistant).
+is_subclass(ambulanceDriver, secondAmbulance).
+property(kari, ambulanceDriver).
+is_a(kari, ambulanceDriver).
 
-step(1..Y+1):- Y = #count{Ac: responsible(Ac, Ag)}.
-1{expedite(Ac, Ag, T): step(T)}1 :- responsible(Ac, Ag).
-
-:- someone_does(Ac, T), T>1, not preceded(Ac). % Actions form a cohesive time-sequence
-:- someone_does(Ac1, T1), someone_does(Ac2, T2), not  T1 < T2, pred(Ac2, Ac1). % Respect the ordering constraints on actions
-first :- something_done(1). % Sequence starts at timestep 1.
-:- not first.                  % Sequence starts at timestep 1.
-
-%% % Other requirements
-:- concurrent(Ac1, Ac2).  % An agent can only participate in one action at a time
-T1 = T2 :- expedited_at(Ac, T1, q), expedited_at(Ac, T2, q). % An action only occurs once. % implicit in time compression
-
-
-#minimize{T: expedite(Ac, Ag, T)}.				      
-
-#show .
-
-#show expedite/3.
 
