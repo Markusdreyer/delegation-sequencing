@@ -46,10 +46,10 @@ app.post("/wasm", async (req, res) => {
   const changes = reqBody.changes.join("");
   const revision = currentModel + changes;
 
-  const model = fs.readFileSync("src/control.lp", "utf8");
-  const actions = fs.readFileSync("src/actions.lp", "utf8");
+  const control = fs.readFileSync("src/asp/control.lp", "utf8");
+  const actions = fs.readFileSync("src/asp/actions.lp", "utf8");
   const newModels: clingowasm.ClingoResult | clingowasm.ClingoError =
-    await clingowasm.run(model + actions + revision, 0);
+    await clingowasm.run(control + actions + revision, 0);
   console.log("models: ", newModels);
   res.status(200).json({ models: newModels });
 });
@@ -66,34 +66,6 @@ app.get("/test", (req, res) => {
     })
     .on("end", () => {
       res.status(200).json(models);
-    });
-});
-
-app.post("/revise", (req, res) => {
-  const reqBody = req.body;
-  const currentModel = reqBody.currentModel.join("");
-  const changes = reqBody.changes.join("");
-
-  clingo.config({
-    maxModels: 0,
-  });
-
-  const newModels: any = [];
-
-  const revision = currentModel + changes;
-  console.log("REVISION", revision);
-
-  clingo
-    .solve({
-      inputFiles: ["src/d2/control.lp", currentModel + changes],
-    })
-    .on("model", (model: any) => {
-      console.log("model", model);
-      // const parsedModel = parseModel(model);
-      // newModels.push(parsedModel);
-    })
-    .on("end", () => {
-      res.status(200).json({ model: newModels });
     });
 });
 

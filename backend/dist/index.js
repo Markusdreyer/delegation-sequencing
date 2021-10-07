@@ -51,9 +51,9 @@ app.post("/wasm", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const currentModel = reqBody.currentModel.join("");
     const changes = reqBody.changes.join("");
     const revision = currentModel + changes;
-    const model = fs_1.default.readFileSync("src/control.lp", "utf8");
-    const actions = fs_1.default.readFileSync("src/actions.lp", "utf8");
-    const newModels = yield clingowasm.run(model + actions + revision, 0);
+    const control = fs_1.default.readFileSync("src/asp/control.lp", "utf8");
+    const actions = fs_1.default.readFileSync("src/asp/actions.lp", "utf8");
+    const newModels = yield clingowasm.run(control + actions + revision, 0);
     console.log("models: ", newModels);
     res.status(200).json({ models: newModels });
 }));
@@ -68,30 +68,6 @@ app.get("/test", (req, res) => {
     })
         .on("end", () => {
         res.status(200).json(models);
-    });
-});
-// TODO: Fix .lp file linking. All .lp files should be placed in /src and include the correct files.
-app.post("/revise", (req, res) => {
-    const reqBody = req.body;
-    const currentModel = reqBody.currentModel.join("");
-    const changes = reqBody.changes.join("");
-    clingo.config({
-        maxModels: 0,
-    });
-    const newModels = [];
-    const revision = currentModel + changes;
-    console.log("REVISION", revision);
-    clingo
-        .solve({
-        inputFiles: ["src/d2/control.lp", currentModel + changes],
-    })
-        .on("model", (model) => {
-        console.log("model", model);
-        // const parsedModel = parseModel(model);
-        // newModels.push(parsedModel);
-    })
-        .on("end", () => {
-        res.status(200).json({ model: newModels });
     });
 });
 app.post("/asp-parser", (req, res) => {

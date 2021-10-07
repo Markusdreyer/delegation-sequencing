@@ -2,6 +2,13 @@
 %                 Revision operators
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+objective(Ac):- collaborative(Ac).
+objective(Ac):- primitive(Ac).
+objective(Ac):- abstract(Ac).
+
+abstract(-1):- #false.
+primitive(-1):- #false.
+
 % Remove a responsibility from an agent keeping nothing fixed
 % (that is action-allocations and time may vary)
 :- relieve(Ac, Ag), expedite(Ac, Ag, T), step(T).
