@@ -96,10 +96,10 @@ const generateValues = (models: any) => {
 
 export const getASPModels = (
   taxonomy: TaxonomyData[],
-  procedure: ProcedureData[]
-): Promise<Models | Action[][]> => {
+  procedure: ProcedureData[],
+  numberOfModels: number
+): Promise<string | Action[][]> => {
   const tmpProcedure = JSON.parse(JSON.stringify(procedure));
-  console.log(tmpProcedure);
   tmpProcedure.forEach((el: ProcedureData) => {
     el.role = (el.role as string[]).filter((e) => e).join(",");
     el.agent = (el.agent as string[]).filter((e) => e).join(",");
@@ -113,8 +113,7 @@ export const getASPModels = (
 
   return axios({
     method: "post",
-    url:
-      process.env.REACT_APP_BACKEND_URL || "http://localhost:8000/asp-parser",
+    url: process.env.REACT_APP_BACKEND_URL || "http://localhost:8000/initial",
     data: simulationRequest,
     headers: {
       "Content-Type": "application/json",
@@ -130,9 +129,13 @@ export const getASPModels = (
       });
       return optimumModels;
     })
-    .then((models) => parseModels(models, procedure))
-    .catch((error) => {
-      return error.response.data;
+    .then((models) => parseModels(models, procedure).slice(-numberOfModels))
+    .catch((error: AxiosError) => {
+      if (error.response) {
+        return error.response?.data;
+      } else {
+        return error.message;
+      }
     });
 };
 

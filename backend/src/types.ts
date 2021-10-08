@@ -35,5 +35,26 @@ export interface Time {
 
 export interface Response {
   status: number;
-  body: string | Models;
+  body: Models | FailureReason;
+}
+
+export interface ProcedureData {
+  action: string;
+  agent: string;
+  quantity: number;
+  abbreviation: string;
+  precedence: string;
+  role?: string;
+}
+
+export interface TaxonomyData {
+  id: number;
+  parentId: number;
+  role?: string;
+  agent: string;
+}
+
+export interface FailureReason {
+  function: string;
+  reason: string;
 }
