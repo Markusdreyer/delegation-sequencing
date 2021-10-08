@@ -1,88 +1,97 @@
 primitive(a) . 
-delegate(a, 1, firstAttackEngineCrew) :- deploy(a), member(Ag, firstAttackEngineCrew).
-description(a, "1st attack engine crew turn-out") .
+delegate(a, 1, ae_crew) :- deploy(a), member(Ag, ae_crew). 
+description(a, "Attack engine crew turn-out") .
 mandatory(a) .
 
 primitive(b) . 
-delegate(b, 1, secondAttackEngineCrew) :- deploy(b), member(Ag, secondAttackEngineCrew).
-description(b, "2nd attack engine crew turn-out") .
+delegate(b, 1, se_crew) :- deploy(b), member(Ag, se_crew). 
+description(b, "Second attack engine crew turn-out") .
 mandatory(b) .
 
 primitive(c) . 
-delegate(c, 1, patrolVehicle) :- deploy(c), member(Ag, patrolVehicle).
-description(c, "Patrol vehicle turn-out") .
+delegate(c, 1, lt_crew) :- deploy(c), member(Ag, lt_crew). 
+description(c, "Ladder department turn-out") .
 mandatory(c) .
 
 primitive(d) . 
-delegate(d, 1, firstAmbulance) :- deploy(d), member(Ag, firstAmbulance).
-description(d, "1st Ambulance turn-out") .
+delegate(d, 1, ae_crew) :- deploy(d), member(Ag, ae_crew). 
+description(d, "Travel of attack engine crew to 911 address") .
 mandatory(d) .
 
 primitive(e) . 
-delegate(e, 1, secondAmbulance) :- deploy(e), member(Ag, secondAmbulance).
-description(e, "2nd Ambulance turn-out") .
+delegate(e, 1, se_crew) :- deploy(e), member(Ag, se_crew). 
+description(e, "Travel of second engine crew to 911 address") .
 mandatory(e) .
 
 primitive(f) . 
-delegate(f, 1, firstAttackEngineCrew) :- deploy(f), member(Ag, firstAttackEngineCrew).
-description(f, "First arriving fire department scene size up and establish command ") .
+responsible(f, Ag) :- deploy(f), property(Ag, driver), member(Ag, lt_crew). 
+description(f, "Travel of ladder tower crew to 911 address") .
 mandatory(f) .
 
-pred(f, a) .
+primitive(g) . 
+delegate(g, 1, ae_crew) :- deploy(g), member(Ag, ae_crew). 
+description(g, "Attack engine crew advance 1.75 inch hose to seat of fire") .
+mandatory(g) .
+
+primitive(h) . 
+delegate(h, 1, ae_crew) :- deploy(h), member(Ag, ae_crew). 
+description(h, "Attack engine driver prepare to pump water") .
+mandatory(h) .
+
+primitive(i) . 
+delegate(i, 1, ae_crew) :- deploy(i), member(Ag, ae_crew). 
+description(i, "Attack fire with tank water aboard attack engine") .
+mandatory(i) .
+
+primitive(j) . 
+delegate(j, 1, se_crew) :- deploy(j), member(Ag, se_crew). 
+description(j, "Second engine crew member prepare nearest hydrant for hook-up") .
+mandatory(j) .
+
+primitive(k) . 
+delegate(k, 1, se_crew) :- deploy(k), member(Ag, se_crew). 
+description(k, "Second engine drop 5 inch hose between attack engine and nearest hydrant") .
+mandatory(k) .
+
+primitive(l) . 
+delegate(l, 1, se_crew) :- deploy(l), member(Ag, se_crew). 
+description(l, "Second engine hook to hydrant and attack engine and prepare to pump water") .
+mandatory(l) .
+
+primitive(m) . 
+delegate(m, 1, se_crew) :- deploy(m), member(Ag, se_crew). 
+description(m, "Attack fire with hydrant water") .
+mandatory(m) .
+
+primitive(n) . 
+delegate(n, 1, lt_crew) :- deploy(n), member(Ag, lt_crew). 
+description(n, "Set up ladder tower") .
+mandatory(n) .
+
+pred(d, a) .
+pred(e, b) .
+pred(f, c) .
+pred(g, d) .
+pred(h, g) .
+pred(i, h) .
+pred(j, e) .
+pred(k, e) .
+pred(l, k) .
+pred(m, l) .
+pred(n, f) .
 
 
-is_subclass(firstAttackEngineCrew, agent).
-is_subclass(fireOfficer, firstAttackEngineCrew).
-property(ingolf, fireOfficer).
-is_a(ingolf, fireOfficer).
-is_subclass(firetruckDriver, firstAttackEngineCrew).
-property(lukas, firetruckDriver).
-is_a(lukas, firetruckDriver).
-is_subclass(firefighter, firstAttackEngineCrew).
-property(tormod, firefighter).
-is_a(tormod, firefighter).
-is_subclass(firefighter, firstAttackEngineCrew).
-property(theodor, firefighter).
-is_a(theodor, firefighter).
-is_subclass(firefighter, firstAttackEngineCrew).
-property(mikael, firefighter).
-is_a(mikael, firefighter).
-is_subclass(secondAttackEngineCrew, agent).
-is_subclass(fireOfficer, secondAttackEngineCrew).
-property(morten, fireOfficer).
-is_a(morten, fireOfficer).
-is_subclass(firetruckDriver, secondAttackEngineCrew).
-property(peter, firetruckDriver).
-is_a(peter, firetruckDriver).
-is_subclass(firefighter, secondAttackEngineCrew).
-property(jrgen, firefighter).
-is_a(jrgen, firefighter).
-is_subclass(firefighter, secondAttackEngineCrew).
-property(roar, firefighter).
-is_a(roar, firefighter).
-is_subclass(firefighter, secondAttackEngineCrew).
-property(halvard, firefighter).
-is_a(halvard, firefighter).
-is_subclass(patrolVehicle, agent).
-is_subclass(patrolVehicleDriver, patrolVehicle).
-property(herman, patrolVehicleDriver).
-is_a(herman, patrolVehicleDriver).
-is_subclass(policeOfficer, patrolVehicle).
-property(yngve, policeOfficer).
-is_a(yngve, policeOfficer).
-is_subclass(firstAmbulance, agent).
-is_subclass(ambulanceDriver, firstAmbulance).
-property(rikard, ambulanceDriver).
-is_a(rikard, ambulanceDriver).
-is_subclass(ambulanceAssistant, firstAmbulance).
-property(sven, ambulanceAssistant).
-is_a(sven, ambulanceAssistant).
-is_subclass(secondAmbulance, agent).
-is_subclass(ambulanceAssistant, secondAmbulance).
-property(miriam, ambulanceAssistant).
-is_a(miriam, ambulanceAssistant).
-is_subclass(ambulanceDriver, secondAmbulance).
-property(kari, ambulanceDriver).
-is_a(kari, ambulanceDriver).
-
-
+is_subclass(ae_crew, agent).
+is_subclass(driver, ae_crew).
+property(barry, driver).
+is_a(barry, driver).
+is_a(john, ae_crew).
+is_a(frank, ae_crew).
+is_subclass(se_crew, agent).
+is_a(jan, se_crew).
+is_a(liz, se_crew).
+is_a(kathrin, se_crew).
+is_subclass(lt_crew, agent).
+is_a(xi, lt_crew).
+is_a(lin, lt_crew).
+is_a(dahn, lt_crew).

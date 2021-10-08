@@ -68,8 +68,8 @@ schedule(-1, -1, -1):- #false.
 
 #show .
 #show expedite/3.
-#show expedite(Ac, Ag, T, D): expedite(Ac, Ag, T), primitive(Ac), description(Ac, D).
-#show participate(Ac, Ag, T, D): expedite(Ac, Ag, T), collaborative(Ac),  description(Ac, D).
+%#show expedite(Ac, Ag, T, D): expedite(Ac, Ag, T), primitive(Ac), description(Ac, D).
+%#show participate(Ac, Ag, T, D): expedite(Ac, Ag, T), collaborative(Ac),  description(Ac, D).
 					 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %      Generate responsibilities/delegate actions
