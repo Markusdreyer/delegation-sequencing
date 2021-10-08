@@ -96,8 +96,9 @@ const generateValues = (models: any) => {
 
 export const getASPModels = (
   taxonomy: TaxonomyData[],
-  procedure: ProcedureData[]
-): Promise<Models | Action[][]> => {
+  procedure: ProcedureData[],
+  numberOfModels: number
+): Promise<string | Action[][]> => {
   const tmpProcedure = JSON.parse(JSON.stringify(procedure));
   tmpProcedure.forEach((el: ProcedureData) => {
     el.role = (el.role as string[]).filter((e) => e).join(",");
@@ -128,7 +129,7 @@ export const getASPModels = (
       });
       return optimumModels;
     })
-    .then((models) => parseModels(models, procedure))
+    .then((models) => parseModels(models, procedure).slice(-numberOfModels))
     .catch((error: AxiosError) => {
       if (error.response) {
         return error.response?.data;

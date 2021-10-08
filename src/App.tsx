@@ -95,9 +95,10 @@ const App = () => {
   };
 
   const generateModels = async (modelType: string) => {
-    const models: Action[][] | Models = await getASPModels(
+    const models: string | Action[][] = await getASPModels(
       taxonomies[activeTaxonomy],
-      procedures[tableData.key]
+      procedures[tableData.key],
+      1
     );
 
     console.log("MODELS:: ", models);
