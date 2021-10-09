@@ -3,11 +3,11 @@ import React from "react";
 import { Action } from "../types";
 
 interface Props {
-  data: Action[][];
+  models: Action[][][];
 }
 
 const ActionCards: React.FC<Props> = (props) => {
-  const { data } = props;
+  const { models } = props;
   const columns = [
     { title: "Agent", field: "agent" },
     {
@@ -40,19 +40,24 @@ const ActionCards: React.FC<Props> = (props) => {
 
   return (
     <>
-      {data.map((model) => (
+      {models.map((model) => (
         <>
-          <div className="action-card-horizontal-scroll">
-            {model.map((action) => (
-              <div className="action-card">
-                <MaterialTable
-                  options={options}
-                  columns={columns}
-                  data={parseActionToTableFormat(action)} //Ugly immutable hack: https://github.com/mbrn/material-table/issues/666
-                />
+          {model.map((time, i) => (
+            <>
+              <h2>Actions at {i + 1}: </h2>
+              <div className="action-card-horizontal-scroll">
+                {time.map((action) => (
+                  <div className="action-card">
+                    <MaterialTable
+                      options={options}
+                      columns={columns}
+                      data={parseActionToTableFormat(action)}
+                    />
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </>
+          ))}
           <hr />
         </>
       ))}

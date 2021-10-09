@@ -11,7 +11,11 @@ import {
 
 import Sunburst from "./components/Sunburst";
 import clsx from "clsx";
-import { generateSunburstData, getASPModels } from "./utils/utils";
+import {
+  generateActionCardData,
+  generateSunburstData,
+  getASPModels,
+} from "./utils/utils";
 import { Action, Models, RootState } from "./types";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -38,7 +42,7 @@ const App = () => {
   );
   const dialog = useSelector((state: RootState) => state.dialog);
   const [sunburstData, setSunburstData] = useState();
-  const [actionCardData, setActionCardData] = useState<Action[][]>();
+  const [actionCardData, setActionCardData] = useState<Action[][][]>();
   const [newDocument, setNewDocument] = useState("");
   const [failureMessage, setFailureMessage] = useState<string>();
 
@@ -111,7 +115,7 @@ const App = () => {
       } else if (modelType === modelTypes.ACTION_CARDS) {
         setFailureMessage(undefined);
         setSunburstData(undefined);
-        setActionCardData(models);
+        setActionCardData(generateActionCardData(models));
       } else {
         console.log(`${modelType} is not yet implemented`);
       }
@@ -200,7 +204,7 @@ const App = () => {
           )}
         </main>
       </div>
-      {actionCardData && <ActionCards data={actionCardData} />}
+      {actionCardData && <ActionCards models={actionCardData} />}
     </>
   );
 };

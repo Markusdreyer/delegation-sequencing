@@ -1,8 +1,9 @@
 import axios, { AxiosError } from "axios";
+import { time } from "console";
 import md5 from "md5";
 import { Action, Models, ProcedureData, TaxonomyData } from "../types";
 
-export const generateSunburstData = (models: any) => {
+export const generateSunburstData = (models: Action[][]) => {
   /**
    * Iterate through all the models, looking through all the data to set the correct
    * values and parents.
@@ -10,7 +11,7 @@ export const generateSunburstData = (models: any) => {
   const values = generateValues(models);
   const sunburstData: any = [];
   models
-    .map((model: any, i: number) => {
+    .map((model) => {
       let parents: string[] = [];
       return model.map((el: Action, j: number) => {
         const hash = md5(`${el.agent}${el.name}, at ${el.time}`);
@@ -34,6 +35,24 @@ export const generateSunburstData = (models: any) => {
     })
     .flat(1);
   return sunburstData;
+};
+
+export const generateActionCardData = (models: Action[][]) => {
+  const actionCardData: Action[][][] = [[[]]];
+
+  models.forEach((model, i) => {
+    model.forEach((action) => {
+      try {
+        actionCardData[i][action.time - 1].push(action);
+      } catch (e) {
+        console.log("catch error");
+        actionCardData[i][action.time - 1] = [action];
+      }
+    });
+  });
+  console.log("ActionCardDAta ", actionCardData);
+
+  return actionCardData;
 };
 
 const getParent = (parents: string[], time: number, index: number) => {
