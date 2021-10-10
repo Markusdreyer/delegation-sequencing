@@ -18,3 +18,8 @@ export const dialogOptions = {
     title: "Name of taxonomy",
   },
 };
+
+export enum ExpanderOptions {
+  EXPAND,
+  COLLAPSE,
+}

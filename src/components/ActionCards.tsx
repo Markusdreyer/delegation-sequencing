@@ -1,15 +1,20 @@
 import MaterialTable from "material-table";
+import { CheckCircle, ExpandMore, ExpandLess } from "@mui/icons-material/";
 import Button from "@mui/material/Button";
 import React, { useState } from "react";
 import { Action } from "../types";
+import { ExpanderOptions } from "../utils/const";
 
 interface Props {
   models: Action[][][];
 }
 
 const ActionCards: React.FC<Props> = (props) => {
-  const [foo, setFoo] = useState<Action>();
   const { models } = props;
+  const [acceptedActions, setAcceptedActions] = useState<string[]>([]);
+  const [expanded, setExpanded] = useState<boolean[]>( //This is ufly, should refactor to collapsed instead and have the logic reversed
+    new Array(models[0].length).fill(true)
+  );
   const columns = [
     { title: "Agent", field: "agent" },
     {
@@ -53,8 +58,24 @@ const ActionCards: React.FC<Props> = (props) => {
     ];
   };
 
-  const acceptAction = (action: any) => {
-    setFoo(action);
+  const acceptAction = (actionName: string) => {
+    setAcceptedActions((previous) => [...previous, actionName]);
+  };
+
+  const undoAccept = (actionName: string) => {
+    const update = acceptedActions.filter((el) => el !== actionName);
+    setAcceptedActions(update);
+  };
+
+  const handleExpand = (option: ExpanderOptions, index: number) => {
+    const update = [...expanded];
+    if (option === ExpanderOptions.EXPAND) {
+      update[index] = true;
+      setExpanded(update);
+    } else {
+      update[index] = false;
+      setExpanded(update);
+    }
   };
 
   return (
@@ -63,34 +84,81 @@ const ActionCards: React.FC<Props> = (props) => {
         <>
           {model.map((time, i) => (
             <>
-              <h2>Actions at {i + 1}: </h2>
-              <div className="action-card-horizontal-scroll">
-                {time.map((action) => (
+              <div className="actions-header">
+                <h2>Actions at {i + 1}: </h2>
+                <p>
+                  {" "}
+                  Accepted{" "}
+                  {time.reduce(
+                    (a, v) => (acceptedActions.includes(v.name) ? a + 1 : a),
+                    0
+                  )}{" "}
+                  of {time.length}
+                </p>
+                {expanded[i] ? (
                   <div
-                    className={`action-card ${
-                      foo === action ? "accepted" : ""
-                    }`}
+                    className="expander"
+                    onClick={() => handleExpand(ExpanderOptions.COLLAPSE, i)}
                   >
-                    <MaterialTable
-                      options={options}
-                      columns={columns}
-                      data={parseActionToTableFormat(action)}
-                    />
-                    <div className="confirmation-card">
-                      <Button
-                        variant="contained"
-                        color="success"
-                        onClick={() => acceptAction(action)}
-                      >
-                        Accept
-                      </Button>
-                      <Button variant="outlined" color="error">
-                        Revise
-                      </Button>
-                    </div>
+                    <p>Hide actions</p>
+                    <ExpandMore />
                   </div>
-                ))}
+                ) : (
+                  <div
+                    className="expander"
+                    onClick={() => handleExpand(ExpanderOptions.EXPAND, i)}
+                  >
+                    <p>Show actions</p>
+                    <ExpandLess />
+                  </div>
+                )}
               </div>
+              {expanded[i] && (
+                <div className="action-card-horizontal-scroll">
+                  {time.map((action) => (
+                    <div className="container">
+                      {acceptedActions.includes(action.name) && (
+                        <CheckCircle
+                          className="checkmark"
+                          fontSize="large"
+                          onClick={() => undoAccept(action.name)}
+                        />
+                      )}
+                      <div
+                        className={`action-card ${
+                          acceptedActions.includes(action.name)
+                            ? "accepted"
+                            : ""
+                        }`}
+                      >
+                        <MaterialTable
+                          options={options}
+                          columns={columns}
+                          data={parseActionToTableFormat(action)}
+                        />
+                        <div
+                          className={`confirmation-card ${
+                            acceptedActions.includes(action.name)
+                              ? "hidden"
+                              : ""
+                          }`}
+                        >
+                          <Button
+                            variant="contained"
+                            color="success"
+                            onClick={() => acceptAction(action.name)}
+                          >
+                            Accept
+                          </Button>
+                          <Button variant="outlined" color="error">
+                            Revise
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </>
           ))}
           <hr />
