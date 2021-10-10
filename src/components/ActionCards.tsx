@@ -1,6 +1,6 @@
 import MaterialTable from "material-table";
 import { CheckCircle, ExpandMore, ExpandLess } from "@mui/icons-material/";
-import Button from "@mui/material/Button";
+import { Button } from "@material-ui/core";
 import React, { useState } from "react";
 import { Action } from "../types";
 import { ExpanderOptions } from "../utils/const";
@@ -143,12 +143,12 @@ const ActionCards: React.FC<Props> = (props) => {
                         >
                           <Button
                             variant="contained"
-                            color="success"
+                            color="primary"
                             onClick={() => acceptAction(action.name)}
                           >
                             Accept
                           </Button>
-                          <Button variant="outlined" color="error">
+                          <Button variant="outlined" color="secondary">
                             Revise
                           </Button>
                         </div>
