@@ -12,9 +12,7 @@ interface Props {
 const ActionCards: React.FC<Props> = (props) => {
   const { models } = props;
   const [acceptedActions, setAcceptedActions] = useState<string[]>([]);
-  const [expanded, setExpanded] = useState<boolean[]>( //This is ufly, should refactor to collapsed instead and have the logic reversed
-    new Array(models[0].length).fill(true)
-  );
+  const [collapsed, setCollapsed] = useState<boolean[]>([]);
   const columns = [
     { title: "Agent", field: "agent" },
     {
@@ -68,13 +66,13 @@ const ActionCards: React.FC<Props> = (props) => {
   };
 
   const handleExpand = (option: ExpanderOptions, index: number) => {
-    const update = [...expanded];
+    const update = [...collapsed];
     if (option === ExpanderOptions.EXPAND) {
-      update[index] = true;
-      setExpanded(update);
-    } else {
       update[index] = false;
-      setExpanded(update);
+      setCollapsed(update);
+    } else {
+      update[index] = true;
+      setCollapsed(update);
     }
   };
 
@@ -95,25 +93,25 @@ const ActionCards: React.FC<Props> = (props) => {
                   )}{" "}
                   of {time.length}
                 </p>
-                {expanded[i] ? (
-                  <div
-                    className="expander"
-                    onClick={() => handleExpand(ExpanderOptions.COLLAPSE, i)}
-                  >
-                    <p>Hide actions</p>
-                    <ExpandMore />
-                  </div>
-                ) : (
+                {collapsed[i] ? (
                   <div
                     className="expander"
                     onClick={() => handleExpand(ExpanderOptions.EXPAND, i)}
                   >
                     <p>Show actions</p>
+                    <ExpandMore />
+                  </div>
+                ) : (
+                  <div
+                    className="expander"
+                    onClick={() => handleExpand(ExpanderOptions.COLLAPSE, i)}
+                  >
+                    <p>Hide actions</p>
                     <ExpandLess />
                   </div>
                 )}
               </div>
-              {expanded[i] && (
+              {!collapsed[i] && (
                 <div className="action-card-horizontal-scroll">
                   {time.map((action) => (
                     <div className="container">
