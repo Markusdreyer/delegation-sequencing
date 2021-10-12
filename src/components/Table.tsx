@@ -20,6 +20,7 @@ import {
   OutlinedInput,
   Select,
 } from "@material-ui/core";
+import { unique } from "../utils/utils";
 interface Props {
   data: TableData;
 }
@@ -343,10 +344,6 @@ const Table: React.FC<Props> = (props) => {
         );
       }
     }
-  };
-
-  const unique = (value: any, index: any, self: any) => {
-    return self.indexOf(value) === index;
   };
 
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createStore } from "redux";
@@ -10,7 +10,7 @@ import { Provider } from "react-redux";
 const store = createStore(
   allReducers,
   // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
-  (window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"] as typeof compose || compose) && window.__REDUX_DEVTOOLS_EXTENSION__()
+  ((window["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"] as typeof compose) || compose) && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 ReactDOM.render(
