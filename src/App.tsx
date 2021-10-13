@@ -16,7 +16,7 @@ import {
   generateSunburstData,
   getASPModels,
 } from "./utils/utils";
-import { Action, Models, RootState } from "./types";
+import { Action, Models, ProcedureData, RootState } from "./types";
 import { useSelector, useDispatch } from "react-redux";
 import {
   renderTable,
@@ -99,10 +99,22 @@ const App = () => {
   };
 
   const generateModels = async (modelType: string) => {
+    const tmpProcedure = JSON.parse(JSON.stringify(procedures[tableData.key]));
+    tmpProcedure.forEach((el: ProcedureData) => {
+      el.role = (el.role as string[]).filter((e) => e).join(",");
+      el.agent = (el.agent as string[]).filter((e) => e).join(",");
+    });
+
+    const requestData = {
+      taxonomy: taxonomies[activeTaxonomy],
+      procedure: tmpProcedure,
+    };
+
     const models: string | Action[][] = await getASPModels(
-      taxonomies[activeTaxonomy],
-      procedures[tableData.key],
-      1
+      tmpProcedure,
+      1,
+      requestData,
+      "initial"
     );
 
     console.log("MODELS:: ", models);

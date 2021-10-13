@@ -16,9 +16,9 @@ const port = 8000;
 
 app.post("/revise", async (req, res) => {
   const reqBody = req.body;
-  const currentModel = reqBody.currentModel.join("");
+  const previousModel = reqBody.previousModel.join("");
   const changes = reqBody.changes.join("");
-  const revision = currentModel + changes;
+  const revision = previousModel + changes;
 
   const control = fs.readFileSync("src/asp/control.lp", "utf8");
   const actions = fs.readFileSync("src/asp/actions.lp", "utf8");
@@ -27,7 +27,7 @@ app.post("/revise", async (req, res) => {
     0
   );
   console.log("models: ", newModels);
-  res.status(200).json({ models: newModels });
+  res.status(200).json(newModels);
 });
 
 app.post("/initial", async (req, res) => {

@@ -64,3 +64,12 @@ export const toggleProcedures = () => {
     type: "TOGGLE_PROCEDURES",
   };
 };
+
+export const setPreviousModel = (model: string[]) => {
+  return {
+    type: "SET_PREVIOUS_MODEL",
+    payload: {
+      previousModel: model,
+    },
+  };
+};

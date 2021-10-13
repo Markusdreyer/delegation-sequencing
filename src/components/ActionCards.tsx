@@ -4,8 +4,9 @@ import { Button } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { Action, RootState, TaxonomyData, ProcedureData } from "../types";
 import { ExpanderOptions } from "../utils/const";
-import { useSelector } from "react-redux";
-import { unique } from "../utils/utils";
+import { useSelector, useDispatch } from "react-redux";
+import { getASPModels, unique } from "../utils/utils";
+import { setPreviousModel } from "../actions";
 
 interface Props {
   models: Action[][][];
@@ -17,6 +18,10 @@ const ActionCards: React.FC<Props> = (props) => {
   const activeTaxonomy = useSelector(
     (state: RootState) => state.activeTaxonomy
   );
+  const previousModel = useSelector((state: RootState) => state.previousModel);
+  const dispatch = useDispatch();
+
+  dispatch(setPreviousModel(["WTF"]));
   const { models } = props;
   const [acceptedActions, setAcceptedActions] = useState<string[]>([]);
   const [collapsed, setCollapsed] = useState<boolean[]>([]);
@@ -59,6 +64,10 @@ const ActionCards: React.FC<Props> = (props) => {
     tableLaoyt: "auto",
   };
 
+  useEffect(() => {
+    console.log("PREVIOUS MODEL CHANGE", previousModel);
+  }, [previousModel]);
+
   const parseActionToTableFormat = (action: Action) => {
     return [
       {
@@ -70,6 +79,7 @@ const ActionCards: React.FC<Props> = (props) => {
   };
 
   const acceptAction = (actionName: string) => {
+    //Might need to explicitly schedule task
     setAcceptedActions((previous) => [...previous, actionName]);
   };
 
@@ -109,15 +119,36 @@ const ActionCards: React.FC<Props> = (props) => {
       .filter(unique) as string[];
   };
 
-  const handleRevisionChange = (e: any) => {
-    //TODO: IMPLEMENT. Need to get abbreviation somehow
-    const action: string = e.target.value.toLowerCase();
+  const handleRevisionChange = (e: any, action: Action) => {
+    const procedureData = tableData.data as ProcedureData[];
+    const index = procedureData.findIndex((el) => el.action === action.name);
+    const abbreviation = procedureData[index].abbreviation;
+
+    const changeType: string = e.currentTarget.value.toLowerCase();
     let update: string;
-    if (action === "relieve") {
-      update = `relieve()`;
+    if (changeType === "relieve") {
+      update = `relieve(${abbreviation}, ${action.agent}).`;
+    } else if (changeType === "schedule") {
+      update = `schedule(${abbreviation}, ${action.agent}, ${action.time}).`;
     }
 
-    setChanges((previous) => [...previous]);
+    setChanges((previous) => [...previous, update]);
+    setRevisionOptions({ key: "", agents: [] });
+    setAcceptedActions((previous) => [...previous, action.name]);
+  };
+
+  const submitRevision = async () => {
+    const revisionRequest = {
+      previousModel,
+      changes,
+    };
+    const newModels = await getASPModels(
+      tableData.data as ProcedureData[],
+      1,
+      revisionRequest,
+      "revise"
+    );
+    console.log("new", newModels);
   };
 
   return (
@@ -204,7 +235,14 @@ const ActionCards: React.FC<Props> = (props) => {
                                       ? "secondary"
                                       : "primary"
                                   }
-                                  onClick={(e) => handleRevisionChange(e)}
+                                  value={
+                                    agent === action.agent
+                                      ? "Relieve"
+                                      : "Schedule"
+                                  }
+                                  onClick={(e) =>
+                                    handleRevisionChange(e, action)
+                                  }
                                 >
                                   {agent === action.agent
                                     ? "Relieve"
@@ -241,6 +279,13 @@ const ActionCards: React.FC<Props> = (props) => {
           <hr />
         </>
       ))}
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => submitRevision()}
+      >
+        Submit revised plan
+      </Button>
     </>
   );
 };
