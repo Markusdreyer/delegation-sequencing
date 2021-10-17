@@ -110,17 +110,10 @@ const ActionCards: React.FC<Props> = (props) => {
     const index = procedureData.findIndex((el) => el.action === actionName);
     const teams = procedureData[index].agent as string[];
     const roles = procedureData[index].role as string[];
+    const filteredRoles = roles.filter((el) => el);
 
-    if (roles) {
-      const res = teams
-        .map((team) =>
-          agentsWithRoleIn(
-            team,
-            roles.filter((el) => el)
-          )
-        )
-        .flat();
-      return res;
+    if (filteredRoles.length > 0) {
+      return teams.map((team) => agentsWithRoleIn(team, filteredRoles)).flat();
     } else {
       return teams.map((team) => agentsIn(team)).flat();
     }
@@ -178,6 +171,7 @@ const ActionCards: React.FC<Props> = (props) => {
     if (newModels instanceof Array) {
       setActionCardData(generateActionCardData(newModels as Action[][]));
     } else {
+      console.log("ERROR", newModels);
       setActionCardData([]);
       setFailureMessage(JSON.stringify(newModels, null, 2));
     }

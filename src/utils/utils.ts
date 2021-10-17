@@ -151,6 +151,7 @@ const parseModels = (
   optimumModels: Action[],
   procedure: ProcedureData[]
 ): Action[][] => {
+  console.log("Parse even though error");
   let parsedModels: any = [];
   let previousModel: string[] = [];
   optimumModels.map((model: any) => {
