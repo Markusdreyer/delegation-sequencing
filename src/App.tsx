@@ -20,6 +20,7 @@ import { Action, Models, ProcedureData, RootState } from "./types";
 import { useSelector, useDispatch } from "react-redux";
 import {
   renderTable,
+  setPreviousModel,
   setProcedure,
   setTaxonomy,
   toggleDialog,
@@ -123,11 +124,11 @@ const App = () => {
       if (modelType === modelTypes.SUNBURST) {
         setFailureMessage(undefined);
         setActionCardData(undefined);
-        setSunburstData(generateSunburstData(models));
+        setSunburstData(generateSunburstData(models as Action[][]));
       } else if (modelType === modelTypes.ACTION_CARDS) {
         setFailureMessage(undefined);
         setSunburstData(undefined);
-        setActionCardData(generateActionCardData(models));
+        setActionCardData(generateActionCardData(models as Action[][]));
       } else {
         console.log(`${modelType} is not yet implemented`);
       }
@@ -216,7 +217,13 @@ const App = () => {
           )}
         </main>
       </div>
-      {actionCardData && <ActionCards models={actionCardData} />}
+      {actionCardData && (
+        <ActionCards
+          models={actionCardData}
+          setActionCardData={setActionCardData}
+          setFailureMessage={setFailureMessage}
+        />
+      )}
     </>
   );
 };
