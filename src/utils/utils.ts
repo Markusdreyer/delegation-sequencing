@@ -121,7 +121,8 @@ export const getASPModels = (
   return axios({
     method: "post",
     url:
-      process.env.REACT_APP_BACKEND_URL || `http://localhost:8000/${endpoint}`,
+      process.env.REACT_APP_BACKEND_URL + endpoint ||
+      `http://localhost:8000/${endpoint}`,
     data: requestData,
     headers: {
       "Content-Type": "application/json",
