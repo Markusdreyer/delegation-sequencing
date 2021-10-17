@@ -16,7 +16,7 @@ import {
   generateSunburstData,
   getASPModels,
 } from "./utils/utils";
-import { Action, Models, ProcedureData, RootState } from "./types";
+import { Action, Foo, Models, ProcedureData, RootState } from "./types";
 import { useSelector, useDispatch } from "react-redux";
 import {
   renderTable,
@@ -111,32 +111,33 @@ const App = () => {
       procedure: tmpProcedure,
     };
 
-    const [models, previousModel]: string | (string[] | Action[][])[] =
-      await getASPModels(tmpProcedure, requestData, "initial", 1);
+    const { newModels, newPreviousModel, error }: Foo = await getASPModels(
+      tmpProcedure,
+      requestData,
+      "initial",
+      1
+    );
 
-    if (previousModel instanceof Array) {
-      dispatch(setPreviousModel(previousModel as string[]));
-    }
-
-    console.log("MODELS:: ", models);
-
-    if (models instanceof Array) {
-      if (modelType === modelTypes.SUNBURST) {
-        setFailureMessage(undefined);
-        setActionCardData(undefined);
-        setSunburstData(generateSunburstData(models as Action[][]));
-      } else if (modelType === modelTypes.ACTION_CARDS) {
-        setFailureMessage(undefined);
-        setSunburstData(undefined);
-        setActionCardData(generateActionCardData(models as Action[][]));
-      } else {
-        console.log(`${modelType} is not yet implemented`);
-      }
-    } else {
+    if (error) {
       setSunburstData(undefined);
       setActionCardData(undefined);
-      setFailureMessage(JSON.stringify(models, null, 2));
+      setFailureMessage(JSON.stringify(error, null, 2));
       return;
+    }
+
+    console.log("MODELS:: ", newModels);
+
+    dispatch(setPreviousModel(newPreviousModel as string[]));
+    if (modelType === modelTypes.SUNBURST) {
+      setFailureMessage(undefined);
+      setActionCardData(undefined);
+      setSunburstData(generateSunburstData(newModels as Action[][]));
+    } else if (modelType === modelTypes.ACTION_CARDS) {
+      setFailureMessage(undefined);
+      setSunburstData(undefined);
+      setActionCardData(generateActionCardData(newModels as Action[][]));
+    } else {
+      console.log(`${modelType} is not yet implemented`);
     }
   };
 
@@ -229,7 +230,6 @@ const App = () => {
 };
 
 const PrettyPrintJson = (data: any) => {
-  // (destructured) data could be a prop for example
   return (
     <div>
       <pre>{data}</pre>

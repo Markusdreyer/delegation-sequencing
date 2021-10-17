@@ -2,7 +2,7 @@ import MaterialTable from "material-table";
 import { CheckCircle, ExpandMore, ExpandLess } from "@mui/icons-material/";
 import { Button } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { Action, RootState, TaxonomyData, ProcedureData } from "../types";
+import { Action, RootState, TaxonomyData, ProcedureData, Foo } from "../types";
 import { ExpanderOptions } from "../utils/const";
 import { useSelector, useDispatch } from "react-redux";
 import { generateActionCardData, getASPModels, unique } from "../utils/utils";
@@ -156,29 +156,26 @@ const ActionCards: React.FC<Props> = (props) => {
       changes,
     };
 
-    const [newModels, prev]: string | (string[] | Action[][])[] =
-      await getASPModels(
-        tableData.data as ProcedureData[],
-        revisionRequest,
-        "revise",
-        1
-      );
+    const { newModels, newPreviousModel, error }: Foo = await getASPModels(
+      tableData.data as ProcedureData[],
+      revisionRequest,
+      "revise",
+      1
+    );
 
-    if (prev instanceof Array) {
-      dispatch(setPreviousModel(prev as string[]));
-    }
-
-    if (newModels instanceof Array) {
-      setActionCardData(generateActionCardData(newModels as Action[][]));
-    } else {
-      console.log("ERROR", newModels);
+    if (error) {
+      console.log("Error", error);
       setActionCardData([]);
-      setFailureMessage(JSON.stringify(newModels, null, 2));
-    }
+      setFailureMessage(JSON.stringify(error, null, 2));
+      return;
+    } else {
+      dispatch(setPreviousModel(newPreviousModel as string[]));
+      setActionCardData(generateActionCardData(newModels as Action[][]));
 
-    setChanges([]);
-    setRevisionOptions({ key: "", agents: [] });
-    setAcceptedActions([]);
+      setChanges([]);
+      setRevisionOptions({ key: "", agents: [] });
+      setAcceptedActions([]);
+    }
   };
 
   return (

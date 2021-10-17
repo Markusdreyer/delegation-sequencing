@@ -1,6 +1,6 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import md5 from "md5";
-import { Action, Models, ProcedureData, TaxonomyData } from "../types";
+import { Action, Bar, Foo, ProcedureData } from "../types";
 
 export const generateSunburstData = (models: Action[][]) => {
   /**
@@ -117,7 +117,7 @@ export const getASPModels = (
   requestData: any,
   endpoint: string,
   numberOfModels: number
-): Promise<string | (string[] | Action[][])[]> => {
+): Promise<Foo> => {
   return axios({
     method: "post",
     url:
@@ -129,7 +129,10 @@ export const getASPModels = (
   })
     .then((res) => {
       const data = res.data;
-      console.log("BACKEND RESPONSE: ", res.data);
+      console.log("BACKEND RESPONSE: ", data);
+      if (data.Result !== "OPTIMUM FOUND") {
+        throw new Error(data.Result);
+      }
       const [optimum] = data.Call[0].Witnesses.slice(-1);
       const optimumCost = optimum.Costs[0];
       const optimumModels = data.Call[0].Witnesses.filter((el: any) => {
@@ -138,11 +141,12 @@ export const getASPModels = (
       return optimumModels.slice(-numberOfModels);
     })
     .then((models) => parseModels(models, procedure))
-    .catch((error: AxiosError) => {
+    .catch((error: any) => {
+      console.log("error", error);
       if (error.response) {
-        return error.response?.data;
+        return { error: error.response?.data };
       } else {
-        return error.message;
+        return { error: error.message };
       }
     });
 };
@@ -150,8 +154,7 @@ export const getASPModels = (
 const parseModels = (
   optimumModels: Action[],
   procedure: ProcedureData[]
-): Action[][] => {
-  console.log("Parse even though error");
+): Bar => {
   let parsedModels: any = [];
   let previousModel: string[] = [];
   optimumModels.map((model: any) => {
@@ -185,7 +188,7 @@ const parseModels = (
     );
   });
 
-  return [parsedModels, previousModel];
+  return { newModels: parsedModels, newPreviousModel: previousModel };
 };
 
 export const unique = (value: any, index: any, self: any) => {
