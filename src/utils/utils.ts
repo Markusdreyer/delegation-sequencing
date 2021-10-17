@@ -1,8 +1,10 @@
 import axios, { AxiosError } from "axios";
 import md5 from "md5";
+import { setPreviousModel } from "../actions";
 import { Action, Models, ProcedureData, TaxonomyData } from "../types";
+import store from "../store";
 
-export const generateSunburstData = (models: any) => {
+export const generateSunburstData = (models: Action[][]) => {
   /**
    * Iterate through all the models, looking through all the data to set the correct
    * values and parents.
@@ -10,7 +12,7 @@ export const generateSunburstData = (models: any) => {
   const values = generateValues(models);
   const sunburstData: any = [];
   models
-    .map((model: any, i: number) => {
+    .map((model) => {
       let parents: string[] = [];
       return model.map((el: Action, j: number) => {
         const hash = md5(`${el.agent}${el.name}, at ${el.time}`);
@@ -34,6 +36,24 @@ export const generateSunburstData = (models: any) => {
     })
     .flat(1);
   return sunburstData;
+};
+
+export const generateActionCardData = (models: Action[][]) => {
+  const actionCardData: Action[][][] = [[[]]];
+
+  models.forEach((model, i) => {
+    model.forEach((action) => {
+      try {
+        actionCardData[i][action.time - 1].push(action);
+      } catch (e) {
+        console.log("catch error");
+        actionCardData[i][action.time - 1] = [action];
+      }
+    });
+  });
+  console.log("ActionCardDAta ", actionCardData);
+
+  return actionCardData;
 };
 
 const getParent = (parents: string[], time: number, index: number) => {
@@ -95,26 +115,16 @@ const generateValues = (models: any) => {
 };
 
 export const getASPModels = (
-  taxonomy: TaxonomyData[],
   procedure: ProcedureData[],
-  numberOfModels: number
+  numberOfModels: number,
+  requestData: any,
+  endpoint: string
 ): Promise<string | Action[][]> => {
-  const tmpProcedure = JSON.parse(JSON.stringify(procedure));
-  tmpProcedure.forEach((el: ProcedureData) => {
-    el.role = (el.role as string[]).filter((e) => e).join(",");
-    el.agent = (el.agent as string[]).filter((e) => e).join(",");
-  });
-
-  const simulationData = {
-    taxonomy,
-    procedure: tmpProcedure,
-  };
-  const simulationRequest = simulationData;
-
   return axios({
     method: "post",
-    url: process.env.REACT_APP_BACKEND_URL || "http://localhost:8000/initial",
-    data: simulationRequest,
+    url:
+      process.env.REACT_APP_BACKEND_URL || `http://localhost:8000/${endpoint}`,
+    data: requestData,
     headers: {
       "Content-Type": "application/json",
     },
@@ -127,9 +137,9 @@ export const getASPModels = (
       const optimumModels = data.Call[0].Witnesses.filter((el: any) => {
         return el.Costs[0] === optimumCost;
       });
-      return optimumModels;
+      return optimumModels.slice(-numberOfModels);
     })
-    .then((models) => parseModels(models, procedure).slice(-numberOfModels))
+    .then((models) => parseModels(models, procedure))
     .catch((error: AxiosError) => {
       if (error.response) {
         return error.response?.data;
@@ -144,9 +154,12 @@ const parseModels = (
   procedure: ProcedureData[]
 ): Action[][] => {
   let parsedModels: any = [];
+  let previousModel: string[] = [];
   optimumModels.map((model: any) => {
     let tmpParsedModel: any = [];
     model.Value.map((el: string) => {
+      const parsedPrevious = el.replace("expedite", "previous");
+      previousModel.push(parsedPrevious);
       const expedite = el.replaceAll('"', "").split(/[\(\)\s,]+/);
       const abbreviation = expedite[1];
       const agent = expedite[2];
@@ -172,5 +185,11 @@ const parseModels = (
       a.time > b.time ? 1 : b.time > a.time ? -1 : 0
     );
   });
+  console.log("PREEV", previousModel);
+  store.dispatch(setPreviousModel(previousModel)); //Naively assume that there is only one model being returned
   return parsedModels;
+};
+
+export const unique = (value: any, index: any, self: any) => {
+  return self.indexOf(value) === index;
 };

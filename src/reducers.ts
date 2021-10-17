@@ -81,6 +81,18 @@ const showProceduresReducer = (state: boolean = false, action: any) => {
   }
 };
 
+const previousModelReducer = (
+  state = initialState.previousModel,
+  action: any
+) => {
+  switch (action.type) {
+    case "SET_PREVIOUS_MODEL":
+      return action.payload.previousModel;
+    default:
+      return state;
+  }
+};
+
 const allReducers = combineReducers({
   showSidebar: showSidebarReducer,
   showProcedures: showProceduresReducer,
@@ -89,6 +101,7 @@ const allReducers = combineReducers({
   tableData: tableReducer,
   taxonomies: taxonomiesReducer,
   activeTaxonomy: activeTaxonomyReducer,
+  previousModel: previousModelReducer,
 });
 
 export default allReducers;

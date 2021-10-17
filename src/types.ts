@@ -11,6 +11,7 @@ export interface RootState {
     [key: string]: TaxonomyData[];
   };
   sunburstData: SunburstData[];
+  previousModel: string[];
 }
 
 export interface TableData {

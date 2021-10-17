@@ -11,8 +11,12 @@ import {
 
 import Sunburst from "./components/Sunburst";
 import clsx from "clsx";
-import { generateSunburstData, getASPModels } from "./utils/utils";
-import { Action, Models, RootState } from "./types";
+import {
+  generateActionCardData,
+  generateSunburstData,
+  getASPModels,
+} from "./utils/utils";
+import { Action, Models, ProcedureData, RootState } from "./types";
 import { useSelector, useDispatch } from "react-redux";
 import {
   renderTable,
@@ -38,7 +42,7 @@ const App = () => {
   );
   const dialog = useSelector((state: RootState) => state.dialog);
   const [sunburstData, setSunburstData] = useState();
-  const [actionCardData, setActionCardData] = useState<Action[][]>();
+  const [actionCardData, setActionCardData] = useState<Action[][][]>();
   const [newDocument, setNewDocument] = useState("");
   const [failureMessage, setFailureMessage] = useState<string>();
 
@@ -95,10 +99,22 @@ const App = () => {
   };
 
   const generateModels = async (modelType: string) => {
+    const tmpProcedure = JSON.parse(JSON.stringify(procedures[tableData.key]));
+    tmpProcedure.forEach((el: ProcedureData) => {
+      el.role = (el.role as string[]).filter((e) => e).join(",");
+      el.agent = (el.agent as string[]).filter((e) => e).join(",");
+    });
+
+    const requestData = {
+      taxonomy: taxonomies[activeTaxonomy],
+      procedure: tmpProcedure,
+    };
+
     const models: string | Action[][] = await getASPModels(
-      taxonomies[activeTaxonomy],
-      procedures[tableData.key],
-      1
+      tmpProcedure,
+      1,
+      requestData,
+      "initial"
     );
 
     console.log("MODELS:: ", models);
@@ -111,7 +127,7 @@ const App = () => {
       } else if (modelType === modelTypes.ACTION_CARDS) {
         setFailureMessage(undefined);
         setSunburstData(undefined);
-        setActionCardData(models);
+        setActionCardData(generateActionCardData(models));
       } else {
         console.log(`${modelType} is not yet implemented`);
       }
@@ -200,7 +216,7 @@ const App = () => {
           )}
         </main>
       </div>
-      {actionCardData && <ActionCards data={actionCardData} />}
+      {actionCardData && <ActionCards models={actionCardData} />}
     </>
   );
 };
