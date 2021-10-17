@@ -5,14 +5,17 @@ import React, { useEffect, useState } from "react";
 import { Action, RootState, TaxonomyData, ProcedureData } from "../types";
 import { ExpanderOptions } from "../utils/const";
 import { useSelector, useDispatch } from "react-redux";
-import { getASPModels, unique } from "../utils/utils";
+import { generateActionCardData, getASPModels, unique } from "../utils/utils";
 import { setPreviousModel } from "../actions";
 
 interface Props {
   models: Action[][][];
+  setActionCardData: (data: Action[][][]) => void;
+  setFailureMessage: (data: string) => void;
 }
 
 const ActionCards: React.FC<Props> = (props) => {
+  const { models, setActionCardData, setFailureMessage } = props;
   const taxonomies = useSelector((state: RootState) => state.taxonomies);
   const tableData = useSelector((state: RootState) => state.tableData);
   const activeTaxonomy = useSelector(
@@ -21,8 +24,6 @@ const ActionCards: React.FC<Props> = (props) => {
   const previousModel = useSelector((state: RootState) => state.previousModel);
   const dispatch = useDispatch();
 
-  dispatch(setPreviousModel(["WTF"]));
-  const { models } = props;
   const [acceptedActions, setAcceptedActions] = useState<string[]>([]);
   const [collapsed, setCollapsed] = useState<boolean[]>([]);
   const [revisionOptions, setRevisionOptions] = useState<{
@@ -123,13 +124,13 @@ const ActionCards: React.FC<Props> = (props) => {
     const procedureData = tableData.data as ProcedureData[];
     const index = procedureData.findIndex((el) => el.action === action.name);
     const abbreviation = procedureData[index].abbreviation;
+    const agent: string = e.currentTarget.value;
 
-    const changeType: string = e.currentTarget.value.toLowerCase();
     let update: string;
-    if (changeType === "relieve") {
-      update = `relieve(${abbreviation}, ${action.agent}).`;
-    } else if (changeType === "schedule") {
-      update = `schedule(${abbreviation}, ${action.agent}, ${action.time}).`;
+    if (agent === action.agent) {
+      update = `relieve(${abbreviation}, ${agent}).`;
+    } else {
+      update = `schedule(${abbreviation}, ${agent}, ${action.time}).`;
     }
 
     setChanges((previous) => [...previous, update]);
@@ -138,17 +139,33 @@ const ActionCards: React.FC<Props> = (props) => {
   };
 
   const submitRevision = async () => {
-    const revisionRequest = {
+    const revisionRequest: any = {
       previousModel,
       changes,
     };
-    const newModels = await getASPModels(
-      tableData.data as ProcedureData[],
-      1,
-      revisionRequest,
-      "revise"
-    );
-    console.log("new", newModels);
+
+    const [newModels, prev]: string | (string[] | Action[][])[] =
+      await getASPModels(
+        tableData.data as ProcedureData[],
+        1,
+        revisionRequest,
+        "revise"
+      );
+
+    if (prev instanceof Array) {
+      dispatch(setPreviousModel(prev as string[]));
+    }
+
+    if (newModels instanceof Array) {
+      setActionCardData(generateActionCardData(newModels as Action[][]));
+    } else {
+      setActionCardData([]);
+      setFailureMessage(JSON.stringify(newModels, null, 2));
+    }
+
+    setChanges([]);
+    setRevisionOptions({ key: "", agents: [] });
+    setAcceptedActions([]);
   };
 
   return (
@@ -235,11 +252,7 @@ const ActionCards: React.FC<Props> = (props) => {
                                       ? "secondary"
                                       : "primary"
                                   }
-                                  value={
-                                    agent === action.agent
-                                      ? "Relieve"
-                                      : "Schedule"
-                                  }
+                                  value={agent}
                                   onClick={(e) =>
                                     handleRevisionChange(e, action)
                                   }

@@ -1,8 +1,6 @@
 import axios, { AxiosError } from "axios";
 import md5 from "md5";
-import { setPreviousModel } from "../actions";
 import { Action, Models, ProcedureData, TaxonomyData } from "../types";
-import store from "../store";
 
 export const generateSunburstData = (models: Action[][]) => {
   /**
@@ -119,7 +117,7 @@ export const getASPModels = (
   numberOfModels: number,
   requestData: any,
   endpoint: string
-): Promise<string | Action[][]> => {
+): Promise<string | (string[] | Action[][])[]> => {
   return axios({
     method: "post",
     url:
@@ -158,7 +156,7 @@ const parseModels = (
   optimumModels.map((model: any) => {
     let tmpParsedModel: any = [];
     model.Value.map((el: string) => {
-      const parsedPrevious = el.replace("expedite", "previous");
+      const parsedPrevious = el.replace("expedite", "previous") + ".";
       previousModel.push(parsedPrevious);
       const expedite = el.replaceAll('"', "").split(/[\(\)\s,]+/);
       const abbreviation = expedite[1];
@@ -185,9 +183,8 @@ const parseModels = (
       a.time > b.time ? 1 : b.time > a.time ? -1 : 0
     );
   });
-  console.log("PREEV", previousModel);
-  store.dispatch(setPreviousModel(previousModel)); //Naively assume that there is only one model being returned
-  return parsedModels;
+
+  return [parsedModels, previousModel];
 };
 
 export const unique = (value: any, index: any, self: any) => {
