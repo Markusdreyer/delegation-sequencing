@@ -108,16 +108,35 @@ const ActionCards: React.FC<Props> = (props) => {
     const procedureData = tableData.data as ProcedureData[];
     const index = procedureData.findIndex((el) => el.action === actionName);
     const teams = procedureData[index].agent as string[];
+    const roles = procedureData[index].role as string[];
 
-    return teams.map((team) => agentsIn(team)).flat();
+    if (roles) {
+      const res = teams
+        .map((team) =>
+          agentsWithRoleIn(
+            team,
+            roles.filter((el) => el)
+          )
+        )
+        .flat();
+      return res;
+    } else {
+      return teams.map((team) => agentsIn(team)).flat();
+    }
   };
 
-  const agentsIn = (team: string) => {
-    return taxonomies[activeTaxonomy]
+  const agentsIn = (team: string) =>
+    taxonomies[activeTaxonomy]
       .filter((el: TaxonomyData) => el.parent === team)
       .map((el: TaxonomyData) => el.agent)
       .filter(unique) as string[];
-  };
+
+  const agentsWithRoleIn = (team: string, roles: string[]) =>
+    taxonomies[activeTaxonomy]
+      .filter((el: TaxonomyData) => el.parent === team)
+      .filter((el: TaxonomyData) => roles.includes(el.role))
+      .map((el: TaxonomyData) => el.agent)
+      .filter(unique) as string[];
 
   const handleRevisionChange = (e: any, action: Action) => {
     const procedureData = tableData.data as ProcedureData[];
@@ -142,13 +161,29 @@ const ActionCards: React.FC<Props> = (props) => {
       previousModel,
       changes,
     };
-    const newModels = await getASPModels(
-      tableData.data as ProcedureData[],
-      1,
-      revisionRequest,
-      "revise"
-    );
-    console.log("new", newModels);
+
+    const [newModels, prev]: string | (string[] | Action[][])[] =
+      await getASPModels(
+        tableData.data as ProcedureData[],
+        revisionRequest,
+        "revise",
+        1
+      );
+
+    if (prev instanceof Array) {
+      dispatch(setPreviousModel(prev as string[]));
+    }
+
+    if (newModels instanceof Array) {
+      setActionCardData(generateActionCardData(newModels as Action[][]));
+    } else {
+      setActionCardData([]);
+      setFailureMessage(JSON.stringify(newModels, null, 2));
+    }
+
+    setChanges([]);
+    setRevisionOptions({ key: "", agents: [] });
+    setAcceptedActions([]);
   };
 
   return (

@@ -110,12 +110,12 @@ const App = () => {
       procedure: tmpProcedure,
     };
 
-    const models: string | Action[][] = await getASPModels(
-      tmpProcedure,
-      1,
-      requestData,
-      "initial"
-    );
+    const [models, previousModel]: string | (string[] | Action[][])[] =
+      await getASPModels(tmpProcedure, requestData, "initial", 1);
+
+    if (previousModel instanceof Array) {
+      dispatch(setPreviousModel(previousModel as string[]));
+    }
 
     console.log("MODELS:: ", models);
 

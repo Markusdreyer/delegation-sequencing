@@ -116,10 +116,10 @@ const generateValues = (models: any) => {
 
 export const getASPModels = (
   procedure: ProcedureData[],
-  numberOfModels: number,
   requestData: any,
-  endpoint: string
-): Promise<string | Action[][]> => {
+  endpoint: string,
+  numberOfModels: number
+): Promise<string | (string[] | Action[][])[]> => {
   return axios({
     method: "post",
     url:
