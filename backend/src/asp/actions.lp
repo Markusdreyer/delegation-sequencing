@@ -1,5 +1,5 @@
 primitive(a) . 
-delegate(a, 1, ae_crew) :- deploy(a), member(Ag, ae_crew). 
+responsible(a, Ag) :- deploy(a), property(Ag, driver), member(Ag, ae_crew). 
 description(a, "Attack engine crew turn-out") .
 mandatory(a) .
 
