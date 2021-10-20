@@ -1,6 +1,6 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import md5 from "md5";
-import { Action, Models, ProcedureData, TaxonomyData } from "../types";
+import { Action, Bar, Foo, ProcedureData } from "../types";
 
 export const generateSunburstData = (models: Action[][]) => {
   /**
@@ -114,14 +114,15 @@ const generateValues = (models: any) => {
 
 export const getASPModels = (
   procedure: ProcedureData[],
-  numberOfModels: number,
   requestData: any,
-  endpoint: string
-): Promise<string | (string[] | Action[][])[]> => {
+  endpoint: string,
+  numberOfModels: number
+): Promise<Foo> => {
   return axios({
     method: "post",
     url:
-      process.env.REACT_APP_BACKEND_URL || `http://localhost:8000/${endpoint}`,
+      process.env.REACT_APP_BACKEND_URL + endpoint ||
+      `http://localhost:8000/${endpoint}`,
     data: requestData,
     headers: {
       "Content-Type": "application/json",
@@ -129,7 +130,10 @@ export const getASPModels = (
   })
     .then((res) => {
       const data = res.data;
-      console.log("BACKEND RESPONSE: ", res.data);
+      console.log("BACKEND RESPONSE: ", data);
+      if (data.Result !== "OPTIMUM FOUND") {
+        throw new Error(data.Result);
+      }
       const [optimum] = data.Call[0].Witnesses.slice(-1);
       const optimumCost = optimum.Costs[0];
       const optimumModels = data.Call[0].Witnesses.filter((el: any) => {
@@ -138,11 +142,12 @@ export const getASPModels = (
       return optimumModels.slice(-numberOfModels);
     })
     .then((models) => parseModels(models, procedure))
-    .catch((error: AxiosError) => {
+    .catch((error: any) => {
+      console.log("error", error);
       if (error.response) {
-        return error.response?.data;
+        return { error: error.response?.data };
       } else {
-        return error.message;
+        return { error: error.message };
       }
     });
 };
@@ -150,7 +155,7 @@ export const getASPModels = (
 const parseModels = (
   optimumModels: Action[],
   procedure: ProcedureData[]
-): Action[][] => {
+): Bar => {
   let parsedModels: any = [];
   let previousModel: string[] = [];
   optimumModels.map((model: any) => {
@@ -184,7 +189,7 @@ const parseModels = (
     );
   });
 
-  return [parsedModels, previousModel];
+  return { newModels: parsedModels, newPreviousModel: previousModel };
 };
 
 export const unique = (value: any, index: any, self: any) => {

@@ -111,3 +111,12 @@ export interface Time {
   Unsat: number;
   CPU: number;
 }
+
+export interface Foo extends Bar {
+  error?: string;
+}
+
+export interface Bar {
+  newModels?: Action[][];
+  newPreviousModel?: string[];
+}

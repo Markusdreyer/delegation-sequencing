@@ -2,7 +2,7 @@ import MaterialTable from "material-table";
 import { CheckCircle, ExpandMore, ExpandLess } from "@mui/icons-material/";
 import { Button } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { Action, RootState, TaxonomyData, ProcedureData } from "../types";
+import { Action, RootState, TaxonomyData, ProcedureData, Foo } from "../types";
 import { ExpanderOptions } from "../utils/const";
 import { useSelector, useDispatch } from "react-redux";
 import { generateActionCardData, getASPModels, unique } from "../utils/utils";
@@ -109,16 +109,28 @@ const ActionCards: React.FC<Props> = (props) => {
     const procedureData = tableData.data as ProcedureData[];
     const index = procedureData.findIndex((el) => el.action === actionName);
     const teams = procedureData[index].agent as string[];
+    const roles = procedureData[index].role as string[];
+    const filteredRoles = roles.filter((el) => el);
 
-    return teams.map((team) => agentsIn(team)).flat();
+    if (filteredRoles.length > 0) {
+      return teams.map((team) => agentsWithRoleIn(team, filteredRoles)).flat();
+    } else {
+      return teams.map((team) => agentsIn(team)).flat();
+    }
   };
 
-  const agentsIn = (team: string) => {
-    return taxonomies[activeTaxonomy]
+  const agentsIn = (team: string) =>
+    taxonomies[activeTaxonomy]
       .filter((el: TaxonomyData) => el.parent === team)
       .map((el: TaxonomyData) => el.agent)
       .filter(unique) as string[];
-  };
+
+  const agentsWithRoleIn = (team: string, roles: string[]) =>
+    taxonomies[activeTaxonomy]
+      .filter((el: TaxonomyData) => el.parent === team)
+      .filter((el: TaxonomyData) => roles.includes(el.role))
+      .map((el: TaxonomyData) => el.agent)
+      .filter(unique) as string[];
 
   const handleRevisionChange = (e: any, action: Action) => {
     const procedureData = tableData.data as ProcedureData[];
@@ -144,28 +156,26 @@ const ActionCards: React.FC<Props> = (props) => {
       changes,
     };
 
-    const [newModels, prev]: string | (string[] | Action[][])[] =
-      await getASPModels(
-        tableData.data as ProcedureData[],
-        1,
-        revisionRequest,
-        "revise"
-      );
+    const { newModels, newPreviousModel, error }: Foo = await getASPModels(
+      tableData.data as ProcedureData[],
+      revisionRequest,
+      "revise",
+      1
+    );
 
-    if (prev instanceof Array) {
-      dispatch(setPreviousModel(prev as string[]));
-    }
-
-    if (newModels instanceof Array) {
-      setActionCardData(generateActionCardData(newModels as Action[][]));
-    } else {
+    if (error) {
+      console.log("Error", error);
       setActionCardData([]);
-      setFailureMessage(JSON.stringify(newModels, null, 2));
-    }
+      setFailureMessage(JSON.stringify(error, null, 2));
+      return;
+    } else {
+      dispatch(setPreviousModel(newPreviousModel as string[]));
+      setActionCardData(generateActionCardData(newModels as Action[][]));
 
-    setChanges([]);
-    setRevisionOptions({ key: "", agents: [] });
-    setAcceptedActions([]);
+      setChanges([]);
+      setRevisionOptions({ key: "", agents: [] });
+      setAcceptedActions([]);
+    }
   };
 
   return (
