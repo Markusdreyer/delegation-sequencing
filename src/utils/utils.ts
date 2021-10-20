@@ -1,6 +1,11 @@
 import axios from "axios";
 import md5 from "md5";
-import { Action, Bar, Foo, ProcedureData } from "../types";
+import {
+  Action,
+  BackendResponse,
+  ModelResponse,
+  ProcedureData,
+} from "../types";
 
 export const generateSunburstData = (models: Action[][]) => {
   /**
@@ -117,12 +122,14 @@ export const getASPModels = (
   requestData: any,
   endpoint: string,
   numberOfModels: number
-): Promise<Foo> => {
+): Promise<BackendResponse> => {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL
+    ? process.env.REACT_APP_BACKEND_URL + endpoint
+    : `http://localhost:8000/${endpoint}`;
+
   return axios({
     method: "post",
-    url:
-      process.env.REACT_APP_BACKEND_URL + endpoint ||
-      `http://localhost:8000/${endpoint}`,
+    url: backendUrl,
     data: requestData,
     headers: {
       "Content-Type": "application/json",
@@ -155,7 +162,7 @@ export const getASPModels = (
 const parseModels = (
   optimumModels: Action[],
   procedure: ProcedureData[]
-): Bar => {
+): ModelResponse => {
   let parsedModels: any = [];
   let previousModel: string[] = [];
   optimumModels.map((model: any) => {

@@ -112,11 +112,11 @@ export interface Time {
   CPU: number;
 }
 
-export interface Foo extends Bar {
+export interface BackendResponse extends ModelResponse {
   error?: string;
 }
 
-export interface Bar {
+export interface ModelResponse {
   newModels?: Action[][];
   newPreviousModel?: string[];
 }

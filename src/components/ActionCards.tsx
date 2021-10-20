@@ -2,7 +2,13 @@ import MaterialTable from "material-table";
 import { CheckCircle, ExpandMore, ExpandLess } from "@mui/icons-material/";
 import { Button } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { Action, RootState, TaxonomyData, ProcedureData, Foo } from "../types";
+import {
+  Action,
+  RootState,
+  TaxonomyData,
+  ProcedureData,
+  BackendResponse,
+} from "../types";
 import { ExpanderOptions } from "../utils/const";
 import { useSelector, useDispatch } from "react-redux";
 import { generateActionCardData, getASPModels, unique } from "../utils/utils";
@@ -12,10 +18,11 @@ interface Props {
   models: Action[][][];
   setActionCardData: (data: Action[][][]) => void;
   setFailureMessage: (data: string) => void;
+  setIsLoading: (isLoading: boolean) => void;
 }
 
 const ActionCards: React.FC<Props> = (props) => {
-  const { models, setActionCardData, setFailureMessage } = props;
+  const { models, setActionCardData, setFailureMessage, setIsLoading } = props;
   const taxonomies = useSelector((state: RootState) => state.taxonomies);
   const tableData = useSelector((state: RootState) => state.tableData);
   const activeTaxonomy = useSelector(
@@ -156,12 +163,15 @@ const ActionCards: React.FC<Props> = (props) => {
       changes,
     };
 
-    const { newModels, newPreviousModel, error }: Foo = await getASPModels(
-      tableData.data as ProcedureData[],
-      revisionRequest,
-      "revise",
-      1
-    );
+    setIsLoading(true);
+    const { newModels, newPreviousModel, error }: BackendResponse =
+      await getASPModels(
+        tableData.data as ProcedureData[],
+        revisionRequest,
+        "revise",
+        1
+      );
+    setIsLoading(false);
 
     if (error) {
       console.log("Error", error);

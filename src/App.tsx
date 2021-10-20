@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import * as dotenv from "dotenv";
 import {
   Dialog,
   DialogTitle,
@@ -7,6 +6,7 @@ import {
   TextField,
   DialogActions,
   Button,
+  CircularProgress,
 } from "@material-ui/core";
 
 import Sunburst from "./components/Sunburst";
@@ -16,7 +16,7 @@ import {
   generateSunburstData,
   getASPModels,
 } from "./utils/utils";
-import { Action, Foo, Models, ProcedureData, RootState } from "./types";
+import { Action, BackendResponse, ProcedureData, RootState } from "./types";
 import { useSelector, useDispatch } from "react-redux";
 import {
   renderTable,
@@ -31,8 +31,6 @@ import useStyles from "./Styles";
 import { dialogOptions, modelTypes, tableTypes } from "./utils/const";
 import ActionCards from "./components/ActionCards";
 
-dotenv.config();
-
 const App = () => {
   const showSidebar = useSelector((state: RootState) => state.showSidebar);
   const tableData = useSelector((state: RootState) => state.tableData);
@@ -46,6 +44,7 @@ const App = () => {
   const [actionCardData, setActionCardData] = useState<Action[][][]>();
   const [newDocument, setNewDocument] = useState("");
   const [failureMessage, setFailureMessage] = useState<string>();
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -100,6 +99,9 @@ const App = () => {
   };
 
   const generateModels = async (modelType: string) => {
+    setSunburstData(undefined);
+    setActionCardData(undefined);
+    setFailureMessage(undefined);
     const tmpProcedure = JSON.parse(JSON.stringify(procedures[tableData.key]));
     tmpProcedure.forEach((el: ProcedureData) => {
       el.role = (el.role as string[]).filter((e) => e).join(",");
@@ -111,12 +113,10 @@ const App = () => {
       procedure: tmpProcedure,
     };
 
-    const { newModels, newPreviousModel, error }: Foo = await getASPModels(
-      tmpProcedure,
-      requestData,
-      "initial",
-      1
-    );
+    setIsLoading(true);
+    const { newModels, newPreviousModel, error }: BackendResponse =
+      await getASPModels(tmpProcedure, requestData, "initial", 1);
+    setIsLoading(false);
 
     if (error) {
       setSunburstData(undefined);
@@ -218,11 +218,17 @@ const App = () => {
           )}
         </main>
       </div>
+      {isLoading && (
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <CircularProgress />
+        </div>
+      )}
       {actionCardData && (
         <ActionCards
           models={actionCardData}
           setActionCardData={setActionCardData}
           setFailureMessage={setFailureMessage}
+          setIsLoading={setIsLoading}
         />
       )}
     </>
