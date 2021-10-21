@@ -139,7 +139,8 @@ const Table: React.FC<Props> = (props) => {
   }, [taxonomies, activeTaxonomy]);
 
   useEffect(() => {
-    setColumns(tableColumns.procedures);
+    // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
+    setColumns(tableColumns[data.type]);
   }, [multiselectOptions]);
 
   useEffect(() => {
