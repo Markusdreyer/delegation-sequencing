@@ -31,7 +31,7 @@ export interface ProcedureData {
   role: string[] | string;
 }
 
-export interface MultiselectValues {
+export interface MultiselectOptions {
   role: string[];
   agent: string[];
 }
@@ -74,7 +74,16 @@ export interface MaterialTableData {
 }
 export interface ColumnDef {
   field: string;
-  lookup: boolean;
+  options?: string[];
+  lookup?: any;
+  title: string;
+  editComponent?: (props: {
+    field: string;
+    onChange: (e: any) => void;
+    value: string[];
+    multiselectOptions: MultiselectOptions;
+  }) => JSX.Element;
+  type?: string;
 }
 
 export interface Models {

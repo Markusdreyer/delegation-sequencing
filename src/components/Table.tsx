@@ -5,14 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   ColumnDef,
   MaterialTableData,
-  MultiselectValues,
+  MultiselectOptions,
   ProcedureData,
   RootState,
   TableData,
   TaxonomyData,
 } from "../types";
 import { setActiveTaxonomy, setProcedure, setTaxonomy } from "../actions";
-import { tableTypes } from "../utils/const";
+import { initialLookup, tableTypes } from "../utils/const";
 import {
   FormControl,
   InputLabel,
@@ -21,6 +21,7 @@ import {
   Select,
 } from "@material-ui/core";
 import { unique } from "../utils/utils";
+import EditComponent from "./EditComponent";
 interface Props {
   data: TableData;
 }
@@ -33,156 +34,42 @@ const Table: React.FC<Props> = (props) => {
   const { data } = props;
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [columns, setColumns] = useState<any>([
-    [
-      { title: "Action", field: "action" },
-      {
-        title: "Role",
-        field: "role",
-        options: ["fj", "fk"],
-        editComponent: (props: {
-          columnDef: ColumnDef;
-          onChange: any;
-          value: string[];
-        }) => (
-          <Select
-            multiple
-            value={props.value ? props.value : [""]}
-            onChange={(evt) => {
-              props.onChange(evt.target.value);
-            }}
-            input={<OutlinedInput label="Name" />}
-            MenuProps={MenuProps}
-          >
-            {/* @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642*/}
-            {multiselectOptions.role.map((el: string) => (
-              <MenuItem key={el} value={el}>
-                {el}
-              </MenuItem>
-            ))}
-          </Select>
-        ),
-      },
-      {
-        title: "Agent",
-        field: "agent",
-        lookup: {
-          ae_crew: "ae_crew",
-          se_crew: "se_crew",
-          lt_crew: "lt_crew",
-        },
-      },
-      {
-        title: "Quantity",
-        field: "quantity",
-        type: "numeric",
-      },
-      {
-        title: "Abbreviation",
-        field: "abbreviation",
-      },
-
-      {
-        title: "Precedence",
-        field: "precedence",
-        lookup: {
-          None: "None",
-          a: "a",
-          b: "b",
-          c: "c",
-          d: "d",
-          e: "e",
-          f: "f",
-          g: "g",
-          h: "h",
-          i: "i",
-          j: "j",
-          k: "k",
-          l: "l",
-          m: "m",
-          n: "n",
-        },
-      },
-    ],
-  ]);
+  const [columns, setColumns] = useState<any>();
   const [multiselectOptions, setMultiselectOptions] =
-    useState<MultiselectValues>({ role: [], agent: [] });
-
-  useEffect(() => {
-    // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
-    setColumns(tableColumns[data.type]);
-    const roles = taxonomies[activeTaxonomy]
-      .filter((el: TaxonomyData) => el.role)
-      .map((el: any) => el.role)
-      .filter(unique) as string[];
-
-    const agents = taxonomies[activeTaxonomy]
-      .filter((el: TaxonomyData) => el.parent === "None")
-      .filter((el: TaxonomyData) => el.agent)
-      .map((el: TaxonomyData) => el.agent)
-      .filter(unique) as string[];
-
-    console.log("ROLES:: ", roles);
-    setMultiselectOptions({ role: roles, agent: agents });
-  }, [taxonomies, activeTaxonomy]);
-
-  useEffect(() => {
-    setColumns(tableColumns.procedures);
-  }, [multiselectOptions]);
-
+    useState<MultiselectOptions>({ role: [], agent: [] });
   const tableColumns = {
     procedures: [
       { title: "Action", field: "action" },
       {
         title: "Role",
         field: "role",
+        options: multiselectOptions,
         editComponent: (props: {
           columnDef: ColumnDef;
           onChange: any;
           value: string[];
         }) => (
-          <Select
-            multiple
-            value={props.value ? props.value : [""]}
-            onChange={(evt) => {
-              props.onChange(evt.target.value);
-            }}
-            input={<OutlinedInput label="Name" />}
-            MenuProps={MenuProps}
-          >
-            {/* @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642*/}
-            {multiselectOptions.role.map((el: string) => (
-              <MenuItem key={el} value={el}>
-                {el}
-              </MenuItem>
-            ))}
-          </Select>
+          <EditComponent
+            columnDef={props.columnDef}
+            onChange={props.onChange}
+            value={props.value}
+          />
         ),
       },
       {
         title: "Agent",
         field: "agent",
+        options: multiselectOptions,
         editComponent: (props: {
           columnDef: ColumnDef;
           onChange: any;
           value: string[];
         }) => (
-          <Select
-            multiple
-            value={props.value ? props.value : [""]}
-            onChange={(evt) => {
-              props.onChange(evt.target.value);
-            }}
-            input={<OutlinedInput label="Name" />}
-            MenuProps={MenuProps}
-          >
-            {/* @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642*/}
-            {multiselectOptions.agent.map((el: string) => (
-              <MenuItem key={el} value={el}>
-                {el}
-              </MenuItem>
-            ))}
-          </Select>
+          <EditComponent
+            columnDef={props.columnDef}
+            onChange={props.onChange}
+            value={props.value}
+          />
         ),
       },
       {
@@ -228,14 +115,7 @@ const Table: React.FC<Props> = (props) => {
       {
         title: "Parent",
         field: "parent",
-        lookup: {
-          None: "None",
-          "1st Attack Engine Crew": "1st Attack Engine Crew",
-          "2nd Attack Engine Crew": "2nd Attack Engine Crew",
-          "Patrol Vehicle": "Patrol Vehicle",
-          "1st Ambulance": "1st Ambulance",
-          "2nd Ambulance": "2nd Ambulance",
-        },
+        lookup: initialLookup[data.key],
       },
     ],
   };
@@ -243,7 +123,40 @@ const Table: React.FC<Props> = (props) => {
   useEffect(() => {
     // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
     setColumns(tableColumns[data.type]);
+    const roles = taxonomies[activeTaxonomy]
+      .filter((el: TaxonomyData) => el.role)
+      .map((el: any) => el.role)
+      .filter(unique) as string[];
+
+    const agents = taxonomies[activeTaxonomy]
+      .filter((el: TaxonomyData) => el.parent === "None")
+      .filter((el: TaxonomyData) => el.agent)
+      .map((el: TaxonomyData) => el.agent)
+      .filter(unique) as string[];
+
+    console.log("ROLES:: ", roles);
+    setMultiselectOptions({ role: roles, agent: agents });
+  }, [taxonomies, activeTaxonomy]);
+
+  useEffect(() => {
+    setColumns(tableColumns.procedures);
+  }, [multiselectOptions]);
+
+  useEffect(() => {
+    // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
+    setColumns(tableColumns[data.type]);
   }, [data.type]);
+
+  //Renders parent lookup for each taxonomy
+  useEffect(() => {
+    if (data.type === tableTypes.TAXONOMIES) {
+      // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
+      const update = tableColumns[data.type] as ColumnDef[];
+      const index = update.findIndex((el) => el.field === "parent");
+      update[index].lookup = initialLookup[data.key];
+      setColumns(update);
+    }
+  }, [data.key, data.type]);
 
   const handleChangeTaxonomyChange = (evt: any) => {
     // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
