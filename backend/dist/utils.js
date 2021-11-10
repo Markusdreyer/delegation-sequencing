@@ -111,7 +111,7 @@ const generateAspActions = (procedure) => {
             aspActions += aspFunctions_1.primitive(abbreviation);
             if (role) {
                 // TODO:Backend does not support multiple roles for a single task
-                aspActions += aspFunctions_1.responsible(abbreviation);
+                aspActions += aspFunctions_1.delegate(abbreviation, el.quantity, agents[0]);
                 aspActions += aspFunctions_1.roleProperty(role);
                 aspActions += aspFunctions_1.member(agents[0]);
             }
