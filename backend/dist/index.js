@@ -65,8 +65,15 @@ app.post("/initial", (req, res) => __awaiter(void 0, void 0, void 0, function* (
         const control = fs_1.default.readFileSync("src/asp/control.lp", "utf8");
         const models = yield clingo.run(control + aspString, 0);
         console.log(models);
-        const sortedModels = utils_1.sortModels(models);
-        res.status(sortedModels.status).json(sortedModels.body);
+        if (models.Result === "ERROR") {
+            res
+                .status(500)
+                .json({ function: "clingo.run", reason: "invalid asp format" });
+        }
+        else {
+            const sortedModels = utils_1.sortModels(models);
+            res.status(sortedModels.status).json(sortedModels.body);
+        }
     }
 }));
 // start the Express server

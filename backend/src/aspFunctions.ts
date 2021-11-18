@@ -19,7 +19,7 @@ export const property = (child: string, parent: string) => {
 };
 
 export const roleProperty = (role: string) => {
-  return `property(Ag, ${createReadableConst(role)}), `;
+  return `property(Ag, ${createReadableConst(role)})`;
 };
 
 export const delegate = (
@@ -29,15 +29,21 @@ export const delegate = (
 ) => {
   return `delegate(${abbreviation}, ${quantity}, ${createReadableConst(
     agent
-  )}) :- ${deploy(abbreviation)}`;
+  )}) :- ${deploy(abbreviation)} . \n`;
 };
 
-export const responsible = (abbreviation: string) => {
-  return `responsible(${abbreviation}, Ag) :- ${deploy(abbreviation)}`;
+export const responsible = (
+  abbreviation: string,
+  role: string,
+  agent: string
+) => {
+  return `responsible(${abbreviation}, Ag) :- ${deploy(
+    abbreviation
+  )}, ${roleProperty(role)}, ${member(agent)}`;
 };
 
 const deploy = (abbreviation: string) => {
-  return `deploy(${abbreviation}), `;
+  return `deploy(${abbreviation})`;
 };
 
 export const member = (agent: string) => {
@@ -65,7 +71,6 @@ export const createReadableConst = (input: string) => {
 };
 
 const numberConverter = (stringNumber: string) => {
-  console.log("Number converter match: ", stringNumber);
   const ordinals = ["st", "nd", "rd", "th"];
 
   if (ordinals.includes(stringNumber.slice(-2).toLowerCase())) {
@@ -73,4 +78,23 @@ const numberConverter = (stringNumber: string) => {
   }
 
   return stringNumber.replace(/\d/g, converter.toWordsOrdinal);
+};
+
+export const generateSuperClassSection = (
+  agents: string[],
+  aspActions: string
+) => {
+  const superClassName = agents.join("");
+  let superClassSection = "";
+
+  if (aspActions.includes(superClassName)) {
+    return [superClassName, superClassSection];
+  }
+
+  agents.forEach((agent) => {
+    superClassSection += isSubClass(agent, superClassName);
+  });
+  superClassSection += isSubClass(superClassName, "agent");
+
+  return [superClassName, superClassSection];
 };

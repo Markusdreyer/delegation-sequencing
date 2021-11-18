@@ -45,8 +45,14 @@ app.post("/initial", async (req, res) => {
       0
     );
     console.log(models);
-    const sortedModels = sortModels(models);
-    res.status(sortedModels.status).json(sortedModels.body);
+    if (models.Result === "ERROR") {
+      res
+        .status(500)
+        .json({ function: "clingo.run", reason: "invalid asp format" });
+    } else {
+      const sortedModels = sortModels(models);
+      res.status(sortedModels.status).json(sortedModels.body);
+    }
   }
 });
 

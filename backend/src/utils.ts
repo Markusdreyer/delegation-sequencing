@@ -1,13 +1,12 @@
 import {
   collaborative,
   delegate,
+  generateSuperClassSection,
   isA,
   isSubClass,
-  member,
   primitive,
   property,
   responsible,
-  roleProperty,
 } from "./aspFunctions";
 import {
   FailureReason,
@@ -133,21 +132,19 @@ const generateAspActions = (
 
     if (agents.length > 1) {
       aspActions += collaborative(abbreviation);
-      for (const agent of agents) {
-        // TODO:Tasks with roles does not support collaborative tasks, and the task will be ignored
-        aspActions += delegate(abbreviation, el.quantity, agent);
-        aspActions += member(agent);
-      }
+      const [superClassName, superClassSection] = generateSuperClassSection(
+        agents,
+        aspActions
+      ); // Generate a single class out of all the possible agents
+      aspActions += superClassSection;
+      aspActions += delegate(abbreviation, el.quantity, superClassName);
     } else {
       aspActions += primitive(abbreviation);
       if (role) {
         // TODO:Backend does not support multiple roles for a single task
-        aspActions += delegate(abbreviation, el.quantity, agents[0]);
-        aspActions += roleProperty(role);
-        aspActions += member(agents[0]);
+        aspActions += responsible(abbreviation, role, el.agent);
       } else {
-        aspActions += delegate(abbreviation, el.quantity, agents[0]);
-        aspActions += member(agents[0]);
+        aspActions += delegate(abbreviation, el.quantity, el.agent);
       }
     }
 
@@ -179,6 +176,7 @@ const generateAspTaxonomy = (
       console.log("Error: ", error);
       return [null, error];
     }
+
     if (!el.hasOwnProperty("parentId")) {
       /**
        * Means that the element should be considered top-level.
@@ -186,13 +184,13 @@ const generateAspTaxonomy = (
        */
       aspTaxonomy += isSubClass(el.agent, "agent");
       parents[el.id] = el.agent;
-    } else if (el.hasOwnProperty("role") && el.role !== "") {
-      // What happens if eg. driver is added as subclass to ae_crew twice?
-      aspTaxonomy += isSubClass(el.role, parents[el.parentId]);
-      aspTaxonomy += property(el.agent, el.role);
-      aspTaxonomy += isA(el.agent, el.role);
     } else {
       aspTaxonomy += isA(el.agent, parents[el.parentId]);
+    }
+
+    if (el.hasOwnProperty("role") && el.role !== "") {
+      aspTaxonomy += property(el.agent, el.role);
+      aspTaxonomy += isA(el.agent, el.role);
     }
   }
 
