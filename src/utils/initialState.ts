@@ -343,7 +343,7 @@ const initialState: RootState = {
       {
         action: "Evacuate wounded",
         role: ["Ambulance Assistant"],
-        agent: ["1st Ambulance,2nd Ambulance"],
+        agent: ["1st Ambulance", "2nd Ambulance"],
         quantity: "2",
         abbreviation: "h",
         precedence: "f",
