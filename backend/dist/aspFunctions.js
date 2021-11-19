@@ -19,7 +19,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createReadableConst = exports.primitive = exports.collaborative = exports.member = exports.responsible = exports.delegate = exports.roleProperty = exports.property = exports.isA = exports.isSubClass = void 0;
+exports.generateSuperClassSection = exports.createReadableConst = exports.primitive = exports.collaborative = exports.member = exports.responsible = exports.delegate = exports.roleProperty = exports.property = exports.isA = exports.isSubClass = void 0;
 const converter = __importStar(require("number-to-words"));
 const isSubClass = (child, parent) => {
     return `is_subclass(${exports.createReadableConst(child)}, ${exports.createReadableConst(parent)}).\n`;
@@ -34,19 +34,19 @@ const property = (child, parent) => {
 };
 exports.property = property;
 const roleProperty = (role) => {
-    return `property(Ag, ${exports.createReadableConst(role)}), `;
+    return `property(Ag, ${exports.createReadableConst(role)})`;
 };
 exports.roleProperty = roleProperty;
 const delegate = (abbreviation, quantity, agent) => {
-    return `delegate(${abbreviation}, ${quantity}, ${exports.createReadableConst(agent)}) :- ${deploy(abbreviation)}`;
+    return `delegate(${abbreviation}, ${quantity}, ${exports.createReadableConst(agent)}) :- ${deploy(abbreviation)} . \n`;
 };
 exports.delegate = delegate;
-const responsible = (abbreviation) => {
-    return `responsible(${abbreviation}, Ag) :- ${deploy(abbreviation)}`;
+const responsible = (abbreviation, role, agent) => {
+    return `responsible(${abbreviation}, Ag) :- ${deploy(abbreviation)}, ${exports.roleProperty(role)}, ${exports.member(agent)}`;
 };
 exports.responsible = responsible;
 const deploy = (abbreviation) => {
-    return `deploy(${abbreviation}), `;
+    return `deploy(${abbreviation})`;
 };
 const member = (agent) => {
     return `member(Ag, ${exports.createReadableConst(agent)}). \n`;
@@ -73,11 +73,23 @@ const createReadableConst = (input) => {
 };
 exports.createReadableConst = createReadableConst;
 const numberConverter = (stringNumber) => {
-    console.log("Number converter match: ", stringNumber);
     const ordinals = ["st", "nd", "rd", "th"];
     if (ordinals.includes(stringNumber.slice(-2).toLowerCase())) {
         return converter.toWordsOrdinal(stringNumber.slice(0, -2));
     }
     return stringNumber.replace(/\d/g, converter.toWordsOrdinal);
 };
+const generateSuperClassSection = (agents, aspActions) => {
+    const superClassName = agents.join("");
+    let superClassSection = "";
+    if (aspActions.includes(superClassName)) {
+        return [superClassName, superClassSection];
+    }
+    agents.forEach((agent) => {
+        superClassSection += exports.isSubClass(agent, superClassName);
+    });
+    superClassSection += exports.isSubClass(superClassName, "agent");
+    return [superClassName, superClassSection];
+};
+exports.generateSuperClassSection = generateSuperClassSection;
 //# sourceMappingURL=aspFunctions.js.map
