@@ -235,6 +235,7 @@ const ActionCards: React.FC<Props> = (props) => {
                         />
                       )}
                       <div
+                        data-testid="action-card"
                         className={`action-card ${
                           acceptedActions.includes(action.name)
                             ? "accepted"

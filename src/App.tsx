@@ -198,6 +198,7 @@ const App = () => {
                   Generate sunburst
                 </Button>
                 <Button
+                  data-testid="generate-action-cards-button"
                   variant="contained"
                   color="primary"
                   onClick={() => generateModels(modelTypes.ACTION_CARDS)}
