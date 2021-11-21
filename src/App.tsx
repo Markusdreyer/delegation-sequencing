@@ -25,7 +25,7 @@ import {
   setTaxonomy,
   toggleDialog,
 } from "./actions";
-import Sidebar from "./components/SideBar";
+import Sidebar from "./components/Sidebar";
 import Table from "./components/Table";
 import useStyles from "./Styles";
 import { dialogOptions, modelTypes, tableTypes } from "./utils/const";
@@ -198,6 +198,7 @@ const App = () => {
                   Generate sunburst
                 </Button>
                 <Button
+                  data-testid="generate-action-cards-button"
                   variant="contained"
                   color="primary"
                   onClick={() => generateModels(modelTypes.ACTION_CARDS)}

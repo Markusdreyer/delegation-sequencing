@@ -1,5 +1,10 @@
 import MaterialTable from "material-table";
-import { CheckCircle, ExpandMore, ExpandLess } from "@mui/icons-material/";
+import {
+  CheckCircle,
+  ExpandMore,
+  ExpandLess,
+  IndeterminateCheckBoxSharp,
+} from "@mui/icons-material/";
 import { Button } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import {
@@ -86,9 +91,11 @@ const ActionCards: React.FC<Props> = (props) => {
     ];
   };
 
-  const acceptAction = (actionName: string) => {
-    //Might need to explicitly schedule task
-    setAcceptedActions((previous) => [...previous, actionName]);
+  const acceptAction = (action: Action, j: number) => {
+    const abbreviation = getActionAbbreviation(action);
+    const update = `schedule(${abbreviation}, ${action.agent}, ${action.time}).`;
+    setChanges((previous) => [...previous, update]);
+    setAcceptedActions((previous) => [...previous, action.name + j]);
   };
 
   const undoAccept = (actionName: string) => {
@@ -107,9 +114,9 @@ const ActionCards: React.FC<Props> = (props) => {
     }
   };
 
-  const reviseAction = (actionName: string) => {
+  const reviseAction = (actionName: string, index: number) => {
     const agents = possibleAgents(actionName);
-    setRevisionOptions({ key: actionName, agents });
+    setRevisionOptions({ key: actionName + index, agents });
   };
 
   const possibleAgents = (actionName: string) => {
@@ -129,22 +136,25 @@ const ActionCards: React.FC<Props> = (props) => {
   const agentsIn = (team: string) =>
     taxonomies[activeTaxonomy]
       .filter((el: TaxonomyData) => el.parent === team)
-      .map((el: TaxonomyData) => el.agent)
+      .map((el: TaxonomyData) => el.agent.toLowerCase())
       .filter(unique) as string[];
 
   const agentsWithRoleIn = (team: string, roles: string[]) =>
     taxonomies[activeTaxonomy]
       .filter((el: TaxonomyData) => el.parent === team)
       .filter((el: TaxonomyData) => roles.includes(el.role))
-      .map((el: TaxonomyData) => el.agent)
+      .map((el: TaxonomyData) => el.agent.toLowerCase())
       .filter(unique) as string[];
 
-  const handleRevisionChange = (e: any, action: Action) => {
+  const getActionAbbreviation = (action: Action) => {
     const procedureData = tableData.data as ProcedureData[];
     const index = procedureData.findIndex((el) => el.action === action.name);
-    const abbreviation = procedureData[index].abbreviation;
-    const agent: string = e.currentTarget.value;
+    return procedureData[index].abbreviation;
+  };
 
+  const handleRevisionChange = (e: any, action: Action, j: number) => {
+    const agent: string = e.currentTarget.value;
+    const abbreviation = getActionAbbreviation(action);
     let update: string;
     if (agent === action.agent) {
       update = `relieve(${abbreviation}, ${agent}).`;
@@ -154,7 +164,7 @@ const ActionCards: React.FC<Props> = (props) => {
 
     setChanges((previous) => [...previous, update]);
     setRevisionOptions({ key: "", agents: [] });
-    setAcceptedActions((previous) => [...previous, action.name]);
+    setAcceptedActions((previous) => [...previous, action.name + j]);
   };
 
   const submitRevision = async () => {
@@ -227,16 +237,17 @@ const ActionCards: React.FC<Props> = (props) => {
                 <div className="action-card-horizontal-scroll">
                   {time.map((action, j) => (
                     <div className="container">
-                      {acceptedActions.includes(action.name) && (
+                      {acceptedActions.includes(action.name + j) && (
                         <CheckCircle
                           className="checkmark"
                           fontSize="large"
-                          onClick={() => undoAccept(action.name)}
+                          onClick={() => undoAccept(action.name + j)}
                         />
                       )}
                       <div
+                        data-testid="action-card"
                         className={`action-card ${
-                          acceptedActions.includes(action.name)
+                          acceptedActions.includes(action.name + j)
                             ? "accepted"
                             : ""
                         }`}
@@ -248,20 +259,28 @@ const ActionCards: React.FC<Props> = (props) => {
                         />
                         <div
                           className={`confirmation-card ${
-                            acceptedActions.includes(action.name)
+                            acceptedActions.includes(action.name + j)
                               ? "hidden"
                               : ""
                           } ${
-                            revisionOptions.key === action.name
+                            revisionOptions.key === action.name + j
                               ? "expanded"
                               : ""
                           }`}
                         >
-                          {revisionOptions.key === action.name &&
+                          {revisionOptions.key === action.name + j &&
                             revisionOptions.agents.map((agent) => (
-                              <div className="revision-list-item">
+                              <div
+                                data-testid="revision-options"
+                                className="revision-list-item"
+                              >
                                 <p>{agent}</p>
                                 <Button
+                                  data-testid={
+                                    agent === action.agent
+                                      ? "relieve-button"
+                                      : "schedule-button"
+                                  }
                                   variant={
                                     agent === action.agent
                                       ? "outlined"
@@ -274,7 +293,7 @@ const ActionCards: React.FC<Props> = (props) => {
                                   }
                                   value={agent}
                                   onClick={(e) =>
-                                    handleRevisionChange(e, action)
+                                    handleRevisionChange(e, action, j)
                                   }
                                 >
                                   {agent === action.agent
@@ -283,19 +302,20 @@ const ActionCards: React.FC<Props> = (props) => {
                                 </Button>
                               </div>
                             ))}
-                          {revisionOptions.key !== action.name && (
+                          {revisionOptions.key !== action.name + j && (
                             <>
                               <Button
                                 variant="contained"
                                 color="primary"
-                                onClick={() => acceptAction(action.name)}
+                                onClick={() => acceptAction(action, j)}
                               >
                                 Accept
                               </Button>
                               <Button
+                                data-testid="revise-button"
                                 variant="outlined"
                                 color="secondary"
-                                onClick={() => reviseAction(action.name)}
+                                onClick={() => reviseAction(action.name, j)}
                               >
                                 Revise
                               </Button>
@@ -313,6 +333,7 @@ const ActionCards: React.FC<Props> = (props) => {
         </>
       ))}
       <Button
+        data-testid="revision-submit-button"
         variant="contained"
         color="primary"
         onClick={() => submitRevision()}

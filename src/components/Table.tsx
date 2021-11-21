@@ -280,7 +280,7 @@ const Table: React.FC<Props> = (props) => {
             setTimeout(() => {
               addTableRow(newData);
               resolve();
-            }, 1000);
+            }, 0);
           }),
         onRowAddCancelled: (rowData) => console.log("Row adding cancelled"),
         onRowUpdateCancelled: (rowData) => console.log("Row editing cancelled"),
@@ -289,14 +289,14 @@ const Table: React.FC<Props> = (props) => {
             setTimeout(() => {
               updateTableRow(newData, oldData);
               resolve();
-            }, 1000);
+            }, 0);
           }),
         onRowDelete: (oldData: any) =>
           new Promise((resolve: any, reject) => {
             setTimeout(() => {
               deleteTableRow(oldData);
               resolve();
-            }, 1000);
+            }, 0);
           }),
       }}
       components={{
@@ -308,6 +308,7 @@ const Table: React.FC<Props> = (props) => {
                 <FormControl className={classes.formControl}>
                   <InputLabel>Taxonomy</InputLabel>
                   <Select
+                    data-testid="taxonomy-selector"
                     value={activeTaxonomy}
                     onChange={handleChangeTaxonomyChange}
                   >

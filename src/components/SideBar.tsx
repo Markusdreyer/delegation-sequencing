@@ -87,6 +87,7 @@ const Sidebar = () => {
             <Add />
           </ListItemIcon>
           <ListItemText
+            data-testid="new-procedure"
             primary={"New procedure"}
             onClick={() => dispatch(toggleDialog(dialogOptions.PROCEDURE))}
           />
@@ -96,6 +97,7 @@ const Sidebar = () => {
             <Add />
           </ListItemIcon>
           <ListItemText
+            data-testid="new-taxonomy"
             primary={"New taxonomy"}
             onClick={() => dispatch(toggleDialog(dialogOptions.TAXONOMY))}
           />
@@ -105,22 +107,31 @@ const Sidebar = () => {
           <ListItemIcon>
             <Assignment />
           </ListItemIcon>
-          <ListItemText primary="Procedures" />
+          <ListItemText data-testid="procedure-dropdown" primary="Procedures" />
           {showProcedures ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse in={showProcedures} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {Object.keys(procedures).map((text: string) => (
-              <ListItem button className={classes.nested} key={text}>
+            {Object.keys(procedures).map((procedure: string) => (
+              <ListItem
+                data-testid="procedure"
+                button
+                className={classes.nested}
+                key={procedure}
+              >
                 <ListItemIcon>
                   <Description />
                 </ListItemIcon>
                 <ListItemText
-                  primary={text}
+                  primary={procedure}
                   onClick={() =>
                     dispatch(
                       // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
-                      renderTable(tableTypes.PROCEDURES, text, procedures[text])
+                      renderTable(
+                        tableTypes.PROCEDURES,
+                        procedure,
+                        procedures[procedure]
+                      )
                     )
                   }
                 />
@@ -135,22 +146,31 @@ const Sidebar = () => {
           <ListItemIcon>
             <AccountTree />
           </ListItemIcon>
-          <ListItemText primary="Taxonomies" />
+          <ListItemText data-testid="taxonomy-dropdown" primary="Taxonomies" />
           {displayTaxonomies ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse in={displayTaxonomies} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {Object.keys(taxonomies).map((text: string) => (
-              <ListItem button className={classes.nested} key={text}>
+            {Object.keys(taxonomies).map((taxonomy: string) => (
+              <ListItem
+                data-testid="taxonomy"
+                button
+                className={classes.nested}
+                key={taxonomy}
+              >
                 <ListItemIcon>
                   <Description />
                 </ListItemIcon>
                 <ListItemText
-                  primary={text}
+                  primary={taxonomy}
                   onClick={() =>
                     dispatch(
                       // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
-                      renderTable(tableTypes.TAXONOMIES, text, taxonomies[text])
+                      renderTable(
+                        tableTypes.TAXONOMIES,
+                        taxonomy,
+                        taxonomies[taxonomy]
+                      )
                     )
                   }
                 />

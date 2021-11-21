@@ -103,7 +103,13 @@ const generateAspActions = (procedure) => {
             aspActions += aspFunctions_1.collaborative(abbreviation);
             const [superClassName, superClassSection] = aspFunctions_1.generateSuperClassSection(agents, aspActions); // Generate a single class out of all the possible agents
             aspActions += superClassSection;
-            aspActions += aspFunctions_1.delegate(abbreviation, el.quantity, superClassName);
+            if (role) {
+                // TODO:Backend does not support multiple roles for a single task
+                aspActions += aspFunctions_1.responsible(abbreviation, role, superClassName);
+            }
+            else {
+                aspActions += aspFunctions_1.delegate(abbreviation, el.quantity, superClassName);
+            }
         }
         else {
             aspActions += aspFunctions_1.primitive(abbreviation);
