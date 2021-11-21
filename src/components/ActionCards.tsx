@@ -91,9 +91,11 @@ const ActionCards: React.FC<Props> = (props) => {
     ];
   };
 
-  const acceptAction = (actionName: string) => {
-    //Might need to explicitly schedule task
-    setAcceptedActions((previous) => [...previous, actionName]);
+  const acceptAction = (action: Action, j: number) => {
+    const abbreviation = getActionAbbreviation(action);
+    const update = `schedule(${abbreviation}, ${action.agent}, ${action.time}).`;
+    setChanges((previous) => [...previous, update]);
+    setAcceptedActions((previous) => [...previous, action.name + j]);
   };
 
   const undoAccept = (actionName: string) => {
@@ -144,12 +146,15 @@ const ActionCards: React.FC<Props> = (props) => {
       .map((el: TaxonomyData) => el.agent.toLowerCase())
       .filter(unique) as string[];
 
-  const handleRevisionChange = (e: any, action: Action, j: number) => {
+  const getActionAbbreviation = (action: Action) => {
     const procedureData = tableData.data as ProcedureData[];
     const index = procedureData.findIndex((el) => el.action === action.name);
-    const abbreviation = procedureData[index].abbreviation;
-    const agent: string = e.currentTarget.value;
+    return procedureData[index].abbreviation;
+  };
 
+  const handleRevisionChange = (e: any, action: Action, j: number) => {
+    const agent: string = e.currentTarget.value;
+    const abbreviation = getActionAbbreviation(action);
     let update: string;
     if (agent === action.agent) {
       update = `relieve(${abbreviation}, ${agent}).`;
@@ -294,7 +299,7 @@ const ActionCards: React.FC<Props> = (props) => {
                               <Button
                                 variant="contained"
                                 color="primary"
-                                onClick={() => acceptAction(action.name + j)}
+                                onClick={() => acceptAction(action, j)}
                               >
                                 Accept
                               </Button>

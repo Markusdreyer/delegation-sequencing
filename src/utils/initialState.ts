@@ -447,7 +447,7 @@ const initialState: RootState = {
         id: 8,
       },
       {
-        agent: "Jørgen",
+        agent: "Jorgen",
         role: "Firefighter",
         parent: "2nd Attack Engine Crew",
         parentId: 7,
