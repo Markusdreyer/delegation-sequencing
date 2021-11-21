@@ -308,6 +308,7 @@ const Table: React.FC<Props> = (props) => {
                 <FormControl className={classes.formControl}>
                   <InputLabel>Taxonomy</InputLabel>
                   <Select
+                    data-testid="taxonomy-selector"
                     value={activeTaxonomy}
                     onChange={handleChangeTaxonomyChange}
                   >

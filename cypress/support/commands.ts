@@ -47,7 +47,7 @@ Cypress.Commands.add("edit", (row: number) => {
 });
 
 Cypress.Commands.add("nextPage", () => {
-  return cy.contains("chevron_right").click();
+  return cy.contains("chevron_right").click({ force: true });
 });
 
 Cypress.Commands.add("previousPage", () => {
@@ -109,7 +109,15 @@ Cypress.Commands.add("countQuantity", (total: number) => {
 });
 
 Cypress.Commands.add("generateActionCards", () => {
-  return cy.get("[data-testid=generate-action-cards-button]").click();
+  cy.intercept({
+    method: "POST",
+    url: "/initial",
+  }).as("fetchInitialModel");
+  cy.get("[data-testid=generate-action-cards-button]").click();
+  return cy
+    .wait("@fetchInitialModel")
+    .its("response.statusCode")
+    .should("equal", 200);
 });
 
 Cypress.Commands.add("verifyGeneratedActions", (expectedActions: number) => {
@@ -120,6 +128,36 @@ Cypress.Commands.add("verifyGeneratedActions", (expectedActions: number) => {
 
 Cypress.Commands.add("getActionCard", (index: number) => {
   return cy.get("[data-testid=action-card]").eq(index);
+});
+
+Cypress.Commands.add("openSidebar", () => {
+  return cy.get("[aria-label='open drawer']").click();
+});
+
+Cypress.Commands.add("selectProcedure", (index: number) => {
+  return cy
+    .get("[data-testid='procedure-dropdown']")
+    .click()
+    .get("[data-testid='procedure']")
+    .eq(index)
+    .click();
+});
+
+Cypress.Commands.add("selectTaxonomy", (taxonomy: string) => {
+  return cy
+    .get("[data-testid='taxonomy-selector']")
+    .click()
+    .get(`[data-value='${taxonomy}']`)
+    .click();
+});
+
+Cypress.Commands.add("editTaxonomy", (index: number) => {
+  return cy
+    .get("[data-testid='procedure-dropdown']")
+    .click()
+    .get("[data-testid='procedure']")
+    .eq(index)
+    .click();
 });
 
 const toStrings = (cells$: any) => Cypress._.map(cells$, "textContent");

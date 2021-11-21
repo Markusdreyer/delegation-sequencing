@@ -137,7 +137,12 @@ const generateAspActions = (
         aspActions
       ); // Generate a single class out of all the possible agents
       aspActions += superClassSection;
-      aspActions += delegate(abbreviation, el.quantity, superClassName);
+      if (role) {
+        // TODO:Backend does not support multiple roles for a single task
+        aspActions += responsible(abbreviation, role, superClassName);
+      } else {
+        aspActions += delegate(abbreviation, el.quantity, superClassName);
+      }
     } else {
       aspActions += primitive(abbreviation);
       if (role) {

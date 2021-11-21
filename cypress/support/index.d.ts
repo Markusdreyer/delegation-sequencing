@@ -13,5 +13,8 @@ declare namespace Cypress {
     generateActionCards(): Chainable;
     verifyGeneratedActions(expectedActions): Chainable;
     getActionCard(index: number): Chainable;
+    openSidebar(): Chainable;
+    selectTaxonomy(taxonomy: string): Chainable;
+    selectProcedure(index: number): Chainable;
   }
 }

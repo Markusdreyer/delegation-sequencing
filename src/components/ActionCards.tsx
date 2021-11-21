@@ -117,10 +117,9 @@ const ActionCards: React.FC<Props> = (props) => {
     const index = procedureData.findIndex((el) => el.action === actionName);
     const teams = procedureData[index].agent as string[];
     const roles = procedureData[index].role as string[];
-    const filteredRoles = roles.filter((el) => el);
 
-    if (filteredRoles.length > 0) {
-      return teams.map((team) => agentsWithRoleIn(team, filteredRoles)).flat();
+    if (roles.length > 0) {
+      return teams.map((team) => agentsWithRoleIn(team, roles)).flat();
     } else {
       return teams.map((team) => agentsIn(team)).flat();
     }
@@ -136,7 +135,7 @@ const ActionCards: React.FC<Props> = (props) => {
     taxonomies[activeTaxonomy]
       .filter((el: TaxonomyData) => el.parent === team)
       .filter((el: TaxonomyData) => roles.includes(el.role))
-      .map((el: TaxonomyData) => el.agent)
+      .map((el: TaxonomyData) => el.agent.toLowerCase())
       .filter(unique) as string[];
 
   const handleRevisionChange = (e: any, action: Action) => {
