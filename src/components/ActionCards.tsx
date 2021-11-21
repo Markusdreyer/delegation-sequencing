@@ -270,9 +270,17 @@ const ActionCards: React.FC<Props> = (props) => {
                         >
                           {revisionOptions.key === action.name + j &&
                             revisionOptions.agents.map((agent) => (
-                              <div className="revision-list-item">
+                              <div
+                                data-testid="revision-options"
+                                className="revision-list-item"
+                              >
                                 <p>{agent}</p>
                                 <Button
+                                  data-testid={
+                                    agent === action.agent
+                                      ? "relieve-button"
+                                      : "schedule-button"
+                                  }
                                   variant={
                                     agent === action.agent
                                       ? "outlined"
@@ -304,6 +312,7 @@ const ActionCards: React.FC<Props> = (props) => {
                                 Accept
                               </Button>
                               <Button
+                                data-testid="revise-button"
                                 variant="outlined"
                                 color="secondary"
                                 onClick={() => reviseAction(action.name, j)}
@@ -324,6 +333,7 @@ const ActionCards: React.FC<Props> = (props) => {
         </>
       ))}
       <Button
+        data-testid="revision-submit-button"
         variant="contained"
         color="primary"
         onClick={() => submitRevision()}

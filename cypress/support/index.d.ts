@@ -10,11 +10,18 @@ declare namespace Cypress {
     selectMultiselect(row: number, cell: number): Chainable;
     getCellValues(cell: number): Chainable;
     countQuantity(total: number): Chainable;
-    generateActionCards(): Chainable;
+    generateActionCards(status: number): Chainable;
     verifyGeneratedActions(expectedActions): Chainable;
     getActionCard(index: number): Chainable;
     openSidebar(): Chainable;
     selectTaxonomy(taxonomy: string): Chainable;
     selectProcedure(index: number): Chainable;
+    editTaxonomy(index: number): Chainable;
+    reviseAction(index: number): Chainable;
+    verifyRevisionOptions(length: number): Chainable;
+    relieveAgent(): Chainable;
+    scheduleAgent(index: number): Chainable;
+    verifyActionCardAgent(index: number, agent: string): Chainable;
+    submitRevision(): Chainable;
   }
 }

@@ -108,7 +108,7 @@ Cypress.Commands.add("countQuantity", (total: number) => {
     });
 });
 
-Cypress.Commands.add("generateActionCards", () => {
+Cypress.Commands.add("generateActionCards", (status: number) => {
   cy.intercept({
     method: "POST",
     url: "/initial",
@@ -117,7 +117,7 @@ Cypress.Commands.add("generateActionCards", () => {
   return cy
     .wait("@fetchInitialModel")
     .its("response.statusCode")
-    .should("equal", 200);
+    .should("equal", status);
 });
 
 Cypress.Commands.add("verifyGeneratedActions", (expectedActions: number) => {
@@ -153,11 +153,55 @@ Cypress.Commands.add("selectTaxonomy", (taxonomy: string) => {
 
 Cypress.Commands.add("editTaxonomy", (index: number) => {
   return cy
-    .get("[data-testid='procedure-dropdown']")
+    .get("[data-testid='taxonomy-dropdown']")
     .click()
     .get("[data-testid='procedure']")
     .eq(index)
     .click();
+});
+
+Cypress.Commands.add("reviseAction", (index: number) => {
+  return cy
+    .get("[data-testid='revise-button']")
+    .eq(index)
+    .click({ force: true });
+});
+
+Cypress.Commands.add("verifyRevisionOptions", (length: number) => {
+  return cy
+    .get("[data-testid='revision-options']")
+    .should("have.length", length);
+});
+
+Cypress.Commands.add("relieveAgent", () => {
+  return cy.get("[data-testid='relieve-button']").click();
+});
+
+Cypress.Commands.add("scheduleAgent", (index: number) => {
+  return cy.get("[data-testid='schedule-button']").eq(index).click();
+});
+
+Cypress.Commands.add(
+  "verifyActionCardAgent",
+  (index: number, agent: string) => {
+    return cy
+      .get("[data-testid=action-card]")
+      .eq(index)
+      .find("td:nth-child(1)")
+      .contains(agent);
+  }
+);
+
+Cypress.Commands.add("submitRevision", () => {
+  cy.intercept({
+    method: "POST",
+    url: "/revise",
+  }).as("fetchRevisedModel");
+  cy.get("[data-testid='revision-submit-button']").click({ force: true });
+  return cy
+    .wait("@fetchRevisedModel")
+    .its("response.statusCode")
+    .should("equal", 200);
 });
 
 const toStrings = (cells$: any) => Cypress._.map(cells$, "textContent");
