@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
 
 module.exports = {
   mode: "none",
@@ -29,7 +30,12 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        use: "ts-loader",
+        loader: "ts-loader",
+        options: {
+          compilerOptions: {
+            noEmit: false,
+          },
+        },
         exclude: "/node_modules/",
       },
     ],
@@ -37,6 +43,12 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "public", "index.html"),
+    }),
+    new webpack.DefinePlugin({
+      "process.env.REACT_APP_BACKEND_URL": JSON.stringify(
+        process.env.REACT_APP_BACKEND_URL ||
+          "https://us-central1-delegation-sequencing-d8ae4.cloudfunctions.net/api/"
+      ),
     }),
   ],
 };
