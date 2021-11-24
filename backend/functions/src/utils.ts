@@ -15,7 +15,7 @@ import {
   TaxonomyData,
   Witnesses,
 } from "./types";
-import fs from "fs";
+import * as fs from "fs";
 
 export const sortModels = (models: any): Response => {
   if (!models) {

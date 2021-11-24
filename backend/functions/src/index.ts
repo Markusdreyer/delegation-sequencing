@@ -1,18 +1,21 @@
-import express from "express";
-import cors from "cors";
+import * as functions from "firebase-functions";
+import * as express from "express";
 import * as clingo from "clingo-wasm";
-import fs from "fs";
+import * as fs from "fs";
 import { generateAspString, sortModels } from "./utils";
 import { Response } from "./types";
 
 const app = express();
 
+const cors = require("cors");
 app.use(cors());
 app.use("*", cors());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 app.enable("trust proxy");
-const port = 8000;
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.json());
+
+exports.api = functions.https.onRequest(app);
 
 app.post("/revise", async (req, res) => {
   const reqBody = req.body;
@@ -56,8 +59,8 @@ app.post("/initial", async (req, res) => {
   }
 });
 
-// start the Express server
-app.listen(port, () => {
-  // tslint:disable-next-line:no-console
-  console.log(`server started at http:// localhost:${port}`);
-});
+// // start the Express server
+// app.listen(port, () => {
+//   // tslint:disable-next-line:no-console
+//   console.log(`server started at http:// localhost:${port}`);
+// });
