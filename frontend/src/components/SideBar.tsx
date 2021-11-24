@@ -65,7 +65,7 @@ const Sidebar = () => {
           >
             <Menu />
           </IconButton>
-          <h4>Sequencing</h4>
+          <h4>DelSeq</h4>
         </Toolbar>
       </AppBar>
       <Drawer
