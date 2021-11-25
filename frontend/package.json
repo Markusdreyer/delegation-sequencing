@@ -27,6 +27,7 @@
     "clingo-wasm": "0.0.9",
     "clingojs": "^1.0.2",
     "dotenv": "^10.0.0",
+    "firebase": "^9.5.0",
     "highcharts": "^9.0.1",
     "highcharts-react-official": "^3.0.0",
     "material-table": "1.67.1",
@@ -36,7 +37,9 @@
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.3",
     "react-scripts": "4.0.3",
+    "reactfire": "^4.2.1",
     "sass": "^1.42.1",
+    "tslib": "^2.3.1",
     "web-vitals": "^1.1.0"
   },
   "scripts": {

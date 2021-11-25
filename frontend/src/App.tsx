@@ -30,8 +30,12 @@ import Table from "./components/Table";
 import useStyles from "./Styles";
 import { dialogOptions, modelTypes, tableTypes } from "./utils/const";
 import ActionCards from "./components/ActionCards";
+import { FirestoreProvider, useFirebaseApp } from "reactfire";
+import { doc, setDoc } from "firebase/firestore";
+import { getFirestore } from "@firebase/firestore";
 
 const App = () => {
+  const db = getFirestore();
   const showSidebar = useSelector((state: RootState) => state.showSidebar);
   const tableData = useSelector((state: RootState) => state.tableData);
   const procedures = useSelector((state: RootState) => state.procedures);
@@ -83,13 +87,15 @@ const App = () => {
     }
   }, [procedures, taxonomies, tableData.type, tableData.key, dispatch]);
 
-  const createNewDocument = () => {
+  const createNewDocument = async () => {
     if (dialog.title === dialogOptions.PROCEDURE.title) {
       dispatch(renderTable(tableTypes.PROCEDURES, newDocument, []));
-      dispatch(setProcedure(newDocument, []));
+      await setDoc(doc(db, "procedures", newDocument), { tableData: {} });
+      //firebase refactor dispatch(setProcedure(newDocument, []));
     } else if (dialog.title === dialogOptions.TAXONOMY.title) {
       dispatch(renderTable(tableTypes.TAXONOMIES, newDocument, []));
-      dispatch(setTaxonomy(newDocument, []));
+      await setDoc(doc(db, "taxonomies", newDocument), { tableData: {} });
+      //firebase refactor dispatch(setTaxonomy(newDocument, []));
     } else {
       console.log(
         `${dialog.title} does not match ${dialogOptions.PROCEDURE.title} or ${dialogOptions.TAXONOMY.title}`
@@ -147,7 +153,7 @@ const App = () => {
   };
 
   return (
-    <>
+    <FirestoreProvider sdk={db}>
       <div className={classes.root}>
         <Sidebar />
         <main
@@ -232,7 +238,7 @@ const App = () => {
           setIsLoading={setIsLoading}
         />
       )}
-    </>
+    </FirestoreProvider>
   );
 };
 

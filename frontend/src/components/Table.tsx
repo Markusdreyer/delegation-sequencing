@@ -22,11 +22,48 @@ import {
 } from "@material-ui/core";
 import { unique } from "../utils/utils";
 import EditComponent from "./EditComponent";
+import {
+  doc,
+  collection,
+  getFirestore,
+  query,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
+import {
+  FirebaseAppProvider,
+  FirestoreProvider,
+  useFirebaseApp,
+  useFirestore,
+  useFirestoreCollection,
+  useFirestoreCollectionData,
+  useFirestoreDocData,
+} from "reactfire";
+
 interface Props {
   data: TableData;
 }
 
+const foo = {
+  actions: {
+    0: {
+      thing: "who",
+      me: "ok",
+    },
+    1: {
+      thing: "the",
+      me: "nei",
+    },
+  },
+};
+
 const Table: React.FC<Props> = (props) => {
+  const db = getFirestore();
+  const ref = doc(useFirestore(), props.data.type, props.data.key);
+  const { data: document } = useFirestoreDocData(ref, {
+    idField: "key",
+  });
+
   const taxonomies = useSelector((state: RootState) => state.taxonomies);
   const activeTaxonomy = useSelector(
     (state: RootState) => state.activeTaxonomy
@@ -176,24 +213,30 @@ const Table: React.FC<Props> = (props) => {
       .reduce((acc, curr) => ((acc[curr.agent] = curr.agent), acc), {});
   };
 
-  const addTableRow = (newData: ProcedureData | TaxonomyData): void => {
-    const currentTaxonomy = taxonomies[data.key];
-    const currentTableData = data.data;
+  const addTableRow = async (
+    newData: ProcedureData | TaxonomyData
+  ): Promise<void> => {
+    const currentTableData = document.tableData;
+
+    console.log("currentTableData", currentTableData);
 
     if (data.type === tableTypes.PROCEDURES) {
       const dataUpdate = currentTableData as ProcedureData[];
       const procedureData = newData as unknown as ProcedureData;
-      procedureData.id = 1;
+      procedureData.id = currentTableData.length + 1;
       if (!procedureData.role) {
         procedureData.role = [""];
       }
 
       dataUpdate.push(procedureData as ProcedureData);
-      dispatch(setProcedure(data.key, dataUpdate));
+      await updateDoc(doc(db, data.type, data.key), {
+        tableData: dataUpdate,
+      });
+      //firebase refactor dispatch(setProcedure(data.key, dataUpdate));
     } else if (data.type === tableTypes.TAXONOMIES) {
       let taxonomyData = newData as TaxonomyData;
       if (taxonomyData.parent && taxonomyData.parent !== "None") {
-        const parentId = currentTaxonomy!.find(
+        const parentId = currentTableData!.find(
           (el: TaxonomyData) => el.agent === taxonomyData.parent
         )!.id;
         taxonomyData.parentId = parentId;
@@ -201,7 +244,7 @@ const Table: React.FC<Props> = (props) => {
       } else {
         const prevId = Math.max.apply(
           Math,
-          currentTaxonomy.map((el) => el.id)
+          currentTableData.map((el: ProcedureData) => el.id)
         );
         newData.id = prevId < 0 ? 1 : prevId + 1;
         taxonomyData.role = "";
@@ -212,7 +255,9 @@ const Table: React.FC<Props> = (props) => {
       const columnUpdate: any = tableColumns;
       columnUpdate.taxonomies[2].lookup[taxonomyData.agent] =
         taxonomyData.agent;
-      dispatch(setTaxonomy(data.key, dataUpdate));
+      await updateDoc(doc(db, data.type, data.key), {
+        tableData: dataUpdate,
+      });
     } else {
       console.log(
         `${data.type} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
@@ -264,7 +309,12 @@ const Table: React.FC<Props> = (props) => {
     <MaterialTable
       title={data.key}
       columns={columns}
-      data={data.data.map((o: any) => ({ ...o }))} //Ugly immutable hack: https://github.com/mbrn/material-table/issues/666
+      data={
+        document &&
+        document.tableData.map((obj: ProcedureData[] | TaxonomyData[]) => ({
+          ...obj,
+        }))
+      }
       parentChildData={(row, rows) => rows.find((o) => o.id === row.parentId)}
       options={{
         rowStyle: (rowData: any) => ({
@@ -282,8 +332,6 @@ const Table: React.FC<Props> = (props) => {
               resolve();
             }, 0);
           }),
-        onRowAddCancelled: (rowData) => console.log("Row adding cancelled"),
-        onRowUpdateCancelled: (rowData) => console.log("Row editing cancelled"),
         onRowUpdate: (newData: ProcedureData | TaxonomyData, oldData: any) =>
           new Promise((resolve: any, reject) => {
             setTimeout(() => {
@@ -306,6 +354,7 @@ const Table: React.FC<Props> = (props) => {
             {data.type === tableTypes.PROCEDURES && (
               <div style={{ padding: "0px 10px" }}>
                 <FormControl className={classes.formControl}>
+                  {console.log(document)}
                   <InputLabel>Taxonomy</InputLabel>
                   <Select
                     data-testid="taxonomy-selector"

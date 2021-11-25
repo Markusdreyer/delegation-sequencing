@@ -125,7 +125,7 @@ export const getASPModels = (
 ): Promise<BackendResponse> => {
   const backendUrl = process.env.REACT_APP_BACKEND_URL
     ? process.env.REACT_APP_BACKEND_URL + endpoint
-    : `http://localhost:5001/delegation-sequencing-d8ae4/us-central1/api/${endpoint}`;
+    : `http://localhost:8080/${endpoint}`;
 
   return axios({
     method: "post",
