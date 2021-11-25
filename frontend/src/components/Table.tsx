@@ -44,22 +44,14 @@ interface Props {
   data: TableData;
 }
 
-const foo = {
-  actions: {
-    0: {
-      thing: "who",
-      me: "ok",
-    },
-    1: {
-      thing: "the",
-      me: "nei",
-    },
-  },
-};
-
 const Table: React.FC<Props> = (props) => {
-  const db = getFirestore();
-  const ref = doc(useFirestore(), props.data.type, props.data.key);
+  const db = useFirestore();
+  const taxonomiesCollection = collection(db, "taxonomies");
+  const { data: firestoreTaxonomies } = useFirestoreCollectionData(
+    taxonomiesCollection,
+    { idField: "key" }
+  );
+  const ref = doc(db, props.data.type, props.data.key);
   const { data: document } = useFirestoreDocData(ref, {
     idField: "key",
   });
@@ -160,20 +152,26 @@ const Table: React.FC<Props> = (props) => {
   useEffect(() => {
     // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
     setColumns(tableColumns[data.type]);
-    const roles = taxonomies[activeTaxonomy]
-      .filter((el: TaxonomyData) => el.role)
-      .map((el: any) => el.role)
-      .filter(unique) as string[];
+    if (firestoreTaxonomies) {
+      const currentTaxonomyData = firestoreTaxonomies.find(
+        (el) => el.key === activeTaxonomy
+      );
+      const roles = currentTaxonomyData?.tableData
+        .filter((el: TaxonomyData) => el.role)
+        .map((el: any) => el.role)
+        .filter(unique) as string[];
 
-    const agents = taxonomies[activeTaxonomy]
-      .filter((el: TaxonomyData) => el.parent === "None")
-      .filter((el: TaxonomyData) => el.agent)
-      .map((el: TaxonomyData) => el.agent)
-      .filter(unique) as string[];
+      const agents = currentTaxonomyData?.tableData
+        .filter((el: TaxonomyData) => el.parent === "None")
+        .filter((el: TaxonomyData) => el.agent)
+        .map((el: TaxonomyData) => el.agent)
+        .filter(unique) as string[];
 
-    console.log("ROLES:: ", roles);
-    setMultiselectOptions({ role: roles, agent: agents });
-  }, [taxonomies, activeTaxonomy]);
+      console.log("ROLES:: ", roles);
+      console.log("AGENTS:: ", agents);
+      setMultiselectOptions({ role: roles, agent: agents });
+    }
+  }, [firestoreTaxonomies, activeTaxonomy]);
 
   useEffect(() => {
     // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
@@ -196,18 +194,22 @@ const Table: React.FC<Props> = (props) => {
     }
   }, [data.key, data.type]);
 
-  const handleChangeTaxonomyChange = (evt: any) => {
+  const handleTaxonomyChange = (evt: any) => {
     // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
     dispatch(setActiveTaxonomy(evt.target.value));
 
+    const newTaxonomyData = firestoreTaxonomies.find(
+      (el) => el.key === evt.target.value
+    );
+
     let updateColumns: any = [...columns];
-    updateColumns[1].lookup = taxonomies[evt.target.value] //Fetch role lookup data from taxonomy
-      .filter((el) => el.hasOwnProperty("parentId") && el["role"])
+    updateColumns[1].lookup = newTaxonomyData?.tableData
+      .filter((el: any) => el.hasOwnProperty("parentId") && el["role"])
       // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
       // eslint-disable-next-line no-sequences
       .reduce((acc, curr) => ((acc[curr.role] = curr.role), acc), {});
-    updateColumns[2].lookup = taxonomies[evt.target.value] //Fetch agent lookup data from taxonomy
-      .filter((el) => !el.hasOwnProperty("parentId") && el["agent"])
+    updateColumns[2].lookup = newTaxonomyData?.tableData
+      .filter((el: any) => !el.hasOwnProperty("parentId") && el["agent"])
       // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
       // eslint-disable-next-line no-sequences
       .reduce((acc, curr) => ((acc[curr.agent] = curr.agent), acc), {});
@@ -359,11 +361,12 @@ const Table: React.FC<Props> = (props) => {
                   <Select
                     data-testid="taxonomy-selector"
                     value={activeTaxonomy}
-                    onChange={handleChangeTaxonomyChange}
+                    onChange={handleTaxonomyChange}
                   >
-                    {Object.keys(taxonomies).map((taxonomy) => (
-                      <MenuItem value={taxonomy}>{taxonomy}</MenuItem>
-                    ))}
+                    {firestoreTaxonomies &&
+                      firestoreTaxonomies.map((taxonomy) => (
+                        <MenuItem value={taxonomy.key}>{taxonomy.key}</MenuItem>
+                      ))}
                   </Select>
                 </FormControl>
               </div>

@@ -90,11 +90,11 @@ const App = () => {
   const createNewDocument = async () => {
     if (dialog.title === dialogOptions.PROCEDURE.title) {
       dispatch(renderTable(tableTypes.PROCEDURES, newDocument, []));
-      await setDoc(doc(db, "procedures", newDocument), { tableData: {} });
+      await setDoc(doc(db, "procedures", newDocument), { tableData: [] });
       //firebase refactor dispatch(setProcedure(newDocument, []));
     } else if (dialog.title === dialogOptions.TAXONOMY.title) {
       dispatch(renderTable(tableTypes.TAXONOMIES, newDocument, []));
-      await setDoc(doc(db, "taxonomies", newDocument), { tableData: {} });
+      await setDoc(doc(db, "taxonomies", newDocument), { tableData: [] });
       //firebase refactor dispatch(setTaxonomy(newDocument, []));
     } else {
       console.log(
