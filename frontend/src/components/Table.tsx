@@ -13,29 +13,12 @@ import {
 } from "../types";
 import { setActiveTaxonomy, setProcedure, setTaxonomy } from "../actions";
 import { initialLookup, tableTypes } from "../utils/const";
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  Select,
-} from "@material-ui/core";
+import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
 import { unique } from "../utils/utils";
 import EditComponent from "./EditComponent";
+import { doc, collection, updateDoc } from "firebase/firestore";
 import {
-  doc,
-  collection,
-  getFirestore,
-  query,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
-import {
-  FirebaseAppProvider,
-  FirestoreProvider,
-  useFirebaseApp,
   useFirestore,
-  useFirestoreCollection,
   useFirestoreCollectionData,
   useFirestoreDocData,
 } from "reactfire";
@@ -56,7 +39,6 @@ const Table: React.FC<Props> = (props) => {
     idField: "key",
   });
 
-  const taxonomies = useSelector((state: RootState) => state.taxonomies);
   const activeTaxonomy = useSelector(
     (state: RootState) => state.activeTaxonomy
   );
@@ -267,25 +249,19 @@ const Table: React.FC<Props> = (props) => {
     }
   };
 
-  const updateTableRow = (
+  const updateTableRow = async (
     newData: TaxonomyData | ProcedureData,
     oldData: MaterialTableData | undefined
-  ): void => {
+  ): Promise<void> => {
     console.log("UPDATE TABLE", newData);
     if (oldData) {
       const dataUpdate = data.data!;
       const index = oldData.tableData.id;
       dataUpdate[index] = newData;
       console.log("newData: ", newData);
-      if (data.type === tableTypes.PROCEDURES) {
-        dispatch(setProcedure(data.key, dataUpdate as ProcedureData[]));
-      } else if (data.type === tableTypes.TAXONOMIES) {
-        dispatch(setTaxonomy(data.key, dataUpdate as TaxonomyData[]));
-      } else {
-        console.log(
-          `${data.type} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
-        );
-      }
+      await updateDoc(doc(db, data.type, data.key), {
+        tableData: dataUpdate,
+      });
     }
   };
 

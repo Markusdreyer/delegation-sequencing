@@ -18,13 +18,7 @@ import {
 } from "./utils/utils";
 import { Action, BackendResponse, ProcedureData, RootState } from "./types";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  renderTable,
-  setPreviousModel,
-  setProcedure,
-  setTaxonomy,
-  toggleDialog,
-} from "./actions";
+import { renderTable, setPreviousModel, toggleDialog } from "./actions";
 import Sidebar from "./components/Sidebar";
 import Table from "./components/Table";
 import useStyles from "./Styles";
@@ -58,34 +52,6 @@ const App = () => {
     setSunburstData(undefined);
     setFailureMessage(undefined);
   }, [activeTaxonomy]);
-
-  useEffect(() => {
-    if (tableData.key) {
-      if (tableData.type === tableTypes.PROCEDURES) {
-        console.log("Update procedure table");
-        dispatch(
-          renderTable(
-            tableTypes.PROCEDURES,
-            tableData.key,
-            procedures[tableData.key]
-          )
-        );
-      } else if (tableData.type === tableTypes.TAXONOMIES) {
-        console.log("Update taxonomy table");
-        dispatch(
-          renderTable(
-            tableTypes.TAXONOMIES,
-            tableData.key,
-            taxonomies[tableData.key]
-          )
-        );
-      } else {
-        console.log(
-          `${tableData.type} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
-        );
-      }
-    }
-  }, [procedures, taxonomies, tableData.type, tableData.key, dispatch]);
 
   const createNewDocument = async () => {
     if (dialog.title === dialogOptions.PROCEDURE.title) {
