@@ -9,17 +9,12 @@ export const setActiveTaxonomy = (activeTaxonomy: string) => {
   };
 };
 
-export const renderTable = (
-  type: string,
-  key: string,
-  data: ProcedureData[] | TaxonomyData[]
-) => {
+export const renderTable = (type: string, key: string) => {
   return {
     type: "RENDER_TABLE",
     payload: {
       type,
       key,
-      data,
     },
   };
 };

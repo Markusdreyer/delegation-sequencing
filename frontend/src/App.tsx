@@ -24,16 +24,14 @@ import Table from "./components/Table";
 import useStyles from "./Styles";
 import { dialogOptions, modelTypes, tableTypes } from "./utils/const";
 import ActionCards from "./components/ActionCards";
-import { FirestoreProvider, useFirebaseApp } from "reactfire";
-import { doc, setDoc } from "firebase/firestore";
+import { FirestoreProvider, useFirestoreDocData } from "reactfire";
+import { collection, doc, setDoc } from "firebase/firestore";
 import { getFirestore } from "@firebase/firestore";
 
 const App = () => {
   const db = getFirestore();
   const showSidebar = useSelector((state: RootState) => state.showSidebar);
   const tableData = useSelector((state: RootState) => state.tableData);
-  const procedures = useSelector((state: RootState) => state.procedures);
-  const taxonomies = useSelector((state: RootState) => state.taxonomies);
   const activeTaxonomy = useSelector(
     (state: RootState) => state.activeTaxonomy
   );
@@ -43,6 +41,15 @@ const App = () => {
   const [newDocument, setNewDocument] = useState("");
   const [failureMessage, setFailureMessage] = useState<string>();
   const [isLoading, setIsLoading] = useState(false);
+
+  const taxonomyRef = doc(db, "taxonomies", activeTaxonomy);
+  const { data: taxonomyData } = useFirestoreDocData(taxonomyRef, {
+    idField: "key",
+  });
+  const procedureRef = doc(db, "procedures", tableData.key);
+  const { data: procedureData } = useFirestoreDocData(procedureRef, {
+    idField: "key",
+  });
 
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -55,11 +62,11 @@ const App = () => {
 
   const createNewDocument = async () => {
     if (dialog.title === dialogOptions.PROCEDURE.title) {
-      dispatch(renderTable(tableTypes.PROCEDURES, newDocument, []));
+      dispatch(renderTable(tableTypes.PROCEDURES, newDocument));
       await setDoc(doc(db, "procedures", newDocument), { tableData: [] });
       //firebase refactor dispatch(setProcedure(newDocument, []));
     } else if (dialog.title === dialogOptions.TAXONOMY.title) {
-      dispatch(renderTable(tableTypes.TAXONOMIES, newDocument, []));
+      dispatch(renderTable(tableTypes.TAXONOMIES, newDocument));
       await setDoc(doc(db, "taxonomies", newDocument), { tableData: [] });
       //firebase refactor dispatch(setTaxonomy(newDocument, []));
     } else {
@@ -74,14 +81,15 @@ const App = () => {
     setSunburstData(undefined);
     setActionCardData(undefined);
     setFailureMessage(undefined);
-    const tmpProcedure = JSON.parse(JSON.stringify(procedures[tableData.key]));
+
+    const tmpProcedure = JSON.parse(JSON.stringify(procedureData.tableData));
     tmpProcedure.forEach((el: ProcedureData) => {
       el.role = (el.role as string[]).filter((e) => e).join(",");
       el.agent = (el.agent as string[]).filter((e) => e).join(",");
     });
 
     const requestData = {
-      taxonomy: taxonomies[activeTaxonomy],
+      taxonomy: taxonomyData.tableData,
       procedure: tmpProcedure,
     };
 
@@ -111,11 +119,6 @@ const App = () => {
     } else {
       console.log(`${modelType} is not yet implemented`);
     }
-  };
-
-  const logTableData = () => {
-    console.log("Procedure: ", procedures[tableData.key]);
-    console.log("Taxonomy: ", taxonomies[activeTaxonomy]);
   };
 
   return (
@@ -176,13 +179,6 @@ const App = () => {
                   onClick={() => generateModels(modelTypes.ACTION_CARDS)}
                 >
                   Generate action cards
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={logTableData}
-                >
-                  Log table data
                 </Button>
               </div>
               {failureMessage && PrettyPrintJson(failureMessage)}

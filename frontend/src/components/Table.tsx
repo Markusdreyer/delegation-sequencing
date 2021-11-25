@@ -132,8 +132,6 @@ const Table: React.FC<Props> = (props) => {
   };
 
   useEffect(() => {
-    // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
-    setColumns(tableColumns[data.type]);
     if (firestoreTaxonomies) {
       const currentTaxonomyData = firestoreTaxonomies.find(
         (el) => el.key === activeTaxonomy
@@ -152,6 +150,8 @@ const Table: React.FC<Props> = (props) => {
       console.log("ROLES:: ", roles);
       console.log("AGENTS:: ", agents);
       setMultiselectOptions({ role: roles, agent: agents });
+      // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
+      setColumns(tableColumns[data.type]);
     }
   }, [firestoreTaxonomies, activeTaxonomy]);
 
@@ -265,21 +265,17 @@ const Table: React.FC<Props> = (props) => {
     }
   };
 
-  const deleteTableRow = (oldData: MaterialTableData | undefined): void => {
+  const deleteTableRow = async (
+    oldData: MaterialTableData | undefined
+  ): Promise<void> => {
     if (oldData) {
       const dataDelete = data.data!;
       const index = oldData.tableData.id;
       dataDelete.splice(index, 1);
 
-      if (data.type === tableTypes.PROCEDURES) {
-        dispatch(setProcedure(data.key, dataDelete as ProcedureData[]));
-      } else if (data.type === tableTypes.TAXONOMIES) {
-        dispatch(setTaxonomy(data.key, dataDelete as TaxonomyData[]));
-      } else {
-        console.log(
-          `${data.type} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
-        );
-      }
+      await updateDoc(doc(db, data.type, data.key), {
+        tableData: dataDelete,
+      });
     }
   };
 

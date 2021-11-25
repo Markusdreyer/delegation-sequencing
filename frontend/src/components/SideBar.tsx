@@ -62,9 +62,7 @@ const Sidebar = () => {
     }
   );
 
-  const procedures = useSelector((state: RootState) => state.procedures);
   const showSidebar = useSelector((state: RootState) => state.showSidebar);
-  const taxonomies = useSelector((state: RootState) => state.taxonomies);
   const showProcedures = useSelector(
     (state: RootState) => state.showProcedures
   );
@@ -155,11 +153,7 @@ const Sidebar = () => {
                     onClick={() =>
                       dispatch(
                         // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
-                        renderTable(
-                          tableTypes.PROCEDURES,
-                          el.key,
-                          procedures[el.key]
-                        )
+                        renderTable(tableTypes.PROCEDURES, el.key)
                       )
                     }
                   />
@@ -195,11 +189,7 @@ const Sidebar = () => {
                     onClick={() =>
                       dispatch(
                         // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
-                        renderTable(
-                          tableTypes.TAXONOMIES,
-                          el.key,
-                          taxonomies[el.key]
-                        )
+                        renderTable(tableTypes.TAXONOMIES, el.key)
                       )
                     }
                   />
