@@ -3,15 +3,14 @@ export interface RootState {
   showSidebar: boolean;
   showProcedures: boolean;
   dialog: Dialog;
-  tableData: TableData;
+  tableMetaData: TableMetaData;
   sunburstData: SunburstData[];
   previousModel: string[];
 }
 
-export interface TableData {
+export interface TableMetaData {
   type: string;
   key: string;
-  data: ProcedureData[] | TaxonomyData[];
 }
 
 export interface ProcedureData {

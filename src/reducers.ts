@@ -13,7 +13,7 @@ const activeTaxonomyReducer = (
   }
 };
 
-const tableReducer = (state = initialState.tableData, action: any) => {
+const tableReducer = (state = initialState.tableMetaData, action: any) => {
   switch (action.type) {
     case "RENDER_TABLE":
       return {
@@ -72,7 +72,7 @@ const allReducers = combineReducers({
   showSidebar: showSidebarReducer,
   showProcedures: showProceduresReducer,
   dialog: dialogReducer,
-  tableData: tableReducer,
+  tableMetaData: tableReducer,
   activeTaxonomy: activeTaxonomyReducer,
   previousModel: previousModelReducer,
 });

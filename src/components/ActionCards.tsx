@@ -18,8 +18,10 @@ import { ExpanderOptions } from "../utils/const";
 import { useSelector, useDispatch } from "react-redux";
 import { generateActionCardData, getASPModels, unique } from "../utils/utils";
 import { setPreviousModel } from "../actions";
-import { doc, getFirestore } from "@firebase/firestore";
-import { useFirestoreDocData } from "reactfire";
+import { doc, Firestore, getFirestore } from "@firebase/firestore";
+import { useFirestore, useFirestoreDocData } from "reactfire";
+import { connectFirestoreEmulator } from "firebase/firestore";
+import { Database } from "@firebase/database";
 
 interface Props {
   models: Action[][][];
@@ -29,12 +31,12 @@ interface Props {
 }
 
 const ActionCards: React.FC<Props> = (props) => {
-  const db = getFirestore();
   const { models, setActionCardData, setFailureMessage, setIsLoading } = props;
+  const firestore = useFirestore();
   const activeTaxonomy = useSelector(
     (state: RootState) => state.activeTaxonomy
   );
-  const taxonomyRef = doc(db, "taxonomies", activeTaxonomy);
+  const taxonomyRef = doc(firestore, "taxonomies", activeTaxonomy);
   const { data: taxonomyData } = useFirestoreDocData(taxonomyRef, {
     idField: "key",
   });
@@ -126,7 +128,7 @@ const ActionCards: React.FC<Props> = (props) => {
   };
 
   const possibleAgents = (actionName: string) => {
-    const procedureData = taxonomyData.tableData as ProcedureData[];
+    const procedureData = taxonomyData.tableMetaData as ProcedureData[];
     const index = procedureData.findIndex((el) => el.action === actionName);
     const teams = procedureData[index].agent as string[];
     const roles = procedureData[index].role as string[];
@@ -140,20 +142,20 @@ const ActionCards: React.FC<Props> = (props) => {
   };
 
   const agentsIn = (team: string) =>
-    taxonomyData.tableData
+    taxonomyData.tableMetaData
       .filter((el: TaxonomyData) => el.parent === team)
       .map((el: TaxonomyData) => el.agent.toLowerCase())
       .filter(unique) as string[];
 
   const agentsWithRoleIn = (team: string, roles: string[]) =>
-    taxonomyData.tableData
+    taxonomyData.tableMetaData
       .filter((el: TaxonomyData) => el.parent === team)
       .filter((el: TaxonomyData) => roles.includes(el.role))
       .map((el: TaxonomyData) => el.agent.toLowerCase())
       .filter(unique) as string[];
 
   const getActionAbbreviation = (action: Action) => {
-    const procedureData = taxonomyData.tableData as ProcedureData[];
+    const procedureData = taxonomyData.tableMetaData as ProcedureData[];
     const index = procedureData.findIndex((el) => el.action === action.name);
     return procedureData[index].abbreviation;
   };
@@ -182,7 +184,7 @@ const ActionCards: React.FC<Props> = (props) => {
     setIsLoading(true);
     const { newModels, newPreviousModel, error }: BackendResponse =
       await getASPModels(
-        taxonomyData.tableData as ProcedureData[],
+        taxonomyData.tableMetaData as ProcedureData[],
         revisionRequest,
         "revise",
         1

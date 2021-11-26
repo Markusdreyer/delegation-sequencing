@@ -34,6 +34,7 @@ app.post("/revise", async (req, res) => {
 });
 
 app.post("/initial", async (req, res) => {
+  console.log("/initial request received");
   const reqBody = req.body;
   const [aspString, error] = generateAspString(reqBody);
   if (error) {
@@ -41,8 +42,11 @@ app.post("/initial", async (req, res) => {
     res.status(response.status).json(response.body);
   }
 
+  console.log("Successfully generated asp strings");
   if (aspString) {
+    console.log("Reading as control file");
     const control = fs.readFileSync("src/asp/control.lp", "utf8");
+    console.log("Running clingo on asp files");
     const models: clingo.ClingoResult | clingo.ClingoError = await clingo.run(
       control + aspString,
       0
@@ -59,8 +63,8 @@ app.post("/initial", async (req, res) => {
   }
 });
 
-// start the Express server
-app.listen(8080, () => {
-  // tslint:disable-next-line:no-console
-  console.log(`server started at http:// localhost:${8080}`);
-});
+// // start the Express server
+// app.listen(8080, () => {
+//   // tslint:disable-next-line:no-console
+//   console.log(`server started at http:// localhost:${8080}`);
+// });

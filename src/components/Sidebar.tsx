@@ -33,7 +33,14 @@ import {
 import useStyles from "../Styles";
 import { dialogOptions, tableTypes } from "../utils/const";
 import { RootState } from "../types";
-import { doc, collection, getFirestore, query } from "firebase/firestore";
+import {
+  doc,
+  collection,
+  getFirestore,
+  query,
+  connectFirestoreEmulator,
+  Firestore,
+} from "firebase/firestore";
 import {
   FirebaseAppProvider,
   FirestoreProvider,
@@ -45,8 +52,9 @@ import {
 } from "reactfire";
 
 const Sidebar = () => {
-  const proceduresCollection = collection(useFirestore(), "procedures");
-  const taxonomiesCollection = collection(useFirestore(), "taxonomies");
+  const firestore = useFirestore();
+  const proceduresCollection = collection(firestore, "procedures");
+  const taxonomiesCollection = collection(firestore, "taxonomies");
 
   const { data: firestoreProcedures } = useFirestoreCollectionData(
     proceduresCollection,

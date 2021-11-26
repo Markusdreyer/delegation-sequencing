@@ -2,9 +2,7 @@
 
 ## Frontend
 
-`cd frontend`
-
-### Start
+### Local
 
 `npm run start`
 
@@ -12,19 +10,23 @@
 
 `npm run deploy`
 
-## Backend
+## Firebase local
 
-`cd backend`
+When testing and developing, all firebase features should be emulated, so that it won't interfere with the production data.
 
-#### Start
+To run firestore and functions emulator:
+`firebase emulators:start`
 
-`firebase emulators:start --only functions`
+The emulatore does not currently persist the data, so it will be reset when it's shut down. To store the data for later use, run the following command while the emulator is running:
+`firebase emulators:export seed`
 
-_or_
+To start up the emulator with data from the previous session run the following command:
+`firebase emulators:start --import seed`
 
-`cd functions`
-`npm run dev`
+If there's been changed to the backend API, the service has to be built in advance:
+`cd backend/functions && npm run build`
 
-### Deploy
+## Firebase deploy
 
-`firebase deploy --only functions`
+TODO: Should suffice to run
+`firebase deploy`

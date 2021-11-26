@@ -11,10 +11,9 @@ const initialState: RootState = {
   showSidebar: false,
   showProcedures: false,
   sunburstData: [],
-  tableData: {
+  tableMetaData: {
     type: "procedures",
     key: "EA fire",
-    data: [],
   },
 };
 

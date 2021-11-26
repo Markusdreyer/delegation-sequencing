@@ -8,7 +8,7 @@ import {
   MultiselectOptions,
   ProcedureData,
   RootState,
-  TableData,
+  TableMetaData,
   TaxonomyData,
 } from "../types";
 import { setActiveTaxonomy, setProcedure, setTaxonomy } from "../actions";
@@ -16,25 +16,34 @@ import { initialLookup, tableTypes } from "../utils/const";
 import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
 import { unique } from "../utils/utils";
 import EditComponent from "./EditComponent";
-import { doc, collection, updateDoc } from "firebase/firestore";
+import {
+  doc,
+  collection,
+  updateDoc,
+  getFirestore,
+  connectFirestoreEmulator,
+  Firestore,
+} from "firebase/firestore";
 import {
   useFirestore,
   useFirestoreCollectionData,
   useFirestoreDocData,
 } from "reactfire";
+import { DoorBack } from "@mui/icons-material";
 
 interface Props {
-  data: TableData;
+  tableMetaData: TableMetaData;
 }
 
 const Table: React.FC<Props> = (props) => {
-  const db = useFirestore();
-  const taxonomiesCollection = collection(db, "taxonomies");
+  const { tableMetaData } = props;
+  const firestore = useFirestore();
+  const taxonomiesCollection = collection(firestore, "taxonomies");
   const { data: firestoreTaxonomies } = useFirestoreCollectionData(
     taxonomiesCollection,
     { idField: "key" }
   );
-  const ref = doc(db, props.data.type, props.data.key);
+  const ref = doc(firestore, tableMetaData.type, tableMetaData.key);
   const { data: document } = useFirestoreDocData(ref, {
     idField: "key",
   });
@@ -42,7 +51,6 @@ const Table: React.FC<Props> = (props) => {
   const activeTaxonomy = useSelector(
     (state: RootState) => state.activeTaxonomy
   );
-  const { data } = props;
   const classes = useStyles();
   const dispatch = useDispatch();
   const [columns, setColumns] = useState<any>();
@@ -111,7 +119,7 @@ const Table: React.FC<Props> = (props) => {
       {
         title: "Parent",
         field: "parent",
-        lookup: initialLookup[data.key],
+        lookup: {},
       },
     ],
   };
@@ -150,7 +158,7 @@ const Table: React.FC<Props> = (props) => {
     let lookupData: Record<string, string> = {};
     let updateColumns: Record<string, any> = {};
 
-    if (props.data.type === tableTypes.PROCEDURES) {
+    if (props.tableMetaData.type === tableTypes.PROCEDURES) {
       lookupData = document.tableData
         .map((el: ProcedureData) => el.abbreviation)
         .reduce((obj: any, val: any) => {
@@ -192,7 +200,7 @@ const Table: React.FC<Props> = (props) => {
    */
   useEffect(() => {
     // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
-    if (data.type === tableTypes.PROCEDURES) {
+    if (tableMetaData.type === tableTypes.PROCEDURES) {
       let updateColumns = tableColumns.procedures;
       if (lookupValues) {
         const precedenceFieldIndex = updateColumns.findIndex(
@@ -204,23 +212,23 @@ const Table: React.FC<Props> = (props) => {
       setColumns(updateColumns);
     }
     console.log("multiselectOptions hook called");
-  }, [data.type, multiselectOptions, lookupValues]);
+  }, [tableMetaData.type, multiselectOptions, lookupValues]);
 
   useEffect(() => {
     // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
-    setColumns(tableColumns[data.type]);
-  }, [data.type]);
+    setColumns(tableColumns[tableMetaData.type]);
+  }, [tableMetaData.type]);
 
   //Renders parent lookup for each taxonomy❌❌❌❌❌❌❌❌❌❌
   useEffect(() => {
-    if (data.type === tableTypes.TAXONOMIES) {
+    if (tableMetaData.type === tableTypes.TAXONOMIES) {
       // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
-      const update = tableColumns[data.type] as ColumnDef[];
+      const update = tableColumns[tableMetaData.type] as ColumnDef[];
       const index = update.findIndex((el) => el.field === "parent");
-      update[index].lookup = initialLookup[data.key];
+      update[index].lookup = initialLookup[tableMetaData.key];
       setColumns(update);
     }
-  }, [data.key, data.type]);
+  }, [tableMetaData.key, tableMetaData.type]);
 
   const handleTaxonomyChange = (evt: any) => {
     // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
@@ -250,7 +258,7 @@ const Table: React.FC<Props> = (props) => {
 
     console.log("currentTableData", currentTableData);
 
-    if (data.type === tableTypes.PROCEDURES) {
+    if (tableMetaData.type === tableTypes.PROCEDURES) {
       const dataUpdate = currentTableData as ProcedureData[];
       const procedureData = newData as unknown as ProcedureData;
       procedureData.id = currentTableData.length + 1;
@@ -259,11 +267,11 @@ const Table: React.FC<Props> = (props) => {
       }
 
       dataUpdate.push(procedureData as ProcedureData);
-      await updateDoc(doc(db, data.type, data.key), {
+      await updateDoc(doc(firestore, tableMetaData.type, tableMetaData.key), {
         tableData: dataUpdate,
       });
       //firebase refactor dispatch(setProcedure(data.key, dataUpdate));
-    } else if (data.type === tableTypes.TAXONOMIES) {
+    } else if (tableMetaData.type === tableTypes.TAXONOMIES) {
       let taxonomyData = newData as TaxonomyData;
       if (taxonomyData.parent && taxonomyData.parent !== "None") {
         const parentId = currentTableData!.find(
@@ -285,12 +293,12 @@ const Table: React.FC<Props> = (props) => {
       const columnUpdate: any = tableColumns;
       columnUpdate.taxonomies[2].lookup[taxonomyData.agent] =
         taxonomyData.agent;
-      await updateDoc(doc(db, data.type, data.key), {
+      await updateDoc(doc(firestore, tableMetaData.type, tableMetaData.key), {
         tableData: dataUpdate,
       });
     } else {
       console.log(
-        `${data.type} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
+        `${tableMetaData.type} does not match ${tableTypes.PROCEDURES} or ${tableTypes.TAXONOMIES}`
       );
     }
   };
@@ -306,8 +314,7 @@ const Table: React.FC<Props> = (props) => {
       dataUpdate[index] = newData;
       console.log("newData: ", newData);
       console.log("dataUpdate: ", dataUpdate);
-      console.log("data.data: ", data.data);
-      await updateDoc(doc(db, data.type, data.key), {
+      await updateDoc(doc(firestore, tableMetaData.type, tableMetaData.key), {
         tableData: dataUpdate,
       });
     }
@@ -320,8 +327,7 @@ const Table: React.FC<Props> = (props) => {
       const dataDelete = document.tableData!;
       const index = oldData.tableData.id;
       dataDelete.splice(index, 1);
-      console.log(data);
-      await updateDoc(doc(db, data.type, data.key), {
+      await updateDoc(doc(firestore, tableMetaData.type, tableMetaData.key), {
         tableData: dataDelete,
       });
     }
@@ -329,7 +335,7 @@ const Table: React.FC<Props> = (props) => {
 
   return (
     <MaterialTable
-      title={data.key}
+      title={tableMetaData.key}
       columns={columns}
       data={
         document &&
@@ -341,7 +347,7 @@ const Table: React.FC<Props> = (props) => {
       options={{
         rowStyle: (rowData: any) => ({
           backgroundColor:
-            rowData.parent !== "None" && data.type === "taxonomies"
+            rowData.parent !== "None" && tableMetaData.type === "taxonomies"
               ? "#EEE"
               : "",
         }),
@@ -373,7 +379,7 @@ const Table: React.FC<Props> = (props) => {
         Toolbar: (props) => (
           <div>
             <MTableToolbar {...props} />
-            {data.type === tableTypes.PROCEDURES && (
+            {tableMetaData.type === tableTypes.PROCEDURES && (
               <div style={{ padding: "0px 10px" }}>
                 <FormControl className={classes.formControl}>
                   {console.log("TABLE COLUMNS", columns)}
