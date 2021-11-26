@@ -4,12 +4,6 @@ export interface RootState {
   showProcedures: boolean;
   dialog: Dialog;
   tableData: TableData;
-  procedures: {
-    [key: string]: ProcedureData[];
-  };
-  taxonomies: {
-    [key: string]: TaxonomyData[];
-  };
   sunburstData: SunburstData[];
   previousModel: string[];
 }

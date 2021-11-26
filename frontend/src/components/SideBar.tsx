@@ -33,11 +33,36 @@ import {
 import useStyles from "../Styles";
 import { dialogOptions, tableTypes } from "../utils/const";
 import { RootState } from "../types";
+import { doc, collection, getFirestore, query } from "firebase/firestore";
+import {
+  FirebaseAppProvider,
+  FirestoreProvider,
+  useFirebaseApp,
+  useFirestore,
+  useFirestoreCollection,
+  useFirestoreCollectionData,
+  useFirestoreDocData,
+} from "reactfire";
 
 const Sidebar = () => {
-  const procedures = useSelector((state: RootState) => state.procedures);
+  const proceduresCollection = collection(useFirestore(), "procedures");
+  const taxonomiesCollection = collection(useFirestore(), "taxonomies");
+
+  const { data: firestoreProcedures } = useFirestoreCollectionData(
+    proceduresCollection,
+    {
+      idField: "key",
+    }
+  );
+
+  const { data: firestoreTaxonomies } = useFirestoreCollectionData(
+    taxonomiesCollection,
+    {
+      idField: "key",
+    }
+  );
+
   const showSidebar = useSelector((state: RootState) => state.showSidebar);
-  const taxonomies = useSelector((state: RootState) => state.taxonomies);
   const showProcedures = useSelector(
     (state: RootState) => state.showProcedures
   );
@@ -112,31 +137,28 @@ const Sidebar = () => {
         </ListItem>
         <Collapse in={showProcedures} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {Object.keys(procedures).map((procedure: string) => (
-              <ListItem
-                data-testid="procedure"
-                button
-                className={classes.nested}
-                key={procedure}
-              >
-                <ListItemIcon>
-                  <Description />
-                </ListItemIcon>
-                <ListItemText
-                  primary={procedure}
-                  onClick={() =>
-                    dispatch(
-                      // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
-                      renderTable(
-                        tableTypes.PROCEDURES,
-                        procedure,
-                        procedures[procedure]
+            {firestoreProcedures &&
+              firestoreProcedures.map((el) => (
+                <ListItem
+                  data-testid="procedure"
+                  button
+                  className={classes.nested}
+                  key={el.key}
+                >
+                  <ListItemIcon>
+                    <Description />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={el.key}
+                    onClick={() =>
+                      dispatch(
+                        // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
+                        renderTable(tableTypes.PROCEDURES, el.key)
                       )
-                    )
-                  }
-                />
-              </ListItem>
-            ))}
+                    }
+                  />
+                </ListItem>
+              ))}
           </List>
         </Collapse>
         <ListItem
@@ -151,31 +173,28 @@ const Sidebar = () => {
         </ListItem>
         <Collapse in={displayTaxonomies} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {Object.keys(taxonomies).map((taxonomy: string) => (
-              <ListItem
-                data-testid="taxonomy"
-                button
-                className={classes.nested}
-                key={taxonomy}
-              >
-                <ListItemIcon>
-                  <Description />
-                </ListItemIcon>
-                <ListItemText
-                  primary={taxonomy}
-                  onClick={() =>
-                    dispatch(
-                      // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
-                      renderTable(
-                        tableTypes.TAXONOMIES,
-                        taxonomy,
-                        taxonomies[taxonomy]
+            {firestoreTaxonomies &&
+              firestoreTaxonomies.map((el) => (
+                <ListItem
+                  data-testid="taxonomy"
+                  button
+                  className={classes.nested}
+                  key={el.key}
+                >
+                  <ListItemIcon>
+                    <Description />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={el.key}
+                    onClick={() =>
+                      dispatch(
+                        // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
+                        renderTable(tableTypes.TAXONOMIES, el.key)
                       )
-                    )
-                  }
-                />
-              </ListItem>
-            ))}
+                    }
+                  />
+                </ListItem>
+              ))}
           </List>
         </Collapse>
       </Drawer>

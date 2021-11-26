@@ -115,6 +115,7 @@ Cypress.Commands.add("generateActionCards", (status: number) => {
   }).as("fetchInitialModel");
   cy.get("[data-testid=generate-action-cards-button]").click();
   return cy
+    .wait(2000)
     .wait("@fetchInitialModel")
     .its("response.statusCode")
     .should("equal", status);
@@ -199,6 +200,7 @@ Cypress.Commands.add("submitRevision", () => {
   }).as("fetchRevisedModel");
   cy.get("[data-testid='revision-submit-button']").click({ force: true });
   return cy
+    .wait(2000)
     .wait("@fetchRevisedModel")
     .its("response.statusCode")
     .should("equal", 200);

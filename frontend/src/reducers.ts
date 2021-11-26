@@ -19,31 +19,6 @@ const tableReducer = (state = initialState.tableData, action: any) => {
       return {
         type: action.payload.type,
         key: action.payload.key,
-        data: action.payload.data,
-      };
-    default:
-      return state;
-  }
-};
-
-const proceduresReducer = (state = initialState.procedures, action: any) => {
-  switch (action.type) {
-    case "SET_PROCEDURE":
-      return {
-        ...state,
-        [action.payload.key]: [...action.payload.procedure],
-      };
-    default:
-      return state;
-  }
-};
-
-const taxonomiesReducer = (state = initialState.taxonomies, action: any) => {
-  switch (action.type) {
-    case "SET_TAXONOMY":
-      return {
-        ...state,
-        [action.payload.key]: [...action.payload.taxonomy],
       };
     default:
       return state;
@@ -97,9 +72,7 @@ const allReducers = combineReducers({
   showSidebar: showSidebarReducer,
   showProcedures: showProceduresReducer,
   dialog: dialogReducer,
-  procedures: proceduresReducer,
   tableData: tableReducer,
-  taxonomies: taxonomiesReducer,
   activeTaxonomy: activeTaxonomyReducer,
   previousModel: previousModelReducer,
 });
