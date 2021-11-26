@@ -138,15 +138,20 @@ const Table: React.FC<Props> = (props) => {
     }
   }, [firestoreTaxonomies, activeTaxonomy]);
 
-  //Update table columns to include lookup values
+  /**
+   * Whenever the firestore document is fetched, parse the relevant columns for lookup data.
+   * Set the lookupData in state for later use. This isn't really intuitive, but the Table library
+   * used is such a diva to work with, and requires that all the table columns are rerendered bacause
+   * of the state in the editComponent.
+   */
   useEffect(() => {
     if (!document) return;
 
-    let tmpLookupValues: Record<string, string> = {};
+    let lookupData: Record<string, string> = {};
     let updateColumns: Record<string, any> = {};
 
     if (props.data.type === tableTypes.PROCEDURES) {
-      tmpLookupValues = document.tableData
+      lookupData = document.tableData
         .map((el: ProcedureData) => el.abbreviation)
         .reduce((obj: any, val: any) => {
           // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
@@ -156,12 +161,26 @@ const Table: React.FC<Props> = (props) => {
       const precedenceFieldIndex = tableColumns.procedures.findIndex(
         (el) => el.field === "precedence"
       );
-      tmpLookupValues["None"] = "None";
-      setLookupValues(tmpLookupValues);
+      lookupData["None"] = "None";
       updateColumns = tableColumns.procedures;
-      updateColumns[precedenceFieldIndex].lookup = lookupValues;
-      setColumns(updateColumns);
+      updateColumns[precedenceFieldIndex].lookup = lookupData;
+    } else {
+      lookupData = document.tableData
+        .map((el: TaxonomyData) => el.parent)
+        .reduce((obj: any, val: any) => {
+          // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
+          obj[val] = val;
+          return obj;
+        }, {});
+      const parentFieldIndex = tableColumns.taxonomies.findIndex(
+        (el) => el.field === "parent"
+      );
+      lookupData["None"] = "None";
+      updateColumns = tableColumns.taxonomies;
+      updateColumns[parentFieldIndex].lookup = lookupData;
     }
+    setLookupValues(lookupData);
+    setColumns(updateColumns);
 
     console.log("LOOKUP VALUES", lookupValues);
   }, [document]);
@@ -179,7 +198,7 @@ const Table: React.FC<Props> = (props) => {
         const precedenceFieldIndex = updateColumns.findIndex(
           (el) => el.field === "precedence"
         );
-        updateColumns[precedenceFieldIndex] = lookupValues;
+        updateColumns[precedenceFieldIndex].lookup = lookupValues;
       }
 
       setColumns(updateColumns);
@@ -282,10 +301,12 @@ const Table: React.FC<Props> = (props) => {
   ): Promise<void> => {
     console.log("UPDATE TABLE", newData);
     if (oldData) {
-      const dataUpdate = data.data!;
+      const dataUpdate = document.tableData!;
       const index = oldData.tableData.id;
       dataUpdate[index] = newData;
       console.log("newData: ", newData);
+      console.log("dataUpdate: ", dataUpdate);
+      console.log("data.data: ", data.data);
       await updateDoc(doc(db, data.type, data.key), {
         tableData: dataUpdate,
       });
@@ -296,10 +317,10 @@ const Table: React.FC<Props> = (props) => {
     oldData: MaterialTableData | undefined
   ): Promise<void> => {
     if (oldData) {
-      const dataDelete = data.data!;
+      const dataDelete = document.tableData!;
       const index = oldData.tableData.id;
       dataDelete.splice(index, 1);
-
+      console.log(data);
       await updateDoc(doc(db, data.type, data.key), {
         tableData: dataDelete,
       });
