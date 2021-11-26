@@ -46,6 +46,7 @@ const Table: React.FC<Props> = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [columns, setColumns] = useState<any>();
+  const [lookupValues, setLookupValues] = useState<any>();
   const [multiselectOptions, setMultiselectOptions] =
     useState<MultiselectOptions>({ role: [], agent: [] });
   const tableColumns = {
@@ -95,23 +96,7 @@ const Table: React.FC<Props> = (props) => {
       {
         title: "Precedence",
         field: "precedence",
-        lookup: {
-          None: "None",
-          a: "a",
-          b: "b",
-          c: "c",
-          d: "d",
-          e: "e",
-          f: "f",
-          g: "g",
-          h: "h",
-          i: "i",
-          j: "j",
-          k: "k",
-          l: "l",
-          m: "m",
-          n: "n",
-        },
+        lookup: {},
       },
     ],
     taxonomies: [
@@ -150,22 +135,64 @@ const Table: React.FC<Props> = (props) => {
       console.log("ROLES:: ", roles);
       console.log("AGENTS:: ", agents);
       setMultiselectOptions({ role: roles, agent: agents });
-      // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
-      setColumns(tableColumns[data.type]);
     }
   }, [firestoreTaxonomies, activeTaxonomy]);
 
+  //Update table columns to include lookup values
+  useEffect(() => {
+    if (!document) return;
+
+    let tmpLookupValues: Record<string, string> = {};
+    let updateColumns: Record<string, any> = {};
+
+    if (props.data.type === tableTypes.PROCEDURES) {
+      tmpLookupValues = document.tableData
+        .map((el: ProcedureData) => el.abbreviation)
+        .reduce((obj: any, val: any) => {
+          // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
+          obj[val] = val;
+          return obj;
+        }, {});
+      const precedenceFieldIndex = tableColumns.procedures.findIndex(
+        (el) => el.field === "precedence"
+      );
+      tmpLookupValues["None"] = "None";
+      setLookupValues(tmpLookupValues);
+      updateColumns = tableColumns.procedures;
+      updateColumns[precedenceFieldIndex].lookup = lookupValues;
+      setColumns(updateColumns);
+    }
+
+    console.log("LOOKUP VALUES", lookupValues);
+  }, [document]);
+
+  /**
+   * Really cumbersome logic in order to update the table columns. Have to rerender all of the columns whenever
+   * the multiselectOptions are updated. Also have to make sure the lookup values are included in the update.
+   * Also, the taxonomyTable data has no multiselect options, so the useEffect is not triggered for taxonomy data.
+   */
   useEffect(() => {
     // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
-    setColumns(tableColumns[data.type]);
-  }, [multiselectOptions]);
+    if (data.type === tableTypes.PROCEDURES) {
+      let updateColumns = tableColumns.procedures;
+      if (lookupValues) {
+        const precedenceFieldIndex = updateColumns.findIndex(
+          (el) => el.field === "precedence"
+        );
+        updateColumns[precedenceFieldIndex] = lookupValues;
+      }
+
+      setColumns(updateColumns);
+    }
+    console.log("multiselectOptions hook called");
+  }, [data.type, multiselectOptions, lookupValues]);
 
   useEffect(() => {
     // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
     setColumns(tableColumns[data.type]);
   }, [data.type]);
 
-  //Renders parent lookup for each taxonomy
+  //Renders parent lookup for each taxonomy❌❌❌❌❌❌❌❌❌❌
   useEffect(() => {
     if (data.type === tableTypes.TAXONOMIES) {
       // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
@@ -328,7 +355,7 @@ const Table: React.FC<Props> = (props) => {
             {data.type === tableTypes.PROCEDURES && (
               <div style={{ padding: "0px 10px" }}>
                 <FormControl className={classes.formControl}>
-                  {console.log(document)}
+                  {console.log("TABLE COLUMNS", columns)}
                   <InputLabel>Taxonomy</InputLabel>
                   <Select
                     data-testid="taxonomy-selector"
