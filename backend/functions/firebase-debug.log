@@ -1,0 +1,412 @@
+[debug] [2021-11-25T07:56:47.716Z] ----------------------------------------------------------------------
+[debug] [2021-11-25T07:56:47.717Z] Command:       /usr/local/bin/node /usr/local/bin/firebase functions:shell
+[debug] [2021-11-25T07:56:47.718Z] CLI Version:   9.23.0
+[debug] [2021-11-25T07:56:47.718Z] Platform:      darwin
+[debug] [2021-11-25T07:56:47.718Z] Node Version:  v14.15.1
+[debug] [2021-11-25T07:56:47.719Z] Time:          Thu Nov 25 2021 08:56:47 GMT+0100 (Central European Standard Time)
+[debug] [2021-11-25T07:56:47.719Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-11-25T07:56:47.775Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"rewrites"}
+[debug] [2021-11-25T07:56:47.780Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-11-25T07:56:47.780Z] > authorizing via signed-in user (markus.a.dreyer@gmail.com)
+[debug] [2021-11-25T07:56:47.780Z] [iam] checking project delegation-sequencing-d8ae4 for permissions ["firebase.projects.get"]
+[debug] [2021-11-25T07:56:47.782Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-11-25T07:56:47.783Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-11-25T07:56:48.033Z] <<< HTTP RESPONSE 200 {"expires":"Mon, 01 Jan 1990 00:00:00 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","pragma":"no-cache","date":"Thu, 25 Nov 2021 07:56:48 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-11-25T07:56:48.086Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/delegation-sequencing-d8ae4:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2021-11-25T07:56:48.880Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 25 Nov 2021 07:56:48 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=671","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-11-25T07:56:48.907Z] [functions] Using node@14 from host.
+[debug] [2021-11-25T07:56:48.908Z] defaultcredentials: writing to file /Users/markusdreyer/.config/firebase/markus_a.dreyer_gmail.com_application_default_credentials.json
+[debug] [2021-11-25T07:56:48.910Z] DEBUG: Setting GAC to /Users/markusdreyer/.config/firebase/markus_a.dreyer_gmail.com_application_default_credentials.json
+[debug] [2021-11-25T07:56:48.911Z] > refreshing access token with scopes: []
+[debug] [2021-11-25T07:56:48.912Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-11-25T07:56:49.013Z] <<< HTTP RESPONSE 200 {"expires":"Mon, 01 Jan 1990 00:00:00 GMT","date":"Thu, 25 Nov 2021 07:56:49 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","pragma":"no-cache","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-11-25T07:56:49.063Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/delegation-sequencing-d8ae4/adminSdkConfig [none]
+[debug] [2021-11-25T07:56:49.385Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/delegation-sequencing-d8ae4/adminSdkConfig 200
+[debug] [2021-11-25T07:56:49.385Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/delegation-sequencing-d8ae4/adminSdkConfig {"projectId":"delegation-sequencing-d8ae4","storageBucket":"delegation-sequencing-d8ae4.appspot.com","locationId":"europe-central2"}
+[debug] [2021-11-25T07:56:49.418Z] [functions] Watching "/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions" for Cloud Functions...
+[debug] [2021-11-25T07:56:49.432Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2021-11-25T07:56:49.432Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2021-11-25T07:56:49.432Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2021-11-25T07:56:49.433Z] DEBUG: [worker-~diagnostic~-79953616-1971-4e87-8798-dffa53fc6160]: Assigning socketPath: /var/folders/t1/6xz4sdgd3x3bzjwv248ysd8r0000gn/T/fire_emu_65131.sock
+[debug] [2021-11-25T07:56:49.433Z] DEBUG: [worker-~diagnostic~-79953616-1971-4e87-8798-dffa53fc6160]: BUSY
+[debug] [2021-11-25T07:56:49.632Z] DEBUG: [runtime-status] [65131] Functions runtime initialized. {"cwd":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions","node_version":"14.15.1"}
+[debug] [2021-11-25T07:56:49.632Z] DEBUG: [runtime-status] [65131] Disabled runtime features: undefined
+[debug] [2021-11-25T07:56:49.635Z] DEBUG: [runtime-status] [65131] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-25T07:56:49.640Z] DEBUG: [runtime-status] [65131] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:56:49.642Z] DEBUG: [runtime-status] [65131] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-11-25T07:56:49.643Z] DEBUG: [runtime-status] [65131] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:56:49.691Z] DEBUG: [runtime-status] [65131] Checked functions.config() {"config":{}}
+[debug] [2021-11-25T07:56:49.691Z] DEBUG: [runtime-status] [65131] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-11-25T07:56:49.692Z] DEBUG: [runtime-status] [65131] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:56:49.693Z] DEBUG: [runtime-status] [65131] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-25T07:56:49.694Z] DEBUG: [runtime-status] [65131] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:56:49.694Z] DEBUG: [runtime-status] [65131] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}}
+[info] >  Initialize Clingo {"user":"Initialize Clingo","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Initialize Clingo"}}
+[debug] [2021-11-25T07:56:49.819Z] [functions[us-central1-api]] http function initialized (http://localhost:5000/delegation-sequencing-d8ae4/us-central1/api).
+[info] i  functions: Loaded functions: api 
+[warn] ⚠  functions: The following emulators are not running, calls to these services will affect production: firestore, database, pubsub, storage 
+[debug] [2021-11-25T07:56:49.852Z] DEBUG: [worker-~diagnostic~-79953616-1971-4e87-8798-dffa53fc6160]: IDLE
+[info] >  server started at http:// localhost:8080 {"user":"server started at http:// localhost:8080","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m server started at http:// localhost:8080"}}
+[info] >  taxonomyError null {"user":"taxonomyError null","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m taxonomyError null"}}
+[info] >  actionsError null {"user":"actionsError null","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m actionsError null"}}
+[debug] [2021-11-25T07:56:58.349Z] DEBUG: File /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/src/asp/actions.lp changed, reloading triggers
+[info] >  { {"user":"{","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m {"}}
+[info] >    Solver: 'clingo version 5.5.0', {"user":"  Solver: 'clingo version 5.5.0',","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m   Solver: 'clingo version 5.5.0',"}}
+[info] >    Call: [ {} ], {"user":"  Call: [ {} ],","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m   Call: [ {} ],"}}
+[info] >    Result: 'UNSATISFIABLE', {"user":"  Result: 'UNSATISFIABLE',","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m   Result: 'UNSATISFIABLE',"}}
+[info] >    Models: { Number: 0, More: 'no' }, {"user":"  Models: { Number: 0, More: 'no' },","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m   Models: { Number: 0, More: 'no' },"}}
+[info] >    Calls: 1, {"user":"  Calls: 1,","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m   Calls: 1,"}}
+[info] >    Time: { Total: 0.055, Solve: 0, Model: 0, Unsat: 0, CPU: 0 }, {"user":"  Time: { Total: 0.055, Solve: 0, Model: 0, Unsat: 0, CPU: 0 },","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m   Time: { Total: 0.055, Solve: 0, Model: 0, Unsat: 0, CPU: 0 },"}}
+[info] >    Warnings: [ {"user":"  Warnings: [","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m   Warnings: ["}}
+[info] >      '-:5:17-34: info: atom does not occur in any rule head:\n' + {"user":"    '-:5:17-34: info: atom does not occur in any rule head:\\n' +","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m     '-:5:17-34: info: atom does not occur in any rule head:\\n' +"}}
+[info] >        '  collaborative(Ac)\n' {"user":"      '  collaborative(Ac)\\n'","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m       '  collaborative(Ac)\\n'"}}
+[info] >    ] {"user":"  ]","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m   ]"}}
+[info] >  } {"user":"}","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m }"}}
+[info] >  UNSATISFIABLE MODEL:  { {"user":"UNSATISFIABLE MODEL:  {","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m UNSATISFIABLE MODEL:  {"}}
+[info] >    Solver: 'clingo version 5.5.0', {"user":"  Solver: 'clingo version 5.5.0',","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m   Solver: 'clingo version 5.5.0',"}}
+[info] >    Call: [ {} ], {"user":"  Call: [ {} ],","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m   Call: [ {} ],"}}
+[info] >    Result: 'UNSATISFIABLE', {"user":"  Result: 'UNSATISFIABLE',","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m   Result: 'UNSATISFIABLE',"}}
+[info] >    Models: { Number: 0, More: 'no' }, {"user":"  Models: { Number: 0, More: 'no' },","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m   Models: { Number: 0, More: 'no' },"}}
+[info] >    Calls: 1, {"user":"  Calls: 1,","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m   Calls: 1,"}}
+[info] >    Time: { Total: 0.055, Solve: 0, Model: 0, Unsat: 0, CPU: 0 }, {"user":"  Time: { Total: 0.055, Solve: 0, Model: 0, Unsat: 0, CPU: 0 },","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m   Time: { Total: 0.055, Solve: 0, Model: 0, Unsat: 0, CPU: 0 },"}}
+[info] >    Warnings: [ {"user":"  Warnings: [","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m   Warnings: ["}}
+[info] >      '-:5:17-34: info: atom does not occur in any rule head:\n' + {"user":"    '-:5:17-34: info: atom does not occur in any rule head:\\n' +","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m     '-:5:17-34: info: atom does not occur in any rule head:\\n' +"}}
+[info] >        '  collaborative(Ac)\n' {"user":"      '  collaborative(Ac)\\n'","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m       '  collaborative(Ac)\\n'"}}
+[info] >    ] {"user":"  ]","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m   ]"}}
+[info] >  } {"user":"}","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m }"}}
+[info] >  Model saved to actions.lp {"user":"Model saved to actions.lp","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Model saved to actions.lp"}}
+[debug] [2021-11-25T07:56:58.448Z] DEBUG: File /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/src/asp/actions.lp changed, reloading triggers
+[debug] [2021-11-25T07:56:59.454Z] DEBUG: [worker-pool] Shutting down IDLE worker (~diagnostic~)
+[debug] [2021-11-25T07:56:59.455Z] DEBUG: [worker-~diagnostic~-79953616-1971-4e87-8798-dffa53fc6160]: FINISHING
+[debug] [2021-11-25T07:56:59.466Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2021-11-25T07:56:59.466Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=2
+[debug] [2021-11-25T07:56:59.466Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2021-11-25T07:56:59.467Z] DEBUG: [worker-~diagnostic~-1d641e77-7371-4075-a176-dcbbadd56922]: Assigning socketPath: /var/folders/t1/6xz4sdgd3x3bzjwv248ysd8r0000gn/T/fire_emu_65136.sock
+[debug] [2021-11-25T07:56:59.467Z] DEBUG: [worker-~diagnostic~-1d641e77-7371-4075-a176-dcbbadd56922]: BUSY
+[debug] [2021-11-25T07:56:59.470Z] DEBUG: [worker-~diagnostic~-79953616-1971-4e87-8798-dffa53fc6160]: exited
+[debug] [2021-11-25T07:56:59.471Z] DEBUG: [worker-~diagnostic~-79953616-1971-4e87-8798-dffa53fc6160]: FINISHED
+[debug] [2021-11-25T07:56:59.639Z] DEBUG: [runtime-status] [65136] Functions runtime initialized. {"cwd":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions","node_version":"14.15.1"}
+[debug] [2021-11-25T07:56:59.640Z] DEBUG: [runtime-status] [65136] Disabled runtime features: undefined
+[debug] [2021-11-25T07:56:59.642Z] DEBUG: [runtime-status] [65136] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-25T07:56:59.646Z] DEBUG: [runtime-status] [65136] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:56:59.647Z] DEBUG: [runtime-status] [65136] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-11-25T07:56:59.648Z] DEBUG: [runtime-status] [65136] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:56:59.685Z] DEBUG: [runtime-status] [65136] Checked functions.config() {"config":{}}
+[debug] [2021-11-25T07:56:59.685Z] DEBUG: [runtime-status] [65136] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-11-25T07:56:59.686Z] DEBUG: [runtime-status] [65136] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:56:59.687Z] DEBUG: [runtime-status] [65136] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-25T07:56:59.687Z] DEBUG: [runtime-status] [65136] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:56:59.688Z] DEBUG: [runtime-status] [65136] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}}
+[info] >  Initialize Clingo {"user":"Initialize Clingo","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Initialize Clingo"}}
+[debug] [2021-11-25T07:56:59.789Z] DEBUG: [worker-~diagnostic~-1d641e77-7371-4075-a176-dcbbadd56922]: IDLE
+[info] >  server started at http:// localhost:8080 {"user":"server started at http:// localhost:8080","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m server started at http:// localhost:8080"}}
+[debug] [2021-11-25T07:58:25.738Z] ----------------------------------------------------------------------
+[debug] [2021-11-25T07:58:25.740Z] Command:       /usr/local/bin/node /usr/local/bin/firebase functions:shell
+[debug] [2021-11-25T07:58:25.740Z] CLI Version:   9.23.0
+[debug] [2021-11-25T07:58:25.740Z] Platform:      darwin
+[debug] [2021-11-25T07:58:25.740Z] Node Version:  v14.15.1
+[debug] [2021-11-25T07:58:25.742Z] Time:          Thu Nov 25 2021 08:58:25 GMT+0100 (Central European Standard Time)
+[debug] [2021-11-25T07:58:25.742Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-11-25T07:58:25.796Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"rewrites"}
+[debug] [2021-11-25T07:58:25.801Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-11-25T07:58:25.801Z] > authorizing via signed-in user (markus.a.dreyer@gmail.com)
+[debug] [2021-11-25T07:58:25.801Z] [iam] checking project delegation-sequencing-d8ae4 for permissions ["firebase.projects.get"]
+[debug] [2021-11-25T07:58:25.804Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-11-25T07:58:25.804Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-11-25T07:58:25.931Z] <<< HTTP RESPONSE 200 {"expires":"Mon, 01 Jan 1990 00:00:00 GMT","pragma":"no-cache","cache-control":"no-cache, no-store, max-age=0, must-revalidate","date":"Thu, 25 Nov 2021 07:58:26 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-11-25T07:58:25.980Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/delegation-sequencing-d8ae4:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2021-11-25T07:58:26.770Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 25 Nov 2021 07:58:26 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=663","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-11-25T07:58:26.798Z] [functions] Using node@14 from host.
+[debug] [2021-11-25T07:58:26.799Z] defaultcredentials: writing to file /Users/markusdreyer/.config/firebase/markus_a.dreyer_gmail.com_application_default_credentials.json
+[debug] [2021-11-25T07:58:26.802Z] DEBUG: Setting GAC to /Users/markusdreyer/.config/firebase/markus_a.dreyer_gmail.com_application_default_credentials.json
+[debug] [2021-11-25T07:58:26.804Z] > refreshing access token with scopes: []
+[debug] [2021-11-25T07:58:26.804Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-11-25T07:58:26.903Z] <<< HTTP RESPONSE 200 {"cache-control":"no-cache, no-store, max-age=0, must-revalidate","pragma":"no-cache","date":"Thu, 25 Nov 2021 07:58:27 GMT","expires":"Mon, 01 Jan 1990 00:00:00 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-11-25T07:58:26.956Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/delegation-sequencing-d8ae4/adminSdkConfig [none]
+[debug] [2021-11-25T07:58:27.249Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/delegation-sequencing-d8ae4/adminSdkConfig 200
+[debug] [2021-11-25T07:58:27.249Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/delegation-sequencing-d8ae4/adminSdkConfig {"projectId":"delegation-sequencing-d8ae4","storageBucket":"delegation-sequencing-d8ae4.appspot.com","locationId":"europe-central2"}
+[debug] [2021-11-25T07:58:27.280Z] [functions] Watching "/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions" for Cloud Functions...
+[debug] [2021-11-25T07:58:27.294Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2021-11-25T07:58:27.295Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2021-11-25T07:58:27.295Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2021-11-25T07:58:27.295Z] DEBUG: [worker-~diagnostic~-0430a746-01f4-4425-b5a2-0c877362b726]: Assigning socketPath: /var/folders/t1/6xz4sdgd3x3bzjwv248ysd8r0000gn/T/fire_emu_65342.sock
+[debug] [2021-11-25T07:58:27.296Z] DEBUG: [worker-~diagnostic~-0430a746-01f4-4425-b5a2-0c877362b726]: BUSY
+[debug] [2021-11-25T07:58:27.478Z] DEBUG: [runtime-status] [65342] Functions runtime initialized. {"cwd":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions","node_version":"14.15.1"}
+[debug] [2021-11-25T07:58:27.478Z] DEBUG: [runtime-status] [65342] Disabled runtime features: undefined
+[debug] [2021-11-25T07:58:27.481Z] DEBUG: [runtime-status] [65342] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-25T07:58:27.486Z] DEBUG: [runtime-status] [65342] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:58:27.488Z] DEBUG: [runtime-status] [65342] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-11-25T07:58:27.489Z] DEBUG: [runtime-status] [65342] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:58:27.537Z] DEBUG: [runtime-status] [65342] Checked functions.config() {"config":{}}
+[debug] [2021-11-25T07:58:27.537Z] DEBUG: [runtime-status] [65342] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-11-25T07:58:27.538Z] DEBUG: [runtime-status] [65342] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:58:27.539Z] DEBUG: [runtime-status] [65342] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-25T07:58:27.540Z] DEBUG: [runtime-status] [65342] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:58:27.540Z] DEBUG: [runtime-status] [65342] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}}
+[info] >  Initialize Clingo {"user":"Initialize Clingo","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Initialize Clingo"}}
+[debug] [2021-11-25T07:58:27.662Z] [functions[us-central1-api]] http function initialized (http://localhost:5000/delegation-sequencing-d8ae4/us-central1/api).
+[info] i  functions: Loaded functions: api 
+[warn] ⚠  functions: The following emulators are not running, calls to these services will affect production: firestore, database, pubsub, storage 
+[debug] [2021-11-25T07:58:27.673Z] DEBUG: [worker-~diagnostic~-0430a746-01f4-4425-b5a2-0c877362b726]: IDLE
+[info] >  /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1 {"user":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1"}}
+[debug] [2021-11-25T07:58:27.679Z] DEBUG: [worker-~diagnostic~-0430a746-01f4-4425-b5a2-0c877362b726]: exited
+[debug] [2021-11-25T07:58:27.679Z] DEBUG: [worker-~diagnostic~-0430a746-01f4-4425-b5a2-0c877362b726]: FINISHED
+[debug] [2021-11-25T07:58:59.432Z] DEBUG: File /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/src/asp/actions.lp changed, reloading triggers
+[debug] [2021-11-25T07:59:00.436Z] DEBUG: [worker-pool] Cleaned up workers for ~diagnostic~: 1 --> 0
+[debug] [2021-11-25T07:59:00.445Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2021-11-25T07:59:00.445Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2021-11-25T07:59:00.445Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2021-11-25T07:59:00.446Z] DEBUG: [worker-~diagnostic~-6db59dad-11c4-4e6c-a2b9-f20f0bdb739b]: Assigning socketPath: /var/folders/t1/6xz4sdgd3x3bzjwv248ysd8r0000gn/T/fire_emu_65359.sock
+[debug] [2021-11-25T07:59:00.446Z] DEBUG: [worker-~diagnostic~-6db59dad-11c4-4e6c-a2b9-f20f0bdb739b]: BUSY
+[debug] [2021-11-25T07:59:00.625Z] DEBUG: [runtime-status] [65359] Functions runtime initialized. {"cwd":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions","node_version":"14.15.1"}
+[debug] [2021-11-25T07:59:00.626Z] DEBUG: [runtime-status] [65359] Disabled runtime features: undefined
+[debug] [2021-11-25T07:59:00.629Z] DEBUG: [runtime-status] [65359] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-25T07:59:00.633Z] DEBUG: [runtime-status] [65359] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:59:00.635Z] DEBUG: [runtime-status] [65359] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-11-25T07:59:00.636Z] DEBUG: [runtime-status] [65359] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:59:00.682Z] DEBUG: [runtime-status] [65359] Checked functions.config() {"config":{}}
+[debug] [2021-11-25T07:59:00.682Z] DEBUG: [runtime-status] [65359] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-11-25T07:59:00.683Z] DEBUG: [runtime-status] [65359] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:59:00.684Z] DEBUG: [runtime-status] [65359] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-25T07:59:00.685Z] DEBUG: [runtime-status] [65359] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:59:00.685Z] DEBUG: [runtime-status] [65359] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}}
+[info] >  Initialize Clingo {"user":"Initialize Clingo","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Initialize Clingo"}}
+[debug] [2021-11-25T07:59:00.809Z] DEBUG: [worker-~diagnostic~-6db59dad-11c4-4e6c-a2b9-f20f0bdb739b]: IDLE
+[info] >  /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1 {"user":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1"}}
+[debug] [2021-11-25T07:59:00.820Z] DEBUG: [worker-~diagnostic~-6db59dad-11c4-4e6c-a2b9-f20f0bdb739b]: exited
+[debug] [2021-11-25T07:59:00.821Z] DEBUG: [worker-~diagnostic~-6db59dad-11c4-4e6c-a2b9-f20f0bdb739b]: FINISHED
+[debug] [2021-11-25T07:59:04.765Z] DEBUG: File /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/src/asp/actions.lp changed, reloading triggers
+[debug] [2021-11-25T07:59:05.769Z] DEBUG: [worker-pool] Cleaned up workers for ~diagnostic~: 1 --> 0
+[debug] [2021-11-25T07:59:05.778Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2021-11-25T07:59:05.779Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2021-11-25T07:59:05.779Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2021-11-25T07:59:05.779Z] DEBUG: [worker-~diagnostic~-9ca9f523-462a-49cd-821c-c3f93a7d9192]: Assigning socketPath: /var/folders/t1/6xz4sdgd3x3bzjwv248ysd8r0000gn/T/fire_emu_65362.sock
+[debug] [2021-11-25T07:59:05.779Z] DEBUG: [worker-~diagnostic~-9ca9f523-462a-49cd-821c-c3f93a7d9192]: BUSY
+[debug] [2021-11-25T07:59:05.957Z] DEBUG: [runtime-status] [65362] Functions runtime initialized. {"cwd":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions","node_version":"14.15.1"}
+[debug] [2021-11-25T07:59:05.958Z] DEBUG: [runtime-status] [65362] Disabled runtime features: undefined
+[debug] [2021-11-25T07:59:05.961Z] DEBUG: [runtime-status] [65362] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-25T07:59:05.966Z] DEBUG: [runtime-status] [65362] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:59:05.967Z] DEBUG: [runtime-status] [65362] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-11-25T07:59:05.969Z] DEBUG: [runtime-status] [65362] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:59:06.015Z] DEBUG: [runtime-status] [65362] Checked functions.config() {"config":{}}
+[debug] [2021-11-25T07:59:06.015Z] DEBUG: [runtime-status] [65362] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-11-25T07:59:06.016Z] DEBUG: [runtime-status] [65362] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:59:06.017Z] DEBUG: [runtime-status] [65362] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-25T07:59:06.018Z] DEBUG: [runtime-status] [65362] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:59:06.018Z] DEBUG: [runtime-status] [65362] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}}
+[info] >  Initialize Clingo {"user":"Initialize Clingo","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Initialize Clingo"}}
+[debug] [2021-11-25T07:59:06.140Z] DEBUG: [worker-~diagnostic~-9ca9f523-462a-49cd-821c-c3f93a7d9192]: IDLE
+[info] >  /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1 {"user":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1"}}
+[debug] [2021-11-25T07:59:06.151Z] DEBUG: [worker-~diagnostic~-9ca9f523-462a-49cd-821c-c3f93a7d9192]: exited
+[debug] [2021-11-25T07:59:06.151Z] DEBUG: [worker-~diagnostic~-9ca9f523-462a-49cd-821c-c3f93a7d9192]: FINISHED
+[debug] [2021-11-25T07:59:17.345Z] DEBUG: File /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/src/asp/actions.lp changed, reloading triggers
+[debug] [2021-11-25T07:59:18.350Z] DEBUG: [worker-pool] Cleaned up workers for ~diagnostic~: 1 --> 0
+[debug] [2021-11-25T07:59:18.359Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2021-11-25T07:59:18.360Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2021-11-25T07:59:18.360Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2021-11-25T07:59:18.360Z] DEBUG: [worker-~diagnostic~-7ca0800f-2db9-4a24-8d11-5f1f0a15d2bd]: Assigning socketPath: /var/folders/t1/6xz4sdgd3x3bzjwv248ysd8r0000gn/T/fire_emu_65367.sock
+[debug] [2021-11-25T07:59:18.360Z] DEBUG: [worker-~diagnostic~-7ca0800f-2db9-4a24-8d11-5f1f0a15d2bd]: BUSY
+[debug] [2021-11-25T07:59:18.539Z] DEBUG: [runtime-status] [65367] Functions runtime initialized. {"cwd":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions","node_version":"14.15.1"}
+[debug] [2021-11-25T07:59:18.541Z] DEBUG: [runtime-status] [65367] Disabled runtime features: undefined
+[debug] [2021-11-25T07:59:18.543Z] DEBUG: [runtime-status] [65367] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-25T07:59:18.548Z] DEBUG: [runtime-status] [65367] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:59:18.549Z] DEBUG: [runtime-status] [65367] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-11-25T07:59:18.551Z] DEBUG: [runtime-status] [65367] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:59:18.599Z] DEBUG: [runtime-status] [65367] Checked functions.config() {"config":{}}
+[debug] [2021-11-25T07:59:18.599Z] DEBUG: [runtime-status] [65367] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-11-25T07:59:18.599Z] DEBUG: [runtime-status] [65367] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:59:18.601Z] DEBUG: [runtime-status] [65367] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-25T07:59:18.602Z] DEBUG: [runtime-status] [65367] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:59:18.602Z] DEBUG: [runtime-status] [65367] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}}
+[info] >  Initialize Clingo {"user":"Initialize Clingo","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Initialize Clingo"}}
+[debug] [2021-11-25T07:59:18.727Z] DEBUG: [worker-~diagnostic~-7ca0800f-2db9-4a24-8d11-5f1f0a15d2bd]: IDLE
+[info] >  /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1 {"user":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1"}}
+[debug] [2021-11-25T07:59:18.739Z] DEBUG: [worker-~diagnostic~-7ca0800f-2db9-4a24-8d11-5f1f0a15d2bd]: exited
+[debug] [2021-11-25T07:59:18.739Z] DEBUG: [worker-~diagnostic~-7ca0800f-2db9-4a24-8d11-5f1f0a15d2bd]: FINISHED
+[debug] [2021-11-25T07:59:26.640Z] DEBUG: File /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/src/asp/actions.lp changed, reloading triggers
+[debug] [2021-11-25T07:59:27.640Z] DEBUG: [worker-pool] Cleaned up workers for ~diagnostic~: 1 --> 0
+[debug] [2021-11-25T07:59:27.647Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2021-11-25T07:59:27.648Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2021-11-25T07:59:27.648Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2021-11-25T07:59:27.648Z] DEBUG: [worker-~diagnostic~-ded520fe-a16d-4b78-9a44-062d87b13490]: Assigning socketPath: /var/folders/t1/6xz4sdgd3x3bzjwv248ysd8r0000gn/T/fire_emu_65372.sock
+[debug] [2021-11-25T07:59:27.648Z] DEBUG: [worker-~diagnostic~-ded520fe-a16d-4b78-9a44-062d87b13490]: BUSY
+[debug] [2021-11-25T07:59:27.853Z] DEBUG: [runtime-status] [65372] Functions runtime initialized. {"cwd":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions","node_version":"14.15.1"}
+[debug] [2021-11-25T07:59:27.855Z] DEBUG: [runtime-status] [65372] Disabled runtime features: undefined
+[debug] [2021-11-25T07:59:27.858Z] DEBUG: [runtime-status] [65372] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-25T07:59:27.863Z] DEBUG: [runtime-status] [65372] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:59:27.865Z] DEBUG: [runtime-status] [65372] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-11-25T07:59:27.867Z] DEBUG: [runtime-status] [65372] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:59:27.919Z] DEBUG: [runtime-status] [65372] Checked functions.config() {"config":{}}
+[debug] [2021-11-25T07:59:27.919Z] DEBUG: [runtime-status] [65372] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-11-25T07:59:27.920Z] DEBUG: [runtime-status] [65372] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:59:27.922Z] DEBUG: [runtime-status] [65372] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-25T07:59:27.923Z] DEBUG: [runtime-status] [65372] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:59:27.923Z] DEBUG: [runtime-status] [65372] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}}
+[info] >  Initialize Clingo {"user":"Initialize Clingo","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Initialize Clingo"}}
+[debug] [2021-11-25T07:59:28.067Z] DEBUG: [worker-~diagnostic~-ded520fe-a16d-4b78-9a44-062d87b13490]: IDLE
+[info] >  /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1 {"user":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1"}}
+[debug] [2021-11-25T07:59:28.079Z] DEBUG: [worker-~diagnostic~-ded520fe-a16d-4b78-9a44-062d87b13490]: exited
+[debug] [2021-11-25T07:59:28.079Z] DEBUG: [worker-~diagnostic~-ded520fe-a16d-4b78-9a44-062d87b13490]: FINISHED
+[debug] [2021-11-25T07:59:29.036Z] DEBUG: File /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/src/asp/actions.lp changed, reloading triggers
+[debug] [2021-11-25T07:59:30.037Z] DEBUG: [worker-pool] Cleaned up workers for ~diagnostic~: 1 --> 0
+[debug] [2021-11-25T07:59:30.045Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2021-11-25T07:59:30.045Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2021-11-25T07:59:30.045Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2021-11-25T07:59:30.047Z] DEBUG: [worker-~diagnostic~-75a01ece-23fc-4ea5-ab4c-4dcebb5717dc]: Assigning socketPath: /var/folders/t1/6xz4sdgd3x3bzjwv248ysd8r0000gn/T/fire_emu_65375.sock
+[debug] [2021-11-25T07:59:30.047Z] DEBUG: [worker-~diagnostic~-75a01ece-23fc-4ea5-ab4c-4dcebb5717dc]: BUSY
+[debug] [2021-11-25T07:59:30.220Z] DEBUG: [runtime-status] [65375] Functions runtime initialized. {"cwd":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions","node_version":"14.15.1"}
+[debug] [2021-11-25T07:59:30.221Z] DEBUG: [runtime-status] [65375] Disabled runtime features: undefined
+[debug] [2021-11-25T07:59:30.224Z] DEBUG: [runtime-status] [65375] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-25T07:59:30.229Z] DEBUG: [runtime-status] [65375] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:59:30.230Z] DEBUG: [runtime-status] [65375] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-11-25T07:59:30.231Z] DEBUG: [runtime-status] [65375] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:59:30.279Z] DEBUG: [runtime-status] [65375] Checked functions.config() {"config":{}}
+[debug] [2021-11-25T07:59:30.279Z] DEBUG: [runtime-status] [65375] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-11-25T07:59:30.280Z] DEBUG: [runtime-status] [65375] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:59:30.281Z] DEBUG: [runtime-status] [65375] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-25T07:59:30.283Z] DEBUG: [runtime-status] [65375] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T07:59:30.283Z] DEBUG: [runtime-status] [65375] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}}
+[info] >  Initialize Clingo {"user":"Initialize Clingo","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Initialize Clingo"}}
+[debug] [2021-11-25T07:59:30.409Z] DEBUG: [worker-~diagnostic~-75a01ece-23fc-4ea5-ab4c-4dcebb5717dc]: IDLE
+[info] >  /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1 {"user":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1"}}
+[debug] [2021-11-25T07:59:30.421Z] DEBUG: [worker-~diagnostic~-75a01ece-23fc-4ea5-ab4c-4dcebb5717dc]: exited
+[debug] [2021-11-25T07:59:30.421Z] DEBUG: [worker-~diagnostic~-75a01ece-23fc-4ea5-ab4c-4dcebb5717dc]: FINISHED
+[debug] [2021-11-25T08:01:01.706Z] DEBUG: File /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/src/asp/actions.lp changed, reloading triggers
+[debug] [2021-11-25T08:01:02.711Z] DEBUG: [worker-pool] Cleaned up workers for ~diagnostic~: 1 --> 0
+[debug] [2021-11-25T08:01:02.743Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2021-11-25T08:01:02.743Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2021-11-25T08:01:02.743Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2021-11-25T08:01:02.744Z] DEBUG: [worker-~diagnostic~-dee56a81-2c44-421a-9cbf-65d9cf289501]: Assigning socketPath: /var/folders/t1/6xz4sdgd3x3bzjwv248ysd8r0000gn/T/fire_emu_65412.sock
+[debug] [2021-11-25T08:01:02.744Z] DEBUG: [worker-~diagnostic~-dee56a81-2c44-421a-9cbf-65d9cf289501]: BUSY
+[debug] [2021-11-25T08:01:03.028Z] DEBUG: [runtime-status] [65412] Functions runtime initialized. {"cwd":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions","node_version":"14.15.1"}
+[debug] [2021-11-25T08:01:03.029Z] DEBUG: [runtime-status] [65412] Disabled runtime features: undefined
+[debug] [2021-11-25T08:01:03.033Z] DEBUG: [runtime-status] [65412] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-25T08:01:03.039Z] DEBUG: [runtime-status] [65412] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T08:01:03.041Z] DEBUG: [runtime-status] [65412] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-11-25T08:01:03.042Z] DEBUG: [runtime-status] [65412] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T08:01:03.113Z] DEBUG: [runtime-status] [65412] Checked functions.config() {"config":{}}
+[debug] [2021-11-25T08:01:03.113Z] DEBUG: [runtime-status] [65412] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-11-25T08:01:03.114Z] DEBUG: [runtime-status] [65412] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T08:01:03.116Z] DEBUG: [runtime-status] [65412] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-25T08:01:03.117Z] DEBUG: [runtime-status] [65412] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T08:01:03.117Z] DEBUG: [runtime-status] [65412] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}}
+[info] >  Initialize Clingo {"user":"Initialize Clingo","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Initialize Clingo"}}
+[debug] [2021-11-25T08:01:03.340Z] DEBUG: [worker-~diagnostic~-dee56a81-2c44-421a-9cbf-65d9cf289501]: IDLE
+[info] >  /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1 {"user":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1"}}
+[debug] [2021-11-25T08:01:03.353Z] DEBUG: [worker-~diagnostic~-dee56a81-2c44-421a-9cbf-65d9cf289501]: exited
+[debug] [2021-11-25T08:01:03.353Z] DEBUG: [worker-~diagnostic~-dee56a81-2c44-421a-9cbf-65d9cf289501]: FINISHED
+[debug] [2021-11-25T08:01:03.912Z] DEBUG: File /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/src/asp/actions.lp changed, reloading triggers
+[debug] [2021-11-25T08:01:04.916Z] DEBUG: [worker-pool] Cleaned up workers for ~diagnostic~: 1 --> 0
+[debug] [2021-11-25T08:01:04.925Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2021-11-25T08:01:04.926Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2021-11-25T08:01:04.926Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2021-11-25T08:01:04.926Z] DEBUG: [worker-~diagnostic~-1834b7bf-09fc-4a15-a6f5-9afe8a0c43fb]: Assigning socketPath: /var/folders/t1/6xz4sdgd3x3bzjwv248ysd8r0000gn/T/fire_emu_65416.sock
+[debug] [2021-11-25T08:01:04.926Z] DEBUG: [worker-~diagnostic~-1834b7bf-09fc-4a15-a6f5-9afe8a0c43fb]: BUSY
+[debug] [2021-11-25T08:01:05.105Z] DEBUG: [runtime-status] [65416] Functions runtime initialized. {"cwd":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions","node_version":"14.15.1"}
+[debug] [2021-11-25T08:01:05.106Z] DEBUG: [runtime-status] [65416] Disabled runtime features: undefined
+[debug] [2021-11-25T08:01:05.109Z] DEBUG: [runtime-status] [65416] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-25T08:01:05.113Z] DEBUG: [runtime-status] [65416] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T08:01:05.115Z] DEBUG: [runtime-status] [65416] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-11-25T08:01:05.116Z] DEBUG: [runtime-status] [65416] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T08:01:05.161Z] DEBUG: [runtime-status] [65416] Checked functions.config() {"config":{}}
+[debug] [2021-11-25T08:01:05.161Z] DEBUG: [runtime-status] [65416] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-11-25T08:01:05.161Z] DEBUG: [runtime-status] [65416] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T08:01:05.163Z] DEBUG: [runtime-status] [65416] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-25T08:01:05.163Z] DEBUG: [runtime-status] [65416] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T08:01:05.164Z] DEBUG: [runtime-status] [65416] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}}
+[info] >  Initialize Clingo {"user":"Initialize Clingo","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Initialize Clingo"}}
+[debug] [2021-11-25T08:01:05.280Z] DEBUG: [worker-~diagnostic~-1834b7bf-09fc-4a15-a6f5-9afe8a0c43fb]: IDLE
+[info] >  /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1 {"user":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1"}}
+[debug] [2021-11-25T08:01:05.291Z] DEBUG: [worker-~diagnostic~-1834b7bf-09fc-4a15-a6f5-9afe8a0c43fb]: exited
+[debug] [2021-11-25T08:01:05.291Z] DEBUG: [worker-~diagnostic~-1834b7bf-09fc-4a15-a6f5-9afe8a0c43fb]: FINISHED
+[debug] [2021-11-25T08:07:45.013Z] DEBUG: File /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/src/asp/actions.lp changed, reloading triggers
+[debug] [2021-11-25T08:07:45.776Z] DEBUG: File /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/src/asp/actions.lp changed, reloading triggers
+[debug] [2021-11-25T08:07:46.781Z] DEBUG: [worker-pool] Cleaned up workers for ~diagnostic~: 1 --> 0
+[debug] [2021-11-25T08:07:46.789Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2021-11-25T08:07:46.789Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2021-11-25T08:07:46.789Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2021-11-25T08:07:46.789Z] DEBUG: [worker-~diagnostic~-4481927f-61f3-4e16-b1ed-a3a7be6d38af]: Assigning socketPath: /var/folders/t1/6xz4sdgd3x3bzjwv248ysd8r0000gn/T/fire_emu_65774.sock
+[debug] [2021-11-25T08:07:46.790Z] DEBUG: [worker-~diagnostic~-4481927f-61f3-4e16-b1ed-a3a7be6d38af]: BUSY
+[debug] [2021-11-25T08:07:47.039Z] DEBUG: [runtime-status] [65774] Functions runtime initialized. {"cwd":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions","node_version":"14.15.1"}
+[debug] [2021-11-25T08:07:47.040Z] DEBUG: [runtime-status] [65774] Disabled runtime features: undefined
+[debug] [2021-11-25T08:07:47.044Z] DEBUG: [runtime-status] [65774] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-25T08:07:47.048Z] DEBUG: [runtime-status] [65774] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T08:07:47.049Z] DEBUG: [runtime-status] [65774] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-11-25T08:07:47.050Z] DEBUG: [runtime-status] [65774] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T08:07:47.118Z] DEBUG: [runtime-status] [65774] Checked functions.config() {"config":{}}
+[debug] [2021-11-25T08:07:47.118Z] DEBUG: [runtime-status] [65774] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-11-25T08:07:47.119Z] DEBUG: [runtime-status] [65774] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T08:07:47.120Z] DEBUG: [runtime-status] [65774] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-25T08:07:47.121Z] DEBUG: [runtime-status] [65774] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-25T08:07:47.121Z] DEBUG: [runtime-status] [65774] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}}
+[info] >  Initialize Clingo {"user":"Initialize Clingo","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Initialize Clingo"}}
+[debug] [2021-11-25T08:07:47.291Z] DEBUG: [worker-~diagnostic~-4481927f-61f3-4e16-b1ed-a3a7be6d38af]: IDLE
+[info] >  /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1 {"user":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1"}}
+[debug] [2021-11-25T08:07:47.302Z] DEBUG: [worker-~diagnostic~-4481927f-61f3-4e16-b1ed-a3a7be6d38af]: exited
+[debug] [2021-11-25T08:07:47.302Z] DEBUG: [worker-~diagnostic~-4481927f-61f3-4e16-b1ed-a3a7be6d38af]: FINISHED
+[debug] [2021-11-26T08:00:15.727Z] ----------------------------------------------------------------------
+[debug] [2021-11-26T08:00:15.729Z] Command:       /usr/local/bin/node /usr/local/bin/firebase functions:shell
+[debug] [2021-11-26T08:00:15.729Z] CLI Version:   9.23.0
+[debug] [2021-11-26T08:00:15.730Z] Platform:      darwin
+[debug] [2021-11-26T08:00:15.730Z] Node Version:  v14.15.1
+[debug] [2021-11-26T08:00:15.738Z] Time:          Fri Nov 26 2021 09:00:15 GMT+0100 (Central European Standard Time)
+[debug] [2021-11-26T08:00:15.739Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2021-11-26T08:00:15.741Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2021-11-26T08:00:15.818Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"rewrites"}
+[debug] [2021-11-26T08:00:15.825Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2021-11-26T08:00:15.825Z] > authorizing via signed-in user (markus.a.dreyer@gmail.com)
+[debug] [2021-11-26T08:00:15.825Z] [iam] checking project delegation-sequencing-d8ae4 for permissions ["firebase.projects.get"]
+[debug] [2021-11-26T08:00:15.827Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2021-11-26T08:00:15.827Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-11-26T08:00:15.942Z] <<< HTTP RESPONSE 200 {"date":"Fri, 26 Nov 2021 08:00:15 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","pragma":"no-cache","expires":"Mon, 01 Jan 1990 00:00:00 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-11-26T08:00:15.993Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/delegation-sequencing-d8ae4:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2021-11-26T08:00:16.278Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2021-11-26T08:00:16.278Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2021-11-26T08:00:16.836Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 26 Nov 2021 08:00:16 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=677","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-11-26T08:00:16.861Z] [functions] Using node@14 from host.
+[debug] [2021-11-26T08:00:16.862Z] defaultcredentials: writing to file /Users/markusdreyer/.config/firebase/markus_a.dreyer_gmail.com_application_default_credentials.json
+[debug] [2021-11-26T08:00:16.865Z] DEBUG: Setting GAC to /Users/markusdreyer/.config/firebase/markus_a.dreyer_gmail.com_application_default_credentials.json
+[debug] [2021-11-26T08:00:16.866Z] > refreshing access token with scopes: []
+[debug] [2021-11-26T08:00:16.866Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2021-11-26T08:00:16.966Z] <<< HTTP RESPONSE 200 {"cache-control":"no-cache, no-store, max-age=0, must-revalidate","expires":"Mon, 01 Jan 1990 00:00:00 GMT","pragma":"no-cache","date":"Fri, 26 Nov 2021 08:00:17 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2021-11-26T08:00:17.015Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/delegation-sequencing-d8ae4/adminSdkConfig [none]
+[debug] [2021-11-26T08:00:17.352Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/delegation-sequencing-d8ae4/adminSdkConfig 200
+[debug] [2021-11-26T08:00:17.353Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/delegation-sequencing-d8ae4/adminSdkConfig {"projectId":"delegation-sequencing-d8ae4","storageBucket":"delegation-sequencing-d8ae4.appspot.com","locationId":"europe-central2"}
+[debug] [2021-11-26T08:00:17.382Z] [functions] Watching "/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions" for Cloud Functions...
+[debug] [2021-11-26T08:00:17.396Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2021-11-26T08:00:17.397Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2021-11-26T08:00:17.397Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2021-11-26T08:00:17.397Z] DEBUG: [worker-~diagnostic~-2ad4ca30-853d-4fe9-8b14-108d48807123]: Assigning socketPath: /var/folders/t1/6xz4sdgd3x3bzjwv248ysd8r0000gn/T/fire_emu_74615.sock
+[debug] [2021-11-26T08:00:17.397Z] DEBUG: [worker-~diagnostic~-2ad4ca30-853d-4fe9-8b14-108d48807123]: BUSY
+[debug] [2021-11-26T08:00:17.584Z] DEBUG: [runtime-status] [74615] Functions runtime initialized. {"cwd":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions","node_version":"14.15.1"}
+[debug] [2021-11-26T08:00:17.585Z] DEBUG: [runtime-status] [74615] Disabled runtime features: undefined
+[debug] [2021-11-26T08:00:17.588Z] DEBUG: [runtime-status] [74615] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-26T08:00:17.593Z] DEBUG: [runtime-status] [74615] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-26T08:00:17.595Z] DEBUG: [runtime-status] [74615] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2021-11-26T08:00:17.597Z] DEBUG: [runtime-status] [74615] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-26T08:00:17.674Z] DEBUG: [runtime-status] [74615] Checked functions.config() {"config":{}}
+[debug] [2021-11-26T08:00:17.675Z] DEBUG: [runtime-status] [74615] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2021-11-26T08:00:17.675Z] DEBUG: [runtime-status] [74615] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-26T08:00:17.677Z] DEBUG: [runtime-status] [74615] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2021-11-26T08:00:17.677Z] DEBUG: [runtime-status] [74615] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.16.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2021-11-26T08:00:17.678Z] DEBUG: [runtime-status] [74615] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.12.0","resolution":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/firebase-admin/lib/index.js"}}
+[info] >  Initialize Clingo {"user":"Initialize Clingo","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Initialize Clingo"}}
+[debug] [2021-11-26T08:00:17.906Z] [functions[us-central1-api]] http function initialized (http://localhost:5000/delegation-sequencing-d8ae4/us-central1/api).
+[info] i  functions: Loaded functions: api 
+[warn] ⚠  functions: The following emulators are not running, calls to these services will affect production: firestore, database, pubsub, storage 
+[debug] [2021-11-26T08:00:17.931Z] DEBUG: [worker-~diagnostic~-2ad4ca30-853d-4fe9-8b14-108d48807123]: IDLE
+[info] >  /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1 {"user":"/Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m /Users/markusdreyer/Desktop/school/delegation-sequencing/backend/functions/node_modules/clingo-wasm/dist/clingo.node.js:1"}}
+[debug] [2021-11-26T08:00:17.932Z] DEBUG: [worker-~diagnostic~-2ad4ca30-853d-4fe9-8b14-108d48807123]: exited
+[debug] [2021-11-26T08:00:17.932Z] DEBUG: [worker-~diagnostic~-2ad4ca30-853d-4fe9-8b14-108d48807123]: FINISHED
