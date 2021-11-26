@@ -16,15 +16,21 @@ import {
   useFirestoreDocData,
 } from "reactfire";
 
-const firebaseConfig = {
+let firebaseConfig = {
   apiKey: "AIzaSyAmG6gfiY8QojDxjQSes-7S_xLQmJjjUcQ",
   authDomain: "delegation-sequencing-d8ae4.firebaseapp.com",
+  databaseURL: "https://delegation-sequencing-d8ae4.firebaseio.com",
   projectId: "delegation-sequencing-d8ae4",
   storageBucket: "delegation-sequencing-d8ae4.appspot.com",
   messagingSenderId: "208130555525",
   appId: "1:208130555525:web:5ee839107976d9bb82b3ec",
   measurementId: "G-7STLL6JLRY",
 };
+
+if (window.location.hostname === "localhost") {
+  firebaseConfig.databaseURL =
+    "http://localhost:9000/ns=delegation-sequencing-d8ae4";
+}
 
 const app = initializeApp(firebaseConfig);
 getAnalytics(app);
