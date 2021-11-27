@@ -40,7 +40,10 @@ const firestore = initializeFirestore(app, {
   experimentalForceLongPolling: true,
 });
 
-connectFirestoreEmulator(firestore, "localhost", 8080);
+if (window.location.hostname === "localhsst") {
+  connectFirestoreEmulator(firestore, "localhost", 8080);
+}
+
 ReactDOM.render(
   <FirebaseAppProvider firebaseConfig={firebaseConfig}>
     <FirestoreProvider sdk={firestore}>
