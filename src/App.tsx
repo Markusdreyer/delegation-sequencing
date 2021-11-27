@@ -72,13 +72,13 @@ const App = () => {
     if (dialog.title === dialogOptions.PROCEDURE.title) {
       dispatch(renderTable(tableTypes.PROCEDURES, newDocument));
       await setDoc(doc(firestore, "procedures", newDocument), {
-        tableMetaData: [],
+        tableData: [],
       });
       //firebase refactor dispatch(setProcedure(newDocument, []));
     } else if (dialog.title === dialogOptions.TAXONOMY.title) {
       dispatch(renderTable(tableTypes.TAXONOMIES, newDocument));
       await setDoc(doc(firestore, "taxonomies", newDocument), {
-        tableMetaData: [],
+        tableData: [],
       });
       //firebase refactor dispatch(setTaxonomy(newDocument, []));
     } else {

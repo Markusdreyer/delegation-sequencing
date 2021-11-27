@@ -35,11 +35,12 @@ let firebaseConfig = {
   measurementId: "G-7STLL6JLRY",
 };
 
-const app = initializeApp(firebaseConfig);
-const firestore = getFirestore(app);
+const app = initializeApp(firebaseConfig, {});
+const firestore = initializeFirestore(app, {
+  experimentalForceLongPolling: true,
+});
 
 connectFirestoreEmulator(firestore, "localhost", 8080);
-
 ReactDOM.render(
   <FirebaseAppProvider firebaseConfig={firebaseConfig}>
     <FirestoreProvider sdk={firestore}>

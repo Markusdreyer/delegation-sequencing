@@ -1,29 +1,3 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-
 Cypress.Commands.add("save", (row: number) => {
   return cy
     .get("table")
@@ -109,16 +83,8 @@ Cypress.Commands.add("countQuantity", (total: number) => {
 });
 
 Cypress.Commands.add("generateActionCards", (status: number) => {
-  cy.intercept({
-    method: "POST",
-    url: "/initial",
-  }).as("fetchInitialModel");
   cy.get("[data-testid=generate-action-cards-button]").click();
-  return cy
-    .wait(2000)
-    .wait("@fetchInitialModel")
-    .its("response.statusCode")
-    .should("equal", status);
+  return cy.wait(5000);
 });
 
 Cypress.Commands.add("verifyGeneratedActions", (expectedActions: number) => {
@@ -146,9 +112,9 @@ Cypress.Commands.add("selectProcedure", (index: number) => {
 
 Cypress.Commands.add("selectTaxonomy", (taxonomy: string) => {
   return cy
-    .get("[data-testid='taxonomy-selector']")
+    .get("[data-testid=taxonomy-selector]")
     .click()
-    .get(`[data-value='${taxonomy}']`)
+    .get(`[data-value=${taxonomy}]`)
     .click();
 });
 
@@ -194,16 +160,8 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add("submitRevision", () => {
-  cy.intercept({
-    method: "POST",
-    url: "/revise",
-  }).as("fetchRevisedModel");
   cy.get("[data-testid='revision-submit-button']").click({ force: true });
-  return cy
-    .wait(2000)
-    .wait("@fetchRevisedModel")
-    .its("response.statusCode")
-    .should("equal", 200);
+  return cy.wait(5000);
 });
 
 const toStrings = (cells$: any) => Cypress._.map(cells$, "textContent");
