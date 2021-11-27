@@ -1,8 +1,6 @@
 # Getting started
 
-## Frontend
-
-### Run frontend locally
+## Run frontend locally
 
 `npm run start`
 
