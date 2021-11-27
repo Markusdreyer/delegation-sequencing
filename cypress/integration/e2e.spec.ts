@@ -2,6 +2,7 @@ const url = "localhost:3000";
 describe("Verify EA fire scenario and taxonomy", () => {
   it("should fail to fetch action cards", () => {
     cy.visit(url);
+    cy.wait(2000);
     cy.generateActionCards(400);
     cy.contains('"Result": "UNSATISFIABLE"');
   });
@@ -48,7 +49,8 @@ describe("Verify EA fire scenario and taxonomy", () => {
 describe("Verify Hamar scenario and taxonomy", () => {
   it("should select Hamar scenario and taxonomy", () => {
     cy.openSidebar();
-    cy.selectProcedure(4);
+    cy.selectProcedure(1);
+    cy.wait(500);
     cy.selectTaxonomy("Hamar");
   });
 
@@ -102,9 +104,3 @@ describe("Verify Hamar scenario and taxonomy", () => {
     return cy.countQuantity(0).then((res) => cy.verifyGeneratedActions(res));
   });
 });
-
-//cy.get("#navToggle").click
-//cy.visit(url)
-//cy.contains(text).click
-//cy.get("notification-message").children().should("contain", "Login").and("be.visible")
-//cy.get("input[name=email]").type(email)
