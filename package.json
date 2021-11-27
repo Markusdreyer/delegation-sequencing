@@ -47,7 +47,7 @@
     "build": "webpack --config webpack.config.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "e2e": "cypress open",
+    "e2e": "cypress run",
     "deploy": "webpack --config webpack.config.js && firebase deploy --only hosting"
   },
   "eslintConfig": {

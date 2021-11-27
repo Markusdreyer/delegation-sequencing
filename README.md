@@ -23,3 +23,9 @@ If there's been changes to the backend API, the service has to be built in advan
 ## Firebase deploy
 
 `firebase deploy`
+
+## Run tests
+
+Make sure that the frontend and emulators are running, and that the database is seeded with the correct data. Then run the following:
+
+`npm run e2e`
