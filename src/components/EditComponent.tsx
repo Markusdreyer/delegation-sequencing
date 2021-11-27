@@ -33,11 +33,13 @@ const EditComponent = (props: {
     >
       {console.log("Cdef", columnDef)}
       {/* @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642*/}
-      {columnDef.options[columnDef.field].map((el: string) => (
-        <MenuItem key={el} value={el}>
-          {el}
-        </MenuItem>
-      ))}
+      {columnDef.options[columnDef.field] &&
+        //@ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
+        columnDef.options[columnDef.field]!.map((el: string) => (
+          <MenuItem key={el} value={el}>
+            {el}
+          </MenuItem>
+        ))}
     </Select>
   );
 };

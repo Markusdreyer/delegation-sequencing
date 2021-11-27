@@ -8,18 +8,26 @@ import store from "./store";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import {
+  DatabaseProvider,
   FirebaseAppProvider,
   FirestoreProvider,
   useFirebaseApp,
   useFirestore,
   useFirestoreCollection,
   useFirestoreDocData,
+  useInitFirestore,
 } from "reactfire";
+import { getFirestore } from "@firebase/firestore";
+import {
+  connectFirestoreEmulator,
+  enableIndexedDbPersistence,
+  initializeFirestore,
+} from "firebase/firestore";
+import { connectDatabaseEmulator, getDatabase } from "@firebase/database";
 
 let firebaseConfig = {
   apiKey: "AIzaSyAmG6gfiY8QojDxjQSes-7S_xLQmJjjUcQ",
   authDomain: "delegation-sequencing-d8ae4.firebaseapp.com",
-  databaseURL: "https://delegation-sequencing-d8ae4.firebaseio.com",
   projectId: "delegation-sequencing-d8ae4",
   storageBucket: "delegation-sequencing-d8ae4.appspot.com",
   messagingSenderId: "208130555525",
@@ -27,21 +35,20 @@ let firebaseConfig = {
   measurementId: "G-7STLL6JLRY",
 };
 
-if (window.location.hostname === "localhost") {
-  firebaseConfig.databaseURL =
-    "http://localhost:9000/ns=delegation-sequencing-d8ae4";
-}
-
 const app = initializeApp(firebaseConfig);
-getAnalytics(app);
+const firestore = getFirestore(app);
+
+connectFirestoreEmulator(firestore, "localhost", 8080);
 
 ReactDOM.render(
   <FirebaseAppProvider firebaseConfig={firebaseConfig}>
-    <Provider store={store}>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </Provider>
+    <FirestoreProvider sdk={firestore}>
+      <Provider store={store}>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </Provider>
+    </FirestoreProvider>
   </FirebaseAppProvider>,
   document.getElementById("root")
 );

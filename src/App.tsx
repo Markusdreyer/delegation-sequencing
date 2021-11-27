@@ -24,14 +24,22 @@ import Table from "./components/Table";
 import useStyles from "./Styles";
 import { dialogOptions, modelTypes, tableTypes } from "./utils/const";
 import ActionCards from "./components/ActionCards";
-import { FirestoreProvider, useFirestoreDocData } from "reactfire";
-import { collection, doc, setDoc } from "firebase/firestore";
-import { getFirestore } from "@firebase/firestore";
+import {
+  FirestoreProvider,
+  useFirebaseApp,
+  useFirestore,
+  useFirestoreDocData,
+} from "reactfire";
+
+import { getFirestore, setDoc } from "@firebase/firestore";
+import { connectDatabaseEmulator, getDatabase } from "@firebase/database";
+import { doc } from "firebase/firestore";
 
 const App = () => {
-  const db = getFirestore();
+  const firestore = useFirestore();
+
   const showSidebar = useSelector((state: RootState) => state.showSidebar);
-  const tableData = useSelector((state: RootState) => state.tableData);
+  const tableMetaData = useSelector((state: RootState) => state.tableMetaData);
   const activeTaxonomy = useSelector(
     (state: RootState) => state.activeTaxonomy
   );
@@ -42,11 +50,11 @@ const App = () => {
   const [failureMessage, setFailureMessage] = useState<string>();
   const [isLoading, setIsLoading] = useState(false);
 
-  const taxonomyRef = doc(db, "taxonomies", activeTaxonomy);
+  const taxonomyRef = doc(firestore, "taxonomies", activeTaxonomy);
   const { data: taxonomyData } = useFirestoreDocData(taxonomyRef, {
     idField: "key",
   });
-  const procedureRef = doc(db, "procedures", tableData.key);
+  const procedureRef = doc(firestore, "procedures", tableMetaData.key);
   const { data: procedureData } = useFirestoreDocData(procedureRef, {
     idField: "key",
   });
@@ -63,11 +71,15 @@ const App = () => {
   const createNewDocument = async () => {
     if (dialog.title === dialogOptions.PROCEDURE.title) {
       dispatch(renderTable(tableTypes.PROCEDURES, newDocument));
-      await setDoc(doc(db, "procedures", newDocument), { tableData: [] });
+      await setDoc(doc(firestore, "procedures", newDocument), {
+        tableMetaData: [],
+      });
       //firebase refactor dispatch(setProcedure(newDocument, []));
     } else if (dialog.title === dialogOptions.TAXONOMY.title) {
       dispatch(renderTable(tableTypes.TAXONOMIES, newDocument));
-      await setDoc(doc(db, "taxonomies", newDocument), { tableData: [] });
+      await setDoc(doc(firestore, "taxonomies", newDocument), {
+        tableMetaData: [],
+      });
       //firebase refactor dispatch(setTaxonomy(newDocument, []));
     } else {
       console.log(
@@ -122,7 +134,7 @@ const App = () => {
   };
 
   return (
-    <FirestoreProvider sdk={db}>
+    <>
       <div className={classes.root}>
         <Sidebar />
         <main
@@ -161,8 +173,8 @@ const App = () => {
               </Button>
             </DialogActions>
           </Dialog>
-          <Table data={tableData} />
-          {tableData.type === tableTypes.PROCEDURES && (
+          <Table tableMetaData={tableMetaData} />
+          {tableMetaData.type === tableTypes.PROCEDURES && (
             <>
               <div className="center padding-l">
                 <Button
@@ -200,7 +212,7 @@ const App = () => {
           setIsLoading={setIsLoading}
         />
       )}
-    </FirestoreProvider>
+    </>
   );
 };
 
