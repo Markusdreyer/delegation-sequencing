@@ -11,9 +11,20 @@ import {
   TableMetaData,
   TaxonomyData,
 } from "../types";
-import { setActiveTaxonomy, setProcedure, setTaxonomy } from "../actions";
-import { tableTypes } from "../utils/const";
-import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
+import {
+  setActiveTaxonomy,
+  setProcedure,
+  setTaxonomy,
+  toggleDialog,
+} from "../actions";
+import { dialogOptions, tableTypes } from "../utils/const";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@material-ui/core";
 import { unique } from "../utils/utils";
 import EditComponent from "./EditComponent";
 import {
@@ -23,6 +34,7 @@ import {
   getFirestore,
   connectFirestoreEmulator,
   Firestore,
+  deleteDoc,
 } from "firebase/firestore";
 import {
   useFirestore,
@@ -323,6 +335,10 @@ const Table: React.FC<Props> = (props) => {
     }
   };
 
+  const deleteDocument = async () => {
+    await deleteDoc(doc(firestore, tableMetaData.type, tableMetaData.key));
+  };
+
   return (
     <MaterialTable
       title={tableMetaData.key}
@@ -353,8 +369,14 @@ const Table: React.FC<Props> = (props) => {
         Toolbar: (props) => (
           <div>
             <MTableToolbar {...props} />
-            {tableMetaData.type === tableTypes.PROCEDURES && (
-              <div style={{ padding: "0px 10px" }}>
+            <div
+              style={{
+                padding: "0 16px",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              {tableMetaData.type === tableTypes.PROCEDURES && (
                 <FormControl className={classes.formControl}>
                   <InputLabel>Taxonomy</InputLabel>
                   <Select
@@ -368,8 +390,11 @@ const Table: React.FC<Props> = (props) => {
                       ))}
                   </Select>
                 </FormControl>
-              </div>
-            )}
+              )}
+              <Button data-testid="delete-document" onClick={deleteDocument}>
+                Delete {tableMetaData.key}
+              </Button>
+            </div>
           </div>
         ),
       }}

@@ -158,6 +158,7 @@ const App = () => {
                 label={dialog.label}
                 type="text"
                 fullWidth
+                data-testid="dialog-input"
               />
             </DialogContent>
             <DialogActions>
@@ -165,6 +166,7 @@ const App = () => {
                 Cancel
               </Button>
               <Button
+                data-testid="dialog-submit"
                 type="submit"
                 onClick={() => createNewDocument()}
                 color="primary"
