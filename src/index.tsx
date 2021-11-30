@@ -40,7 +40,7 @@ const firestore = initializeFirestore(app, {
   experimentalForceLongPolling: true,
 });
 
-if (window.location.hostname === "localhsst") {
+if (window.location.hostname === "localhost") {
   connectFirestoreEmulator(firestore, "localhost", 8080);
 }
 
