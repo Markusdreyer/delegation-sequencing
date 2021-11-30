@@ -344,26 +344,10 @@ const Table: React.FC<Props> = (props) => {
       }}
       editable={{
         onRowAdd: (newData: ProcedureData | TaxonomyData) =>
-          new Promise((resolve: any, reject) => {
-            setTimeout(() => {
-              addTableRow(newData);
-              resolve();
-            }, 0);
-          }),
+          addTableRow(newData),
         onRowUpdate: (newData: ProcedureData | TaxonomyData, oldData: any) =>
-          new Promise((resolve: any, reject) => {
-            setTimeout(() => {
-              updateTableRow(newData, oldData);
-              resolve();
-            }, 0);
-          }),
-        onRowDelete: (oldData: any) =>
-          new Promise((resolve: any, reject) => {
-            setTimeout(() => {
-              deleteTableRow(oldData);
-              resolve();
-            }, 0);
-          }),
+          updateTableRow(newData, oldData),
+        onRowDelete: (oldData: any) => deleteTableRow(oldData),
       }}
       components={{
         Toolbar: (props) => (
@@ -372,7 +356,6 @@ const Table: React.FC<Props> = (props) => {
             {tableMetaData.type === tableTypes.PROCEDURES && (
               <div style={{ padding: "0px 10px" }}>
                 <FormControl className={classes.formControl}>
-                  {console.log("TABLE COLUMNS", columns)}
                   <InputLabel>Taxonomy</InputLabel>
                   <Select
                     data-testid="taxonomy-selector"
