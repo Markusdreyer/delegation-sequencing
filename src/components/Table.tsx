@@ -12,7 +12,7 @@ import {
   TaxonomyData,
 } from "../types";
 import { setActiveTaxonomy, setProcedure, setTaxonomy } from "../actions";
-import { initialLookup, tableTypes } from "../utils/const";
+import { tableTypes } from "../utils/const";
 import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
 import { unique } from "../utils/utils";
 import EditComponent from "./EditComponent";
@@ -29,7 +29,6 @@ import {
   useFirestoreCollectionData,
   useFirestoreDocData,
 } from "reactfire";
-import { DoorBack } from "@mui/icons-material";
 
 interface Props {
   tableMetaData: TableMetaData;
@@ -174,7 +173,8 @@ const Table: React.FC<Props> = (props) => {
       updateColumns[precedenceFieldIndex].lookup = lookupData;
     } else {
       lookupData = document.tableData
-        .map((el: TaxonomyData) => el.parent)
+        .filter((el: TaxonomyData) => !el.parentId)
+        .map((el: TaxonomyData) => el.agent)
         .reduce((obj: any, val: any) => {
           // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
           obj[val] = val;
@@ -190,7 +190,8 @@ const Table: React.FC<Props> = (props) => {
     setLookupValues(lookupData);
     setColumns(updateColumns);
 
-    console.log("LOOKUP VALUES", lookupValues);
+    console.log("TABLE COLUMNS", tableColumns);
+    console.log("LOOKUP data", lookupData);
   }, [document]);
 
   /**
@@ -218,17 +219,6 @@ const Table: React.FC<Props> = (props) => {
     // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
     setColumns(tableColumns[tableMetaData.type]);
   }, [tableMetaData.type]);
-
-  //Renders parent lookup for each taxonomy❌❌❌❌❌❌❌❌❌❌
-  useEffect(() => {
-    if (tableMetaData.type === tableTypes.TAXONOMIES) {
-      // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
-      const update = tableColumns[tableMetaData.type] as ColumnDef[];
-      const index = update.findIndex((el) => el.field === "parent");
-      update[index].lookup = initialLookup[tableMetaData.key];
-      setColumns(update);
-    }
-  }, [tableMetaData.key, tableMetaData.type]);
 
   const handleTaxonomyChange = (evt: any) => {
     // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
