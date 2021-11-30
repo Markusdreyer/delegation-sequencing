@@ -26,23 +26,6 @@ export enum ExpanderOptions {
   COLLAPSE,
 }
 
-export const initialLookup: Record<string, any> = {
-  Hamar: {
-    None: "None",
-    "1st Attack Engine Crew": "1st Attack Engine Crew",
-    "2nd Attack Engine Crew": "2nd Attack Engine Crew",
-    "Patrol Vehicle": "Patrol Vehicle",
-    "1st Ambulance": "1st Ambulance",
-    "2nd Ambulance": "2nd Ambulance",
-  },
-  "Land fire incidents": {
-    None: "None",
-    ae_crew: "ae_crew",
-    se_crew: "ae_crew",
-    lt_crew: "ae_crew",
-  },
-};
-
 export const tableColumns: Record<string, ColumnDef[]> = {
   procedures: [
     { title: "Action", field: "action" },
@@ -53,11 +36,7 @@ export const tableColumns: Record<string, ColumnDef[]> = {
     {
       title: "Agent",
       field: "agent",
-      lookup: {
-        ae_crew: "ae_crew",
-        se_crew: "se_crew",
-        lt_crew: "lt_crew",
-      },
+      lookup: {},
     },
     {
       title: "Quantity",
