@@ -10,7 +10,7 @@ declare namespace Cypress {
     selectMultiselect(row: number, cell: number): Chainable;
     getCellValues(cell: number): Chainable;
     countQuantity(total: number): Chainable;
-    generateActionCards(status: number): Chainable;
+    generateActionCards(): Chainable;
     verifyGeneratedActions(expectedActions): Chainable;
     getActionCard(index: number): Chainable;
     openSidebar(): Chainable;

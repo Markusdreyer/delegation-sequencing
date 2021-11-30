@@ -372,7 +372,6 @@ const Table: React.FC<Props> = (props) => {
             {tableMetaData.type === tableTypes.PROCEDURES && (
               <div style={{ padding: "0px 10px" }}>
                 <FormControl className={classes.formControl}>
-                  {console.log("TABLE COLUMNS", columns)}
                   <InputLabel>Taxonomy</InputLabel>
                   <Select
                     data-testid="taxonomy-selector"
