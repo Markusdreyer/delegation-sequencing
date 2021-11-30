@@ -82,9 +82,9 @@ Cypress.Commands.add("countQuantity", (total: number) => {
     });
 });
 
-Cypress.Commands.add("generateActionCards", (status: number) => {
+Cypress.Commands.add("generateActionCards", () => {
   cy.get("[data-testid=generate-action-cards-button]").click();
-  return cy.wait(5000);
+  return cy.wait(6000);
 });
 
 Cypress.Commands.add("verifyGeneratedActions", (expectedActions: number) => {
