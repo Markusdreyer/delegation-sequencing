@@ -309,17 +309,33 @@ const Table: React.FC<Props> = (props) => {
     newData: TaxonomyData | ProcedureData,
     oldData: MaterialTableData | undefined
   ): Promise<void> => {
-    console.log("UPDATE TABLE", newData);
     if (oldData) {
-      const dataUpdate = document.tableData!;
+      const dataUpdate = document.tableData! as
+        | TaxonomyData[]
+        | ProcedureData[];
       const index = oldData.tableData.id;
       dataUpdate[index] = newData;
-      console.log("newData: ", newData);
-      console.log("dataUpdate: ", dataUpdate);
+      if (tableMetaData.type === tableTypes.TAXONOMIES) {
+        //If its a taxonomy update, then need to make sure the nesting is updated
+        if ((newData as TaxonomyData).parent === "None") {
+          delete (dataUpdate[index] as TaxonomyData).parentId;
+        } else {
+          const parentId = getParentId(newData as TaxonomyData);
+          dataUpdate[index].parentId = parentId;
+        }
+      }
+
       await updateDoc(doc(firestore, tableMetaData.type, tableMetaData.key), {
         tableData: dataUpdate,
       });
     }
+  };
+
+  const getParentId = (taxonomy: TaxonomyData) => {
+    const parent: TaxonomyData = document.tableData.find(
+      (el: TaxonomyData) => el.agent === taxonomy.parent
+    );
+    return parent.id;
   };
 
   const deleteTableRow = async (
@@ -362,7 +378,12 @@ const Table: React.FC<Props> = (props) => {
         onRowAdd: (newData: ProcedureData | TaxonomyData) =>
           addTableRow(newData),
         onRowUpdate: (newData: ProcedureData | TaxonomyData, oldData: any) =>
-          updateTableRow(newData, oldData),
+          new Promise((resolve: any, reject) => {
+            setTimeout(() => {
+              updateTableRow(newData, oldData);
+              resolve();
+            }, 0);
+          }),
         onRowDelete: (oldData: any) => deleteTableRow(oldData),
       }}
       components={{
