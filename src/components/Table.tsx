@@ -11,9 +11,20 @@ import {
   TableMetaData,
   TaxonomyData,
 } from "../types";
-import { setActiveTaxonomy, setProcedure, setTaxonomy } from "../actions";
-import { tableTypes } from "../utils/const";
-import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
+import {
+  setActiveTaxonomy,
+  setProcedure,
+  setTaxonomy,
+  toggleDialog,
+} from "../actions";
+import { dialogOptions, tableTypes } from "../utils/const";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@material-ui/core";
 import { unique } from "../utils/utils";
 import EditComponent from "./EditComponent";
 import {
@@ -23,6 +34,7 @@ import {
   getFirestore,
   connectFirestoreEmulator,
   Firestore,
+  deleteDoc,
 } from "firebase/firestore";
 import {
   useFirestore,
@@ -297,17 +309,33 @@ const Table: React.FC<Props> = (props) => {
     newData: TaxonomyData | ProcedureData,
     oldData: MaterialTableData | undefined
   ): Promise<void> => {
-    console.log("UPDATE TABLE", newData);
     if (oldData) {
-      const dataUpdate = document.tableData!;
+      const dataUpdate = document.tableData! as
+        | TaxonomyData[]
+        | ProcedureData[];
       const index = oldData.tableData.id;
       dataUpdate[index] = newData;
-      console.log("newData: ", newData);
-      console.log("dataUpdate: ", dataUpdate);
+      if (tableMetaData.type === tableTypes.TAXONOMIES) {
+        //If its a taxonomy update, then need to make sure the nesting is updated
+        if ((newData as TaxonomyData).parent === "None") {
+          delete (dataUpdate[index] as TaxonomyData).parentId;
+        } else {
+          const parentId = getParentId(newData as TaxonomyData);
+          dataUpdate[index].parentId = parentId;
+        }
+      }
+
       await updateDoc(doc(firestore, tableMetaData.type, tableMetaData.key), {
         tableData: dataUpdate,
       });
     }
+  };
+
+  const getParentId = (taxonomy: TaxonomyData) => {
+    const parent: TaxonomyData = document.tableData.find(
+      (el: TaxonomyData) => el.agent === taxonomy.parent
+    );
+    return parent.id;
   };
 
   const deleteTableRow = async (
@@ -321,6 +349,10 @@ const Table: React.FC<Props> = (props) => {
         tableData: dataDelete,
       });
     }
+  };
+
+  const deleteDocument = async () => {
+    await deleteDoc(doc(firestore, tableMetaData.type, tableMetaData.key));
   };
 
   return (
@@ -346,15 +378,26 @@ const Table: React.FC<Props> = (props) => {
         onRowAdd: (newData: ProcedureData | TaxonomyData) =>
           addTableRow(newData),
         onRowUpdate: (newData: ProcedureData | TaxonomyData, oldData: any) =>
-          updateTableRow(newData, oldData),
+          new Promise((resolve: any, reject) => {
+            setTimeout(() => {
+              updateTableRow(newData, oldData);
+              resolve();
+            }, 0);
+          }),
         onRowDelete: (oldData: any) => deleteTableRow(oldData),
       }}
       components={{
         Toolbar: (props) => (
           <div>
             <MTableToolbar {...props} />
-            {tableMetaData.type === tableTypes.PROCEDURES && (
-              <div style={{ padding: "0px 10px" }}>
+            <div
+              style={{
+                padding: "0 16px",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              {tableMetaData.type === tableTypes.PROCEDURES && (
                 <FormControl className={classes.formControl}>
                   <InputLabel>Taxonomy</InputLabel>
                   <Select
@@ -368,8 +411,11 @@ const Table: React.FC<Props> = (props) => {
                       ))}
                   </Select>
                 </FormControl>
-              </div>
-            )}
+              )}
+              <Button data-testid="delete-document" onClick={deleteDocument}>
+                Delete {tableMetaData.key}
+              </Button>
+            </div>
           </div>
         ),
       }}

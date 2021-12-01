@@ -15,8 +15,8 @@ declare namespace Cypress {
     getActionCard(index: number): Chainable;
     openSidebar(): Chainable;
     selectTaxonomy(taxonomy: string): Chainable;
-    selectProcedure(index: number): Chainable;
-    editTaxonomy(index: number): Chainable;
+    renderProcedure(index: number): Chainable;
+    renderTaxonomy(index: number): Chainable;
     reviseAction(index: number): Chainable;
     verifyRevisionOptions(length: number): Chainable;
     relieveAgent(): Chainable;
