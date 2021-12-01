@@ -168,7 +168,6 @@ const generateAspTaxonomy = (
   taxonomy: TaxonomyData[]
 ): (string | FailureReason)[] => {
   let aspTaxonomy: string = "";
-  console.log("TAXONOMY::", taxonomy);
   const parents: TaxonomyData[] = taxonomy.filter(
     (el) => !el.hasOwnProperty("parentId")
   );
@@ -187,11 +186,7 @@ const generateAspTaxonomy = (
     if (!el.hasOwnProperty("parentId")) {
       aspTaxonomy += isSubClass(el.agent, "agent");
     } else {
-      console.log("---- PROBLEM SECTION ----");
-      console.log("---- EL ----");
-      console.log(el);
       const parent = parents.find((obj) => obj.agent === el.parent).agent;
-      console.log("PARENT: ", parent);
       aspTaxonomy += isA(el.agent, parent);
     }
 

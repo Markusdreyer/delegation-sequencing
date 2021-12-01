@@ -65,7 +65,7 @@ describe("Verify EA fire scenario and taxonomy", () => {
 describe("Verify Hamar scenario and taxonomy", () => {
   it("should select Hamar scenario and taxonomy", () => {
     cy.openSidebar();
-    cy.selectProcedure(1);
+    cy.renderProcedure(1);
     cy.wait(1000);
     cy.selectTaxonomy("Hamar");
   });
