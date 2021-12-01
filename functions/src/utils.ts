@@ -125,8 +125,8 @@ const generateAspActions = (
       console.log("Error: ", error);
       return [null, error];
     }
-    const precedence = el.precedence;
-    const abbreviation = el.abbreviation;
+    const precedence = el.precedence.toLowerCase();
+    const abbreviation = el.abbreviation.toLowerCase();
     const agents = el.agent.split(",");
     const role = el.role;
 
