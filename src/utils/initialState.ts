@@ -15,6 +15,8 @@ const initialState: RootState = {
     type: "procedures",
     key: "EA fire",
   },
+  acceptedActions: [],
+  revisionOptions: { key: "", agents: [] },
 };
 
 export default initialState;

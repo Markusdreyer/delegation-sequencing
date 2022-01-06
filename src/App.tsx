@@ -23,7 +23,7 @@ import Sidebar from "./components/Sidebar";
 import Table from "./components/Table";
 import useStyles from "./Styles";
 import { dialogOptions, modelTypes, tableTypes } from "./utils/const";
-import ActionCards from "./components/ActionCards";
+import ActionCardSection from "./components/ActionCardSection";
 import { useFirestore, useFirestoreDocData } from "reactfire";
 
 import { setDoc } from "@firebase/firestore";
@@ -192,7 +192,7 @@ const App = () => {
         </div>
       )}
       {actionCardData && (
-        <ActionCards
+        <ActionCardSection
           models={actionCardData}
           setActionCardData={setActionCardData}
           setFailureMessage={setFailureMessage}

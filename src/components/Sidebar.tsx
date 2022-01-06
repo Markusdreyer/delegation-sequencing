@@ -33,23 +33,8 @@ import {
 import useStyles from "../Styles";
 import { dialogOptions, tableTypes } from "../utils/const";
 import { RootState } from "../types";
-import {
-  doc,
-  collection,
-  getFirestore,
-  query,
-  connectFirestoreEmulator,
-  Firestore,
-} from "firebase/firestore";
-import {
-  FirebaseAppProvider,
-  FirestoreProvider,
-  useFirebaseApp,
-  useFirestore,
-  useFirestoreCollection,
-  useFirestoreCollectionData,
-  useFirestoreDocData,
-} from "reactfire";
+import { collection } from "firebase/firestore";
+import { useFirestore, useFirestoreCollectionData } from "reactfire";
 
 const Sidebar = () => {
   const firestore = useFirestore();

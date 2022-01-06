@@ -6,6 +6,8 @@ export interface RootState {
   tableMetaData: TableMetaData;
   sunburstData: SunburstData[];
   previousModel: string[];
+  revisionOptions: RevisionOptions;
+  acceptedActions: string[];
 }
 
 export interface TableMetaData {
@@ -121,4 +123,9 @@ export interface BackendResponse extends ModelResponse {
 export interface ModelResponse {
   newModels?: Action[][];
   newPreviousModel?: string[];
+}
+
+export interface RevisionOptions {
+  key: string;
+  agents: string[];
 }

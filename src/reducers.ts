@@ -68,6 +68,18 @@ const previousModelReducer = (
   }
 };
 
+const acceptedActionsReducer = (
+  state = initialState.acceptedActions,
+  action: any
+) => {
+  switch (action.type) {
+    case "SET_ACCEPTED_ACTIONS":
+      return action.payload.acceptedActions;
+    default:
+      return state;
+  }
+};
+
 const allReducers = combineReducers({
   showSidebar: showSidebarReducer,
   showProcedures: showProceduresReducer,
@@ -75,6 +87,7 @@ const allReducers = combineReducers({
   tableMetaData: tableReducer,
   activeTaxonomy: activeTaxonomyReducer,
   previousModel: previousModelReducer,
+  acceptedActions: acceptedActionsReducer,
 });
 
 export default allReducers;

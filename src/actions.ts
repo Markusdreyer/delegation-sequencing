@@ -68,3 +68,12 @@ export const setPreviousModel = (model: string[]) => {
     },
   };
 };
+
+export const setAcceptedActions = (acceptedActions: string[]) => {
+  return {
+    type: "SET_ACCEPTED_ACTIONS",
+    payload: {
+      acceptedActions,
+    },
+  };
+};

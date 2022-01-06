@@ -3,7 +3,7 @@ describe("Verify EA fire scenario and taxonomy", () => {
   it("should fail to fetch action cards", () => {
     cy.visit(url);
     cy.wait(2000);
-    cy.generateActionCards(400);
+    cy.generateActionCards();
     cy.contains('"Result": "UNSATISFIABLE"');
   });
 
@@ -12,13 +12,13 @@ describe("Verify EA fire scenario and taxonomy", () => {
     cy.edit(1);
     cy.deselectMultiselect(1, 3);
     cy.save(1);
-    cy.generateActionCards(200);
+    cy.generateActionCards();
     cy.previousPage();
     cy.contains("Submit revised plan");
   });
 
   it("should verify number of expected actions with number of generated actions", () => {
-    cy.generateActionCards(200);
+    cy.generateActionCards();
     return cy.countQuantity(0).then((res) => cy.verifyGeneratedActions(res));
   });
 
@@ -31,7 +31,7 @@ describe("Verify EA fire scenario and taxonomy", () => {
   });
 
   it("should verify quantity change", () => {
-    cy.generateActionCards(200);
+    cy.generateActionCards();
     return cy.countQuantity(0).then((res) => cy.verifyGeneratedActions(res));
   });
 
@@ -41,7 +41,7 @@ describe("Verify EA fire scenario and taxonomy", () => {
     cy.edit(4);
     cy.selectMultiselect(4, 3);
     cy.save(4);
-    cy.generateActionCards(200);
+    cy.generateActionCards();
     cy.getActionCard(4).get("td:nth-child(1)").contains("barry");
   });
 });
@@ -55,7 +55,7 @@ describe("Verify Hamar scenario and taxonomy", () => {
   });
 
   it("should verify generated actions match expected actions", () => {
-    cy.generateActionCards(200);
+    cy.generateActionCards();
     return cy.countQuantity(0).then((res) => cy.verifyGeneratedActions(res));
   });
 
