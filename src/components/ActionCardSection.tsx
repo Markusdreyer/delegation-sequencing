@@ -1,17 +1,16 @@
 import { ExpandMore, ExpandLess } from "@mui/icons-material/";
 import { Button } from "@material-ui/core";
 import React, { useState } from "react";
-import {
-  Action,
-  RootState,
-  ProcedureData,
-  BackendResponse,
-  RevisionOptions,
-} from "../types";
+import { Action, RootState, ProcedureData, BackendResponse } from "../types";
 import { ExpanderOptions } from "../utils/const";
 import { useSelector, useDispatch } from "react-redux";
 import { generateActionCardData, getASPModels } from "../utils/utils";
-import { setPreviousModel } from "../actions";
+import {
+  setAcceptedActions,
+  setPreviousModel,
+  setRevisedPlan,
+  setRevisionOptions,
+} from "../actions";
 import { doc } from "@firebase/firestore";
 import { useFirestore, useFirestoreDocData } from "reactfire";
 import ActionCard from "./ActionCard";
@@ -27,6 +26,10 @@ const ActionCardSection: React.FC<Props> = (props) => {
   const { models, setActionCardData, setFailureMessage, setIsLoading } = props;
   const firestore = useFirestore();
 
+  const revisedPlan = useSelector((state: RootState) => state.revisedPlan);
+  const acceptedActions = useSelector(
+    (state: RootState) => state.acceptedActions
+  );
   const previousModel = useSelector((state: RootState) => state.previousModel);
   const tableMetaData = useSelector((state: RootState) => state.tableMetaData);
   const dispatch = useDispatch();
@@ -36,14 +39,7 @@ const ActionCardSection: React.FC<Props> = (props) => {
     idField: "key",
   });
 
-  const [acceptedActions, setAcceptedActions] = useState<string[]>([]);
   const [collapsed, setCollapsed] = useState<boolean[]>([]);
-  const [revisionOptions, setRevisionOptions] = useState<RevisionOptions>({
-    key: "",
-    agents: [],
-  });
-
-  const [changes, setChanges] = useState<string[]>([]);
 
   const handleExpand = (option: ExpanderOptions, index: number) => {
     const update = [...collapsed];
@@ -59,7 +55,7 @@ const ActionCardSection: React.FC<Props> = (props) => {
   const submitRevision = async () => {
     const revisionRequest: any = {
       previousModel,
-      changes,
+      changes: revisedPlan,
     };
 
     setIsLoading(true);
@@ -81,14 +77,10 @@ const ActionCardSection: React.FC<Props> = (props) => {
       dispatch(setPreviousModel(newPreviousModel as string[]));
       setActionCardData(generateActionCardData(newModels as Action[][]));
 
-      setChanges([]);
-      setRevisionOptions({ key: "", agents: [] });
-      setAcceptedActions([]);
+      dispatch(setRevisedPlan([]));
+      dispatch(setRevisionOptions({ key: "", agents: [] }));
+      dispatch(setAcceptedActions([]));
     }
-  };
-
-  const updatePlan = (update: string) => {
-    setChanges((previous) => [...previous, update]);
   };
 
   return (
@@ -130,13 +122,7 @@ const ActionCardSection: React.FC<Props> = (props) => {
                 <div className="action-card-horizontal-scroll">
                   {time.map((action, j) => (
                     <div className="container">
-                      <ActionCard
-                        index={j}
-                        action={action}
-                        revisionOptions={revisionOptions}
-                        setRevisionOptions={setRevisionOptions}
-                        updatePlan={updatePlan}
-                      />
+                      <ActionCard index={j} action={action} />
                     </div>
                   ))}
                 </div>

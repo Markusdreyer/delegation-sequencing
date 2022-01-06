@@ -7,6 +7,7 @@ export interface RootState {
   sunburstData: SunburstData[];
   previousModel: string[];
   revisionOptions: RevisionOptions;
+  revisedPlan: string[];
   acceptedActions: string[];
 }
 

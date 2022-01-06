@@ -5,35 +5,29 @@ import MaterialTable from "material-table";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFirestore, useFirestoreDocData } from "reactfire";
-import { setAcceptedActions } from "../actions";
 import {
-  Action,
-  ProcedureData,
-  RevisionOptions,
-  RootState,
-  TaxonomyData,
-} from "../types";
+  setAcceptedActions,
+  setRevisedPlan,
+  setRevisionOptions,
+} from "../actions";
+import { Action, ProcedureData, RootState, TaxonomyData } from "../types";
 import { unique } from "../utils/utils";
 
 interface Props {
   index: number;
   action: Action;
-  revisionOptions: RevisionOptions;
-  updatePlan: (update: string) => void;
-  setRevisionOptions: (options: RevisionOptions) => void;
 }
 
-const ActionCard: React.FC<Props> = ({
-  index,
-  action,
-  revisionOptions,
-  updatePlan,
-  setRevisionOptions,
-}) => {
+const ActionCard: React.FC<Props> = ({ index, action }) => {
   const firestore = useFirestore();
   const tableMetaData = useSelector((state: RootState) => state.tableMetaData);
+  const revisedPlan = useSelector((state: RootState) => state.revisedPlan);
   const acceptedActions = useSelector(
     (state: RootState) => state.acceptedActions
+  );
+
+  const revisionOptions = useSelector(
+    (state: RootState) => state.revisionOptions
   );
   const activeTaxonomy = useSelector(
     (state: RootState) => state.activeTaxonomy
@@ -53,7 +47,7 @@ const ActionCard: React.FC<Props> = ({
 
   const reviseAction = (actionName: string, index: number) => {
     const agents = possibleAgents(actionName);
-    setRevisionOptions({ key: actionName + index, agents });
+    dispatch(setRevisionOptions({ key: actionName + index, agents }));
   };
 
   const getActionAbbreviation = (action: Action) => {
@@ -95,7 +89,7 @@ const ActionCard: React.FC<Props> = ({
     const abbreviation = getActionAbbreviation(action);
     const update = `schedule(${abbreviation}, ${action.agent}, ${action.time}).`;
 
-    updatePlan(update);
+    dispatch(setRevisedPlan([...revisedPlan, update]));
     dispatch(setAcceptedActions([...acceptedActions, action.name + index]));
   };
 
@@ -109,9 +103,9 @@ const ActionCard: React.FC<Props> = ({
       update = `schedule(${abbreviation}, ${agent}, ${action.time}).`;
     }
 
-    updatePlan(update);
+    dispatch(setRevisedPlan([...revisedPlan, update]));
     dispatch(setAcceptedActions([...acceptedActions, action.name + index]));
-    setRevisionOptions({ key: "", agents: [] });
+    dispatch(setRevisionOptions({ key: "", agents: [] }));
   };
 
   const parseActionToTableFormat = (action: Action) => {

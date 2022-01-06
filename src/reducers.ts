@@ -1,3 +1,4 @@
+import { any } from "cypress/types/bluebird";
 import { combineReducers } from "redux";
 import initialState from "./utils/initialState";
 
@@ -80,6 +81,27 @@ const acceptedActionsReducer = (
   }
 };
 
+const revisionOptionsReducer = (
+  state = initialState.revisionOptions,
+  action: any
+) => {
+  switch (action.type) {
+    case "SET_REVISION_OPTIONS":
+      return action.payload.revisionOptions;
+    default:
+      return state;
+  }
+};
+
+const revisedPlanReducer = (state = initialState.revisedPlan, action: any) => {
+  switch (action.type) {
+    case "SET_REVISED_PLAN":
+      return action.payload.revisedPlan;
+    default:
+      return state;
+  }
+};
+
 const allReducers = combineReducers({
   showSidebar: showSidebarReducer,
   showProcedures: showProceduresReducer,
@@ -88,6 +110,8 @@ const allReducers = combineReducers({
   activeTaxonomy: activeTaxonomyReducer,
   previousModel: previousModelReducer,
   acceptedActions: acceptedActionsReducer,
+  revisionOptions: revisionOptionsReducer,
+  revisedPlan: revisedPlanReducer,
 });
 
 export default allReducers;

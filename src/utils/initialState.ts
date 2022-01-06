@@ -17,6 +17,7 @@ const initialState: RootState = {
   },
   acceptedActions: [],
   revisionOptions: { key: "", agents: [] },
+  revisedPlan: [],
 };
 
 export default initialState;

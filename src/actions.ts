@@ -1,4 +1,4 @@
-import { ProcedureData, TaxonomyData } from "./types";
+import { ProcedureData, RevisionOptions, TaxonomyData } from "./types";
 
 export const setActiveTaxonomy = (activeTaxonomy: string) => {
   return {
@@ -74,6 +74,24 @@ export const setAcceptedActions = (acceptedActions: string[]) => {
     type: "SET_ACCEPTED_ACTIONS",
     payload: {
       acceptedActions,
+    },
+  };
+};
+
+export const setRevisionOptions = (revisionOptions: RevisionOptions) => {
+  return {
+    type: "SET_REVISION_OPTIONS",
+    payload: {
+      revisionOptions,
+    },
+  };
+};
+
+export const setRevisedPlan = (revisedPlan: string[]) => {
+  return {
+    type: "SET_REVISED_PLAN",
+    payload: {
+      revisedPlan,
     },
   };
 };
