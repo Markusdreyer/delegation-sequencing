@@ -177,7 +177,7 @@ const parseModels = (
 
       // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
       const actionLookup = procedure.find(
-        (el: ProcedureData) => el.abbreviation === abbreviation
+        (el: ProcedureData) => el.abbreviation.toLowerCase() === abbreviation
       ).action;
 
       const actionObject: Action = {

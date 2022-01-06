@@ -52,6 +52,7 @@ export interface TaxonomyData {
   parentId: number;
   role?: string;
   agent: string;
+  parent: string;
 }
 
 export interface FailureReason {

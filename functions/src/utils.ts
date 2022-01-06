@@ -125,8 +125,8 @@ const generateAspActions = (
       console.log("Error: ", error);
       return [null, error];
     }
-    const precedence = el.precedence;
-    const abbreviation = el.abbreviation;
+    const precedence = el.precedence.toLowerCase();
+    const abbreviation = el.abbreviation.toLowerCase();
     const agents = el.agent.split(",");
     const role = el.role;
 
@@ -156,7 +156,7 @@ const generateAspActions = (
     aspActions += ``;
     aspActions += `description(${abbreviation}, "${el.action}") .\nmandatory(${abbreviation}) .\n\n`;
 
-    if (precedence !== "None") {
+    if (precedence !== "none") {
       aspPrecendence += `pred(${abbreviation}, ${precedence}) .\n`;
     }
   }
@@ -168,7 +168,9 @@ const generateAspTaxonomy = (
   taxonomy: TaxonomyData[]
 ): (string | FailureReason)[] => {
   let aspTaxonomy: string = "";
-  const parents: string[] = [];
+  const parents: TaxonomyData[] = taxonomy.filter(
+    (el) => !el.hasOwnProperty("parentId")
+  );
   for (const el of taxonomy) {
     if (el.role === "") {
       delete el.role;
@@ -178,22 +180,17 @@ const generateAspTaxonomy = (
         function: "generateAspActions",
         reason: `Detected missing value in element: ${JSON.stringify(el)}`,
       };
-      console.log("Error: ", error);
       return [null, error];
     }
 
     if (!el.hasOwnProperty("parentId")) {
-      /**
-       * Means that the element should be considered top-level.
-       * The parents should be added to an array for easy lookup.
-       */
       aspTaxonomy += isSubClass(el.agent, "agent");
-      parents[el.id] = el.agent;
     } else {
-      aspTaxonomy += isA(el.agent, parents[el.parentId]);
+      const parent = parents.find((obj) => obj.agent === el.parent).agent;
+      aspTaxonomy += isA(el.agent, parent);
     }
 
-    if (el.hasOwnProperty("role") && el.role !== "") {
+    if (el.hasOwnProperty("role")) {
       aspTaxonomy += property(el.agent, el.role);
       aspTaxonomy += isA(el.agent, el.role);
     }

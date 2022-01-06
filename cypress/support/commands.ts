@@ -45,7 +45,7 @@ Cypress.Commands.add("deselectMultiselect", (row: number, cell: number) => {
     .eq(cell)
     .click()
     .get("li.MuiListItem-button")
-    .click();
+    .click({ force: true });
 });
 
 Cypress.Commands.add("selectMultiselect", (row: number, cell: number) => {
@@ -101,7 +101,7 @@ Cypress.Commands.add("openSidebar", () => {
   return cy.get("[aria-label='open drawer']").click();
 });
 
-Cypress.Commands.add("selectProcedure", (index: number) => {
+Cypress.Commands.add("renderProcedure", (index: number) => {
   return cy
     .get("[data-testid='procedure-dropdown']")
     .click()
@@ -114,15 +114,15 @@ Cypress.Commands.add("selectTaxonomy", (taxonomy: string) => {
   return cy
     .get("[data-testid=taxonomy-selector]")
     .click()
-    .get(`[data-value=${taxonomy}]`)
+    .get(`[data-value='${taxonomy}']`)
     .click();
 });
 
-Cypress.Commands.add("editTaxonomy", (index: number) => {
+Cypress.Commands.add("renderTaxonomy", (index: number) => {
   return cy
     .get("[data-testid='taxonomy-dropdown']")
     .click()
-    .get("[data-testid='procedure']")
+    .get("[data-testid='taxonomy']")
     .eq(index)
     .click();
 });

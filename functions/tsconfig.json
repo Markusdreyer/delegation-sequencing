@@ -5,7 +5,8 @@
     "noUnusedLocals": true,
     "outDir": "lib",
     "sourceMap": true,
-    "target": "es2017"
+    "target": "es2017",
+    "jsx": "react"
   },
   "compileOnSave": true,
   "include": ["src"]
