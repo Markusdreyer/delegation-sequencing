@@ -1,6 +1,6 @@
 import { MenuItem, OutlinedInput, Select } from "@material-ui/core";
 import React from "react";
-import { ColumnDef, MultiselectOptions } from "../types";
+import { ColumnDef } from "../types";
 
 const EditComponent = (props: {
   columnDef: ColumnDef;

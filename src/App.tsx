@@ -24,15 +24,9 @@ import Table from "./components/Table";
 import useStyles from "./Styles";
 import { dialogOptions, modelTypes, tableTypes } from "./utils/const";
 import ActionCards from "./components/ActionCards";
-import {
-  FirestoreProvider,
-  useFirebaseApp,
-  useFirestore,
-  useFirestoreDocData,
-} from "reactfire";
+import { useFirestore, useFirestoreDocData } from "reactfire";
 
-import { getFirestore, setDoc } from "@firebase/firestore";
-import { connectDatabaseEmulator, getDatabase } from "@firebase/database";
+import { setDoc } from "@firebase/firestore";
 import { doc } from "firebase/firestore";
 
 const App = () => {
@@ -177,13 +171,6 @@ const App = () => {
           {tableMetaData.type === tableTypes.PROCEDURES && (
             <>
               <div className="center padding-l">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => generateModels(modelTypes.SUNBURST)}
-                >
-                  Generate sunburst
-                </Button>
                 <Button
                   data-testid="generate-action-cards-button"
                   variant="contained"

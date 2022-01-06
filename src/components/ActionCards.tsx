@@ -1,10 +1,5 @@
 import MaterialTable from "material-table";
-import {
-  CheckCircle,
-  ExpandMore,
-  ExpandLess,
-  IndeterminateCheckBoxSharp,
-} from "@mui/icons-material/";
+import { CheckCircle, ExpandMore, ExpandLess } from "@mui/icons-material/";
 import { Button } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import {
@@ -18,10 +13,8 @@ import { ExpanderOptions } from "../utils/const";
 import { useSelector, useDispatch } from "react-redux";
 import { generateActionCardData, getASPModels, unique } from "../utils/utils";
 import { setPreviousModel } from "../actions";
-import { doc, Firestore, getFirestore } from "@firebase/firestore";
+import { doc } from "@firebase/firestore";
 import { useFirestore, useFirestoreDocData } from "reactfire";
-import { connectFirestoreEmulator } from "firebase/firestore";
-import { Database } from "@firebase/database";
 
 interface Props {
   models: Action[][][];

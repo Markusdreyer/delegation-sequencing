@@ -1,4 +1,4 @@
-import { ColumnDef, ProcedureData, TaxonomyData } from "../types";
+import { ColumnDef } from "../types";
 
 export const tableTypes = {
   PROCEDURES: "procedures",

@@ -11,19 +11,12 @@ import {
   TableMetaData,
   TaxonomyData,
 } from "../types";
-import { setActiveTaxonomy, setProcedure, setTaxonomy } from "../actions";
+import { setActiveTaxonomy } from "../actions";
 import { tableTypes } from "../utils/const";
 import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
 import { unique } from "../utils/utils";
 import EditComponent from "./EditComponent";
-import {
-  doc,
-  collection,
-  updateDoc,
-  getFirestore,
-  connectFirestoreEmulator,
-  Firestore,
-} from "firebase/firestore";
+import { doc, collection, updateDoc } from "firebase/firestore";
 import {
   useFirestore,
   useFirestoreCollectionData,
