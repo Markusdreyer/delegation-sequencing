@@ -9,6 +9,7 @@ export interface RootState {
   revisionOptions: RevisionOptions;
   revisedPlan: string[];
   acceptedActions: string[];
+  collapsed: boolean[];
 }
 
 export interface TableMetaData {

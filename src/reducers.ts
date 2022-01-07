@@ -102,6 +102,15 @@ const revisedPlanReducer = (state = initialState.revisedPlan, action: any) => {
   }
 };
 
+const collapedReducer = (state = initialState.collapsed, action: any) => {
+  switch (action.type) {
+    case "SET_COLLAPSED":
+      return action.payload.collapsed;
+    default:
+      return state;
+  }
+};
+
 const allReducers = combineReducers({
   showSidebar: showSidebarReducer,
   showProcedures: showProceduresReducer,
@@ -112,6 +121,7 @@ const allReducers = combineReducers({
   acceptedActions: acceptedActionsReducer,
   revisionOptions: revisionOptionsReducer,
   revisedPlan: revisedPlanReducer,
+  collapsed: collapedReducer,
 });
 
 export default allReducers;

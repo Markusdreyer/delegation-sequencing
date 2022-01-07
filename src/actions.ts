@@ -95,3 +95,12 @@ export const setRevisedPlan = (revisedPlan: string[]) => {
     },
   };
 };
+
+export const setCollapsed = (collapsed: boolean[]) => {
+  return {
+    type: "SET_COLLAPSED",
+    payload: {
+      collapsed,
+    },
+  };
+};

@@ -259,7 +259,6 @@ const Table: React.FC<Props> = (props) => {
       await updateDoc(doc(firestore, tableMetaData.type, tableMetaData.key), {
         tableData: dataUpdate,
       });
-      //firebase refactor dispatch(setProcedure(data.key, dataUpdate));
     } else if (tableMetaData.type === tableTypes.TAXONOMIES) {
       let taxonomyData = newData as TaxonomyData;
       if (taxonomyData.parent && taxonomyData.parent !== "None") {

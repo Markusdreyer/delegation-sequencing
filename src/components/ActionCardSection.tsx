@@ -1,8 +1,6 @@
-import { ExpandMore, ExpandLess } from "@mui/icons-material/";
 import { Button } from "@material-ui/core";
-import React, { useState } from "react";
+import React from "react";
 import { Action, RootState, ProcedureData, BackendResponse } from "../types";
-import { ExpanderOptions } from "../utils/const";
 import { useSelector, useDispatch } from "react-redux";
 import { generateActionCardData, getASPModels } from "../utils/utils";
 import {
@@ -14,6 +12,7 @@ import {
 import { doc } from "@firebase/firestore";
 import { useFirestore, useFirestoreDocData } from "reactfire";
 import ActionCard from "./ActionCard";
+import ActionCardSectionHeader from "./ActionCardSectionHeader";
 
 interface Props {
   models: Action[][][];
@@ -27,9 +26,7 @@ const ActionCardSection: React.FC<Props> = (props) => {
   const firestore = useFirestore();
 
   const revisedPlan = useSelector((state: RootState) => state.revisedPlan);
-  const acceptedActions = useSelector(
-    (state: RootState) => state.acceptedActions
-  );
+  const collapsed = useSelector((state: RootState) => state.collapsed);
   const previousModel = useSelector((state: RootState) => state.previousModel);
   const tableMetaData = useSelector((state: RootState) => state.tableMetaData);
   const dispatch = useDispatch();
@@ -38,19 +35,6 @@ const ActionCardSection: React.FC<Props> = (props) => {
   const { data: procedureData } = useFirestoreDocData(procedureRef, {
     idField: "key",
   });
-
-  const [collapsed, setCollapsed] = useState<boolean[]>([]);
-
-  const handleExpand = (option: ExpanderOptions, index: number) => {
-    const update = [...collapsed];
-    if (option === ExpanderOptions.EXPAND) {
-      update[index] = false;
-      setCollapsed(update);
-    } else {
-      update[index] = true;
-      setCollapsed(update);
-    }
-  };
 
   const submitRevision = async () => {
     const revisionRequest: any = {
@@ -89,35 +73,7 @@ const ActionCardSection: React.FC<Props> = (props) => {
         <>
           {model.map((time, i) => (
             <>
-              <div className="actions-header">
-                <h2>Actions at {i + 1}: </h2>
-                <p>
-                  {" "}
-                  Accepted{" "}
-                  {time.reduce(
-                    (a, v) => (acceptedActions.includes(v.name) ? a + 1 : a),
-                    0
-                  )}{" "}
-                  of {time.length}
-                </p>
-                {collapsed[i] ? (
-                  <div
-                    className="expander"
-                    onClick={() => handleExpand(ExpanderOptions.EXPAND, i)}
-                  >
-                    <p>Show actions</p>
-                    <ExpandMore />
-                  </div>
-                ) : (
-                  <div
-                    className="expander"
-                    onClick={() => handleExpand(ExpanderOptions.COLLAPSE, i)}
-                  >
-                    <p>Hide actions</p>
-                    <ExpandLess />
-                  </div>
-                )}
-              </div>
+              <ActionCardSectionHeader index={i} actions={time} />
               {!collapsed[i] && (
                 <div className="action-card-horizontal-scroll">
                   {time.map((action, j) => (
