@@ -37,6 +37,10 @@ const ActionCardSection: React.FC<Props> = (props) => {
   });
 
   const submitRevision = async () => {
+    dispatch(setRevisedPlan([]));
+    dispatch(setRevisionOptions({ key: "", agents: [] }));
+    dispatch(setAcceptedActions([]));
+
     const revisionRequest: any = {
       previousModel,
       changes: revisedPlan,
@@ -60,10 +64,6 @@ const ActionCardSection: React.FC<Props> = (props) => {
     } else {
       dispatch(setPreviousModel(newPreviousModel as string[]));
       setActionCardData(generateActionCardData(newModels as Action[][]));
-
-      dispatch(setRevisedPlan([]));
-      dispatch(setRevisionOptions({ key: "", agents: [] }));
-      dispatch(setAcceptedActions([]));
     }
   };
 

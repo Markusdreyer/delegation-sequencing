@@ -1,8 +1,7 @@
 import { Button } from "@material-ui/core";
-import { CheckCircle } from "@material-ui/icons";
 import { doc } from "firebase/firestore";
 import MaterialTable from "material-table";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFirestore, useFirestoreDocData } from "reactfire";
 import {
@@ -51,6 +50,10 @@ const ActionCard: React.FC<Props> = ({ index, action }) => {
   const { data: taxonomyData } = useFirestoreDocData(taxonomyRef, {
     idField: "key",
   });
+
+  useEffect(() => {
+    console.log("revisedPlan", revisedPlan);
+  }, [revisedPlan]);
 
   const dispatch = useDispatch();
 
@@ -112,18 +115,25 @@ const ActionCard: React.FC<Props> = ({ index, action }) => {
     const abbreviation = getActionAbbreviation(action);
     let update: string;
     if (agent === action.agent) {
+      setData([
+        {
+          agent: agentChange(action.agent, "?"),
+          action: action.name,
+          time: action.time,
+        },
+      ]);
       update = `relieve(${abbreviation}, ${agent}).`;
     } else {
+      setData([
+        {
+          agent: agentChange(action.agent, agent),
+          action: action.name,
+          time: action.time,
+        },
+      ]);
       update = `schedule(${abbreviation}, ${agent}, ${action.time}).`;
     }
 
-    setData([
-      {
-        agent: agentChange(action.agent, agent),
-        action: action.name,
-        time: action.time,
-      },
-    ]);
     dispatch(setRevisedPlan([...revisedPlan, update]));
     dispatch(setAcceptedActions([...acceptedActions, action.name + index]));
     dispatch(setRevisionOptions({ key: "", agents: [] }));
@@ -136,22 +146,34 @@ const ActionCard: React.FC<Props> = ({ index, action }) => {
   );
 
   const undoAccept = (action: Action, index: number) => {
-    if (action.agent.includes("<del>")) {
+    if (data[0].agent.props) {
+      //Means that the agent was changed, and we have to reset back to the previos agent
       setData([
         {
-          agent: getPreviousAgent(action),
+          agent: getPreviousAgent(),
           action: action.name,
           time: action.time,
         },
       ]);
     }
+
     const update = acceptedActions.filter((el) => el !== action.name + index);
     dispatch(setAcceptedActions(update));
+    //Also need to reset the revised plan, and figure out which action to remove
+    const revisionUpdate = revisedPlan.filter(
+      (el) =>
+        el !==
+          `schedule(${getActionAbbreviation(action)}, ${action.agent}, ${
+            action.time
+          }).` &&
+        el !== `relieve(${getActionAbbreviation(action)}, ${action.agent}).`
+    );
+
+    dispatch(setRevisedPlan(revisionUpdate));
   };
 
-  const getPreviousAgent = (action: Action) => {
-    const first = action.agent.split("<del>")[1];
-    return first.split("</del>")[0];
+  const getPreviousAgent = () => {
+    return data[0].agent.props.children[0].props.children;
   };
 
   const getNewAgent = (action: Action) => {

@@ -34,8 +34,7 @@ const ActionCardSectionHeader: React.FC<Props> = ({ index, actions }) => {
       <h2>Actions at {index + 1}: </h2>
       <p>
         {" "}
-        Accepted {console.log("AcceptedActions", acceptedActions)}{" "}
-        {console.log("Actions", actions)}
+        Accepted{" "}
         {actions.reduce(
           (a, v, i) => (acceptedActions.includes(v.name + i) ? a + 1 : a),
           0
