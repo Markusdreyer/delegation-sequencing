@@ -146,8 +146,10 @@ const ActionCard: React.FC<Props> = ({ index, action }) => {
   );
 
   const undoAccept = (action: Action, index: number) => {
+    let agent = action.agent;
     if (data[0].agent.props) {
-      //Means that the agent was changed, and we have to reset back to the previos agent
+      //Means that the agent was changed, and we have to reset back to the previous agent
+      agent = getNewAgent();
       setData([
         {
           agent: getPreviousAgent(),
@@ -156,17 +158,18 @@ const ActionCard: React.FC<Props> = ({ index, action }) => {
         },
       ]);
     }
-
     const update = acceptedActions.filter((el) => el !== action.name + index);
     dispatch(setAcceptedActions(update));
+
+    console.log("Data", data);
+
     //Also need to reset the revised plan, and figure out which action to remove
     const revisionUpdate = revisedPlan.filter(
       (el) =>
         el !==
-          `schedule(${getActionAbbreviation(action)}, ${action.agent}, ${
+          `schedule(${getActionAbbreviation(action)}, ${agent}, ${
             action.time
-          }).` &&
-        el !== `relieve(${getActionAbbreviation(action)}, ${action.agent}).`
+          }).` && el !== `relieve(${getActionAbbreviation(action)}, ${agent}).`
     );
 
     dispatch(setRevisedPlan(revisionUpdate));
@@ -176,9 +179,8 @@ const ActionCard: React.FC<Props> = ({ index, action }) => {
     return data[0].agent.props.children[0].props.children;
   };
 
-  const getNewAgent = (action: Action) => {
-    const first = action.agent.split("<ins>")[1];
-    return first.split("</ins>")[0];
+  const getNewAgent = () => {
+    return data[0].agent.props.children[2].props.children;
   };
 
   const options = {
