@@ -17,6 +17,12 @@ export interface TableMetaData {
   key: string;
 }
 
+export interface TableData {
+  agent: any;
+  action: string;
+  time: number;
+}
+
 export interface ProcedureData {
   id: number;
   parentId?: number;

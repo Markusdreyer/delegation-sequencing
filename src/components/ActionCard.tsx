@@ -2,7 +2,7 @@ import { Button } from "@material-ui/core";
 import { CheckCircle } from "@material-ui/icons";
 import { doc } from "firebase/firestore";
 import MaterialTable from "material-table";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFirestore, useFirestoreDocData } from "reactfire";
 import {
@@ -10,7 +10,13 @@ import {
   setRevisedPlan,
   setRevisionOptions,
 } from "../actions";
-import { Action, ProcedureData, RootState, TaxonomyData } from "../types";
+import {
+  Action,
+  ProcedureData,
+  RootState,
+  TableData,
+  TaxonomyData,
+} from "../types";
 import { unique } from "../utils/utils";
 
 interface Props {
@@ -19,6 +25,14 @@ interface Props {
 }
 
 const ActionCard: React.FC<Props> = ({ index, action }) => {
+  const [data, setData] = useState<TableData[]>([
+    {
+      agent: action.agent,
+      action: action.name,
+      time: action.time,
+    },
+  ]);
+
   const firestore = useFirestore();
   const tableMetaData = useSelector((state: RootState) => state.tableMetaData);
   const revisedPlan = useSelector((state: RootState) => state.revisedPlan);
@@ -103,24 +117,46 @@ const ActionCard: React.FC<Props> = ({ index, action }) => {
       update = `schedule(${abbreviation}, ${agent}, ${action.time}).`;
     }
 
+    setData([
+      {
+        agent: agentChange(action.agent, agent),
+        action: action.name,
+        time: action.time,
+      },
+    ]);
     dispatch(setRevisedPlan([...revisedPlan, update]));
     dispatch(setAcceptedActions([...acceptedActions, action.name + index]));
     dispatch(setRevisionOptions({ key: "", agents: [] }));
   };
 
-  const parseActionToTableFormat = (action: Action) => {
-    return [
-      {
-        agent: action.agent,
-        action: action.name,
-        time: action.time,
-      },
-    ];
+  const agentChange = (fromAgent: string, toAgent: string) => (
+    <p>
+      <del>{fromAgent}</del> <ins>{toAgent}</ins>
+    </p>
+  );
+
+  const undoAccept = (action: Action, index: number) => {
+    if (action.agent.includes("<del>")) {
+      setData([
+        {
+          agent: getPreviousAgent(action),
+          action: action.name,
+          time: action.time,
+        },
+      ]);
+    }
+    const update = acceptedActions.filter((el) => el !== action.name + index);
+    dispatch(setAcceptedActions(update));
   };
 
-  const undoAccept = (actionName: string) => {
-    const update = acceptedActions.filter((el) => el !== actionName);
-    dispatch(setAcceptedActions(update));
+  const getPreviousAgent = (action: Action) => {
+    const first = action.agent.split("<del>")[1];
+    return first.split("</del>")[0];
+  };
+
+  const getNewAgent = (action: Action) => {
+    const first = action.agent.split("<ins>")[1];
+    return first.split("</ins>")[0];
   };
 
   const options = {
@@ -158,28 +194,21 @@ const ActionCard: React.FC<Props> = ({ index, action }) => {
 
   return (
     <>
-      {acceptedActions.includes(action.name + index) && (
-        <CheckCircle
-          className="checkmark"
-          fontSize="large"
-          onClick={() => undoAccept(action.name + index)}
-        />
-      )}
-      <div
-        data-testid="action-card"
-        className={`action-card ${
-          acceptedActions.includes(action.name + index) ? "accepted" : ""
-        }`}
-      >
+      <div data-testid="action-card" className={"action-card"}>
         <MaterialTable
+          style={{
+            border: acceptedActions.includes(action.name + index)
+              ? "2px solid #4050B5"
+              : "",
+          }}
           options={options}
           columns={columns}
-          data={parseActionToTableFormat(action)}
+          data={data}
         />
         <div
           className={`confirmation-card ${
-            acceptedActions.includes(action.name + index) ? "hidden" : ""
-          } ${revisionOptions.key === action.name + index ? "expanded" : ""}`}
+            revisionOptions.key === action.name + index ? "expanded" : ""
+          }`}
         >
           {revisionOptions.key === action.name + index &&
             revisionOptions.agents.map((agent) => (
@@ -205,21 +234,38 @@ const ActionCard: React.FC<Props> = ({ index, action }) => {
             ))}
           {revisionOptions.key !== action.name + index && (
             <>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => acceptAction(action, index)}
-              >
-                Accept
-              </Button>
-              <Button
-                data-testid="revise-button"
-                variant="outlined"
-                color="secondary"
-                onClick={() => reviseAction(action.name, index)}
-              >
-                Revise
-              </Button>
+              {acceptedActions.includes(action.name + index) ? (
+                <>
+                  {}
+                  <p>Action accepted</p>
+                  <Button
+                    data-testid="revise-button"
+                    variant="outlined"
+                    color="secondary"
+                    onClick={() => undoAccept(action, index)}
+                  >
+                    Undo
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => acceptAction(action, index)}
+                  >
+                    Accept
+                  </Button>
+                  <Button
+                    data-testid="revise-button"
+                    variant="outlined"
+                    color="secondary"
+                    onClick={() => reviseAction(action.name, index)}
+                  >
+                    Revise
+                  </Button>
+                </>
+              )}
             </>
           )}
         </div>
