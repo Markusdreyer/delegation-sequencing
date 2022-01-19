@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { generateActionCardData, getASPModels } from "../utils/utils";
 import {
   setAcceptedActions,
+  setActionCardData,
   setPreviousModel,
   setRevisedPlan,
   setRevisionOptions,
@@ -15,16 +16,17 @@ import ActionCard from "./ActionCard";
 import ActionCardSectionHeader from "./ActionCardSectionHeader";
 
 interface Props {
-  models: Action[][][];
-  setActionCardData: (data: Action[][][]) => void;
   setFailureMessage: (data: string) => void;
   setIsLoading: (isLoading: boolean) => void;
 }
 
 const ActionCardSection: React.FC<Props> = (props) => {
-  const { models, setActionCardData, setFailureMessage, setIsLoading } = props;
+  const { setFailureMessage, setIsLoading } = props;
   const firestore = useFirestore();
 
+  const actionCardData = useSelector(
+    (state: RootState) => state.actionCardData
+  );
   const revisedPlan = useSelector((state: RootState) => state.revisedPlan);
   const collapsed = useSelector((state: RootState) => state.collapsed);
   const previousModel = useSelector((state: RootState) => state.previousModel);
@@ -36,11 +38,15 @@ const ActionCardSection: React.FC<Props> = (props) => {
     idField: "key",
   });
 
-  const submitRevision = async () => {
+  const resetData = () => {
+    dispatch(setActionCardData(null));
     dispatch(setRevisedPlan([]));
     dispatch(setRevisionOptions({ key: "", agents: [] }));
     dispatch(setAcceptedActions([]));
+  };
 
+  const submitRevision = async () => {
+    resetData();
     const revisionRequest: any = {
       previousModel,
       changes: revisedPlan,
@@ -58,36 +64,40 @@ const ActionCardSection: React.FC<Props> = (props) => {
 
     if (error) {
       console.log("Error", error);
-      setActionCardData([]);
+      dispatch(setActionCardData([]));
       setFailureMessage(JSON.stringify(error, null, 2));
       return;
     } else {
       dispatch(setPreviousModel(newPreviousModel as string[]));
-      setActionCardData(generateActionCardData(newModels as Action[][]));
+      dispatch(
+        setActionCardData(generateActionCardData(newModels as Action[][]))
+      );
     }
   };
 
   return (
     <>
-      {models.map((model) => (
-        <>
-          {model.map((time, i) => (
-            <>
-              <ActionCardSectionHeader index={i} actions={time} />
-              {!collapsed[i] && (
-                <div className="action-card-horizontal-scroll">
-                  {time.map((action, j) => (
-                    <div className="container">
-                      <ActionCard index={j} action={action} />
-                    </div>
-                  ))}
-                </div>
-              )}
-            </>
-          ))}
-          <hr />
-        </>
-      ))}
+      {actionCardData &&
+        actionCardData.map((actionCardSection) => (
+          <>
+            {console.log("ACEJFGEIO", actionCardData)}
+            {actionCardSection.map((actions, i) => (
+              <>
+                <ActionCardSectionHeader index={i} actions={actions} />
+                {!collapsed[i] && (
+                  <div className="action-card-horizontal-scroll">
+                    {actions.map((action, j) => (
+                      <div className="container">
+                        <ActionCard index={j} action={action} />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </>
+            ))}
+            <hr />
+          </>
+        ))}
       <Button
         data-testid="revision-submit-button"
         variant="contained"

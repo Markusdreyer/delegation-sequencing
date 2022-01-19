@@ -1,4 +1,4 @@
-import { ProcedureData, RevisionOptions, TaxonomyData } from "./types";
+import { Action, ProcedureData, RevisionOptions, TaxonomyData } from "./types";
 
 export const setActiveTaxonomy = (activeTaxonomy: string) => {
   return {
@@ -101,6 +101,15 @@ export const setCollapsed = (collapsed: boolean[]) => {
     type: "SET_COLLAPSED",
     payload: {
       collapsed,
+    },
+  };
+};
+
+export const setActionCardData = (actionCardData: Action[][][] | null) => {
+  return {
+    type: "SET_ACTION_CARD_DATA",
+    payload: {
+      actionCardData,
     },
   };
 };

@@ -18,7 +18,12 @@ import {
 } from "./utils/utils";
 import { Action, BackendResponse, ProcedureData, RootState } from "./types";
 import { useSelector, useDispatch } from "react-redux";
-import { renderTable, setPreviousModel, toggleDialog } from "./actions";
+import {
+  renderTable,
+  setActionCardData,
+  setPreviousModel,
+  toggleDialog,
+} from "./actions";
 import Sidebar from "./components/Sidebar";
 import Table from "./components/Table";
 import useStyles from "./Styles";
@@ -32,14 +37,16 @@ import { doc } from "firebase/firestore";
 const App = () => {
   const firestore = useFirestore();
 
+  const dialog = useSelector((state: RootState) => state.dialog);
   const showSidebar = useSelector((state: RootState) => state.showSidebar);
   const tableMetaData = useSelector((state: RootState) => state.tableMetaData);
   const activeTaxonomy = useSelector(
     (state: RootState) => state.activeTaxonomy
   );
-  const dialog = useSelector((state: RootState) => state.dialog);
+  const actionCardData = useSelector(
+    (state: RootState) => state.actionCardData
+  );
   const [sunburstData, setSunburstData] = useState();
-  const [actionCardData, setActionCardData] = useState<Action[][][]>();
   const [newDocument, setNewDocument] = useState("");
   const [failureMessage, setFailureMessage] = useState<string>();
   const [isLoading, setIsLoading] = useState(false);
@@ -57,10 +64,8 @@ const App = () => {
   const classes = useStyles();
 
   useEffect(() => {
-    setActionCardData(undefined);
-    setSunburstData(undefined);
-    setFailureMessage(undefined);
-  }, [activeTaxonomy]);
+    resetData();
+  });
 
   const createNewDocument = async () => {
     if (dialog.title === dialogOptions.PROCEDURE.title) {
@@ -68,13 +73,11 @@ const App = () => {
       await setDoc(doc(firestore, "procedures", newDocument), {
         tableData: [],
       });
-      //firebase refactor dispatch(setProcedure(newDocument, []));
     } else if (dialog.title === dialogOptions.TAXONOMY.title) {
       dispatch(renderTable(tableTypes.TAXONOMIES, newDocument));
       await setDoc(doc(firestore, "taxonomies", newDocument), {
         tableData: [],
       });
-      //firebase refactor dispatch(setTaxonomy(newDocument, []));
     } else {
       console.log(
         `${dialog.title} does not match ${dialogOptions.PROCEDURE.title} or ${dialogOptions.TAXONOMY.title}`
@@ -83,11 +86,14 @@ const App = () => {
     dispatch(toggleDialog());
   };
 
-  const generateModels = async (modelType: string) => {
+  const resetData = () => {
     setSunburstData(undefined);
-    setActionCardData(undefined);
+    dispatch(setActionCardData(null));
     setFailureMessage(undefined);
+  };
 
+  const generateModels = async (modelType: string) => {
+    resetData();
     const tmpProcedure = JSON.parse(JSON.stringify(procedureData.tableData));
     tmpProcedure.forEach((el: ProcedureData) => {
       el.role = (el.role as string[]).filter((e) => e).join(",");
@@ -106,7 +112,7 @@ const App = () => {
 
     if (error) {
       setSunburstData(undefined);
-      setActionCardData(undefined);
+      dispatch(setActionCardData(null));
       setFailureMessage(JSON.stringify(error, null, 2));
       return;
     }
@@ -116,12 +122,14 @@ const App = () => {
     dispatch(setPreviousModel(newPreviousModel as string[]));
     if (modelType === modelTypes.SUNBURST) {
       setFailureMessage(undefined);
-      setActionCardData(undefined);
+      dispatch(setActionCardData(null));
       setSunburstData(generateSunburstData(newModels as Action[][]));
     } else if (modelType === modelTypes.ACTION_CARDS) {
       setFailureMessage(undefined);
       setSunburstData(undefined);
-      setActionCardData(generateActionCardData(newModels as Action[][]));
+      dispatch(
+        setActionCardData(generateActionCardData(newModels as Action[][]))
+      );
     } else {
       console.log(`${modelType} is not yet implemented`);
     }
@@ -195,8 +203,6 @@ const App = () => {
       )}
       {actionCardData && (
         <ActionCardSection
-          models={actionCardData}
-          setActionCardData={setActionCardData}
           setFailureMessage={setFailureMessage}
           setIsLoading={setIsLoading}
         />

@@ -10,6 +10,7 @@ export interface RootState {
   revisedPlan: string[];
   acceptedActions: string[];
   collapsed: boolean[];
+  actionCardData: Action[][][] | null;
 }
 
 export interface TableMetaData {

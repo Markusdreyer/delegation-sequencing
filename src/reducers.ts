@@ -111,6 +111,18 @@ const collapedReducer = (state = initialState.collapsed, action: any) => {
   }
 };
 
+const actionCardDataReducer = (
+  state = initialState.actionCardData,
+  action: any
+) => {
+  switch (action.type) {
+    case "SET_ACTION_CARD_DATA":
+      return action.payload.actionCardData;
+    default:
+      return state;
+  }
+};
+
 const allReducers = combineReducers({
   showSidebar: showSidebarReducer,
   showProcedures: showProceduresReducer,
@@ -122,6 +134,7 @@ const allReducers = combineReducers({
   revisionOptions: revisionOptionsReducer,
   revisedPlan: revisedPlanReducer,
   collapsed: collapedReducer,
+  actionCardData: actionCardDataReducer,
 });
 
 export default allReducers;
