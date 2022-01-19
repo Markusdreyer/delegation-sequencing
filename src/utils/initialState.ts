@@ -19,6 +19,7 @@ const initialState: RootState = {
   revisionOptions: { key: "", agents: [] },
   revisedPlan: [],
   collapsed: [],
+  actionCardData: null,
 };
 
 export default initialState;

@@ -10,11 +10,18 @@ export interface RootState {
   revisedPlan: string[];
   acceptedActions: string[];
   collapsed: boolean[];
+  actionCardData: Action[][][] | null;
 }
 
 export interface TableMetaData {
   type: string;
   key: string;
+}
+
+export interface TableData {
+  agent: any;
+  action: string;
+  time: number;
 }
 
 export interface ProcedureData {
