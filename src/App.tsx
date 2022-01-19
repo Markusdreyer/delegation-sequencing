@@ -64,8 +64,8 @@ const App = () => {
   const classes = useStyles();
 
   useEffect(() => {
-    resetData();
-  });
+    reset();
+  }, [activeTaxonomy]); //Active taxonomy has to be there to only trigger when taxonomy changes
 
   const createNewDocument = async () => {
     if (dialog.title === dialogOptions.PROCEDURE.title) {
@@ -86,14 +86,15 @@ const App = () => {
     dispatch(toggleDialog());
   };
 
-  const resetData = () => {
+  const reset = () => {
     setSunburstData(undefined);
     dispatch(setActionCardData(null));
     setFailureMessage(undefined);
   };
 
   const generateModels = async (modelType: string) => {
-    resetData();
+    reset();
+
     const tmpProcedure = JSON.parse(JSON.stringify(procedureData.tableData));
     tmpProcedure.forEach((el: ProcedureData) => {
       el.role = (el.role as string[]).filter((e) => e).join(",");
