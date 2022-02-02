@@ -43,7 +43,7 @@ export const responsible = (
 };
 
 const deploy = (abbreviation: string) => {
-  return `deploy(${abbreviation})`;
+  return `deploy(${createReadableConst(abbreviation)})`;
 };
 
 export const member = (agent: string) => {
@@ -51,11 +51,11 @@ export const member = (agent: string) => {
 };
 
 export const collaborative = (abbreviation: string) => {
-  return `collaborative(${abbreviation}) . \n`;
+  return `collaborative(${createReadableConst(abbreviation)}) . \n`;
 };
 
 export const primitive = (abbreviation: string) => {
-  return `primitive(${abbreviation}) . \n`;
+  return `primitive(${createReadableConst(abbreviation)}) . \n`;
 };
 
 export const createReadableConst = (input: string) => {

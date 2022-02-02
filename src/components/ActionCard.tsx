@@ -210,10 +210,6 @@ const ActionCard: React.FC<Props> = ({ index, action }) => {
       title: "Action",
       field: "action",
     },
-    {
-      title: "Time",
-      field: "time",
-    },
   ];
 
   return (

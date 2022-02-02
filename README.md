@@ -18,7 +18,7 @@ To start up the emulator with data from the previous session run the following c
 `firebase emulators:start --import seed`
 
 If there's been changes to the backend API, the service has to be built in advance:
-`cd backend/functions && npm run build`
+`cd functions && npm run build`
 
 ## Firebase deploy
 

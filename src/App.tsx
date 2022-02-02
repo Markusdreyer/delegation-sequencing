@@ -38,6 +38,8 @@ const App = () => {
   const firestore = useFirestore();
 
   const dialog = useSelector((state: RootState) => state.dialog);
+  const revisedPlan = useSelector((state: RootState) => state.revisedPlan);
+  const previousModel = useSelector((state: RootState) => state.previousModel);
   const showSidebar = useSelector((state: RootState) => state.showSidebar);
   const tableMetaData = useSelector((state: RootState) => state.tableMetaData);
   const activeTaxonomy = useSelector(
@@ -64,7 +66,7 @@ const App = () => {
   const classes = useStyles();
 
   useEffect(() => {
-    reset();
+    resetData();
   }, [activeTaxonomy]); //Active taxonomy has to be there to only trigger when taxonomy changes
 
   const createNewDocument = async () => {
@@ -86,14 +88,14 @@ const App = () => {
     dispatch(toggleDialog());
   };
 
-  const reset = () => {
+  const resetData = () => {
     setSunburstData(undefined);
     dispatch(setActionCardData(null));
     setFailureMessage(undefined);
   };
 
   const generateModels = async (modelType: string) => {
-    reset();
+    resetData();
 
     const tmpProcedure = JSON.parse(JSON.stringify(procedureData.tableData));
     tmpProcedure.forEach((el: ProcedureData) => {
@@ -133,6 +135,37 @@ const App = () => {
       );
     } else {
       console.log(`${modelType} is not yet implemented`);
+    }
+  };
+
+  const reviseResponse = async () => {
+    resetData();
+
+    const revisionRequest: any = {
+      previousModel,
+      changes: revisedPlan,
+    };
+
+    setIsLoading(true);
+    const { newModels, newPreviousModel, error }: BackendResponse =
+      await getASPModels(
+        procedureData.tableData as ProcedureData[],
+        revisionRequest,
+        "revise",
+        1
+      );
+    setIsLoading(false);
+
+    if (error) {
+      console.log("Error", error);
+      dispatch(setActionCardData([]));
+      setFailureMessage(JSON.stringify(error, null, 2));
+      return;
+    } else {
+      dispatch(setPreviousModel(newPreviousModel as string[]));
+      dispatch(
+        setActionCardData(generateActionCardData(newModels as Action[][]))
+      );
     }
   };
 
@@ -188,8 +221,18 @@ const App = () => {
                   color="primary"
                   onClick={() => generateModels(modelTypes.ACTION_CARDS)}
                 >
-                  Generate action cards
+                  Initiate new response
                 </Button>
+                {actionCardData && (
+                  <Button
+                    data-testid="revision-submit-button"
+                    variant="contained"
+                    color="primary"
+                    onClick={() => reviseResponse()}
+                  >
+                    Revise response
+                  </Button>
+                )}
               </div>
               {failureMessage && PrettyPrintJson(failureMessage)}
               {sunburstData && <Sunburst data={sunburstData} />}
@@ -202,12 +245,7 @@ const App = () => {
           <CircularProgress />
         </div>
       )}
-      {actionCardData && (
-        <ActionCardSection
-          setFailureMessage={setFailureMessage}
-          setIsLoading={setIsLoading}
-        />
-      )}
+      <ActionCardSection />
     </>
   );
 };
