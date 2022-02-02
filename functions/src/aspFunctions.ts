@@ -1,4 +1,5 @@
 import * as converter from "number-to-words";
+import { TaxonomyData } from "./types";
 
 export const isSubClass = (child: string, parent: string) => {
   return `is_subclass(${createReadableConst(child)}, ${createReadableConst(
@@ -93,7 +94,7 @@ const numberConverter = (stringNumber: string) => {
   return stringNumber.replace(/\d/g, converter.toWordsOrdinal);
 };
 
-export const generateSuperClassSection = (
+export const generateAgentSuperClass = (
   agents: string[],
   aspActions: string
 ) => {
@@ -107,6 +108,30 @@ export const generateSuperClassSection = (
   agents.forEach((agent) => {
     superClassSection += isSubClass(agent, superClassName);
   });
+  superClassSection += isSubClass(superClassName, "agent");
+
+  return [superClassName, superClassSection];
+};
+
+export const generateRoleSuperClass = (
+  taxonomy: TaxonomyData[],
+  roles: string[],
+  aspActions: string
+) => {
+  const superClassName = roles.join("");
+  let superClassSection = "";
+
+  if (aspActions.includes(superClassName)) {
+    return [superClassName, superClassSection];
+  }
+
+  roles.forEach((role) => {
+    const agents = taxonomy.filter((el) => el.role == role);
+    agents.map((el) => {
+      superClassSection += property(el.agent, superClassName);
+    });
+  });
+
   superClassSection += isSubClass(superClassName, "agent");
 
   return [superClassName, superClassSection];

@@ -214,7 +214,7 @@ export const unique = (value: any, index: any, self: any) => {
 };
 
 //This is the same function as used in backend, but needs to be used frontend as well to "deserialize" the const back
-const createReadableConst = (input: string) => {
+export const createReadableConst = (input: string) => {
   if (!input) {
     console.log("No input");
     return null;

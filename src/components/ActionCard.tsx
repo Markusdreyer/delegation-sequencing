@@ -16,7 +16,7 @@ import {
   TableData,
   TaxonomyData,
 } from "../types";
-import { unique } from "../utils/utils";
+import { createReadableConst, unique } from "../utils/utils";
 
 interface Props {
   index: number;
@@ -104,7 +104,9 @@ const ActionCard: React.FC<Props> = ({ index, action }) => {
 
   const acceptAction = (action: Action, index: number) => {
     const abbreviation = getActionAbbreviation(action);
-    const update = `schedule(${abbreviation}, ${action.agent}, ${action.time}).`;
+    const update = `schedule(${createReadableConst(
+      abbreviation
+    )}, ${createReadableConst(action.agent)}, ${action.time}).`;
 
     dispatch(setRevisedPlan([...revisedPlan, update]));
     dispatch(setAcceptedActions([...acceptedActions, action.name + index]));
@@ -122,7 +124,9 @@ const ActionCard: React.FC<Props> = ({ index, action }) => {
           time: action.time,
         },
       ]);
-      update = `relieve(${abbreviation}, ${agent}).`;
+      update = `relieve(${createReadableConst(
+        abbreviation
+      )}, ${createReadableConst(agent)}).`;
     } else {
       setData([
         {
@@ -131,7 +135,9 @@ const ActionCard: React.FC<Props> = ({ index, action }) => {
           time: action.time,
         },
       ]);
-      update = `schedule(${abbreviation}, ${agent}, ${action.time}).`;
+      update = `schedule(${createReadableConst(
+        abbreviation
+      )}, ${createReadableConst(agent)}, ${action.time}).`;
     }
 
     dispatch(setRevisedPlan([...revisedPlan, update]));
