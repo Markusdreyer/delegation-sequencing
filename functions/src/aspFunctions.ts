@@ -19,7 +19,7 @@ export const property = (child: string, parent: string) => {
 };
 
 export const roleProperty = (role: string) => {
-  return `property(Ag, ${createReadableConst(role)})`;
+  return `property(Ag, ${role})`;
 };
 
 export const delegate = (
@@ -27,9 +27,11 @@ export const delegate = (
   quantity: number,
   agent: string
 ) => {
-  return `delegate(${abbreviation}, ${quantity}, ${createReadableConst(
-    agent
-  )}) :- ${deploy(abbreviation)} . \n`;
+  const parsedAbbreviation = createReadableConst(abbreviation);
+  const parsedAgent = createReadableConst(agent);
+  return `delegate(${parsedAbbreviation}, ${quantity}, ${parsedAgent}) :- ${deploy(
+    parsedAbbreviation
+  )} . \n`;
 };
 
 export const responsible = (
@@ -37,17 +39,20 @@ export const responsible = (
   role: string,
   agent: string
 ) => {
-  return `responsible(${abbreviation}, Ag) :- ${deploy(
-    abbreviation
-  )}, ${roleProperty(role)}, ${member(agent)}`;
+  const parsedAbbreviation = createReadableConst(abbreviation);
+  const parsedAgent = createReadableConst(agent);
+  const parsedRole = createReadableConst(role);
+  return `responsible(${parsedAbbreviation}, Ag) :- ${deploy(
+    parsedAbbreviation
+  )}, ${roleProperty(parsedRole)}, ${member(parsedAgent)}`;
 };
 
 const deploy = (abbreviation: string) => {
-  return `deploy(${createReadableConst(abbreviation)})`;
+  return `deploy(${abbreviation})`;
 };
 
 export const member = (agent: string) => {
-  return `member(Ag, ${createReadableConst(agent)}). \n`;
+  return `member(Ag, ${agent}). \n`;
 };
 
 export const collaborative = (abbreviation: string) => {
@@ -56,6 +61,14 @@ export const collaborative = (abbreviation: string) => {
 
 export const primitive = (abbreviation: string) => {
   return `primitive(${createReadableConst(abbreviation)}) . \n`;
+};
+
+export const mandatory = (abbreviation: string) => {
+  return `\nmandatory(${createReadableConst(abbreviation)}) .\n\n`;
+};
+
+export const description = (abbreviation: string, action: string) => {
+  return `description(${abbreviation}, "${action}") .`;
 };
 
 export const createReadableConst = (input: string) => {

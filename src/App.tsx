@@ -110,7 +110,13 @@ const App = () => {
 
     setIsLoading(true);
     const { newModels, newPreviousModel, error }: BackendResponse =
-      await getASPModels(tmpProcedure, requestData, "initial", 1);
+      await getASPModels(
+        tmpProcedure,
+        taxonomyData.tableData,
+        requestData,
+        "initial",
+        1
+      );
     setIsLoading(false);
 
     if (error) {
@@ -150,6 +156,7 @@ const App = () => {
     const { newModels, newPreviousModel, error }: BackendResponse =
       await getASPModels(
         procedureData.tableData as ProcedureData[],
+        taxonomyData.tableData,
         revisionRequest,
         "revise",
         1

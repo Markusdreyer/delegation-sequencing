@@ -1,9 +1,12 @@
 import {
   collaborative,
+  createReadableConst,
   delegate,
+  description,
   generateSuperClassSection,
   isA,
   isSubClass,
+  mandatory,
   primitive,
   property,
   responsible,
@@ -125,10 +128,10 @@ const generateAspActions = (
       console.log("Error: ", error);
       return [null, error];
     }
-    const precedence = el.precedence.toLowerCase();
-    const abbreviation = el.abbreviation.toLowerCase();
+    const precedence = createReadableConst(el.precedence.toLowerCase());
+    const abbreviation = createReadableConst(el.abbreviation.toLowerCase());
     const agents = el.agent.split(",");
-    const role = el.role;
+    const role = createReadableConst(el.role);
 
     if (agents.length > 1) {
       aspActions += collaborative(abbreviation);
@@ -153,8 +156,8 @@ const generateAspActions = (
       }
     }
 
-    aspActions += ``;
-    aspActions += `description(${abbreviation}, "${el.action}") .\nmandatory(${abbreviation}) .\n\n`;
+    aspActions += description(abbreviation, el.action);
+    aspActions += mandatory(abbreviation);
 
     if (precedence !== "none") {
       aspPrecendence += `pred(${abbreviation}, ${precedence}) .\n`;

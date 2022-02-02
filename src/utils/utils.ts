@@ -1,10 +1,12 @@
 import axios from "axios";
+import converter from "number-to-words";
 import md5 from "md5";
 import {
   Action,
   BackendResponse,
   ModelResponse,
   ProcedureData,
+  TaxonomyData,
 } from "../types";
 
 export const generateSunburstData = (models: Action[][]) => {
@@ -119,6 +121,7 @@ const generateValues = (models: any) => {
 
 export const getASPModels = (
   procedure: ProcedureData[],
+  taxonomy: TaxonomyData[],
   requestData: any,
   endpoint: string,
   numberOfModels: number
@@ -148,7 +151,7 @@ export const getASPModels = (
       });
       return optimumModels.slice(-numberOfModels);
     })
-    .then((models) => parseModels(models, procedure))
+    .then((models) => parseModels(models, procedure, taxonomy))
     .catch((error: any) => {
       console.log("error", error);
       if (error.response) {
@@ -161,7 +164,8 @@ export const getASPModels = (
 
 const parseModels = (
   optimumModels: Action[],
-  procedure: ProcedureData[]
+  procedure: ProcedureData[],
+  taxonomy: TaxonomyData[]
 ): ModelResponse => {
   let parsedModels: any = [];
   let previousModel: string[] = [];
@@ -177,12 +181,18 @@ const parseModels = (
 
       // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
       const actionLookup = procedure.find(
-        (el: ProcedureData) => el.abbreviation.toLowerCase() === abbreviation
+        (el: ProcedureData) =>
+          createReadableConst(el.abbreviation) === abbreviation
       ).action;
+
+      // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
+      const agentLookup = taxonomy.find(
+        (el: TaxonomyData) => createReadableConst(el.agent) === agent
+      ).agent;
 
       const actionObject: Action = {
         name: actionLookup,
-        agent: agent,
+        agent: agentLookup,
         time: time,
       };
       tmpParsedModel.push(actionObject);
@@ -201,4 +211,27 @@ const parseModels = (
 
 export const unique = (value: any, index: any, self: any) => {
   return self.indexOf(value) === index;
+};
+
+//This is the same function as used in backend, but needs to be used frontend as well to "deserialize" the const back
+const createReadableConst = (input: string) => {
+  if (!input) {
+    console.log("No input");
+    return null;
+  }
+  const readableConst = input
+    .replace(/\d.{2}/g, numberConverter)
+    .replace(/\s/g, "")
+    .replace(/[æøå]/g, "");
+  return readableConst.charAt(0).toLowerCase() + readableConst.slice(1);
+};
+
+const numberConverter = (stringNumber: string) => {
+  const ordinals = ["st", "nd", "rd", "th"];
+
+  if (ordinals.includes(stringNumber.slice(-2).toLowerCase())) {
+    return converter.toWordsOrdinal(stringNumber.slice(0, -2));
+  }
+
+  return stringNumber.replace(/\d/g, converter.toWordsOrdinal);
 };
