@@ -92,14 +92,14 @@ const ActionCard: React.FC<Props> = ({ index, action }) => {
   const agentsIn = (team: string) =>
     taxonomyData.tableData
       .filter((el: TaxonomyData) => el.parent === team)
-      .map((el: TaxonomyData) => el.agent.toLowerCase())
+      .map((el: TaxonomyData) => el.agent)
       .filter(unique) as string[];
 
   const agentsWithRoleIn = (team: string, roles: string[]) =>
     taxonomyData.tableData
       .filter((el: TaxonomyData) => el.parent === team)
       .filter((el: TaxonomyData) => roles.includes(el.role))
-      .map((el: TaxonomyData) => el.agent.toLowerCase())
+      .map((el: TaxonomyData) => el.agent)
       .filter(unique) as string[];
 
   const acceptAction = (action: Action, index: number) => {
