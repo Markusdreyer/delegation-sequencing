@@ -258,7 +258,7 @@ describe("Clean up created resources", () => {
   });
 
   it("should delete the taxonomy and all its data", () => {
-    cy.renderTaxonomy(0);
+    cy.renderTaxonomy(1);
     cy.get("[data-testid='delete-document'").click();
   });
 });

@@ -130,8 +130,8 @@ const generateAspActions = (
       console.log("Error: ", error);
       return [null, error];
     }
-    const precedence = createReadableConst(el.precedence.toLowerCase());
-    const abbreviation = createReadableConst(el.abbreviation.toLowerCase());
+    const precedence = createReadableConst(el.precedence);
+    const abbreviation = createReadableConst(el.abbreviation);
     const agents = el.agent.split(",");
     const roles = el.role;
 

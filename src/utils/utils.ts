@@ -179,6 +179,9 @@ const parseModels = (
       const agent = expedite[2];
       const time = parseInt(expedite[3]);
 
+      console.log("readableconst", createReadableConst("FA"));
+      console.log("abbreviation", abbreviation);
+      console.log("procedure", procedure);
       // @ts-ignore: Object is possibly 'undefined'. //https://github.com/microsoft/TypeScript/issues/29642
       const actionLookup = procedure.find(
         (el: ProcedureData) =>
