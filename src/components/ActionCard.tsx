@@ -16,7 +16,7 @@ import {
   TableData,
   TaxonomyData,
 } from "../types";
-import { unique } from "../utils/utils";
+import { createReadableConst, unique } from "../utils/utils";
 
 interface Props {
   index: number;
@@ -92,19 +92,21 @@ const ActionCard: React.FC<Props> = ({ index, action }) => {
   const agentsIn = (team: string) =>
     taxonomyData.tableData
       .filter((el: TaxonomyData) => el.parent === team)
-      .map((el: TaxonomyData) => el.agent.toLowerCase())
+      .map((el: TaxonomyData) => el.agent)
       .filter(unique) as string[];
 
   const agentsWithRoleIn = (team: string, roles: string[]) =>
     taxonomyData.tableData
       .filter((el: TaxonomyData) => el.parent === team)
       .filter((el: TaxonomyData) => roles.includes(el.role))
-      .map((el: TaxonomyData) => el.agent.toLowerCase())
+      .map((el: TaxonomyData) => el.agent)
       .filter(unique) as string[];
 
   const acceptAction = (action: Action, index: number) => {
     const abbreviation = getActionAbbreviation(action);
-    const update = `schedule(${abbreviation}, ${action.agent}, ${action.time}).`;
+    const update = `schedule(${createReadableConst(
+      abbreviation
+    )}, ${createReadableConst(action.agent)}, ${action.time}).`;
 
     dispatch(setRevisedPlan([...revisedPlan, update]));
     dispatch(setAcceptedActions([...acceptedActions, action.name + index]));
@@ -122,7 +124,9 @@ const ActionCard: React.FC<Props> = ({ index, action }) => {
           time: action.time,
         },
       ]);
-      update = `relieve(${abbreviation}, ${agent}).`;
+      update = `relieve(${createReadableConst(
+        abbreviation
+      )}, ${createReadableConst(agent)}).`;
     } else {
       setData([
         {
@@ -131,7 +135,9 @@ const ActionCard: React.FC<Props> = ({ index, action }) => {
           time: action.time,
         },
       ]);
-      update = `schedule(${abbreviation}, ${agent}, ${action.time}).`;
+      update = `schedule(${createReadableConst(
+        abbreviation
+      )}, ${createReadableConst(agent)}, ${action.time}).`;
     }
 
     dispatch(setRevisedPlan([...revisedPlan, update]));
@@ -209,10 +215,6 @@ const ActionCard: React.FC<Props> = ({ index, action }) => {
     {
       title: "Action",
       field: "action",
-    },
-    {
-      title: "Time",
-      field: "time",
     },
   ];
 

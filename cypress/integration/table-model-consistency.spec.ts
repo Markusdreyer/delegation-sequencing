@@ -15,7 +15,7 @@ describe("Verify EA fire scenario and taxonomy", () => {
     cy.save(1);
     cy.generateActionCards();
     cy.previousPage();
-    cy.contains("Submit revised plan");
+    cy.contains("Revise response");
   });
 
   it("should verify number of expected actions with number of generated actions", () => {
@@ -65,7 +65,7 @@ describe("Verify EA fire scenario and taxonomy", () => {
 describe("Verify Hamar scenario and taxonomy", () => {
   it("should select Hamar scenario and taxonomy", () => {
     cy.openSidebar();
-    cy.renderProcedure(1);
+    cy.renderProcedure(2); //index of the procedure
     cy.wait(1000);
     cy.selectTaxonomy("Hamar");
   });
@@ -78,23 +78,23 @@ describe("Verify Hamar scenario and taxonomy", () => {
 
   it("should verify selected agents", () => {
     //Actions at 1
-    cy.verifyActionCardAgent(0, "lukas");
+    cy.verifyActionCardAgent(0, "Lukas");
     //Actions at 2
-    cy.verifyActionCardAgent(1, "ingolf");
-    cy.verifyActionCardAgent(2, "peter");
+    cy.verifyActionCardAgent(1, "Ingolf");
+    cy.verifyActionCardAgent(2, "Peter");
     //Actions at 3
-    cy.verifyActionCardAgent(3, "sven");
-    cy.verifyActionCardAgent(4, "miriam");
-    cy.verifyActionCardAgent(5, "ingolf");
-    cy.verifyActionCardAgent(6, "kari");
-    cy.verifyActionCardAgent(7, "rikard");
-    cy.verifyActionCardAgent(8, "herman");
-    cy.verifyActionCardAgent(9, "mikael");
-    cy.verifyActionCardAgent(10, "morten");
-    cy.verifyActionCardAgent(11, "halvard");
+    cy.verifyActionCardAgent(3, "Sven");
+    cy.verifyActionCardAgent(4, "Miriam");
+    cy.verifyActionCardAgent(5, "Ingolf");
+    cy.verifyActionCardAgent(6, "Kari");
+    cy.verifyActionCardAgent(7, "Rikard");
+    cy.verifyActionCardAgent(8, "Herman");
+    cy.verifyActionCardAgent(9, "Mikael");
+    cy.verifyActionCardAgent(10, "Morten");
+    cy.verifyActionCardAgent(11, "Halvard");
     //Actions at 4
-    cy.verifyActionCardAgent(12, "ingolf");
-    cy.verifyActionCardAgent(13, "theodor");
+    cy.verifyActionCardAgent(12, "Ingolf");
+    cy.verifyActionCardAgent(13, "Theodor");
   });
 
   it("should verify available agents", () => {
@@ -115,8 +115,8 @@ describe("Verify Hamar scenario and taxonomy", () => {
     cy.reviseAction(13); //Weird that it skips 12.. Whatever, it's atleast the last element
     cy.scheduleAgent(1);
     cy.submitRevision();
-    cy.verifyActionCardAgent(9, "lukas");
-    cy.verifyActionCardAgent(10, "sven");
+    cy.verifyActionCardAgent(9, "Lukas");
+    cy.verifyActionCardAgent(10, "Sven");
     cy.firstPage();
     return cy.countQuantity(0).then((res) => cy.verifyGeneratedActions(res));
   });

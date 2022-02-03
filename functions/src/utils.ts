@@ -1,9 +1,13 @@
 import {
   collaborative,
+  createReadableConst,
   delegate,
-  generateSuperClassSection,
+  description,
+  generateAgentSuperClass,
+  generateRoleSuperClass,
   isA,
   isSubClass,
+  mandatory,
   primitive,
   property,
   responsible,
@@ -84,7 +88,7 @@ export const generateAspString = ({
   taxonomy: TaxonomyData[];
   procedure: ProcedureData[];
 }): (string | Response)[] => {
-  const [aspActions, actionsError] = generateAspActions(procedure);
+  const [aspActions, actionsError] = generateAspActions(taxonomy, procedure);
   const [aspTaxonomy, taxonomyError] = generateAspTaxonomy(taxonomy);
 
   console.log("taxonomyError", taxonomyError);
@@ -109,6 +113,7 @@ export const generateAspString = ({
 };
 
 const generateAspActions = (
+  taxonomy: TaxonomyData[],
   procedure: ProcedureData[]
 ): (string | FailureReason)[] => {
   let aspActions: string = "";
@@ -125,36 +130,54 @@ const generateAspActions = (
       console.log("Error: ", error);
       return [null, error];
     }
-    const precedence = el.precedence.toLowerCase();
-    const abbreviation = el.abbreviation.toLowerCase();
+    const precedence = createReadableConst(el.precedence);
+    const abbreviation = createReadableConst(el.abbreviation);
     const agents = el.agent.split(",");
-    const role = el.role;
+    const roles = el.role;
 
     if (agents.length > 1) {
       aspActions += collaborative(abbreviation);
-      const [superClassName, superClassSection] = generateSuperClassSection(
+      const [agentSuperClass, agentSuperClassSection] = generateAgentSuperClass(
         agents,
         aspActions
       ); // Generate a single class out of all the possible agents
-      aspActions += superClassSection;
-      if (role) {
-        // TODO:Backend does not support multiple roles for a single task
-        aspActions += responsible(abbreviation, role, superClassName);
+      aspActions += agentSuperClassSection;
+      if (roles) {
+        const parsedRoles = roles.split(",");
+        if (parsedRoles.length > 1) {
+          const [roleSuperClass, roleSuperClassSection] =
+            generateRoleSuperClass(taxonomy, parsedRoles, aspActions);
+          aspActions += roleSuperClassSection;
+          aspActions += responsible(
+            abbreviation,
+            roleSuperClass,
+            agentSuperClass
+          );
+        } else {
+          aspActions += responsible(abbreviation, roles, agentSuperClass);
+        }
       } else {
-        aspActions += delegate(abbreviation, el.quantity, superClassName);
+        aspActions += delegate(abbreviation, el.quantity, agentSuperClass);
       }
     } else {
       aspActions += primitive(abbreviation);
-      if (role) {
-        // TODO:Backend does not support multiple roles for a single task
-        aspActions += responsible(abbreviation, role, el.agent);
+      if (roles) {
+        const parsedRoles = roles.split(",");
+        if (parsedRoles.length > 1) {
+          const [roleSuperClass, roleSuperClassSection] =
+            generateRoleSuperClass(taxonomy, parsedRoles, aspActions);
+          aspActions += roleSuperClassSection;
+          aspActions += responsible(abbreviation, roleSuperClass, agents[0]);
+        } else {
+          aspActions += responsible(abbreviation, roles, agents[0]);
+        }
       } else {
-        aspActions += delegate(abbreviation, el.quantity, el.agent);
+        aspActions += delegate(abbreviation, el.quantity, agents[0]);
       }
     }
 
-    aspActions += ``;
-    aspActions += `description(${abbreviation}, "${el.action}") .\nmandatory(${abbreviation}) .\n\n`;
+    aspActions += description(abbreviation, el.action);
+    aspActions += mandatory(abbreviation);
 
     if (precedence !== "none") {
       aspPrecendence += `pred(${abbreviation}, ${precedence}) .\n`;

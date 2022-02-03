@@ -1,4 +1,5 @@
 import * as converter from "number-to-words";
+import { TaxonomyData } from "./types";
 
 export const isSubClass = (child: string, parent: string) => {
   return `is_subclass(${createReadableConst(child)}, ${createReadableConst(
@@ -19,7 +20,7 @@ export const property = (child: string, parent: string) => {
 };
 
 export const roleProperty = (role: string) => {
-  return `property(Ag, ${createReadableConst(role)})`;
+  return `property(Ag, ${role})`;
 };
 
 export const delegate = (
@@ -27,9 +28,11 @@ export const delegate = (
   quantity: number,
   agent: string
 ) => {
-  return `delegate(${abbreviation}, ${quantity}, ${createReadableConst(
-    agent
-  )}) :- ${deploy(abbreviation)} . \n`;
+  const parsedAbbreviation = createReadableConst(abbreviation);
+  const parsedAgent = createReadableConst(agent);
+  return `delegate(${parsedAbbreviation}, ${quantity}, ${parsedAgent}) :- ${deploy(
+    parsedAbbreviation
+  )} . \n`;
 };
 
 export const responsible = (
@@ -37,9 +40,12 @@ export const responsible = (
   role: string,
   agent: string
 ) => {
-  return `responsible(${abbreviation}, Ag) :- ${deploy(
-    abbreviation
-  )}, ${roleProperty(role)}, ${member(agent)}`;
+  const parsedAbbreviation = createReadableConst(abbreviation);
+  const parsedAgent = createReadableConst(agent);
+  const parsedRole = createReadableConst(role);
+  return `responsible(${parsedAbbreviation}, Ag) :- ${deploy(
+    parsedAbbreviation
+  )}, ${roleProperty(parsedRole)}, ${member(parsedAgent)}`;
 };
 
 const deploy = (abbreviation: string) => {
@@ -47,15 +53,23 @@ const deploy = (abbreviation: string) => {
 };
 
 export const member = (agent: string) => {
-  return `member(Ag, ${createReadableConst(agent)}). \n`;
+  return `member(Ag, ${agent}). \n`;
 };
 
 export const collaborative = (abbreviation: string) => {
-  return `collaborative(${abbreviation}) . \n`;
+  return `collaborative(${createReadableConst(abbreviation)}) . \n`;
 };
 
 export const primitive = (abbreviation: string) => {
-  return `primitive(${abbreviation}) . \n`;
+  return `primitive(${createReadableConst(abbreviation)}) . \n`;
+};
+
+export const mandatory = (abbreviation: string) => {
+  return `\nmandatory(${createReadableConst(abbreviation)}) .\n\n`;
+};
+
+export const description = (abbreviation: string, action: string) => {
+  return `description(${abbreviation}, "${action}") .`;
 };
 
 export const createReadableConst = (input: string) => {
@@ -80,7 +94,7 @@ const numberConverter = (stringNumber: string) => {
   return stringNumber.replace(/\d/g, converter.toWordsOrdinal);
 };
 
-export const generateSuperClassSection = (
+export const generateAgentSuperClass = (
   agents: string[],
   aspActions: string
 ) => {
@@ -94,6 +108,30 @@ export const generateSuperClassSection = (
   agents.forEach((agent) => {
     superClassSection += isSubClass(agent, superClassName);
   });
+  superClassSection += isSubClass(superClassName, "agent");
+
+  return [superClassName, superClassSection];
+};
+
+export const generateRoleSuperClass = (
+  taxonomy: TaxonomyData[],
+  roles: string[],
+  aspActions: string
+) => {
+  const superClassName = roles.join("");
+  let superClassSection = "";
+
+  if (aspActions.includes(superClassName)) {
+    return [superClassName, superClassSection];
+  }
+
+  roles.forEach((role) => {
+    const agents = taxonomy.filter((el) => el.role == role);
+    agents.map((el) => {
+      superClassSection += property(el.agent, superClassName);
+    });
+  });
+
   superClassSection += isSubClass(superClassName, "agent");
 
   return [superClassName, superClassSection];
