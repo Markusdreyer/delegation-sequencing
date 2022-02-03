@@ -28,7 +28,6 @@ const EditComponent = (props: {
       onChange={(evt) => {
         onChange(evt.target.value);
       }}
-      input={<OutlinedInput label="Name" />}
       MenuProps={MenuProps}
     >
       {console.log("Cdef", columnDef)}

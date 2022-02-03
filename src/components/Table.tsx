@@ -12,10 +12,11 @@ import {
   TaxonomyData,
 } from "../types";
 import { setActiveTaxonomy } from "../actions";
-import { tableTypes } from "../utils/const";
+import { editComponentTypes, tableTypes } from "../utils/const";
 import {
   Button,
   FormControl,
+  Input,
   InputLabel,
   MenuItem,
   Select,
@@ -54,7 +55,15 @@ const Table: React.FC<Props> = (props) => {
   const [columns, setColumns] = useState<any>();
   const [lookupValues, setLookupValues] = useState<any>();
   const [multiselectOptions, setMultiselectOptions] =
-    useState<MultiselectOptions>({ role: [], agent: [] });
+    useState<MultiselectOptions>({
+      role: [],
+      agent: [],
+      causality: {
+        causalities: [],
+        comparisonOperators: [],
+        threshold: "",
+      },
+    });
   const tableColumns = {
     procedures: [
       { title: "Action", field: "action" },
@@ -104,6 +113,42 @@ const Table: React.FC<Props> = (props) => {
         field: "precedence",
         lookup: {},
       },
+      {
+        title: "Causality",
+        field: "causality",
+        options: multiselectOptions,
+        editComponent: (props: { onChange: any }) => (
+          <>
+            <Select
+              onChange={(evt) => {
+                props.onChange(evt.target.value);
+              }}
+              defaultValue="None"
+            >
+              {multiselectOptions.causality.causalities.map((el: string) => (
+                <MenuItem key={el} value={el}>
+                  {el}
+                </MenuItem>
+              ))}
+            </Select>
+            <Select
+              onChange={(evt) => {
+                props.onChange(evt.target.value);
+              }}
+              defaultValue="None"
+            >
+              {multiselectOptions.causality.comparisonOperators.map(
+                (el: string) => (
+                  <MenuItem key={el} value={el}>
+                    {el}
+                  </MenuItem>
+                )
+              )}
+            </Select>
+            <Input placeholder="Threshold" />
+          </>
+        ),
+      },
     ],
     taxonomies: [
       {
@@ -140,7 +185,20 @@ const Table: React.FC<Props> = (props) => {
 
       console.log("ROLES:: ", roles);
       console.log("AGENTS:: ", agents);
-      setMultiselectOptions({ role: roles, agent: agents });
+      setMultiselectOptions({
+        role: roles,
+        agent: agents,
+        causality: {
+          causalities: ["Severity", "None"],
+          comparisonOperators: [
+            "Less than",
+            "Greater than",
+            "Equal to",
+            "None",
+          ],
+          threshold: "",
+        },
+      });
     }
   }, [firestoreTaxonomies, activeTaxonomy]);
 

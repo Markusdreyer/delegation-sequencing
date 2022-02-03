@@ -38,6 +38,13 @@ export interface ProcedureData {
 export interface MultiselectOptions {
   role: string[];
   agent: string[];
+  causality: CausalityOptions;
+}
+
+export interface CausalityOptions {
+  causalities: string[];
+  comparisonOperators: string[];
+  threshold: string;
 }
 
 export interface TaxonomyData {
