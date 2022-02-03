@@ -35,6 +35,12 @@ export interface ProcedureData {
   role: string[] | string;
 }
 
+export interface CausalityData {
+  id: string;
+  causality: string;
+  value: string;
+}
+
 export interface MultiselectOptions {
   role: string[];
   agent: string[];
