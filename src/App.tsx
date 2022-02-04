@@ -237,10 +237,8 @@ const App = () => {
               </Button>
             </DialogActions>
           </Dialog>
-          <div style={{ display: "flex" }}>
-            <Table tableMetaData={tableMetaData} />
-            <CausalityEditor currentProcedure={tableMetaData.key} />
-          </div>
+          <Table tableMetaData={tableMetaData} />
+          <CausalityEditor currentProcedure={tableMetaData.key} />
           {tableMetaData.type === tableTypes.PROCEDURES && (
             <>
               <div className="center padding-l">

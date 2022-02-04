@@ -20,6 +20,7 @@ const initialState: RootState = {
   revisedPlan: [],
   collapsed: [],
   actionCardData: null,
+  showCausalities: false,
 };
 
 export default initialState;

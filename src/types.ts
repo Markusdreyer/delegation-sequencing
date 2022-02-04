@@ -11,6 +11,7 @@ export interface RootState {
   acceptedActions: string[];
   collapsed: boolean[];
   actionCardData: Action[][][] | null;
+  showCausalities: boolean;
 }
 
 export interface TableMetaData {

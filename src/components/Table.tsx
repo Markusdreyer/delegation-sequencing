@@ -12,10 +12,11 @@ import {
   TableMetaData,
   TaxonomyData,
 } from "../types";
-import { setActiveTaxonomy } from "../actions";
+import { setActiveTaxonomy, toggleCausalities } from "../actions";
 import { editComponentTypes, tableTypes } from "../utils/const";
 import {
   Button,
+  ButtonGroup,
   FormControl,
   Input,
   InputLabel,
@@ -437,9 +438,24 @@ const Table: React.FC<Props> = (props) => {
                   </Select>
                 </FormControl>
               )}
-              <Button data-testid="delete-document" onClick={deleteDocument}>
-                Delete {tableMetaData.key}
-              </Button>
+              <ButtonGroup>
+                <Button
+                  color="secondary"
+                  variant="outlined"
+                  data-testid="delete-document"
+                  onClick={deleteDocument}
+                >
+                  Delete {tableMetaData.key}
+                </Button>
+                <Button
+                  color="primary"
+                  variant="outlined"
+                  data-testid="show-causalities"
+                  onClick={() => dispatch(toggleCausalities())}
+                >
+                  Show causalities
+                </Button>
+              </ButtonGroup>
             </div>
           </div>
         ),

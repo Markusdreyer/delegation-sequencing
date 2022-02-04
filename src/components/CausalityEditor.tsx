@@ -1,14 +1,21 @@
+import { Drawer } from "@material-ui/core";
 import { doc, updateDoc } from "firebase/firestore";
 import MaterialTable from "material-table";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useFirestore, useFirestoreDocData } from "reactfire";
-import { CausalityData } from "../types";
+import { toggleCausalities } from "../actions";
+import { CausalityData, RootState } from "../types";
 
 interface Props {
   currentProcedure: string;
 }
 
 const CausalityEditor: React.FC<Props> = (props) => {
+  const dispatch = useDispatch();
+  const showCausalities = useSelector(
+    (state: RootState) => state.showCausalities
+  );
   const { currentProcedure } = props;
   const firestore = useFirestore();
   const ref = doc(firestore, "procedures", currentProcedure);
@@ -53,7 +60,11 @@ const CausalityEditor: React.FC<Props> = (props) => {
   };
 
   return (
-    <div style={{ border: "1px solid black", height: "600px", width: "100%" }}>
+    <Drawer
+      anchor="right"
+      open={showCausalities}
+      onClose={() => dispatch(toggleCausalities())}
+    >
       <MaterialTable
         options={{
           paging: false,
@@ -88,7 +99,7 @@ const CausalityEditor: React.FC<Props> = (props) => {
           onRowDelete: (oldData: any) => deleteTableRow(oldData),
         }}
       />
-    </div>
+    </Drawer>
   );
 };
 
