@@ -3,6 +3,7 @@ import MaterialTable, { MTableToolbar } from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  CausalityData,
   ColumnDef,
   MaterialTableData,
   MultiselectOptions,
@@ -29,6 +30,7 @@ import {
   useFirestoreCollectionData,
   useFirestoreDocData,
 } from "reactfire";
+import CausalitySelector from "./CausalitySelector";
 
 interface Props {
   tableMetaData: TableMetaData;
@@ -117,36 +119,12 @@ const Table: React.FC<Props> = (props) => {
         title: "Causality",
         field: "causality",
         options: multiselectOptions,
-        editComponent: (props: { onChange: any }) => (
-          <>
-            <Select
-              onChange={(evt) => {
-                props.onChange(evt.target.value);
-              }}
-              defaultValue="None"
-            >
-              {multiselectOptions.causality.causalities.map((el: string) => (
-                <MenuItem key={el} value={el}>
-                  {el}
-                </MenuItem>
-              ))}
-            </Select>
-            <Select
-              onChange={(evt) => {
-                props.onChange(evt.target.value);
-              }}
-              defaultValue="None"
-            >
-              {multiselectOptions.causality.comparisonOperators.map(
-                (el: string) => (
-                  <MenuItem key={el} value={el}>
-                    {el}
-                  </MenuItem>
-                )
-              )}
-            </Select>
-            <Input placeholder="Threshold" />
-          </>
+        editComponent: (props: { onChange: any; value: string[] }) => (
+          <CausalitySelector
+            options={multiselectOptions.causality}
+            onChange={props.onChange}
+            values={props.value}
+          />
         ),
       },
     ],
@@ -183,13 +161,16 @@ const Table: React.FC<Props> = (props) => {
         .map((el: TaxonomyData) => el.agent)
         .filter(unique) as string[];
 
-      console.log("ROLES:: ", roles);
-      console.log("AGENTS:: ", agents);
+      const causalities = document.causalityData.map(
+        (el: CausalityData) => el.causality
+      );
+      causalities.push("None");
+
       setMultiselectOptions({
         role: roles,
         agent: agents,
         causality: {
-          causalities: ["Severity", "None"],
+          causalities: causalities,
           comparisonOperators: [
             "Less than",
             "Greater than",

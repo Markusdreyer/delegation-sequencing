@@ -76,7 +76,6 @@ const CausalityEditor: React.FC<Props> = (props) => {
             ...obj,
           }))
         }
-        parentChildData={(row, rows) => rows.find((o) => o.id === row.parentId)}
         editable={{
           onRowAdd: (newData: any) => addTableRow(newData),
           onRowUpdate: (newData: any, oldData: any) =>
