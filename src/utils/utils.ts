@@ -4,6 +4,7 @@ import md5 from "md5";
 import {
   Action,
   BackendResponse,
+  CausalityData,
   ModelResponse,
   ProcedureData,
   TaxonomyData,
@@ -160,6 +161,41 @@ export const getASPModels = (
         return { error: error.message };
       }
     });
+};
+
+export const causalityThresholdReached = (
+  causalitySelection: string[],
+  causalityData: CausalityData[]
+) => {
+  const [causality, comparisonOperator, threshold] = causalitySelection;
+  const value = causalityData.find(
+    (el: CausalityData) => el.causality === causality
+  )?.value;
+
+  if (!value) {
+    console.log("Cold not find value for ", causality);
+    return false;
+  }
+
+  console.log(`${causality} of ${value} is ${comparisonOperator} ${threshold}`);
+  let res: boolean;
+  switch (comparisonOperator) {
+    case "Less than":
+      console.log("Less than");
+      res = value < threshold;
+      console.log(res);
+      return res;
+    case "Greater than":
+      console.log("Greater than");
+      res = value > threshold;
+      console.log(res);
+      return res;
+    case "Equal to":
+      console.log("Equal to");
+      res = value === threshold;
+      console.log(res);
+      return res;
+  }
 };
 
 const parseModels = (

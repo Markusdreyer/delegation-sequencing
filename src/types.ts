@@ -33,6 +33,7 @@ export interface ProcedureData {
   abbreviation: string;
   precedence: string;
   role: string[] | string;
+  causality?: string[];
 }
 
 export interface CausalityData {
