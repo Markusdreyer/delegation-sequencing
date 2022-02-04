@@ -110,7 +110,6 @@ const Table: React.FC<Props> = (props) => {
         title: "Abbreviation",
         field: "abbreviation",
       },
-
       {
         title: "Precedence",
         field: "precedence",
@@ -447,14 +446,16 @@ const Table: React.FC<Props> = (props) => {
                 >
                   Delete {tableMetaData.key}
                 </Button>
-                <Button
-                  color="primary"
-                  variant="outlined"
-                  data-testid="show-causalities"
-                  onClick={() => dispatch(toggleCausalities())}
-                >
-                  Show causalities
-                </Button>
+                {tableMetaData.type === tableTypes.PROCEDURES && (
+                  <Button
+                    color="primary"
+                    variant="outlined"
+                    data-testid="show-causalities"
+                    onClick={() => dispatch(toggleCausalities())}
+                  >
+                    Show causalities
+                  </Button>
+                )}
               </ButtonGroup>
             </div>
           </div>
