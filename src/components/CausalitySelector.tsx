@@ -1,20 +1,19 @@
 import { Input, MenuItem, Select } from "@material-ui/core";
 import React, { useState } from "react";
-import { CausalityOptions } from "../types";
+import { CausalityData, CausalityOptions } from "../types";
 
 interface Props {
   onChange: (value: string[]) => void;
   options: CausalityOptions;
   values: string[];
 }
-//TODO: Causality table have ghost entries which need to be cleaned up. Also, the procedure table need to get real time updates from the causality editor,
-//e.g. when adding a new causality, this should be immediately available in the multiselect options for the causality selector
+
 const CausalitySelector: React.FC<Props> = (props) => {
   const { onChange, options, values } = props;
   const [causalitySelection, setCausalitySelection] = useState(
     values ? values : ["None", "None", "None"]
   );
-
+  console.log(options);
   const handleChange = (
     evt: React.ChangeEvent<{
       name?: string | undefined;
@@ -51,13 +50,11 @@ const CausalitySelector: React.FC<Props> = (props) => {
           handleChange(evt);
         }}
         name="causality"
-        value={
-          causalitySelection[0] !== undefined ? causalitySelection[0] : "None"
-        }
+        value={causalitySelection[0]}
       >
-        {options.causalities.map((el: string) => (
-          <MenuItem key={el} value={el}>
-            {el}
+        {options.causalities.map((el: CausalityData) => (
+          <MenuItem key={el.id} value={el.causality}>
+            {el.causality}
           </MenuItem>
         ))}
       </Select>
@@ -71,12 +68,10 @@ const CausalitySelector: React.FC<Props> = (props) => {
           handleChange(evt);
         }}
         name="comparisonOperator"
-        value={
-          causalitySelection[1] !== undefined ? causalitySelection[1] : "None"
-        }
+        value={causalitySelection[1]}
       >
-        {options.comparisonOperators.map((el: string) => (
-          <MenuItem key={el} value={el}>
+        {options.comparisonOperators.map((el: string, i: number) => (
+          <MenuItem key={el + i} value={el}>
             {el}
           </MenuItem>
         ))}
@@ -92,9 +87,7 @@ const CausalitySelector: React.FC<Props> = (props) => {
           handleChange(evt);
         }}
         name="threshold"
-        value={
-          causalitySelection[2] !== undefined ? causalitySelection[2] : "None"
-        }
+        value={causalitySelection[2]}
       />
     </>
   );

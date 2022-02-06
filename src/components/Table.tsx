@@ -431,7 +431,9 @@ const Table: React.FC<Props> = (props) => {
                   >
                     {firestoreTaxonomies &&
                       firestoreTaxonomies.map((taxonomy) => (
-                        <MenuItem value={taxonomy.key}>{taxonomy.key}</MenuItem>
+                        <MenuItem key={taxonomy.key} value={taxonomy.key}>
+                          {taxonomy.key}
+                        </MenuItem>
                       ))}
                   </Select>
                 </FormControl>

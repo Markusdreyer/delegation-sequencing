@@ -10,7 +10,8 @@ import { CausalityData, RootState } from "../types";
 interface Props {
   currentProcedure: string;
 }
-
+//TODO: Causality table have ghost entries which need to be cleaned up. Also, the procedure table need to get real time updates from the causality editor,
+//e.g. when adding a new causality, this should be immediately available in the multiselect options for the causality selector
 const CausalityEditor: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
   const showCausalities = useSelector(
@@ -98,6 +99,7 @@ const CausalityEditor: React.FC<Props> = (props) => {
           onRowDelete: (oldData: any) => deleteTableRow(oldData),
         }}
       />
+      {console.log("doc", document)}
     </Drawer>
   );
 };

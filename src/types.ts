@@ -50,7 +50,7 @@ export interface MultiselectOptions {
 }
 
 export interface CausalityOptions {
-  causalities: string[];
+  causalities: CausalityData[];
   comparisonOperators: string[];
   threshold: string;
 }
