@@ -1,13 +1,14 @@
 import { Input, MenuItem, Select } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import { CausalityData, CausalityOptions } from "../types";
+import React, { useState } from "react";
+import { CausalityOptions } from "../types";
 
 interface Props {
   onChange: (value: string[]) => void;
   options: CausalityOptions;
   values: string[];
 }
-
+//TODO: Causality table have ghost entries which need to be cleaned up. Also, the procedure table need to get real time updates from the causality editor,
+//e.g. when adding a new causality, this should be immediately available in the multiselect options for the causality selector
 const CausalitySelector: React.FC<Props> = (props) => {
   const { onChange, options, values } = props;
   const [causalitySelection, setCausalitySelection] = useState(

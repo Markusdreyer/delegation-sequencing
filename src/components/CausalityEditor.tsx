@@ -24,7 +24,6 @@ const CausalityEditor: React.FC<Props> = (props) => {
   });
 
   const addTableRow = async (newData: any): Promise<void> => {
-    console.log("ADD");
     const currentCausalityData = document.causalityData;
     const dataUpdate = currentCausalityData as CausalityData[];
     const causalityData = newData as unknown as CausalityData;

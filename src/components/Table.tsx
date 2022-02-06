@@ -146,7 +146,7 @@ const Table: React.FC<Props> = (props) => {
   };
 
   useEffect(() => {
-    if (firestoreTaxonomies) {
+    if (firestoreTaxonomies && document) {
       const currentTaxonomyData = firestoreTaxonomies.find(
         (el) => el.key === activeTaxonomy
       );
@@ -161,9 +161,8 @@ const Table: React.FC<Props> = (props) => {
         .map((el: TaxonomyData) => el.agent)
         .filter(unique) as string[];
 
-      const causalities = document.causalityData.map(
-        (el: CausalityData) => el.causality
-      );
+      const causalities = document.causalityData;
+      causalities.map((el: CausalityData) => el?.causality);
       causalities.push("None");
 
       setMultiselectOptions({
@@ -181,7 +180,7 @@ const Table: React.FC<Props> = (props) => {
         },
       });
     }
-  }, [firestoreTaxonomies, activeTaxonomy]);
+  }, [firestoreTaxonomies, activeTaxonomy, document]);
 
   /**
    * Whenever the firestore document is fetched, parse the relevant columns for lookup data.
