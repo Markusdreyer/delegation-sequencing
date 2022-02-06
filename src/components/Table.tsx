@@ -163,7 +163,6 @@ const Table: React.FC<Props> = (props) => {
 
       const causalities = document.causalityData;
       causalities.map((el: CausalityData) => el?.causality);
-      causalities.push("None");
 
       setMultiselectOptions({
         role: roles,
