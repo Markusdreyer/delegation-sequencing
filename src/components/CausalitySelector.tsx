@@ -1,5 +1,5 @@
 import { Input, MenuItem, Select } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CausalityData, CausalityOptions } from "../types";
 
 interface Props {
@@ -13,7 +13,7 @@ const CausalitySelector: React.FC<Props> = (props) => {
   const [causalitySelection, setCausalitySelection] = useState(
     values ? values : ["None", "None", "None"]
   );
-  console.log(options);
+
   const handleChange = (
     evt: React.ChangeEvent<{
       name?: string | undefined;
@@ -52,9 +52,9 @@ const CausalitySelector: React.FC<Props> = (props) => {
         name="causality"
         value={causalitySelection[0]}
       >
-        {options.causalities.map((el: CausalityData) => (
-          <MenuItem key={el.id} value={el.causality}>
-            {el.causality}
+        {options.causalities.map((el: string, i: number) => (
+          <MenuItem key={el + i} value={el}>
+            {el}
           </MenuItem>
         ))}
       </Select>

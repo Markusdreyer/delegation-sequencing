@@ -161,8 +161,14 @@ const Table: React.FC<Props> = (props) => {
         .map((el: TaxonomyData) => el.agent)
         .filter(unique) as string[];
 
-      const causalities = document.causalityData;
-      causalities.map((el: CausalityData) => el?.causality);
+      const causalities = document.causalityData.map(
+        (el: CausalityData) => el?.causality
+      );
+
+      //Add "None" to the options to allow users to undo their choice
+      if (!causalities.includes("None")) {
+        causalities.push("None");
+      }
 
       setMultiselectOptions({
         role: roles,
