@@ -146,44 +146,46 @@ const Table: React.FC<Props> = (props) => {
   };
 
   useEffect(() => {
-    if (firestoreTaxonomies && document) {
-      const currentTaxonomyData = firestoreTaxonomies.find(
-        (el) => el.key === activeTaxonomy
-      );
-      const roles = currentTaxonomyData?.tableData
-        .filter((el: TaxonomyData) => el.role)
-        .map((el: any) => el.role)
-        .filter(unique) as string[];
+    if (tableMetaData.type === tableTypes.PROCEDURES) {
+      if (firestoreTaxonomies && document) {
+        const currentTaxonomyData = firestoreTaxonomies.find(
+          (el) => el.key === activeTaxonomy
+        );
+        const roles = currentTaxonomyData?.tableData
+          .filter((el: TaxonomyData) => el.role)
+          .map((el: any) => el.role)
+          .filter(unique) as string[];
 
-      const agents = currentTaxonomyData?.tableData
-        .filter((el: TaxonomyData) => el.parent === "None")
-        .filter((el: TaxonomyData) => el.agent)
-        .map((el: TaxonomyData) => el.agent)
-        .filter(unique) as string[];
+        const agents = currentTaxonomyData?.tableData
+          .filter((el: TaxonomyData) => el.parent === "None")
+          .filter((el: TaxonomyData) => el.agent)
+          .map((el: TaxonomyData) => el.agent)
+          .filter(unique) as string[];
 
-      const causalities = document.causalityData.map(
-        (el: CausalityData) => el?.causality
-      );
+        const causalities = document.causalityData.map(
+          (el: CausalityData) => el?.causality
+        );
 
-      //Add "None" to the options to allow users to undo their choice
-      if (!causalities.includes("None")) {
-        causalities.push("None");
+        //Add "None" to the options to allow users to undo their choice
+        if (!causalities.includes("None")) {
+          causalities.push("None");
+        }
+
+        setMultiselectOptions({
+          role: roles,
+          agent: agents,
+          causality: {
+            causalities: causalities,
+            comparisonOperators: [
+              "Less than",
+              "Greater than",
+              "Equal to",
+              "None",
+            ],
+            threshold: "",
+          },
+        });
       }
-
-      setMultiselectOptions({
-        role: roles,
-        agent: agents,
-        causality: {
-          causalities: causalities,
-          comparisonOperators: [
-            "Less than",
-            "Greater than",
-            "Equal to",
-            "None",
-          ],
-          threshold: "",
-        },
-      });
     }
   }, [firestoreTaxonomies, activeTaxonomy, document]);
 

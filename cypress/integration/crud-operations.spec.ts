@@ -121,7 +121,7 @@ describe("Verify procedure creation", () => {
   });
 
   it("should create a new action", () => {
-    cy.contains("add_box").click();
+    cy.contains("add_box").click({ force: true });
     cy.get("input[placeholder=Action]").type(firstAction.action);
     cy.get("table")
       .find("tr")
@@ -192,7 +192,7 @@ describe("Verify procedure creation", () => {
 
   it("should create a second action", () => {
     cy.wait(2000);
-    cy.contains("add_box").click();
+    cy.contains("add_box").click({ force: true });
     cy.get("input[placeholder=Action]").type(secondAction.action);
     cy.get("table")
       .find("tr")
