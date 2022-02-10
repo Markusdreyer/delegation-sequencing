@@ -146,7 +146,6 @@ member(A, C):- is_a(A, D), subclass(D, C).
 
 class(agent).
 
-
 % https://github.com/Markusdreyer/delegation-sequencing/issues/10
-assigned(Ac):- responsible(Ac, Ag).
-:- not assigned(Ac), objective(Ac).
+% assigned(Ac):- responsible(Ac, Ag).
+% :- not assigned(Ac), objective(Ac).
