@@ -1,4 +1,10 @@
-import { ColumnDef } from "../types";
+export const editComponentTypes = {
+  ROLE: "role",
+  AGENT: "agent",
+  CAUSALITIES: "causalities",
+  COMPARISON_OPERATORS: "comparisonOperators",
+  THRESHOLD: "threshold",
+};
 
 export const tableTypes = {
   PROCEDURES: "procedures",
@@ -25,47 +31,3 @@ export enum ExpanderOptions {
   EXPAND,
   COLLAPSE,
 }
-
-export const tableColumns: Record<string, ColumnDef[]> = {
-  procedures: [
-    { title: "Action", field: "action" },
-    {
-      title: "Role",
-      field: "role",
-    },
-    {
-      title: "Agent",
-      field: "agent",
-      lookup: {},
-    },
-    {
-      title: "Quantity",
-      field: "quantity",
-      type: "numeric",
-    },
-    {
-      title: "Abbreviation",
-      field: "abbreviation",
-    },
-
-    {
-      title: "Precedence",
-      field: "precedence",
-      lookup: {},
-    },
-  ],
-  taxonomies: [
-    {
-      title: "Agent",
-      field: "agent",
-    },
-    {
-      title: "Role",
-      field: "role",
-    },
-    {
-      title: "Parent",
-      field: "parent",
-    },
-  ],
-};

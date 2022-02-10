@@ -54,6 +54,12 @@ export const toggleDialog = (options?: { title: string; label: string }) => {
   };
 };
 
+export const toggleCausalities = () => {
+  return {
+    type: "TOGGLE_CAUSALITIES",
+  };
+};
+
 export const toggleProcedures = () => {
   return {
     type: "TOGGLE_PROCEDURES",

@@ -48,6 +48,18 @@ const dialogReducer = (state = initialState.dialog, action: any) => {
   }
 };
 
+const showCausalitiesReducer = (
+  state = initialState.showCausalities,
+  action: any
+) => {
+  switch (action.type) {
+    case "TOGGLE_CAUSALITIES":
+      return !state;
+    default:
+      return state;
+  }
+};
+
 const showProceduresReducer = (state: boolean = false, action: any) => {
   switch (action.type) {
     case "TOGGLE_PROCEDURES":
@@ -127,6 +139,7 @@ const allReducers = combineReducers({
   showSidebar: showSidebarReducer,
   showProcedures: showProceduresReducer,
   dialog: dialogReducer,
+  showCausalities: showCausalitiesReducer,
   tableMetaData: tableReducer,
   activeTaxonomy: activeTaxonomyReducer,
   previousModel: previousModelReducer,

@@ -12,6 +12,7 @@ import {
 import Sunburst from "./components/Sunburst";
 import clsx from "clsx";
 import {
+  causalityThresholdReached,
   generateActionCardData,
   generateSunburstData,
   getASPModels,
@@ -33,6 +34,7 @@ import { useFirestore, useFirestoreDocData } from "reactfire";
 
 import { setDoc } from "@firebase/firestore";
 import { doc } from "firebase/firestore";
+import CausalityEditor from "./components/CausalityEditor";
 
 const App = () => {
   const firestore = useFirestore();
@@ -74,6 +76,7 @@ const App = () => {
       dispatch(renderTable(tableTypes.PROCEDURES, newDocument));
       await setDoc(doc(firestore, "procedures", newDocument), {
         tableData: [],
+        causalityData: [],
       });
     } else if (dialog.title === dialogOptions.TAXONOMY.title) {
       dispatch(renderTable(tableTypes.TAXONOMIES, newDocument));
@@ -98,10 +101,26 @@ const App = () => {
     resetData();
 
     const tmpProcedure = JSON.parse(JSON.stringify(procedureData.tableData));
-    tmpProcedure.forEach((el: ProcedureData) => {
-      el.role = (el.role as string[]).filter((e) => e).join(",");
-      el.agent = (el.agent as string[]).filter((e) => e).join(",");
-    });
+    console.log("tmpprocedure", tmpProcedure);
+    for (let i = tmpProcedure.length - 1; i >= 0; i--) {
+      if (
+        tmpProcedure[i].causality &&
+        !causalityThresholdReached(
+          tmpProcedure[i].causality,
+          procedureData.causalityData
+        )
+      ) {
+        console.log("Should remove", tmpProcedure[i]);
+        tmpProcedure.splice(i, 1); //Remove the item from the procedure as the threshold has not been reached
+      } else {
+        tmpProcedure[i].role = (tmpProcedure[i].role as string[])
+          .filter((e) => e)
+          .join(",");
+        tmpProcedure[i].agent = (tmpProcedure[i].agent as string[])
+          .filter((e) => e)
+          .join(",");
+      }
+    }
 
     const requestData = {
       taxonomy: taxonomyData.tableData,
@@ -219,6 +238,7 @@ const App = () => {
             </DialogActions>
           </Dialog>
           <Table tableMetaData={tableMetaData} />
+          <CausalityEditor currentProcedure={tableMetaData.key} />
           {tableMetaData.type === tableTypes.PROCEDURES && (
             <>
               <div className="center padding-l">

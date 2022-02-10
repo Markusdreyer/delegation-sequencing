@@ -11,6 +11,7 @@ export interface RootState {
   acceptedActions: string[];
   collapsed: boolean[];
   actionCardData: Action[][][] | null;
+  showCausalities: boolean;
 }
 
 export interface TableMetaData {
@@ -33,11 +34,25 @@ export interface ProcedureData {
   abbreviation: string;
   precedence: string;
   role: string[] | string;
+  causality?: string[];
+}
+
+export interface CausalityData {
+  id: string;
+  causality: string;
+  value: string;
 }
 
 export interface MultiselectOptions {
   role: string[];
   agent: string[];
+  causality: CausalityOptions;
+}
+
+export interface CausalityOptions {
+  causalities: string[];
+  comparisonOperators: string[];
+  threshold: string;
 }
 
 export interface TaxonomyData {

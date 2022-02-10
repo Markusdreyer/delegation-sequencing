@@ -48,9 +48,7 @@ ReactDOM.render(
   <FirebaseAppProvider firebaseConfig={firebaseConfig}>
     <FirestoreProvider sdk={firestore}>
       <Provider store={store}>
-        <React.StrictMode>
-          <App />
-        </React.StrictMode>
+        <App />
       </Provider>
     </FirestoreProvider>
   </FirebaseAppProvider>,

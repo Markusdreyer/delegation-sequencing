@@ -3,6 +3,7 @@ import MaterialTable, { MTableToolbar } from "material-table";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  CausalityData,
   ColumnDef,
   MaterialTableData,
   MultiselectOptions,
@@ -11,11 +12,13 @@ import {
   TableMetaData,
   TaxonomyData,
 } from "../types";
-import { setActiveTaxonomy } from "../actions";
-import { tableTypes } from "../utils/const";
+import { setActiveTaxonomy, toggleCausalities } from "../actions";
+import { editComponentTypes, tableTypes } from "../utils/const";
 import {
   Button,
+  ButtonGroup,
   FormControl,
+  Input,
   InputLabel,
   MenuItem,
   Select,
@@ -28,6 +31,7 @@ import {
   useFirestoreCollectionData,
   useFirestoreDocData,
 } from "reactfire";
+import CausalitySelector from "./CausalitySelector";
 
 interface Props {
   tableMetaData: TableMetaData;
@@ -54,7 +58,15 @@ const Table: React.FC<Props> = (props) => {
   const [columns, setColumns] = useState<any>();
   const [lookupValues, setLookupValues] = useState<any>();
   const [multiselectOptions, setMultiselectOptions] =
-    useState<MultiselectOptions>({ role: [], agent: [] });
+    useState<MultiselectOptions>({
+      role: [],
+      agent: [],
+      causality: {
+        causalities: [],
+        comparisonOperators: [],
+        threshold: "",
+      },
+    });
   const tableColumns = {
     procedures: [
       { title: "Action", field: "action" },
@@ -98,11 +110,22 @@ const Table: React.FC<Props> = (props) => {
         title: "Abbreviation",
         field: "abbreviation",
       },
-
       {
         title: "Precedence",
         field: "precedence",
         lookup: {},
+      },
+      {
+        title: "Causality",
+        field: "causality",
+        options: multiselectOptions,
+        editComponent: (props: { onChange: any; value: string[] }) => (
+          <CausalitySelector
+            options={multiselectOptions.causality}
+            onChange={props.onChange}
+            values={props.value}
+          />
+        ),
       },
     ],
     taxonomies: [
@@ -123,26 +146,48 @@ const Table: React.FC<Props> = (props) => {
   };
 
   useEffect(() => {
-    if (firestoreTaxonomies) {
-      const currentTaxonomyData = firestoreTaxonomies.find(
-        (el) => el.key === activeTaxonomy
-      );
-      const roles = currentTaxonomyData?.tableData
-        .filter((el: TaxonomyData) => el.role)
-        .map((el: any) => el.role)
-        .filter(unique) as string[];
+    if (tableMetaData.type === tableTypes.PROCEDURES) {
+      if (firestoreTaxonomies && document) {
+        const currentTaxonomyData = firestoreTaxonomies.find(
+          (el) => el.key === activeTaxonomy
+        );
+        const roles = currentTaxonomyData?.tableData
+          .filter((el: TaxonomyData) => el.role)
+          .map((el: any) => el.role)
+          .filter(unique) as string[];
 
-      const agents = currentTaxonomyData?.tableData
-        .filter((el: TaxonomyData) => el.parent === "None")
-        .filter((el: TaxonomyData) => el.agent)
-        .map((el: TaxonomyData) => el.agent)
-        .filter(unique) as string[];
+        const agents = currentTaxonomyData?.tableData
+          .filter((el: TaxonomyData) => el.parent === "None")
+          .filter((el: TaxonomyData) => el.agent)
+          .map((el: TaxonomyData) => el.agent)
+          .filter(unique) as string[];
 
-      console.log("ROLES:: ", roles);
-      console.log("AGENTS:: ", agents);
-      setMultiselectOptions({ role: roles, agent: agents });
+        const causalities = document.causalityData.map(
+          (el: CausalityData) => el?.causality
+        );
+
+        //Add "None" to the options to allow users to undo their choice
+        if (!causalities.includes("None")) {
+          causalities.push("None");
+        }
+
+        setMultiselectOptions({
+          role: roles,
+          agent: agents,
+          causality: {
+            causalities: causalities,
+            comparisonOperators: [
+              "Less than",
+              "Greater than",
+              "Equal to",
+              "None",
+            ],
+            threshold: "",
+          },
+        });
+      }
     }
-  }, [firestoreTaxonomies, activeTaxonomy]);
+  }, [firestoreTaxonomies, activeTaxonomy, document]);
 
   /**
    * Whenever the firestore document is fetched, parse the relevant columns for lookup data.
@@ -393,14 +438,33 @@ const Table: React.FC<Props> = (props) => {
                   >
                     {firestoreTaxonomies &&
                       firestoreTaxonomies.map((taxonomy) => (
-                        <MenuItem value={taxonomy.key}>{taxonomy.key}</MenuItem>
+                        <MenuItem key={taxonomy.key} value={taxonomy.key}>
+                          {taxonomy.key}
+                        </MenuItem>
                       ))}
                   </Select>
                 </FormControl>
               )}
-              <Button data-testid="delete-document" onClick={deleteDocument}>
-                Delete {tableMetaData.key}
-              </Button>
+              <ButtonGroup>
+                <Button
+                  color="secondary"
+                  variant="outlined"
+                  data-testid="delete-document"
+                  onClick={deleteDocument}
+                >
+                  Delete {tableMetaData.key}
+                </Button>
+                {tableMetaData.type === tableTypes.PROCEDURES && (
+                  <Button
+                    color="primary"
+                    variant="outlined"
+                    data-testid="show-causalities"
+                    onClick={() => dispatch(toggleCausalities())}
+                  >
+                    Show causalities
+                  </Button>
+                )}
+              </ButtonGroup>
             </div>
           </div>
         ),
