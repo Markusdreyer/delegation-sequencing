@@ -100,7 +100,7 @@ const App = () => {
   const generateModels = async (modelType: string) => {
     resetData();
 
-    const tmpProcedure = JSON.parse(JSON.stringify(procedureData.tableData));
+    const tmpProcedure = JSON.parse(JSON.stringify(procedureData.tableData)); //Ugly js way of cloning an object
     console.log("tmpprocedure", tmpProcedure);
     for (let i = tmpProcedure.length - 1; i >= 0; i--) {
       if (
@@ -113,6 +113,7 @@ const App = () => {
         console.log("Should remove", tmpProcedure[i]);
         tmpProcedure.splice(i, 1); //Remove the item from the procedure as the threshold has not been reached
       } else {
+        //Only parse role and agents if the item is included
         tmpProcedure[i].role = (tmpProcedure[i].role as string[])
           .filter((e) => e)
           .join(",");
@@ -163,6 +164,18 @@ const App = () => {
     }
   };
 
+  const sumNumberOfNewActions = (
+    previousModel: string[],
+    currentTableData: ProcedureData[]
+  ): number => {
+    const quantity = (el: { quantity: string }) => parseInt(el.quantity);
+    const sum = (prevSum: number, newQuantity: number) => prevSum + newQuantity;
+    const currentNumberOfActions = currentTableData.map(quantity).reduce(sum);
+    const previousNumberOfActions = previousModel.length;
+
+    return currentNumberOfActions - previousNumberOfActions;
+  };
+
   const reviseResponse = async () => {
     resetData();
 
@@ -170,6 +183,29 @@ const App = () => {
       previousModel,
       changes: revisedPlan,
     };
+
+    const numberOfNewActions = sumNumberOfNewActions(
+      previousModel,
+      procedureData.tableData
+    );
+
+    if (numberOfNewActions > 0) {
+      console.log(
+        `${numberOfNewActions} new actions added since initial response`
+      );
+      const newActions = JSON.parse(
+        JSON.stringify(procedureData.tableData.slice(-numberOfNewActions)) //Ugly js way of cloning an object
+      );
+
+      newActions.forEach((el: ProcedureData) => {
+        el.role = (el.role as string[]).filter((e) => e).join(",");
+        el.agent = (el.agent as string[]).filter((e) => e).join(",");
+      });
+
+      console.log("New actions since intial response: ", newActions);
+      revisionRequest["newActions"] = newActions;
+      revisionRequest["taxonomy"] = taxonomyData.tableData;
+    }
 
     setIsLoading(true);
     const { newModels, newPreviousModel, error }: BackendResponse =

@@ -2,8 +2,8 @@ import * as functions from "firebase-functions";
 import * as express from "express";
 import * as clingo from "clingo-wasm";
 import * as fs from "fs";
-import { generateAspString, sortModels } from "./utils";
-import { Response } from "./types";
+import { generateAspActions, generateAspString, sortModels } from "./utils";
+import { FailureReason, Response } from "./types";
 
 const app = express();
 
@@ -18,15 +18,38 @@ app.use(express.json());
 exports.api = functions.https.onRequest(app);
 
 app.post("/revise", async (req, res) => {
+  console.log("Revise endpoint reached");
   const reqBody = req.body;
   const previousModel = reqBody.previousModel.join("");
   const changes = reqBody.changes.join("");
   const revision = previousModel + changes;
-
   const control = fs.readFileSync("src/asp/control.lp", "utf8");
-  const actions = fs.readFileSync("src/asp/actions.lp", "utf8");
+  let actions = fs.readFileSync("src/asp/actions.lp", "utf8");
+  const newActions = reqBody.newActions;
+  const taxonomy = reqBody.taxonomy;
+
+  if (reqBody && taxonomy) {
+    const [newAspActions, actionsError] = generateAspActions(
+      taxonomy,
+      newActions
+    );
+
+    if (actionsError) {
+      const error: Response = {
+        status: 400,
+        body: actionsError as FailureReason,
+      };
+      console.log("ActionsError", actionsError);
+      res.status(error.status).json(error.body);
+      return;
+    }
+    console.log("NEW ASP ACTIONS:: ", newAspActions);
+    actions += newAspActions;
+  }
+
+  const aspString = control + actions + revision;
   const newModels: clingo.ClingoResult | clingo.ClingoError = await clingo.run(
-    control + actions + revision,
+    aspString,
     0
   );
   console.log("models: ", newModels);

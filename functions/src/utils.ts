@@ -112,7 +112,7 @@ export const generateAspString = ({
   return [aspString, null];
 };
 
-const generateAspActions = (
+export const generateAspActions = (
   taxonomy: TaxonomyData[],
   procedure: ProcedureData[]
 ): (string | FailureReason)[] => {
