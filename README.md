@@ -1,10 +1,17 @@
-# Getting started
+#README
+# Structure
 
-## Run frontend locally
+Frontend files are located in the root `src` directory. 
+Backend files are located in `functions/src/`
+The static ASP rules are located in /functions/src/asp/
+
+## Getting started
+
+### Run frontend locally
 
 `npm run start`
 
-## Run API and database emulators locally
+### Run API and database emulators locally
 
 When testing and developing, all Firebase features should be emulated, so that it won't interfere with the production data.
 
@@ -20,11 +27,11 @@ To start up the emulator with data from the previous session run the following c
 If there's been changes to the backend API, the service has to be built in advance:
 `cd functions && npm run build`
 
-## Firebase deploy
+### Firebase deploy
 
 `firebase deploy`
 
-## Run tests
+### Run tests
 
 Make sure that the frontend and emulators are running, and that the database is seeded with the correct data. Then run the following:
 
