@@ -1,4 +1,4 @@
-#README
+# README
 # Structure
 
 Frontend files are located in the root `src` directory. 
